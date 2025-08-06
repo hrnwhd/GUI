@@ -1,3 +1,32 @@
 {
-  "signals": []
+  "signals": [
+    {
+      "timestamp": "2025-08-06T22:21:24.131154",
+      "symbol": "USDCAD",
+      "direction": "short",
+      "entry_price": 1.4285,
+      "tp": 1.427,
+      "sl_distance_pips": 25,
+      "tp_distance_pips": 15,
+      "risk_profile": "Low",
+      "adx_value": 32.8,
+      "rsi": 72.5,
+      "timeframes_aligned": 3,
+      "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-06T22:04:24.131154",
+      "symbol": "XAUUSD",
+      "direction": "long",
+      "entry_price": 2045.75,
+      "tp": 2048.25,
+      "sl_distance_pips": 20,
+      "tp_distance_pips": 25,
+      "risk_profile": "High",
+      "adx_value": 28.2,
+      "rsi": 28.9,
+      "timeframes_aligned": 2,
+      "is_initial": true
+    }
+  ]
 }

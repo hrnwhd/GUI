@@ -1,21 +1,51 @@
 {
-  "timestamp": "2025-08-05T14:51:48.247997",
-  "robot_status": "Stopped",
+  "timestamp": "2025-08-06T23:03:49.470028",
+  "robot_status": "Running",
   "account": {
-    "balance": 0,
-    "equity": 0,
-    "margin": 0,
-    "free_margin": 0,
-    "margin_level": 0,
-    "profit": 0
+    "balance": 10855.21,
+    "equity": 10944.13,
+    "margin": 250.0,
+    "free_margin": 10696.27,
+    "margin_level": 4377.65,
+    "profit": 88.92
   },
-  "active_trades": 0,
-  "active_batches": 0,
-  "total_trades": 0,
+  "active_trades": 3,
+  "active_batches": 2,
+  "total_trades": 12,
   "emergency_stop": false,
-  "drawdown_percent": 0,
-  "last_signal_time": null,
-  "next_analysis": null,
-  "pairs_status": {},
-  "batches": []
+  "drawdown_percent": 0.84,
+  "last_signal_time": "2025-08-06T23:01:19.470028",
+  "next_analysis": "2025-08-06T23:06:34.470028",
+  "batches": [
+    {
+      "batch_id": 1,
+      "symbol": "EURUSD",
+      "direction": "long",
+      "current_layer": 3,
+      "total_volume": 0.18,
+      "breakeven_price": 1.08275,
+      "initial_entry_price": 1.0845,
+      "next_trigger": 1.0805,
+      "created_time": "2025-08-06T21:04:24.131154"
+    },
+    {
+      "batch_id": 2,
+      "symbol": "GBPUSD",
+      "direction": "short",
+      "current_layer": 2,
+      "total_volume": 0.12,
+      "breakeven_price": 1.26685,
+      "initial_entry_price": 1.2675,
+      "next_trigger": 1.2685,
+      "created_time": "2025-08-06T21:44:24.131154"
+    }
+  ],
+  "pairs_status": {
+    "EURUSD": "Active",
+    "GBPUSD": "Active",
+    "AUDUSD": "Waiting",
+    "USDCAD": "Active",
+    "XAUUSD": "Paused",
+    "BTCUSD": "Active"
+  }
 }

@@ -1,3 +1,76 @@
 {
-  "trades": []
+  "trades": [
+    {
+      "timestamp": "2025-08-06T21:04:24.131154",
+      "symbol": "EURUSD",
+      "direction": "long",
+      "volume": 0.06,
+      "entry_price": 1.0845,
+      "tp": 1.086,
+      "profit": 0,
+      "layer": 1,
+      "comment": "BM01_EURUSD_B01",
+      "enhanced_comment": "BM01_EURUSD_B01"
+    },
+    {
+      "timestamp": "2025-08-06T21:14:24.131154",
+      "symbol": "EURUSD",
+      "direction": "long",
+      "volume": 0.06,
+      "entry_price": 1.0825,
+      "tp": 1.084,
+      "profit": 0,
+      "layer": 2,
+      "comment": "BM01_EURUSD_B02",
+      "enhanced_comment": "BM01_EURUSD_B02"
+    },
+    {
+      "timestamp": "2025-08-06T21:34:24.131154",
+      "symbol": "EURUSD",
+      "direction": "long",
+      "volume": 0.06,
+      "entry_price": 1.08125,
+      "tp": 1.08275,
+      "profit": 0,
+      "layer": 3,
+      "comment": "BM01_EURUSD_B03",
+      "enhanced_comment": "BM01_EURUSD_B03"
+    },
+    {
+      "timestamp": "2025-08-06T21:44:24.131154",
+      "symbol": "GBPUSD",
+      "direction": "short",
+      "volume": 0.08,
+      "entry_price": 1.2675,
+      "tp": 1.266,
+      "profit": 0,
+      "layer": 1,
+      "comment": "BM02_GBPUSD_S01",
+      "enhanced_comment": "BM02_GBPUSD_S01"
+    },
+    {
+      "timestamp": "2025-08-06T21:54:24.131154",
+      "symbol": "GBPUSD",
+      "direction": "short",
+      "volume": 0.04,
+      "entry_price": 1.268,
+      "tp": 1.2665,
+      "profit": 0,
+      "layer": 2,
+      "comment": "BM02_GBPUSD_S02",
+      "enhanced_comment": "BM02_GBPUSD_S02"
+    },
+    {
+      "timestamp": "2025-08-06T20:29:24.131154",
+      "symbol": "AUDUSD",
+      "direction": "long",
+      "volume": 0.1,
+      "entry_price": 0.6625,
+      "tp": 0.664,
+      "profit": 75.5,
+      "layer": 1,
+      "comment": "BM03_AUDUSD_B01",
+      "enhanced_comment": "BM03_AUDUSD_B01"
+    }
+  ]
 }
