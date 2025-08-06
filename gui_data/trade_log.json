@@ -71,6 +71,22 @@
       "layer": 1,
       "comment": "BM03_AUDUSD_B01",
       "enhanced_comment": "BM03_AUDUSD_B01"
+    },
+    {
+      "timestamp": "2025-08-06T23:10:12.338902",
+      "event_type": "executed",
+      "symbol": "US500",
+      "direction": "long",
+      "volume": 0.01,
+      "entry_price": 6349.66,
+      "tp": 6351.66,
+      "sl": null,
+      "order_id": 1010689067,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM02_US500_BL01",
+      "sl_distance_pips": 0
     }
   ]
 }

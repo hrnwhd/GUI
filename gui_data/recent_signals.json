@@ -27,6 +27,20 @@
       "rsi": 28.9,
       "timeframes_aligned": 2,
       "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-06T23:10:14.408160",
+      "symbol": "US500",
+      "direction": "long",
+      "entry_price": 6349.11,
+      "tp": 6357.634999999999,
+      "sl_distance_pips": 77.5,
+      "tp_distance_pips": 85.24999999999636,
+      "risk_profile": "High",
+      "adx_value": 25.835967883014746,
+      "rsi": 51.35135135135135,
+      "timeframes_aligned": 2,
+      "is_initial": true
     }
   ]
 }
