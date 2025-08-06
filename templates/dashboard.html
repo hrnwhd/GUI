@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Trading Robot Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: #4CAF50;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .status-card h3 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card .value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card .change {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .status-running {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .status-stopped {
+            border-left: 4px solid #f44336;
+        }
+
+        .status-emergency {
+            border-left: 4px solid #ff9800;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-container h3 {
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .trades-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .trade-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trade-buy {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .trade-sell {
+            border-left: 4px solid #f44336;
+        }
+
+        .trade-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .trade-symbol {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .trade-details {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .trade-profit {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profit-positive {
+            color: #4CAF50;
+        }
+
+        .profit-negative {
+            color: #f44336;
+        }
+
+        .batches-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 2rem;
+        }
+
+        .batch-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2196F3;
+        }
+
+        .batch-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .batch-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .batch-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            transition: width 0.3s ease;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0.7;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .refresh-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .refresh-btn:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-robot"></i> BM Trading Robot Dashboard</h1>
+        <nav class="nav-links">
+            <a href="/" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/config"><i class="fas fa-cog"></i> Config</a>
+            <a href="/trades"><i class="fas fa-chart-line"></i> Trades</a>
+            <a href="/signals"><i class="fas fa-signal"></i> Signals</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-card" id="robot-status">
+                <h3><i class="fas fa-power-off"></i> Robot Status</h3>
+                <div class="value" id="status-value">Loading...</div>
+                <div class="change" id="status-change">Checking connection...</div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-dollar-sign"></i> Account Balance</h3>
+                <div class="value" id="balance-value">$0.00</div>
+                <div class="change" id="balance-change">Equity: $0.00</div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-chart-area"></i> P&L</h3>
+                <div class="value" id="pnl-value">$0.00</div>
+                <div class="change" id="pnl-change">0.00%</div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-layer-group"></i> Active Trades</h3>
+                <div class="value" id="trades-value">0</div>
+                <div class="change" id="trades-change">0 batches</div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-chart-line"></i> Drawdown</h3>
+                <div class="value" id="drawdown-value">0.00%</div>
+                <div class="change" id="drawdown-change">Max: 0.00%</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Charts -->
+            <div class="chart-container">
+                <h3><i class="fas fa-chart-area"></i> Account Performance</h3>
+                <div id="balance-chart" style="height: 400px;">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading chart data...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Trades -->
+            <div class="trades-container">
+                <h3><i class="fas fa-history"></i> Recent Trades</h3>
+                <div id="recent-trades">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading trades...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drawdown Chart -->
+        <div class="chart-container">
+            <h3><i class="fas fa-chart-line"></i> Drawdown Analysis</h3>
+            <div id="drawdown-chart" style="height: 300px;">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading drawdown data...
+                </div>
+            </div>
+        </div>
+
+        <!-- Martingale Batches -->
+        <div class="batches-section">
+            <h3><i class="fas fa-layer-group"></i> Active Martingale Batches</h3>
+            <div id="active-batches">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading batch data...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="refresh-btn" onclick="refreshAll()">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <script>
+        let refreshInterval;
+        let isRefreshing = false;
+
+        function startAutoRefresh() {
+            refreshInterval = setInterval(refreshAll, 5000); // Refresh every 5 seconds
+        }
+
+        function stopAutoRefresh() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        }
+
+        async function fetchJSON(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${url}:`, error);
+                return null;
+            }
+        }
+
+        async function updateLiveData() {
+            const data = await fetchJSON('/api/live_data');
+            if (!data) return;
+
+            // Update status
+            const statusCard = document.getElementById('robot-status');
+            const statusValue = document.getElementById('status-value');
+            const statusChange = document.getElementById('status-change');
+            
+            statusValue.textContent = data.robot_status || 'Unknown';
+            statusChange.textContent = data.last_signal_time ? 
+                `Last signal: ${new Date(data.last_signal_time).toLocaleTimeString()}` : 
+                'No recent signals';
+            
+            // Update status card styling
+            statusCard.className = 'status-card';
+            if (data.robot_status === 'Running') {
+                statusCard.classList.add('status-running');
+            } else if (data.emergency_stop) {
+                statusCard.classList.add('status-emergency');
+            } else {
+                statusCard.classList.add('status-stopped');
+            }
+
+            // Update account data
+            if (data.account) {
+                document.getElementById('balance-value').textContent = 
+                    `$${data.account.balance?.toFixed(2) || '0.00'}`;
+                document.getElementById('balance-change').textContent = 
+                    `Equity: $${data.account.equity?.toFixed(2) || '0.00'}`;
+                
+                const profit = data.account.profit || 0;
+                const pnlElement = document.getElementById('pnl-value');
+                pnlElement.textContent = `$${profit.toFixed(2)}`;
+                pnlElement.className = `value ${profit >= 0 ? 'profit-positive' : 'profit-negative'}`;
+                
+                const profitPercent = data.account.balance ? 
+                    ((profit / data.account.balance) * 100).toFixed(2) : '0.00';
+                document.getElementById('pnl-change').textContent = `${profitPercent}%`;
+            }
+
+            // Update trades info
+            document.getElementById('trades-value').textContent = data.active_trades || 0;
+            document.getElementById('trades-change').textContent = `${data.active_batches || 0} batches`;
+            
+            // Update drawdown
+            const drawdown = data.drawdown_percent || 0;
+            const drawdownElement = document.getElementById('drawdown-value');
+            drawdownElement.textContent = `${drawdown.toFixed(2)}%`;
+            drawdownElement.className = `value ${drawdown > 10 ? 'profit-negative' : ''}`;
+            document.getElementById('drawdown-change').textContent = `Max: ${drawdown.toFixed(2)}%`;
+        }
+
+        async function updateCharts() {
+            try {
+                // Balance chart
+                const balanceChartData = await fetch('/api/balance_chart').then(r => r.text());
+                if (balanceChartData && balanceChartData !== '{}') {
+                    const chartConfig = JSON.parse(balanceChartData);
+                    chartConfig.config = { responsive: true, displayModeBar: false };
+                    Plotly.newPlot('balance-chart', chartConfig.data, chartConfig.layout, chartConfig.config);
+                }
+
+                // Drawdown chart
+                const drawdownChartData = await fetch('/api/drawdown_chart').then(r => r.text());
+                if (drawdownChartData && drawdownChartData !== '{}') {
+                    const chartConfig = JSON.parse(drawdownChartData);
+                    chartConfig.config = { responsive: true, displayModeBar: false };
+                    Plotly.newPlot('drawdown-chart', chartConfig.data, chartConfig.layout, chartConfig.config);
+                }
+            } catch (error) {
+                console.error('Error updating charts:', error);
+            }
+        }
+
+        async function updateRecentTrades() {
+            const trades = await fetchJSON('/api/trade_log');
+            if (!trades) return;
+
+            const container = document.getElementById('recent-trades');
+            
+            if (!trades.length) {
+                container.innerHTML = '<div class="loading">No recent trades</div>';
+                return;
+            }
+
+            const recentTrades = trades.slice(-10).reverse(); // Show last 10, newest first
+            
+            container.innerHTML = recentTrades.map(trade => {
+                const isLong = trade.direction === 'long';
+                const profit = trade.profit || 0;
+                const profitClass = profit >= 0 ? 'profit-positive' : 'profit-negative';
+                
+                return `
+                    <div class="trade-item ${isLong ? 'trade-buy' : 'trade-sell'}">
+                        <div class="trade-info">
+                            <div class="trade-symbol">${trade.symbol} ${isLong ? 'BUY' : 'SELL'}</div>
+                            <div class="trade-details">
+                                ${trade.volume} lots @ ${trade.entry_price}
+                                ${trade.layer > 1 ? `(Layer ${trade.layer})` : ''}
+                            </div>
+                            <div class="trade-details">
+                                ${new Date(trade.timestamp).toLocaleString()}
+                            </div>
+                        </div>
+                        <div class="trade-profit ${profitClass}">
+                            ${profit.toFixed(2)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function updateActiveBatches() {
+            const data = await fetchJSON('/api/live_data');
+            if (!data || !data.batches) return;
+
+            const container = document.getElementById('active-batches');
+            
+            if (!data.batches.length) {
+                container.innerHTML = '<div class="loading">No active batches</div>';
+                return;
+            }
+
+            container.innerHTML = data.batches.map(batch => {
+                const progressPercent = (batch.current_layer / 15) * 100; // Max 15 layers
+                const isLong = batch.direction === 'long';
+                
+                return `
+                    <div class="batch-item">
+                        <div class="batch-header">
+                            <div>
+                                <strong>${batch.symbol} ${isLong ? 'LONG' : 'SHORT'}</strong>
+                                <span style="opacity: 0.7; margin-left: 1rem;">
+                                    Batch #${batch.batch_id}
+                                </span>
+                            </div>
+                            <div>
+                                <strong>Layer ${batch.current_layer}/15</strong>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Volume: ${batch.total_volume.toFixed(2)}</span>
+                            <span>Breakeven: ${batch.breakeven_price.toFixed(5)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Entry: ${batch.initial_entry_price.toFixed(5)}</span>
+                            <span>Next Trigger: ${batch.next_trigger?.toFixed(5) || 'N/A'}</span>
+                        </div>
+                        <div class="batch-progress">
+                            <div class="batch-progress-bar" style="width: ${progressPercent}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function refreshAll() {
+            if (isRefreshing) return;
+            
+            isRefreshing = true;
+            const refreshBtn = document.querySelector('.refresh-btn i');
+            refreshBtn.style.animation = 'spin 1s linear infinite';
+
+            try {
+                await Promise.all([
+                    updateLiveData(),
+                    updateCharts(),
+                    updateRecentTrades(),
+                    updateActiveBatches()
+                ]);
+            } catch (error) {
+                console.error('Error during refresh:', error);
+            } finally {
+                refreshBtn.style.animation = '';
+                isRefreshing = false;
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshAll();
+            startAutoRefresh();
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            stopAutoRefresh();
+        });
+
+        // Handle visibility change to pause/resume refresh
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopAutoRefresh();
+            } else {
+                startAutoRefresh();
+            }
+        });
+    </script>
+</body>
+</html>

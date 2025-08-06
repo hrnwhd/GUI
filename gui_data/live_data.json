@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-08-05T14:51:48.247997",
+  "robot_status": "Stopped",
+  "account": {
+    "balance": 0,
+    "equity": 0,
+    "margin": 0,
+    "free_margin": 0,
+    "margin_level": 0,
+    "profit": 0
+  },
+  "active_trades": 0,
+  "active_batches": 0,
+  "total_trades": 0,
+  "emergency_stop": false,
+  "drawdown_percent": 0,
+  "last_signal_time": null,
+  "next_analysis": null,
+  "pairs_status": {},
+  "batches": []
+}

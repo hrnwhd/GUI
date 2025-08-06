@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Robot Configuration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: #4CAF50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .config-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .config-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .pairs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pair-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .risk-profiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .risk-profile {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .risk-profile h4 {
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #da190b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-running {
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        .status-stopped {
+            background: #f44336;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-cog"></i> Robot Configuration</h1>
+        <nav class="nav-links">
+            <a href="/"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/config" class="active"><i class="fas fa-cog"></i> Config</a>
+            <a href="/trades"><i class="fas fa-chart-line"></i> Trades</a>
+            <a href="/signals"><i class="fas fa-signal"></i> Signals</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div id="success-message" class="success-message">
+            <i class="fas fa-check-circle"></i> Configuration saved successfully!
+        </div>
+        
+        <div id="error-message" class="error-message">
+            <i class="fas fa-exclamation-triangle"></i> <span id="error-text">Error saving configuration</span>
+        </div>
+
+        <!-- Account Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-user-circle"></i> Account Settings</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Account Number</label>
+                    <input type="number" id="account_number" placeholder="42903786">
+                </div>
+                <div class="form-group">
+                    <label>Magic Number</label>
+                    <input type="number" id="magic_number" placeholder="50515253">
+                </div>
+            </div>
+        </div>
+
+        <!-- Trading Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-chart-line"></i> Trading Settings</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Global Timeframe</label>
+                    <select id="global_timeframe">
+                        <option value="M1">M1 - 1 Minute</option>
+                        <option value="M5">M5 - 5 Minutes</option>
+                        <option value="M15">M15 - 15 Minutes</option>
+                        <option value="M30">M30 - 30 Minutes</option>
+                        <option value="H1">H1 - 1 Hour</option>
+                        <option value="H4">H4 - 4 Hours</option>
+                        <option value="D1">D1 - Daily</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Lot Size Mode</label>
+                    <select id="lot_size_mode">
+                        <option value="DYNAMIC">Dynamic (Risk-based)</option>
+                        <option value="MANUAL">Manual (Fixed size)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Manual Lot Size</label>
+                    <input type="number" id="manual_lot_size" step="0.01" placeholder="0.01">
+                </div>
+            </div>
+        </div>
+
+        <!-- Martingale Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-layer-group"></i> Martingale Settings</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="martingale_enabled">
+                        <label>Enable Martingale</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Max Layers</label>
+                    <input type="number" id="max_layers" min="1" max="20" placeholder="15">
+                </div>
+                <div class="form-group">
+                    <label>Multiplier</label>
+                    <input type="number" id="multiplier" step="0.1" placeholder="2">
+                </div>
+                <div class="form-group">
+                    <label>Emergency DD %</label>
+                    <input type="number" id="emergency_dd_percentage" min="10" max="90" placeholder="50">
+                </div>
+                <div class="form-group">
+                    <label>Profit Buffer (Pips)</label>
+                    <input type="number" id="profit_buffer_pips" placeholder="5">
+                </div>
+                <div class="form-group">
+                    <label>Min Profit %</label>
+                    <input type="number" id="min_profit_percentage" step="0.1" placeholder="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Trading Pairs -->
+        <div class="config-section">
+            <h2><i class="fas fa-coins"></i> Trading Pairs</h2>
+            <div id="trading-pairs" class="pairs-grid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Risk Profiles -->
+        <div class="config-section">
+            <h2><i class="fas fa-shield-alt"></i> Risk Profiles</h2>
+            <div id="risk-profiles" class="risk-profiles">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="saveConfiguration()">
+                <i class="fas fa-save"></i> Save Configuration
+            </button>
+            <button class="btn btn-secondary" onclick="loadConfiguration()">
+                <i class="fas fa-refresh"></i> Reload
+            </button>
+            <button class="btn btn-secondary" onclick="exportConfiguration()">
+                <i class="fas fa-download"></i> Export
+            </button>
+            <button class="btn btn-danger" onclick="resetConfiguration()">
+                <i class="fas fa-undo"></i> Reset to Default
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentConfig = {};
+
+        async function loadConfiguration() {
+            try {
+                const response = await fetch('/api/config');
+                if (!response.ok) throw new Error('Failed to load configuration');
+                
+                currentConfig = await response.json();
+                populateForm(currentConfig);
+                showMessage('Configuration loaded successfully', 'success');
+            } catch (error) {
+                console.error('Error loading configuration:', error);
+                showMessage('Error loading configuration: ' + error.message, 'error');
+            }
+        }
+
+        function populateForm(config) {
+            // Account settings
+            document.getElementById('account_number').value = config.account_settings?.account_number || '';
+            document.getElementById('magic_number').value = config.account_settings?.magic_number || '';
+
+            // Timeframe settings
+            document.getElementById('global_timeframe').value = config.timeframe_settings?.global_timeframe || 'M5';
+
+            // Lot size settings
+            document.getElementById('lot_size_mode').value = config.lot_size_settings?.mode || 'DYNAMIC';
+            document.getElementById('manual_lot_size').value = config.lot_size_settings?.manual_lot_size || 0.01;
+
+            // Martingale settings
+            document.getElementById('martingale_enabled').checked = config.martingale_settings?.enabled || false;
+            document.getElementById('max_layers').value = config.martingale_settings?.max_layers || 15;
+            document.getElementById('multiplier').value = config.martingale_settings?.multiplier || 2;
+            document.getElementById('emergency_dd_percentage').value = config.martingale_settings?.emergency_dd_percentage || 50;
+            document.getElementById('profit_buffer_pips').value = config.martingale_settings?.profit_buffer_pips || 5;
+            document.getElementById('min_profit_percentage').value = config.martingale_settings?.min_profit_percentage || 1;
+
+            // Trading pairs
+            populateTradingPairs(config.trading_pairs || []);
+
+            // Risk profiles
+            populateRiskProfiles(config.pair_risk_profiles || {});
+        }
+
+        function populateTradingPairs(pairs) {
+            const container = document.getElementById('trading-pairs');
+            const allPairs = ['AUDUSD', 'USDCAD', 'XAUUSD', 'EURUSD', 'GBPUSD', 
+                             'AUDCAD', 'USDCHF', 'GBPCAD', 'AUDNZD', 'NZDCAD', 'US500', 'BTCUSD'];
+            
+            container.innerHTML = allPairs.map(pair => {
+                const isSelected = pairs.includes(pair);
+                return `
+                    <div class="pair-item">
+                        <label>
+                            <input type="checkbox" class="trading-pair" value="${pair}" ${isSelected ? 'checked' : ''}>
+                            ${pair}
+                        </label>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function populateRiskProfiles(profiles) {
+            const container = document.getElementById('risk-profiles');
+            const riskLevels = ['Low', 'Medium', 'High'];
+            
+            container.innerHTML = Object.entries(profiles).map(([symbol, profile]) => `
+                <div class="risk-profile">
+                    <h4>${symbol}</h4>
+                    <div class="form-group">
+                        <label>Risk Level</label>
+                        <select class="risk-level" data-symbol="${symbol}">
+                            ${riskLevels.map(level => 
+                                `<option value="${level}" ${profile.risk === level ? 'selected' : ''}>${level}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Min Lot</label>
+                            <input type="number" class="min-lot" data-symbol="${symbol}" 
+                                   step="0.01" value="${profile.min_lot}" placeholder="0.01">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Max Lot</label>
+                            <input type="number" class="max-lot" data-symbol="${symbol}" 
+                                   step="0.01" value="${profile.max_lot}" placeholder="1.0">
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function collectFormData() {
+            const config = {
+                account_settings: {
+                    account_number: parseInt(document.getElementById('account_number').value),
+                    magic_number: parseInt(document.getElementById('magic_number').value)
+                },
+                timeframe_settings: {
+                    global_timeframe: document.getElementById('global_timeframe').value
+                },
+                lot_size_settings: {
+                    mode: document.getElementById('lot_size_mode').value,
+                    manual_lot_size: parseFloat(document.getElementById('manual_lot_size').value)
+                },
+                martingale_settings: {
+                    enabled: document.getElementById('martingale_enabled').checked,
+                    max_layers: parseInt(document.getElementById('max_layers').value),
+                    multiplier: parseFloat(document.getElementById('multiplier').value),
+                    emergency_dd_percentage: parseFloat(document.getElementById('emergency_dd_percentage').value),
+                    profit_buffer_pips: parseInt(document.getElementById('profit_buffer_pips').value),
+                    min_profit_percentage: parseFloat(document.getElementById('min_profit_percentage').value),
+                    flirt_threshold_pips: 10
+                },
+                trading_pairs: [],
+                pair_risk_profiles: {},
+                pair_trading_schedule: {
+                    trading_days: [0, 1, 2, 3, 4],
+                    trading_hours: {
+                        start: 0,
+                        end: 23
+                    }
+                },
+                risk_parameters: currentConfig.risk_parameters || {},
+                symbol_specific_settings: currentConfig.symbol_specific_settings || {},
+                logging_settings: currentConfig.logging_settings || {}
+            };
+
+            // Collect selected trading pairs
+            document.querySelectorAll('.trading-pair:checked').forEach(checkbox => {
+                config.trading_pairs.push(checkbox.value);
+            });
+
+            // Collect risk profiles
+            document.querySelectorAll('.risk-profile').forEach(profileElement => {
+                const symbol = profileElement.querySelector('.risk-level').dataset.symbol;
+                const risk = profileElement.querySelector('.risk-level').value;
+                const minLot = parseFloat(profileElement.querySelector('.min-lot').value);
+                const maxLot = parseFloat(profileElement.querySelector('.max-lot').value);
+
+                config.pair_risk_profiles[symbol] = {
+                    risk: risk,
+                    min_lot: minLot,
+                    max_lot: maxLot
+                };
+            });
+
+            return config;
+        }
+
+        async function saveConfiguration() {
+            try {
+                const config = collectFormData();
+                
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showMessage('Configuration saved successfully! Robot will reload on next cycle.', 'success');
+                } else {
+                    showMessage('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving configuration:', error);
+                showMessage('Error saving configuration: ' + error.message, 'error');
+            }
+        }
+
+        function exportConfiguration() {
+            const config = collectFormData();
+            const dataStr = JSON.stringify(config, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `bot_config_${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function resetConfiguration() {
+            if (confirm('Are you sure you want to reset to default configuration? This cannot be undone.')) {
+                // Reset to default values
+                const defaultConfig = {
+                    account_settings: {
+                        account_number: 42903786,
+                        magic_number: 50515253
+                    },
+                    timeframe_settings: {
+                        global_timeframe: "M5"
+                    },
+                    lot_size_settings: {
+                        mode: "DYNAMIC",
+                        manual_lot_size: 0.01
+                    },
+                    martingale_settings: {
+                        enabled: true,
+                        max_layers: 15,
+                        multiplier: 2,
+                        emergency_dd_percentage: 50,
+                        profit_buffer_pips: 5,
+                        min_profit_percentage: 1
+                    },
+                    trading_pairs: ["AUDUSD", "USDCAD", "XAUUSD", "EURUSD", "GBPUSD", 
+                                   "AUDCAD", "USDCHF", "GBPCAD", "AUDNZD", "NZDCAD", "US500", "BTCUSD"],
+                    pair_risk_profiles: {
+                        "AUDUSD": {"risk": "Medium", "max_lot": 1.0, "min_lot": 0.01},
+                        "USDCAD": {"risk": "Low", "max_lot": 0.5, "min_lot": 0.01},
+                        "US500": {"risk": "High", "max_lot": 0.1, "min_lot": 0.01},
+                        "XAUUSD": {"risk": "High", "max_lot": 0.2, "min_lot": 0.01},
+                        "BTCUSD": {"risk": "Medium", "max_lot": 0.05, "min_lot": 0.01},
+                        "EURUSD": {"risk": "Medium", "max_lot": 1.0, "min_lot": 0.01},
+                        "GBPUSD": {"risk": "Medium", "max_lot": 1.0, "min_lot": 0.01},
+                        "AUDCAD": {"risk": "Low", "max_lot": 0.3, "min_lot": 0.01},
+                        "USDCHF": {"risk": "Medium", "max_lot": 0.5, "min_lot": 0.01},
+                        "GBPCAD": {"risk": "Low", "max_lot": 0.3, "min_lot": 0.01},
+                        "AUDNZD": {"risk": "Medium", "max_lot": 0.5, "min_lot": 0.01},
+                        "NZDCAD": {"risk": "Low", "max_lot": 0.3, "min_lot": 0.01}
+                    }
+                };
+                
+                populateForm(defaultConfig);
+                showMessage('Configuration reset to defaults', 'success');
+            }
+        }
+
+        function showMessage(message, type) {
+            const successElement = document.getElementById('success-message');
+            const errorElement = document.getElementById('error-message');
+            
+            // Hide both messages first
+            successElement.style.display = 'none';
+            errorElement.style.display = 'none';
+            
+            if (type === 'success') {
+                successElement.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+                successElement.style.display = 'block';
+                setTimeout(() => successElement.style.display = 'none', 5000);
+            } else {
+                document.getElementById('error-text').textContent = message;
+                errorElement.style.display = 'block';
+                setTimeout(() => errorElement.style.display = 'none', 8000);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfiguration();
+        });
+    </script>
+</body>
+</html>

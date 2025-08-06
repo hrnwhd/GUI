@@ -1,0 +1,218 @@
+{
+  "account_settings": {
+    "account_number": 102820128,
+    "magic_number": 50515253
+  },
+  "timeframe_settings": {
+    "global_timeframe": "M5"
+  },
+  "lot_size_settings": {
+    "mode": "DYNAMIC",
+    "manual_lot_size": 0.01
+  },
+  "martingale_settings": {
+    "enabled": true,
+    "max_layers": 15,
+    "multiplier": 2,
+    "emergency_dd_percentage": 50,
+    "profit_buffer_pips": 5,
+    "min_profit_percentage": 1,
+    "flirt_threshold_pips": 10
+  },
+  "trading_pairs": [
+    "AUDUSD",
+    "USDCAD",
+    "XAUUSD",
+    "EURUSD",
+    "GBPUSD",
+    "AUDCAD",
+    "USDCHF",
+    "GBPCAD",
+    "AUDNZD",
+    "NZDCAD",
+    "US500",
+    "BTCUSD"
+  ],
+  "pair_risk_profiles": {
+    "AUDCAD": {
+      "risk": "Low",
+      "min_lot": 0.01,
+      "max_lot": 0.3
+    },
+    "AUDNZD": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 0.5
+    },
+    "AUDUSD": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 1
+    },
+    "BTCUSD": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 0.05
+    },
+    "EURUSD": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 1
+    },
+    "GBPCAD": {
+      "risk": "Low",
+      "min_lot": 0.01,
+      "max_lot": 0.3
+    },
+    "GBPUSD": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 1
+    },
+    "NZDCAD": {
+      "risk": "Low",
+      "min_lot": 0.01,
+      "max_lot": 0.3
+    },
+    "US500": {
+      "risk": "High",
+      "min_lot": 0.01,
+      "max_lot": 0.1
+    },
+    "USDCAD": {
+      "risk": "Low",
+      "min_lot": 0.01,
+      "max_lot": 0.5
+    },
+    "USDCHF": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 0.5
+    },
+    "USDJPY": {
+      "risk": "Low",
+      "min_lot": 0.01,
+      "max_lot": 1
+    },
+    "XAUUSD": {
+      "risk": "High",
+      "min_lot": 0.01,
+      "max_lot": 0.2
+    }
+  },
+  "pair_trading_schedule": {
+    "trading_days": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "trading_hours": {
+      "start": 0,
+      "end": 23
+    }
+  },
+  "risk_parameters": {
+    "High": {
+      "adx_threshold": 20,
+      "atr_multiplier": 2,
+      "ema_buffer_pct": 0.008,
+      "max_adx_strength": 70,
+      "min_adx_strength": 20,
+      "min_timeframes": 1,
+      "min_volatility_pips": 3,
+      "risk_per_trade_pct": 0.2,
+      "risk_reward_ratio_long": 1.1,
+      "risk_reward_ratio_short": 1.1,
+      "rsi_overbought": 70,
+      "rsi_oversold": 30
+    },
+    "Low": {
+      "adx_threshold": 25,
+      "atr_multiplier": 1.5,
+      "ema_buffer_pct": 0.005,
+      "max_adx_strength": 60,
+      "min_adx_strength": 25,
+      "min_timeframes": 3,
+      "min_volatility_pips": 5,
+      "risk_per_trade_pct": 0.05,
+      "risk_reward_ratio_long": 1.5,
+      "risk_reward_ratio_short": 1.5,
+      "rsi_overbought": 70,
+      "rsi_oversold": 30
+    },
+    "Medium": {
+      "adx_threshold": 25,
+      "atr_multiplier": 1.5,
+      "ema_buffer_pct": 0.005,
+      "max_adx_strength": 60,
+      "min_adx_strength": 25,
+      "min_timeframes": 2,
+      "min_volatility_pips": 5,
+      "risk_per_trade_pct": 0.1,
+      "risk_reward_ratio_long": 1.3,
+      "risk_reward_ratio_short": 1.3,
+      "rsi_overbought": 70,
+      "rsi_oversold": 30
+    }
+  },
+  "symbol_specific_settings": {
+    "base_tp_targets": {
+      "AUDCAD": 15,
+      "AUDNZD": 10,
+      "AUDUSD": 12,
+      "BTCUSD": 50,
+      "ETHUSD": 40,
+      "EURUSD": 15,
+      "GBPCAD": 18,
+      "GBPUSD": 15,
+      "NZDCAD": 12,
+      "US500": 20,
+      "USDCAD": 12,
+      "USDJPY": 12,
+      "XAUUSD": 25,
+      "XRPUSD": 30,
+      "default": 15
+    },
+    "max_position_percentages": {
+      "BTCUSD": 0.02,
+      "ETHUSD": 0.02,
+      "US500": 0.01,
+      "USDCHF": 0.05,
+      "XAUUSD": 0.03,
+      "default": 0.05
+    },
+    "risk_reduction_factors": {
+      "AUDCAD": 0.7,
+      "BTCUSD": 0.3,
+      "ETHUSD": 0.3,
+      "EURCAD": 0.7,
+      "GBPCAD": 0.6,
+      "NAS100": 0.2,
+      "NZDCAD": 0.7,
+      "US500": 0.2,
+      "USDCAD": 0.8,
+      "USDCHF": 0.6,
+      "XAUUSD": 0.4,
+      "XRPUSD": 0.3
+    },
+    "spread_limits": {
+      "AUDCAD": 10,
+      "BTCUSD": 100,
+      "ETHUSD": 50,
+      "GBPCAD": 12,
+      "NZDCAD": 12,
+      "US500": 50,
+      "USDCAD": 8,
+      "USDCHF": 8,
+      "XAUUSD": 15,
+      "default": 5
+    }
+  },
+  "logging_settings": {
+    "format": "%(asctime)s - %(levelname)s - %(message)s",
+    "level": "INFO",
+    "log_file": "bm_robot.log"
+  }
+}
