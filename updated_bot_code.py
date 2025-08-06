@@ -611,7 +611,6 @@ class MartingaleBatch:
                 
         return False
 
-
 class WebhookManager:
     """Manages webhook communications with the dashboard"""
     
@@ -635,24 +634,23 @@ class WebhookManager:
             )
             
             if response.status_code == 200:
-                self.logger.debug(f"Webhook {endpoint} sent successfully")
+                self.logger.debug(f"✅ Webhook {endpoint} sent successfully")
                 return True
             else:
-                self.logger.warning(f"Webhook {endpoint} failed: {response.status_code}")
+                self.logger.warning(f"⚠️ Webhook {endpoint} failed: {response.status_code}")
                 return False
                 
         except requests.exceptions.RequestException as e:
-            self.logger.debug(f"Webhook {endpoint} connection error: {e}")
+            self.logger.debug(f"🔌 Webhook {endpoint} connection error: {e}")
             return False
         except Exception as e:
-            self.logger.error(f"Unexpected webhook error: {e}")
+            self.logger.error(f"❌ Unexpected webhook error: {e}")
             return False
     
     def send_live_data(self, trade_manager, account_info=None):
         """Send current live data to dashboard"""
         try:
             if account_info is None:
-                import MetaTrader5 as mt5
                 account_info = mt5.account_info()
                 
             if account_info is None:
@@ -709,10 +707,13 @@ class WebhookManager:
                 "last_signal_time": datetime.now().isoformat(),
                 "next_analysis": (datetime.now() + timedelta(minutes=5)).isoformat(),
                 "batches": batches_data,
-                "pairs_status": {pair: "Active" for pair in PAIRS}  # Add this
+                "pairs_status": {pair: "Active" for pair in PAIRS}
             }
             
-            return self._send_webhook("live_data", live_data)
+            success = self._send_webhook("live_data", live_data)
+            if success:
+                self.logger.debug(f"📊 Live data sent: Balance=${account_info.balance:.2f}")
+            return success
             
         except Exception as e:
             self.logger.error(f"Error preparing live data: {e}")
@@ -738,7 +739,10 @@ class WebhookManager:
                 "drawdown": round(drawdown, 2)
             }
             
-            return self._send_webhook("account_update", update_data)
+            success = self._send_webhook("account_update", update_data)
+            if success:
+                self.logger.debug(f"📈 Chart data sent")
+            return success
             
         except Exception as e:
             self.logger.error(f"Error sending account update: {e}")
@@ -764,7 +768,10 @@ class WebhookManager:
                 "sl_distance_pips": trade_info.get('sl_distance_pips', 0)
             }
             
-            return self._send_webhook("trade_event", trade_data)
+            success = self._send_webhook("trade_event", trade_data)
+            if success:
+                self.logger.info(f"🎯 Trade event sent: {trade_info.get('symbol')} {trade_info.get('direction')}")
+            return success
             
         except Exception as e:
             self.logger.error(f"Error sending trade event: {e}")
@@ -788,7 +795,10 @@ class WebhookManager:
                 "is_initial": signal.get('is_initial', True)
             }
             
-            return self._send_webhook("signal_generated", signal_data)
+            success = self._send_webhook("signal_generated", signal_data)
+            if success:
+                self.logger.info(f"📡 Signal sent: {signal.get('symbol')} {signal.get('direction')}")
+            return success
             
         except Exception as e:
             self.logger.error(f"Error sending signal: {e}")
@@ -813,7 +823,6 @@ class WebhookManager:
             self.logger.error(f"Error checking config reload: {e}")
             
         return False
-
 
 
 # ===== ENHANCED PERSISTENCE SYSTEM =====
@@ -1257,12 +1266,16 @@ class EnhancedTradeManager:
         self.persistence = BotPersistence()
         
         # ✅ RECOVERY ON STARTUP
+       # ✅ RECOVERY ON STARTUP
         logger.info("🔄 Attempting to recover previous state...")
         recovery_success = self.persistence.load_and_recover_state(self)
         if recovery_success:
             logger.info("✅ State recovery completed successfully")
         else:
             logger.warning("⚠️ State recovery failed - starting fresh")
+        
+        # ✅ ADD THIS - Send test webhook data on startup
+        self.send_test_webhook_data()
         
     def can_trade(self, symbol):
         """Check if we can trade this symbol"""
@@ -1458,9 +1471,10 @@ class EnhancedTradeManager:
             except Exception as e:
                 logger.error(f"Failed to save state: {e}")
             
-            # ADD THIS LINE - Send webhook notification
+            # ✅ ADD THIS - Send webhook notification
             try:
                 self.webhook_manager.send_trade_event(trade_info, "executed")
+                logger.info("📡 Trade webhook sent successfully")
             except Exception as e:
                 logger.error(f"Webhook error in add_trade: {e}")
             
@@ -1629,6 +1643,24 @@ class EnhancedTradeManager:
                     
         except Exception as e:
             logger.error(f"Error in monitor_batch_exits: {e}")
+            
+        def send_test_webhook_data(self):
+            """Send test data to verify webhook connection"""
+            try:
+                # Get account info for test
+                account_info = mt5.account_info()
+                if account_info:
+                    logger.info("🧪 Sending test webhook data...")
+                    success = self.webhook_manager.send_live_data(self, account_info)
+                    if success:
+                        logger.info("✅ Test webhook data sent successfully!")
+                    else:
+                        logger.warning("⚠️ Test webhook failed - check dashboard connection")
+                else:
+                    logger.info("ℹ️ No account info available for test webhook")
+            except Exception as e:
+                logger.error(f"❌ Test webhook error: {e}")
+
 
 # ===== SIGNAL GENERATION =====
 def execute_martingale_trade(opportunity, trade_manager):

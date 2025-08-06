@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-08-06T17:14:26.325357",
+  "account_number": 102820128,
+  "magic_number": 50515253,
+  "bot_version": "3.0_enhanced",
+  "total_trades": 0,
+  "next_batch_id": 1,
+  "emergency_stop_active": false,
+  "initial_balance": 10772.1,
+  "batches": {}
+}
