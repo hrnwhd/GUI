@@ -611,6 +611,211 @@ class MartingaleBatch:
                 
         return False
 
+
+class WebhookManager:
+    """Manages webhook communications with the dashboard"""
+    
+    def __init__(self, dashboard_url="http://localhost:5000"):
+        self.dashboard_url = dashboard_url
+        self.enabled = True
+        self.logger = logging.getLogger(__name__)
+        
+    def _send_webhook(self, endpoint: str, data: dict) -> bool:
+        """Send data to webhook endpoint"""
+        if not self.enabled:
+            return False
+            
+        try:
+            url = f"{self.dashboard_url}/webhook/{endpoint}"
+            response = requests.post(
+                url, 
+                json=data, 
+                timeout=5,
+                headers={'Content-Type': 'application/json'}
+            )
+            
+            if response.status_code == 200:
+                self.logger.debug(f"Webhook {endpoint} sent successfully")
+                return True
+            else:
+                self.logger.warning(f"Webhook {endpoint} failed: {response.status_code}")
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.logger.debug(f"Webhook {endpoint} connection error: {e}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Unexpected webhook error: {e}")
+            return False
+    
+    def send_live_data(self, trade_manager, account_info=None):
+        """Send current live data to dashboard"""
+        try:
+            if account_info is None:
+                import MetaTrader5 as mt5
+                account_info = mt5.account_info()
+                
+            if account_info is None:
+                return False
+            
+            # Calculate profit
+            profit = account_info.equity - account_info.balance
+            
+            # Calculate drawdown
+            drawdown = 0
+            if trade_manager.initial_balance and account_info.equity < trade_manager.initial_balance:
+                drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+            
+            # Prepare batch data
+            batches_data = []
+            for batch_key, batch in trade_manager.martingale_batches.items():
+                if batch.trades:
+                    # Calculate next trigger price
+                    next_trigger = None
+                    try:
+                        next_trigger = batch.get_next_trigger_price()
+                    except:
+                        pass
+                    
+                    batch_data = {
+                        "batch_id": batch.batch_id,
+                        "symbol": batch.symbol,
+                        "direction": batch.direction,
+                        "current_layer": batch.current_layer,
+                        "total_volume": round(batch.total_volume, 2),
+                        "breakeven_price": round(batch.breakeven_price, 5),
+                        "initial_entry_price": round(batch.initial_entry_price, 5),
+                        "next_trigger": round(next_trigger, 5) if next_trigger else None,
+                        "created_time": batch.created_time.isoformat()
+                    }
+                    batches_data.append(batch_data)
+            
+            live_data = {
+                "timestamp": datetime.now().isoformat(),
+                "robot_status": "Running" if not trade_manager.emergency_stop_active else "Emergency Stop",
+                "account": {
+                    "balance": round(account_info.balance, 2),
+                    "equity": round(account_info.equity, 2),
+                    "margin": round(account_info.margin, 2),
+                    "free_margin": round(account_info.margin_free, 2),
+                    "margin_level": round((account_info.equity / account_info.margin * 100) if account_info.margin > 0 else 0, 2),
+                    "profit": round(profit, 2)
+                },
+                "active_trades": len([t for t in trade_manager.active_trades if t.get('order_id')]),
+                "active_batches": len([b for b in trade_manager.martingale_batches.values() if b.trades]),
+                "total_trades": trade_manager.total_trades,
+                "emergency_stop": trade_manager.emergency_stop_active,
+                "drawdown_percent": round(drawdown, 2),
+                "last_signal_time": datetime.now().isoformat(),
+                "next_analysis": (datetime.now() + timedelta(minutes=5)).isoformat(),
+                "batches": batches_data,
+                "pairs_status": {pair: "Active" for pair in PAIRS}  # Add this
+            }
+            
+            return self._send_webhook("live_data", live_data)
+            
+        except Exception as e:
+            self.logger.error(f"Error preparing live data: {e}")
+            return False
+    
+    def send_account_update(self, account_info, trade_manager):
+        """Send account update for chart data"""
+        try:
+            if account_info is None:
+                return False
+            
+            profit = account_info.equity - account_info.balance
+            drawdown = 0
+            
+            if trade_manager.initial_balance and account_info.equity < trade_manager.initial_balance:
+                drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+            
+            update_data = {
+                "timestamp": datetime.now().isoformat(),
+                "balance": round(account_info.balance, 2),
+                "equity": round(account_info.equity, 2),
+                "profit": round(profit, 2),
+                "drawdown": round(drawdown, 2)
+            }
+            
+            return self._send_webhook("account_update", update_data)
+            
+        except Exception as e:
+            self.logger.error(f"Error sending account update: {e}")
+            return False
+    
+    def send_trade_event(self, trade_info, event_type="executed"):
+        """Send trade execution event"""
+        try:
+            trade_data = {
+                "timestamp": datetime.now().isoformat(),
+                "event_type": event_type,
+                "symbol": trade_info.get('symbol'),
+                "direction": trade_info.get('direction'),
+                "volume": trade_info.get('volume'),
+                "entry_price": trade_info.get('entry_price'),
+                "tp": trade_info.get('tp'),
+                "sl": trade_info.get('sl'),
+                "order_id": trade_info.get('order_id'),
+                "layer": trade_info.get('layer', 1),
+                "is_martingale": trade_info.get('is_martingale', False),
+                "profit": trade_info.get('profit', 0),
+                "comment": trade_info.get('enhanced_comment', ''),
+                "sl_distance_pips": trade_info.get('sl_distance_pips', 0)
+            }
+            
+            return self._send_webhook("trade_event", trade_data)
+            
+        except Exception as e:
+            self.logger.error(f"Error sending trade event: {e}")
+            return False
+    
+    def send_signal_generated(self, signal):
+        """Send signal generation event"""
+        try:
+            signal_data = {
+                "timestamp": datetime.now().isoformat(),
+                "symbol": signal.get('symbol'),
+                "direction": signal.get('direction'),
+                "entry_price": signal.get('entry_price'),
+                "tp": signal.get('tp'),
+                "sl_distance_pips": signal.get('sl_distance_pips'),
+                "tp_distance_pips": signal.get('tp_distance_pips'),
+                "risk_profile": signal.get('risk_profile'),
+                "adx_value": signal.get('adx_value'),
+                "rsi": signal.get('rsi'),
+                "timeframes_aligned": signal.get('timeframes_aligned', 1),
+                "is_initial": signal.get('is_initial', True)
+            }
+            
+            return self._send_webhook("signal_generated", signal_data)
+            
+        except Exception as e:
+            self.logger.error(f"Error sending signal: {e}")
+            return False
+    
+    def check_config_reload(self) -> bool:
+        """Check if configuration reload is requested"""
+        try:
+            reload_flag_file = "gui_data/reload_config.flag"
+            if os.path.exists(reload_flag_file):
+                # Read flag file to get timestamp
+                with open(reload_flag_file, 'r') as f:
+                    flag_time = f.read().strip()
+                
+                # Remove flag file
+                os.remove(reload_flag_file)
+                
+                self.logger.info(f"Configuration reload requested at {flag_time}")
+                return True
+                
+        except Exception as e:
+            self.logger.error(f"Error checking config reload: {e}")
+            
+        return False
+
+
+
 # ===== ENHANCED PERSISTENCE SYSTEM =====
 class BotPersistence:
     def __init__(self, data_file="BM_bot_state.json"):
@@ -1045,7 +1250,9 @@ class EnhancedTradeManager:
         self.emergency_stop_active = False
         self.initial_balance = None
         self.next_batch_id = 1
-        
+        self.webhook_manager = WebhookManager()
+        self.last_webhook_update = datetime.now()
+        self.webhook_update_interval = 10  # seconds     
         # Initialize persistence system
         self.persistence = BotPersistence()
         
@@ -1100,6 +1307,86 @@ class EnhancedTradeManager:
         except Exception as e:
             logger.error(f"Error in can_trade: {e}")
             return False
+    
+    def send_periodic_webhook_updates(self):
+        """Send periodic updates to dashboard"""
+        try:
+            now = datetime.now()
+            if (now - self.last_webhook_update).total_seconds() >= self.webhook_update_interval:
+                
+                # Get account info
+                account_info = mt5.account_info()
+                if account_info:
+                    # Send live data
+                    self.webhook_manager.send_live_data(self, account_info)
+                    
+                    # Send account update for charts (less frequently)
+                    if (now - self.last_webhook_update).total_seconds() >= 30:
+                        self.webhook_manager.send_account_update(account_info, self)
+                
+                self.last_webhook_update = now
+                
+        except Exception as e:
+            logger.error(f"Error in periodic webhook updates: {e}")
+
+    def check_and_reload_config(self):
+        """Check for configuration reload request"""
+        try:
+            if self.webhook_manager.check_config_reload():
+                logger.info("🔄 Configuration reload requested from dashboard")
+                
+                # Reload configuration
+                global CONFIG
+                CONFIG = load_config()
+                
+                # Update global variables
+                self.update_global_config_variables()
+                
+                logger.info("✅ Configuration reloaded successfully")
+                return True
+                
+        except Exception as e:
+            logger.error(f"Error reloading configuration: {e}")
+            
+        return False
+
+    def update_global_config_variables(self):
+        """Update global configuration variables after reload"""
+        global MARTINGALE_ENABLED, MAX_MARTINGALE_LAYERS, LOT_SIZE_MODE, MANUAL_LOT_SIZE
+        global PAIRS, ENHANCED_PAIR_RISK_PROFILES, PARAM_SETS, SPREAD_LIMITS
+        global RISK_REDUCTION_FACTORS, MAX_POSITION_PERCENTAGES, BASE_TP_TARGETS
+        
+        # Update martingale settings
+        MARTINGALE_ENABLED = CONFIG['martingale_settings']['enabled']
+        MAX_MARTINGALE_LAYERS = CONFIG['martingale_settings']['max_layers']
+        
+        # Update lot size settings
+        LOT_SIZE_MODE = CONFIG['lot_size_settings']['mode']
+        MANUAL_LOT_SIZE = CONFIG['lot_size_settings']['manual_lot_size']
+        
+        # Update pairs and profiles
+        PAIRS[:] = CONFIG['trading_pairs']  # Update in place
+        ENHANCED_PAIR_RISK_PROFILES.clear()
+        ENHANCED_PAIR_RISK_PROFILES.update(CONFIG['pair_risk_profiles'])
+        
+        PARAM_SETS.clear()
+        PARAM_SETS.update(CONFIG['risk_parameters'])
+        
+        # Update symbol-specific settings
+        SPREAD_LIMITS.clear()
+        SPREAD_LIMITS.update(CONFIG['symbol_specific_settings']['spread_limits'])
+        
+        RISK_REDUCTION_FACTORS.clear()
+        RISK_REDUCTION_FACTORS.update(CONFIG['symbol_specific_settings']['risk_reduction_factors'])
+        
+        MAX_POSITION_PERCENTAGES.clear()
+        MAX_POSITION_PERCENTAGES.update(CONFIG['symbol_specific_settings']['max_position_percentages'])
+        
+        BASE_TP_TARGETS.clear()
+        BASE_TP_TARGETS.update(CONFIG['symbol_specific_settings']['base_tp_targets'])
+        
+        logger.info("Global configuration variables updated")
+    
     
     def has_position(self, symbol, direction):
         """Check if we already have a position for symbol+direction"""
@@ -1170,6 +1457,12 @@ class EnhancedTradeManager:
                 logger.debug("State saved successfully")
             except Exception as e:
                 logger.error(f"Failed to save state: {e}")
+            
+            # ADD THIS LINE - Send webhook notification
+            try:
+                self.webhook_manager.send_trade_event(trade_info, "executed")
+            except Exception as e:
+                logger.error(f"Webhook error in add_trade: {e}")
             
             return True
             
@@ -1918,6 +2211,10 @@ def run_simplified_robot():
                         
                         if execute_trade(signal, trade_manager):
                             logger.info("✅ Enhanced trade executed successfully")
+                            try:
+                                trade_manager.webhook_manager.send_signal_generated(signal)
+                            except Exception as e:
+                                logger.error(f"Signal webhook error: {e}")
                         else:
                             logger.error("❌ Trade execution failed")
                             
