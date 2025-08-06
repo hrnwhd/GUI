@@ -1,415 +1,249 @@
-# ===== WEBHOOK INTEGRATION FOR EXISTING BOT =====
-# webhook_integration.py - Add this to your existing bot code
+"""
+Enhanced Webhook Integration for Trading Bot
+Handles sending trading data to external webhooks with retry logic and error handling
+"""
 
 import requests
 import json
 import logging
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
+import time
 
-# Add to your existing bot code
+# Set up logging
+logger = logging.getLogger(__name__)
 
-class WebhookManager:
-    """Manages webhook communications with the dashboard"""
-    
-    def __init__(self, dashboard_url="http://localhost:5000"):
-        self.dashboard_url = dashboard_url
-        self.enabled = True
-        self.logger = logging.getLogger(__name__)
+class WebhookIntegration:
+    def __init__(self, config_file: str = 'bot_config.json'):
+        """Initialize webhook integration with configuration"""
+        self.config = self.load_config(config_file)
+        self.webhook_urls = self.config.get('webhook_urls', [])
+        self.webhook_enabled = self.config.get('webhook_enabled', False)
+        self.retry_attempts = self.config.get('webhook_retry_attempts', 3)
+        self.timeout = self.config.get('webhook_timeout', 10)
+        self.rate_limit_delay = self.config.get('webhook_rate_limit_delay', 1)
         
-    def _send_webhook(self, endpoint: str, data: Dict[str, Any]) -> bool:
-        """Send data to webhook endpoint"""
-        if not self.enabled:
-            return False
-            
+        logger.info(f"Webhook integration initialized:")
+        logger.info(f"  - Enabled: {self.webhook_enabled}")
+        logger.info(f"  - URLs configured: {len(self.webhook_urls)}")
+        logger.info(f"  - Retry attempts: {self.retry_attempts}")
+    
+    def load_config(self, config_file: str) -> Dict:
+        """Load configuration from JSON file"""
         try:
-            url = f"{self.dashboard_url}/webhook/{endpoint}"
-            response = requests.post(
-                url, 
-                json=data, 
-                timeout=5,
-                headers={'Content-Type': 'application/json'}
-            )
-            
-            if response.status_code == 200:
-                return True
-            else:
-                self.logger.warning(f"Webhook {endpoint} failed: {response.status_code}")
-                return False
-                
-        except requests.exceptions.RequestException as e:
-            self.logger.debug(f"Webhook {endpoint} error: {e}")
-            return False
-        except Exception as e:
-            self.logger.error(f"Unexpected webhook error: {e}")
-            return False
+            with open(config_file, 'r') as f:
+                config = json.load(f)
+            return config
+        except FileNotFoundError:
+            logger.warning(f"Config file {config_file} not found, using defaults")
+            return {}
+        except json.JSONDecodeError as e:
+            logger.error(f"Error parsing config file: {e}")
+            return {}
     
-    def send_live_data(self, trade_manager, account_info=None):
-        """Send current live data to dashboard"""
-        try:
-            if account_info is None:
-                account_info = mt5.account_info()
-                
-            if account_info is None:
-                return False
-            
-            # Calculate profit
-            profit = account_info.equity - account_info.balance
-            
-            # Calculate drawdown
-            drawdown = 0
-            if trade_manager.initial_balance and account_info.equity < trade_manager.initial_balance:
-                drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
-            
-            # Prepare batch data
-            batches_data = []
-            for batch_key, batch in trade_manager.martingale_batches.items():
-                if batch.trades:
-                    # Calculate next trigger price
-                    next_trigger = None
-                    try:
-                        next_trigger = batch.get_next_trigger_price()
-                    except:
-                        pass
-                    
-                    batch_data = {
-                        "batch_id": batch.batch_id,
-                        "symbol": batch.symbol,
-                        "direction": batch.direction,
-                        "current_layer": batch.current_layer,
-                        "total_volume": round(batch.total_volume, 2),
-                        "breakeven_price": round(batch.breakeven_price, 5),
-                        "initial_entry_price": round(batch.initial_entry_price, 5),
-                        "next_trigger": round(next_trigger, 5) if next_trigger else None,
-                        "created_time": batch.created_time.isoformat()
-                    }
-                    batches_data.append(batch_data)
-            
-            live_data = {
-                "timestamp": datetime.now().isoformat(),
-                "robot_status": "Running" if not trade_manager.emergency_stop_active else "Emergency Stop",
-                "account": {
-                    "balance": round(account_info.balance, 2),
-                    "equity": round(account_info.equity, 2),
-                    "margin": round(account_info.margin, 2),
-                    "free_margin": round(account_info.margin_free, 2),
-                    "margin_level": round((account_info.equity / account_info.margin * 100) if account_info.margin > 0 else 0, 2),
-                    "profit": round(profit, 2)
-                },
-                "active_trades": len(trade_manager.active_trades),
-                "active_batches": len([b for b in trade_manager.martingale_batches.values() if b.trades]),
-                "total_trades": trade_manager.total_trades,
-                "emergency_stop": trade_manager.emergency_stop_active,
-                "drawdown_percent": round(drawdown, 2),
-                "last_signal_time": datetime.now().isoformat(),
-                "next_analysis": (datetime.now() + timedelta(minutes=5)).isoformat(),
-                "batches": batches_data
-            }
-            
-            return self._send_webhook("live_data", live_data)
-            
-        except Exception as e:
-            self.logger.error(f"Error preparing live data: {e}")
-            return False
-    
-    def send_account_update(self, account_info, trade_manager):
-        """Send account update for chart data"""
-        try:
-            if account_info is None:
-                return False
-            
-            profit = account_info.equity - account_info.balance
-            drawdown = 0
-            
-            if trade_manager.initial_balance and account_info.equity < trade_manager.initial_balance:
-                drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
-            
-            update_data = {
-                "timestamp": datetime.now().isoformat(),
-                "balance": round(account_info.balance, 2),
-                "equity": round(account_info.equity, 2),
-                "profit": round(profit, 2),
-                "drawdown": round(drawdown, 2)
-            }
-            
-            return self._send_webhook("account_update", update_data)
-            
-        except Exception as e:
-            self.logger.error(f"Error sending account update: {e}")
-            return False
-    
-    def send_trade_event(self, trade_info, event_type="executed"):
-        """Send trade execution event"""
-        try:
-            trade_data = {
-                "timestamp": datetime.now().isoformat(),
-                "event_type": event_type,
-                "symbol": trade_info.get('symbol'),
-                "direction": trade_info.get('direction'),
-                "volume": trade_info.get('volume'),
-                "entry_price": trade_info.get('entry_price'),
-                "tp": trade_info.get('tp'),
-                "sl": trade_info.get('sl'),
-                "order_id": trade_info.get('order_id'),
-                "layer": trade_info.get('layer', 1),
-                "is_martingale": trade_info.get('is_martingale', False),
-                "profit": trade_info.get('profit', 0),
-                "comment": trade_info.get('enhanced_comment', '')
-            }
-            
-            return self._send_webhook("trade_event", trade_data)
-            
-        except Exception as e:
-            self.logger.error(f"Error sending trade event: {e}")
-            return False
-    
-    def send_signal_generated(self, signal):
-        """Send signal generation event"""
-        try:
-            signal_data = {
-                "timestamp": datetime.now().isoformat(),
-                "symbol": signal.get('symbol'),
-                "direction": signal.get('direction'),
-                "entry_price": signal.get('entry_price'),
-                "tp": signal.get('tp'),
-                "sl_distance_pips": signal.get('sl_distance_pips'),
-                "tp_distance_pips": signal.get('tp_distance_pips'),
-                "risk_profile": signal.get('risk_profile'),
-                "adx_value": signal.get('adx_value'),
-                "rsi": signal.get('rsi'),
-                "timeframes_aligned": signal.get('timeframes_aligned', 1),
-                "is_initial": signal.get('is_initial', True)
-            }
-            
-            return self._send_webhook("signal_generated", signal_data)
-            
-        except Exception as e:
-            self.logger.error(f"Error sending signal: {e}")
-            return False
-    
-    def check_config_reload(self) -> bool:
-        """Check if configuration reload is requested"""
-        try:
-            reload_flag_file = "gui_data/reload_config.flag"
-            if os.path.exists(reload_flag_file):
-                # Read flag file to get timestamp
-                with open(reload_flag_file, 'r') as f:
-                    flag_time = f.read().strip()
-                
-                # Remove flag file
-                os.remove(reload_flag_file)
-                
-                self.logger.info(f"Configuration reload requested at {flag_time}")
-                return True
-                
-        except Exception as e:
-            self.logger.error(f"Error checking config reload: {e}")
-            
-        return False
-
-# ===== INTEGRATION POINTS FOR EXISTING BOT =====
-
-# Add this to your existing EnhancedTradeManager class:
-def integrate_webhooks_to_trade_manager():
-    """
-    Add these methods to your existing EnhancedTradeManager class
-    """
-    
-    # Add to __init__ method:
-    def __init__(self):
-        # ... existing code ...
-        self.webhook_manager = WebhookManager()
-        self.last_webhook_update = datetime.now()
-        self.webhook_update_interval = 10  # seconds
-    
-    # Add to add_trade method (after successful trade addition):
-    def add_trade_webhook_integration(self, trade_info):
-        # ... existing add_trade code ...
-        
-        # Send trade event webhook
-        try:
-            self.webhook_manager.send_trade_event(trade_info, "executed")
-        except Exception as e:
-            logger.error(f"Webhook error in add_trade: {e}")
-    
-    # Add new method for periodic updates:
-    def send_periodic_webhook_updates(self):
-        """Send periodic updates to dashboard"""
-        try:
-            now = datetime.now()
-            if (now - self.last_webhook_update).total_seconds() >= self.webhook_update_interval:
-                
-                # Get account info
-                account_info = mt5.account_info()
-                if account_info:
-                    # Send live data
-                    self.webhook_manager.send_live_data(self, account_info)
-                    
-                    # Send account update for charts (less frequently)
-                    if (now - self.last_webhook_update).total_seconds() >= 30:
-                        self.webhook_manager.send_account_update(account_info, self)
-                
-                self.last_webhook_update = now
-                
-        except Exception as e:
-            logger.error(f"Error in periodic webhook updates: {e}")
-    
-    # Add configuration reload check:
-    def check_and_reload_config(self):
-        """Check for configuration reload request"""
-        try:
-            if self.webhook_manager.check_config_reload():
-                logger.info("🔄 Configuration reload requested from dashboard")
-                
-                # Reload configuration
-                global CONFIG
-                CONFIG = load_config()
-                
-                # Update global variables
-                self.update_global_config_variables()
-                
-                logger.info("✅ Configuration reloaded successfully")
-                return True
-                
-        except Exception as e:
-            logger.error(f"Error reloading configuration: {e}")
-            
-        return False
-    
-    def update_global_config_variables(self):
-        """Update global configuration variables after reload"""
-        global MARTINGALE_ENABLED, MAX_MARTINGALE_LAYERS, LOT_SIZE_MODE, MANUAL_LOT_SIZE
-        global PAIRS, ENHANCED_PAIR_RISK_PROFILES, PARAM_SETS
-        
-        # Update martingale settings
-        MARTINGALE_ENABLED = CONFIG['martingale_settings']['enabled']
-        MAX_MARTINGALE_LAYERS = CONFIG['martingale_settings']['max_layers']
-        
-        # Update lot size settings
-        LOT_SIZE_MODE = CONFIG['lot_size_settings']['mode']
-        MANUAL_LOT_SIZE = CONFIG['lot_size_settings']['manual_lot_size']
-        
-        # Update pairs and profiles
-        PAIRS = CONFIG['trading_pairs']
-        ENHANCED_PAIR_RISK_PROFILES = CONFIG['pair_risk_profiles']
-        PARAM_SETS = CONFIG['risk_parameters']
-        
-        logger.info("Global configuration variables updated")
-
-# ===== INTEGRATION POINTS FOR MAIN ROBOT LOOP =====
-
-def integrate_webhooks_to_main_loop():
-    """
-    Add these calls to your main robot loop in run_simplified_robot()
-    """
-    
-    # Add this after each successful signal execution:
-    def after_signal_execution(signal, execution_success):
-        if execution_success:
-            try:
-                trade_manager.webhook_manager.send_signal_generated(signal)
-            except Exception as e:
-                logger.error(f"Webhook error after signal execution: {e}")
-    
-    # Add this in your main loop (every cycle):
-    def main_loop_webhook_calls(trade_manager):
-        try:
-            # Send periodic updates
-            trade_manager.send_periodic_webhook_updates()
-            
-            # Check for configuration reload
-            trade_manager.check_and_reload_config()
-            
-        except Exception as e:
-            logger.error(f"Webhook integration error in main loop: {e}")
-
-# ===== SAMPLE INTEGRATION EXAMPLE =====
-
-def sample_integration_in_execute_trade():
-    """
-    Example of how to integrate webhooks in your execute_trade function
-    """
-    
-    # At the end of successful execute_trade function, add:
-    def execute_trade_with_webhooks(signal, trade_manager):
-        # ... existing execute_trade code ...
-        
-        # After successful execution (before return True):
-        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-            # ... existing trade_info creation ...
-            
-            # Add trade to manager (existing code)
-            trade_manager.add_trade(trade_info)
-            
-            # Send webhook notification
-            try:
-                trade_manager.webhook_manager.send_trade_event(trade_info, "executed")
-            except Exception as e:
-                logger.error(f"Webhook error: {e}")
-            
+    def send_webhook(self, data: Dict[str, Any]) -> bool:
+        """Send data to all configured webhook URLs"""
+        if not self.webhook_enabled:
+            logger.debug("Webhooks disabled, skipping send")
             return True
-
-# ===== SAMPLE INTEGRATION IN SIGNAL GENERATION =====
-
-def sample_integration_in_signal_generation():
-    """
-    Example of how to integrate webhooks in signal generation
-    """
-    
-    # In your generate_enhanced_signals function, after creating each signal:
-    def generate_signals_with_webhooks(pairs, trade_manager):
-        signals = []
         
-        # ... existing signal generation code ...
+        if not self.webhook_urls:
+            logger.warning("No webhook URLs configured")
+            return False
         
-        for signal in generated_signals:
-            # Send signal webhook
-            try:
-                trade_manager.webhook_manager.send_signal_generated(signal)
-            except Exception as e:
-                logger.error(f"Signal webhook error: {e}")
+        success_count = 0
+        total_urls = len(self.webhook_urls)
+        
+        for url in self.webhook_urls:
+            if self.send_single_webhook(url, data):
+                success_count += 1
             
-            signals.append(signal)
+            # Rate limiting between webhook calls
+            if len(self.webhook_urls) > 1:
+                time.sleep(self.rate_limit_delay)
         
-        return signals
+        success_rate = success_count / total_urls
+        logger.info(f"Webhook batch sent: {success_count}/{total_urls} successful ({success_rate:.1%})")
+        
+        return success_count > 0
+    
+    def send_single_webhook(self, url: str, data: Dict[str, Any]) -> bool:
+        """Send data to a single webhook URL with retry logic"""
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': 'BM-Trading-Robot-Webhook/1.0'
+        }
+        
+        # Add timestamp if not present
+        if 'timestamp' not in data:
+            data['timestamp'] = datetime.now().isoformat()
+        
+        # Add webhook metadata
+        webhook_data = {
+            'webhook_version': '1.0',
+            'sent_at': datetime.now().isoformat(),
+            'data': data
+        }
+        
+        for attempt in range(self.retry_attempts):
+            try:
+                response = requests.post(
+                    url,
+                    json=webhook_data,
+                    headers=headers,
+                    timeout=self.timeout
+                )
+                
+                if response.status_code == 200:
+                    logger.debug(f"✅ Webhook sent successfully to {self.mask_url(url)}")
+                    return True
+                else:
+                    logger.warning(f"⚠️ Webhook failed with status {response.status_code}: {response.text}")
+                    
+            except requests.exceptions.Timeout:
+                logger.warning(f"⏰ Webhook timeout (attempt {attempt + 1}/{self.retry_attempts})")
+            except requests.exceptions.ConnectionError:
+                logger.warning(f"🔌 Webhook connection error (attempt {attempt + 1}/{self.retry_attempts})")
+            except Exception as e:
+                logger.error(f"❌ Webhook error (attempt {attempt + 1}/{self.retry_attempts}): {e}")
+            
+            # Wait before retry (exponential backoff)
+            if attempt < self.retry_attempts - 1:
+                wait_time = (2 ** attempt) * self.rate_limit_delay
+                time.sleep(wait_time)
+        
+        logger.error(f"❌ Webhook failed after {self.retry_attempts} attempts to {self.mask_url(url)}")
+        return False
+    
+    def mask_url(self, url: str) -> str:
+        """Mask URL for logging security"""
+        try:
+            from urllib.parse import urlparse
+            parsed = urlparse(url)
+            return f"{parsed.scheme}://{parsed.netloc}/***"
+        except:
+            return "***masked***"
+    
+    def send_trade_signal(self, signal_data: Dict[str, Any]) -> bool:
+        """Send trading signal webhook"""
+        webhook_data = {
+            'type': 'trade_signal',
+            'signal': signal_data,
+            'timestamp': datetime.now().isoformat()
+        }
+        return self.send_webhook(webhook_data)
+    
+    def send_trade_execution(self, execution_data: Dict[str, Any]) -> bool:
+        """Send trade execution webhook"""
+        webhook_data = {
+            'type': 'trade_execution',
+            'execution': execution_data,
+            'timestamp': datetime.now().isoformat()
+        }
+        return self.send_webhook(webhook_data)
+    
+    def send_batch_update(self, batch_data: Dict[str, Any]) -> bool:
+        """Send batch update webhook"""
+        webhook_data = {
+            'type': 'batch_update',
+            'batch': batch_data,
+            'timestamp': datetime.now().isoformat()
+        }
+        return self.send_webhook(webhook_data)
+    
+    def send_account_update(self, account_data: Dict[str, Any]) -> bool:
+        """Send account update webhook"""
+        webhook_data = {
+            'type': 'account_update',
+            'account': account_data,
+            'timestamp': datetime.now().isoformat()
+        }
+        return self.send_webhook(webhook_data)
+    
+    def send_error_alert(self, error_data: Dict[str, Any]) -> bool:
+        """Send error alert webhook"""
+        webhook_data = {
+            'type': 'error_alert',
+            'error': error_data,
+            'timestamp': datetime.now().isoformat(),
+            'severity': error_data.get('severity', 'medium')
+        }
+        return self.send_webhook(webhook_data)
+    
+    def send_heartbeat(self) -> bool:
+        """Send heartbeat webhook to confirm system is running"""
+        webhook_data = {
+            'type': 'heartbeat',
+            'timestamp': datetime.now().isoformat(),
+            'status': 'running'
+        }
+        return self.send_webhook(webhook_data)
+    
+    def test_webhook_connection(self) -> Dict[str, Any]:
+        """Test webhook connections and return status"""
+        if not self.webhook_enabled:
+            return {
+                'enabled': False,
+                'message': 'Webhooks are disabled'
+            }
+        
+        if not self.webhook_urls:
+            return {
+                'enabled': True,
+                'urls_configured': 0,
+                'message': 'No webhook URLs configured'
+            }
+        
+        test_data = {
+            'type': 'connection_test',
+            'message': 'Testing webhook connection',
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        results = []
+        for i, url in enumerate(self.webhook_urls):
+            success = self.send_single_webhook(url, test_data)
+            results.append({
+                'url_index': i,
+                'url_masked': self.mask_url(url),
+                'success': success
+            })
+        
+        successful_tests = sum(1 for r in results if r['success'])
+        
+        return {
+            'enabled': True,
+            'urls_configured': len(self.webhook_urls),
+            'successful_tests': successful_tests,
+            'total_tests': len(self.webhook_urls),
+            'success_rate': successful_tests / len(self.webhook_urls) if self.webhook_urls else 0,
+            'results': results
+        }
 
-# ===== EASY INTEGRATION GUIDE =====
+# Convenience function for quick webhook sending
+def send_quick_webhook(data: Dict[str, Any], config_file: str = 'bot_config.json') -> bool:
+    """Quick function to send webhook data"""
+    webhook = WebhookIntegration(config_file)
+    return webhook.send_webhook(data)
 
-"""
-INTEGRATION STEPS:
-
-1. Add WebhookManager to your imports and trade manager initialization
-2. Add these method calls to your main robot loop:
-
-   # In run_simplified_robot(), add to main while loop:
-   
-   try:
-       # ... existing cycle code ...
-       
-       # Add periodic webhook updates
-       trade_manager.send_periodic_webhook_updates()
-       
-       # Check for config reload
-       trade_manager.check_and_reload_config()
-       
-       # After executing signals:
-       for signal in signals:
-           if execute_trade(signal, trade_manager):
-               # Send signal webhook
-               trade_manager.webhook_manager.send_signal_generated(signal)
-       
-   except Exception as e:
-       # ... existing error handling ...
-
-3. Modify your execute_trade function to send trade events:
-
-   # At the end of execute_trade, after trade_manager.add_trade():
-   try:
-       trade_manager.webhook_manager.send_trade_event(trade_info, "executed")
-   except Exception as e:
-       logger.error(f"Webhook error: {e}")
-
-4. Make sure gui_data directory exists for config reload functionality
-
-That's it! Your bot will now communicate with the dashboard.
-"""
+# Example usage and testing
+if __name__ == "__main__":
+    # Test the webhook integration
+    logging.basicConfig(level=logging.INFO)
+    
+    webhook = WebhookIntegration()
+    
+    # Test connection
+    test_result = webhook.test_webhook_connection()
+    print(f"Webhook test result: {json.dumps(test_result, indent=2)}")
+    
+    # Send test data
+    test_data = {
+        'message': 'Test webhook from BM Trading Robot',
+        'account': 'TEST123',
+        'balance': 10000.00,
+        'timestamp': datetime.now().isoformat()
+    }
+    
+    success = webhook.send_webhook(test_data)
+    print(f"Test webhook sent: {'Success' if success else 'Failed'}")

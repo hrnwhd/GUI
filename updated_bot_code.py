@@ -14,6 +14,8 @@ import json
 import os
 import requests
 from webhook_integration import WebhookManager
+import threading
+import time
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -1261,9 +1263,11 @@ class EnhancedTradeManager:
         self.next_batch_id = 1
         self.webhook_manager = WebhookManager()
         self.last_webhook_update = datetime.now()
-        self.webhook_update_interval = 10  # seconds     
+        self.webhook_update_interval = 10  # seconds   
+        self.webhook = WebhookIntegration(config_file)
         # Initialize persistence system
         self.persistence = BotPersistence()
+        self.start_heartbeat_thread()
         
         # ✅ RECOVERY ON STARTUP
        # ✅ RECOVERY ON STARTUP
@@ -1276,6 +1280,24 @@ class EnhancedTradeManager:
         
         # ✅ ADD THIS - Send test webhook data on startup
         self.send_test_webhook_data()
+        
+    def start_heartbeat_thread(self):
+        """Start heartbeat thread for webhook monitoring"""
+        if self.webhook.webhook_enabled and self.config.get('webhook', {}).get('send_heartbeat', False):
+            heartbeat_interval = self.config.get('webhook', {}).get('heartbeat_interval_minutes', 15) * 60
+            
+            def heartbeat_worker():
+                while getattr(self, 'running', True):
+                    try:
+                        self.webhook.send_heartbeat()
+                        time.sleep(heartbeat_interval)
+                    except Exception as e:
+                        logger.error(f"Heartbeat error: {e}")
+                        time.sleep(60)  # Wait 1 minute on error
+            
+            heartbeat_thread = threading.Thread(target=heartbeat_worker, daemon=True)
+            heartbeat_thread.start()
+            logger.info("✅ Webhook heartbeat thread started")
         
     def can_trade(self, symbol):
         """Check if we can trade this symbol"""
@@ -1644,22 +1666,98 @@ class EnhancedTradeManager:
         except Exception as e:
             logger.error(f"Error in monitor_batch_exits: {e}")
             
-        def send_test_webhook_data(self):
-            """Send test data to verify webhook connection"""
-            try:
-                # Get account info for test
-                account_info = mt5.account_info()
-                if account_info:
-                    logger.info("🧪 Sending test webhook data...")
-                    success = self.webhook_manager.send_live_data(self, account_info)
-                    if success:
-                        logger.info("✅ Test webhook data sent successfully!")
-                    else:
-                        logger.warning("⚠️ Test webhook failed - check dashboard connection")
-                else:
-                    logger.info("ℹ️ No account info available for test webhook")
-            except Exception as e:
-                logger.error(f"❌ Test webhook error: {e}")
+
+    def send_test_webhook_data(self):
+        """Send test data via webhook"""
+        try:
+            from webhook_integration import WebhookIntegration
+            
+            webhook = WebhookIntegration()
+            
+            # Create test data
+            test_data = {
+                "type": "test",
+                "timestamp": datetime.now().isoformat(),
+                "account": getattr(self, 'account_info', {}).get('login', 'N/A'),
+                "balance": getattr(self, 'account_info', {}).get('balance', 0),
+                "equity": getattr(self, 'account_info', {}).get('equity', 0),
+                "active_batches": len(self.active_batches) if hasattr(self, 'active_batches') else 0,
+                "message": "Trading bot test webhook"
+            }
+            
+            # Send the webhook
+            success = webhook.send_webhook(test_data)
+            
+            if success:
+                logger.info("✅ Test webhook sent successfully")
+                return True
+            else:
+                logger.warning("⚠️ Test webhook failed to send")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending test webhook: {e}")
+            return False
+
+    def send_trade_webhook(self, trade_data):
+        """Send trade data via webhook"""
+        try:
+            from webhook_integration import WebhookIntegration
+            
+            webhook = WebhookIntegration()
+            
+            # Prepare trade data for webhook
+            webhook_data = {
+                "type": "trade",
+                "timestamp": datetime.now().isoformat(),
+                "account": getattr(self, 'account_info', {}).get('login', 'N/A'),
+                "balance": getattr(self, 'account_info', {}).get('balance', 0),
+                "trade_data": trade_data
+            }
+            
+            # Send the webhook
+            success = webhook.send_webhook(webhook_data)
+            
+            if success:
+                logger.info(f"✅ Trade webhook sent for {trade_data.get('symbol', 'Unknown')}")
+            else:
+                logger.warning(f"⚠️ Trade webhook failed for {trade_data.get('symbol', 'Unknown')}")
+                
+            return success
+            
+        except Exception as e:
+            logger.error(f"Error sending trade webhook: {e}")
+            return False
+    
+    def send_batch_webhook(self, batch_data):
+        """Send batch update via webhook"""
+        try:
+            from webhook_integration import WebhookIntegration
+            
+            webhook = WebhookIntegration()
+            
+            # Prepare batch data for webhook
+            webhook_data = {
+                "type": "batch_update",
+                "timestamp": datetime.now().isoformat(),
+                "account": getattr(self, 'account_info', {}).get('login', 'N/A'),
+                "balance": getattr(self, 'account_info', {}).get('balance', 0),
+                "batch_data": batch_data
+            }
+            
+            # Send the webhook
+            success = webhook.send_webhook(webhook_data)
+            
+            if success:
+                logger.info(f"✅ Batch webhook sent for {batch_data.get('symbol', 'Unknown')}")
+            else:
+                logger.warning(f"⚠️ Batch webhook failed for {batch_data.get('symbol', 'Unknown')}")
+                
+            return success
+            
+        except Exception as e:
+            logger.error(f"Error sending batch webhook: {e}")
+            return False
 
 
 # ===== SIGNAL GENERATION =====
