@@ -1,21 +1,21 @@
 {
-  "timestamp": "2025-08-06T23:03:49.470028",
+  "timestamp": "2025-08-06T23:07:14.144133",
   "robot_status": "Running",
   "account": {
-    "balance": 10855.21,
-    "equity": 10944.13,
+    "balance": 10856.8,
+    "equity": 10951.15,
     "margin": 250.0,
     "free_margin": 10696.27,
-    "margin_level": 4377.65,
-    "profit": 88.92
+    "margin_level": 4380.46,
+    "profit": 94.35
   },
   "active_trades": 3,
   "active_batches": 2,
   "total_trades": 12,
   "emergency_stop": false,
   "drawdown_percent": 0.84,
-  "last_signal_time": "2025-08-06T23:01:19.470028",
-  "next_analysis": "2025-08-06T23:06:34.470028",
+  "last_signal_time": "2025-08-06T23:04:44.144133",
+  "next_analysis": "2025-08-06T23:09:59.144133",
   "batches": [
     {
       "batch_id": 1,
