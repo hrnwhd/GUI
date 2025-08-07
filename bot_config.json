@@ -1,10 +1,10 @@
 {
   "account_settings": {
     "account_number": 102820128,
-    "magic_number": 50515253
+    "magic_number": 80808081
   },
   "timeframe_settings": {
-    "global_timeframe": "M5"
+    "global_timeframe": "M15"
   },
   "lot_size_settings": {
     "mode": "DYNAMIC",
@@ -20,7 +20,6 @@
     "flirt_threshold_pips": 10
   },
   "trading_pairs": [
-    "AUDUSD",
     "USDCAD",
     "XAUUSD",
     "EURUSD",
@@ -101,7 +100,13 @@
     }
   },
   "pair_trading_schedule": {
-    "trading_days": [0, 1, 2, 3, 4],
+    "trading_days": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
     "trading_hours": {
       "start": 0,
       "end": 23
@@ -202,25 +207,6 @@
       "USDCHF": 8,
       "XAUUSD": 15,
       "default": 5
-    }
-  },
-  "webhook": {
-    "webhook_enabled": true,
-    "webhook_urls": [
-      "https://your-webhook-url.com/trading-alerts"
-    ],
-    "webhook_timeout": 10,
-    "webhook_retry_attempts": 3,
-    "webhook_rate_limit_delay": 1,
-    "send_heartbeat": false,
-    "heartbeat_interval_minutes": 15,
-    "webhook_events": {
-      "trade_signals": true,
-      "trade_executions": true,
-      "batch_updates": true,
-      "account_updates": true,
-      "error_alerts": true,
-      "heartbeat": false
     }
   },
   "logging_settings": {
