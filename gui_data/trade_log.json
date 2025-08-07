@@ -127,6 +127,54 @@
       "profit": 0,
       "comment": "BM16_USDCHF_BL01",
       "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T16:05:05.876947",
+      "event_type": "executed",
+      "symbol": "EURUSD",
+      "direction": "short",
+      "volume": 0.04,
+      "entry_price": 1.16428,
+      "tp": 1.16278,
+      "sl": null,
+      "order_id": 1012115840,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM17_EURUSD_SL01",
+      "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T16:05:10.713611",
+      "event_type": "executed",
+      "symbol": "GBPUSD",
+      "direction": "long",
+      "volume": 0.03,
+      "entry_price": 1.34193,
+      "tp": 1.3434300000000001,
+      "sl": null,
+      "order_id": 1012116008,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM18_GBPUSD_BL01",
+      "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T16:05:15.578149",
+      "event_type": "executed",
+      "symbol": "GBPCAD",
+      "direction": "long",
+      "volume": 0.01,
+      "entry_price": 1.8437999999999999,
+      "tp": 1.8456,
+      "sl": null,
+      "order_id": 1012116639,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM19_GBPCAD_BL01",
+      "sl_distance_pips": 0
     }
   ]
 }

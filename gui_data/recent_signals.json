@@ -83,6 +83,48 @@
       "rsi": 76.09195402298931,
       "timeframes_aligned": 2,
       "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T16:05:07.918903",
+      "symbol": "EURUSD",
+      "direction": "short",
+      "entry_price": 1.1643,
+      "tp": 1.1610704285714284,
+      "sl_distance_pips": 24.842857142857167,
+      "tp_distance_pips": 32.29571428571498,
+      "risk_profile": "Medium",
+      "adx_value": 36.32394785698512,
+      "rsi": 18.167938931297314,
+      "timeframes_aligned": 2,
+      "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T16:05:12.798264",
+      "symbol": "GBPUSD",
+      "direction": "long",
+      "entry_price": 1.34164,
+      "tp": 1.3469087142857141,
+      "sl_distance_pips": 40.5285714285708,
+      "tp_distance_pips": 52.68714285714182,
+      "risk_profile": "Medium",
+      "adx_value": 34.47811443376302,
+      "rsi": 70.8449396471672,
+      "timeframes_aligned": 2,
+      "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T16:05:17.643295",
+      "symbol": "GBPCAD",
+      "direction": "long",
+      "entry_price": 1.8435700000000002,
+      "tp": 1.8517953571428574,
+      "sl_distance_pips": 54.835714285714765,
+      "tp_distance_pips": 82.25357142857214,
+      "risk_profile": "Low",
+      "adx_value": 30.112654487578173,
+      "rsi": 75.23616734142979,
+      "timeframes_aligned": 2,
+      "is_initial": true
     }
   ]
 }

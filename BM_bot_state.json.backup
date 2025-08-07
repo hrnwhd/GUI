@@ -1,180 +1,60 @@
 {
-  "timestamp": "2025-08-07T15:50:17.124957",
+  "timestamp": "2025-08-07T16:05:10.697783",
   "account_number": 102820128,
   "magic_number": 50515253,
   "bot_version": "3.0_enhanced",
-  "total_trades": 17,
-  "next_batch_id": 16,
+  "total_trades": 20,
+  "next_batch_id": 19,
   "emergency_stop_active": false,
   "initial_balance": 10772.1,
   "batches": {
-    "EURUSD_long": {
-      "batch_id": 8,
+    "EURUSD_short": {
+      "batch_id": 17,
       "symbol": "EURUSD",
-      "direction": "long",
-      "initial_entry_price": 1.16846,
-      "initial_sl_distance": 0.0019978571428571623,
-      "current_layer": 3,
-      "total_volume": 0.35000000000000003,
-      "total_invested": 0.40794500000000006,
-      "breakeven_price": 1.165557142857143,
-      "created_time": "2025-08-07T13:00:04.877513",
-      "last_layer_time": "2025-08-07T15:50:16.201336",
-      "trades": [
-        {
-          "order_id": 1011698605,
-          "layer": 1,
-          "volume": 0.05,
-          "entry_price": 1.16846,
-          "tp": 1.1664571428571429,
-          "entry_time": "2025-08-07T13:00:04.877513",
-          "enhanced_comment": "BM08_EURUSD_BL01",
-          "trade_id": 8
-        },
-        {
-          "order_id": 1011868256,
-          "layer": 2,
-          "volume": 0.1,
-          "entry_price": 1.16636,
-          "tp": 1.1664571428571429,
-          "entry_time": "2025-08-07T14:25:05.562505",
-          "enhanced_comment": "BM08_EURUSD_BL02",
-          "trade_id": 13
-        },
-        {
-          "order_id": 1012084529,
-          "layer": 3,
-          "volume": 0.2,
-          "entry_price": 1.16443,
-          "tp": 1.1664571428571429,
-          "entry_time": "2025-08-07T15:50:16.200332",
-          "enhanced_comment": "BM08_EURUSD_BL03",
-          "trade_id": 17
-        }
-      ]
-    },
-    "AUDCAD_long": {
-      "batch_id": 10,
-      "symbol": "AUDCAD",
-      "direction": "long",
-      "initial_entry_price": 0.89637,
-      "initial_sl_distance": 0.0012942857142856923,
+      "direction": "short",
+      "initial_entry_price": 1.16428,
+      "initial_sl_distance": 0.0024842857142857167,
       "current_layer": 1,
       "total_volume": 0.04,
-      "total_invested": 0.0358548,
-      "breakeven_price": 0.89637,
-      "created_time": "2025-08-07T14:20:05.700211",
-      "last_layer_time": "2025-08-07T14:20:05.700211",
+      "total_invested": 0.0465712,
+      "breakeven_price": 1.16428,
+      "created_time": "2025-08-07T16:05:05.541317",
+      "last_layer_time": "2025-08-07T16:05:05.545306",
       "trades": [
         {
-          "order_id": 1011858121,
+          "order_id": 1012115840,
           "layer": 1,
           "volume": 0.04,
-          "entry_price": 0.89637,
-          "tp": 0.89787,
-          "entry_time": "2025-08-07T14:20:05.700211",
-          "enhanced_comment": "BM10_AUDCAD_BL01",
-          "trade_id": 10
-        }
-      ]
-    },
-    "NZDCAD_long": {
-      "batch_id": 11,
-      "symbol": "NZDCAD",
-      "direction": "long",
-      "initial_entry_price": 0.81757,
-      "initial_sl_distance": 0.0011842857142856378,
-      "current_layer": 1,
-      "total_volume": 0.04,
-      "total_invested": 0.032702800000000004,
-      "breakeven_price": 0.8175700000000001,
-      "created_time": "2025-08-07T14:20:10.586908",
-      "last_layer_time": "2025-08-07T14:20:10.586908",
-      "trades": [
-        {
-          "order_id": 1011858293,
-          "layer": 1,
-          "volume": 0.04,
-          "entry_price": 0.81757,
-          "tp": 0.8187700000000001,
-          "entry_time": "2025-08-07T14:20:10.586908",
-          "enhanced_comment": "BM11_NZDCAD_BL01",
-          "trade_id": 11
-        }
-      ]
-    },
-    "US500_long": {
-      "batch_id": 12,
-      "symbol": "US500",
-      "direction": "long",
-      "initial_entry_price": 6404.11,
-      "initial_sl_distance": 25.62428571428609,
-      "current_layer": 1,
-      "total_volume": 0.01,
-      "total_invested": 64.0411,
-      "breakeven_price": 6404.11,
-      "created_time": "2025-08-07T14:20:15.678286",
-      "last_layer_time": "2025-08-07T14:20:15.678286",
-      "trades": [
-        {
-          "order_id": 1011858371,
-          "layer": 1,
-          "volume": 0.01,
-          "entry_price": 6404.11,
-          "tp": 6406.11,
-          "entry_time": "2025-08-07T14:20:15.678286",
-          "enhanced_comment": "BM12_US500_BL01",
-          "trade_id": 12
+          "entry_price": 1.16428,
+          "tp": 1.16278,
+          "entry_time": "2025-08-07T16:05:05.541317",
+          "enhanced_comment": "BM17_EURUSD_SL01",
+          "trade_id": 19
         }
       ]
     },
     "GBPUSD_long": {
-      "batch_id": 14,
+      "batch_id": 18,
       "symbol": "GBPUSD",
       "direction": "long",
-      "initial_entry_price": 1.34109,
-      "initial_sl_distance": 0.003366785714285614,
+      "initial_entry_price": 1.34193,
+      "initial_sl_distance": 0.00405285714285708,
       "current_layer": 1,
       "total_volume": 0.03,
-      "total_invested": 0.040232699999999996,
-      "breakeven_price": 1.34109,
-      "created_time": "2025-08-07T15:50:06.290208",
-      "last_layer_time": "2025-08-07T15:50:06.290208",
+      "total_invested": 0.0402579,
+      "breakeven_price": 1.34193,
+      "created_time": "2025-08-07T16:05:10.414720",
+      "last_layer_time": "2025-08-07T16:05:10.417685",
       "trades": [
         {
-          "order_id": 1012084202,
+          "order_id": 1012116008,
           "layer": 1,
           "volume": 0.03,
-          "entry_price": 1.34109,
-          "tp": 1.34259,
-          "entry_time": "2025-08-07T15:50:06.290208",
-          "enhanced_comment": "BM14_GBPUSD_BL01",
-          "trade_id": 15
-        }
-      ]
-    },
-    "GBPCAD_long": {
-      "batch_id": 15,
-      "symbol": "GBPCAD",
-      "direction": "long",
-      "initial_entry_price": 1.8425099999999999,
-      "initial_sl_distance": 0.004295357142857004,
-      "current_layer": 1,
-      "total_volume": 0.01,
-      "total_invested": 0.0184251,
-      "breakeven_price": 1.8425099999999999,
-      "created_time": "2025-08-07T15:50:11.158659",
-      "last_layer_time": "2025-08-07T15:50:11.158659",
-      "trades": [
-        {
-          "order_id": 1012084332,
-          "layer": 1,
-          "volume": 0.01,
-          "entry_price": 1.8425099999999999,
-          "tp": 1.84431,
-          "entry_time": "2025-08-07T15:50:11.158659",
-          "enhanced_comment": "BM15_GBPCAD_BL01",
-          "trade_id": 16
+          "entry_price": 1.34193,
+          "tp": 1.3434300000000001,
+          "entry_time": "2025-08-07T16:05:10.414720",
+          "enhanced_comment": "BM18_GBPUSD_BL01",
+          "trade_id": 20
         }
       ]
     }
