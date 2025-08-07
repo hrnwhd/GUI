@@ -55,6 +55,48 @@
       "rsi": 52.52613240418089,
       "timeframes_aligned": 2,
       "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T12:55:11.147536",
+      "symbol": "XAUUSD",
+      "direction": "short",
+      "entry_price": 3379.71,
+      "tp": 3367.4622857142854,
+      "sl_distance_pips": 111.34285714285852,
+      "tp_distance_pips": 122.47714285714665,
+      "risk_profile": "High",
+      "adx_value": 38.9468566682092,
+      "rsi": 23.066926575698403,
+      "timeframes_aligned": 2,
+      "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T12:55:16.004454",
+      "symbol": "USDCHF",
+      "direction": "long",
+      "entry_price": 0.80606,
+      "tp": 0.8079761071428572,
+      "sl_distance_pips": 14.739285714285844,
+      "tp_distance_pips": 19.161071428571706,
+      "risk_profile": "Medium",
+      "adx_value": 31.228977827410905,
+      "rsi": 61.25244618395251,
+      "timeframes_aligned": 2,
+      "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T12:55:20.829841",
+      "symbol": "BTCUSD",
+      "direction": "long",
+      "entry_price": 115031.8,
+      "tp": 115236.06482142856,
+      "sl_distance_pips": 157.12678571428114,
+      "tp_distance_pips": 204.2648214285582,
+      "risk_profile": "Medium",
+      "adx_value": 42.50696221781638,
+      "rsi": 68.58165125227782,
+      "timeframes_aligned": 2,
+      "is_initial": true
     }
   ]
 }

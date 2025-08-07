@@ -103,6 +103,54 @@
       "profit": 0,
       "comment": "BM03_BTCUSD_SL01",
       "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T12:55:09.117943",
+      "event_type": "executed",
+      "symbol": "XAUUSD",
+      "direction": "short",
+      "volume": 0.01,
+      "entry_price": 3379.73,
+      "tp": 3377.23,
+      "sl": null,
+      "order_id": 1011688212,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM04_XAUUSD_SL01",
+      "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T12:55:13.923074",
+      "event_type": "executed",
+      "symbol": "USDCHF",
+      "direction": "long",
+      "volume": 0.06,
+      "entry_price": 0.80615,
+      "tp": 0.80765,
+      "sl": null,
+      "order_id": 1011688338,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM05_USDCHF_BL01",
+      "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T12:55:18.789100",
+      "event_type": "executed",
+      "symbol": "BTCUSD",
+      "direction": "long",
+      "volume": 0.01,
+      "entry_price": 115068.5,
+      "tp": 115118.49999999999,
+      "sl": null,
+      "order_id": 1011688618,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM06_BTCUSD_BL01",
+      "sl_distance_pips": 0
     }
   ]
 }

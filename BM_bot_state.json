@@ -1,11 +1,87 @@
 {
-  "timestamp": "2025-08-07T08:10:16.218242",
+  "timestamp": "2025-08-07T12:55:18.789100",
   "account_number": 102820128,
   "magic_number": 50515253,
   "bot_version": "3.0_enhanced",
-  "total_trades": 3,
-  "next_batch_id": 4,
+  "total_trades": 6,
+  "next_batch_id": 7,
   "emergency_stop_active": false,
   "initial_balance": 10772.1,
-  "batches": {}
+  "batches": {
+    "XAUUSD_short": {
+      "batch_id": 4,
+      "symbol": "XAUUSD",
+      "direction": "short",
+      "initial_entry_price": 3379.73,
+      "initial_sl_distance": 11.134285714285852,
+      "current_layer": 1,
+      "total_volume": 0.01,
+      "total_invested": 33.7973,
+      "breakeven_price": 3379.73,
+      "created_time": "2025-08-07T12:55:08.657641",
+      "last_layer_time": "2025-08-07T12:55:08.657641",
+      "trades": [
+        {
+          "order_id": 1011688212,
+          "layer": 1,
+          "volume": 0.01,
+          "entry_price": 3379.73,
+          "tp": 3377.23,
+          "entry_time": "2025-08-07T12:55:08.657641",
+          "enhanced_comment": "BM04_XAUUSD_SL01",
+          "trade_id": 4
+        }
+      ]
+    },
+    "USDCHF_long": {
+      "batch_id": 5,
+      "symbol": "USDCHF",
+      "direction": "long",
+      "initial_entry_price": 0.80615,
+      "initial_sl_distance": 0.0014739285714285844,
+      "current_layer": 1,
+      "total_volume": 0.06,
+      "total_invested": 0.048369,
+      "breakeven_price": 0.80615,
+      "created_time": "2025-08-07T12:55:13.609374",
+      "last_layer_time": "2025-08-07T12:55:13.609374",
+      "trades": [
+        {
+          "order_id": 1011688338,
+          "layer": 1,
+          "volume": 0.06,
+          "entry_price": 0.80615,
+          "tp": 0.80765,
+          "entry_time": "2025-08-07T12:55:13.609374",
+          "enhanced_comment": "BM05_USDCHF_BL01",
+          "trade_id": 5
+        }
+      ]
+    },
+    "BTCUSD_long": {
+      "batch_id": 6,
+      "symbol": "BTCUSD",
+      "direction": "long",
+      "initial_entry_price": 115068.5,
+      "initial_sl_distance": 157.12678571428114,
+      "current_layer": 1,
+      "total_volume": 0.01,
+      "total_invested": 1150.685,
+      "breakeven_price": 115068.49999999999,
+      "created_time": "2025-08-07T12:55:18.488602",
+      "last_layer_time": "2025-08-07T12:55:18.488602",
+      "trades": [
+        {
+          "order_id": 1011688618,
+          "layer": 1,
+          "volume": 0.01,
+          "entry_price": 115068.5,
+          "tp": 115118.49999999999,
+          "entry_time": "2025-08-07T12:55:18.488602",
+          "enhanced_comment": "BM06_BTCUSD_BL01",
+          "trade_id": 6
+        }
+      ]
+    }
+  }
 }
