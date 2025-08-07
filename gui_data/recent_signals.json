@@ -41,6 +41,20 @@
       "rsi": 51.35135135135135,
       "timeframes_aligned": 2,
       "is_initial": true
+    },
+    {
+      "timestamp": "2025-08-07T08:01:42.358833",
+      "symbol": "BTCUSD",
+      "direction": "short",
+      "entry_price": 114503.05,
+      "tp": 114254.22535714286,
+      "sl_distance_pips": 191.403571428571,
+      "tp_distance_pips": 248.82464285714377,
+      "risk_profile": "Medium",
+      "adx_value": 38.74280516985452,
+      "rsi": 52.52613240418089,
+      "timeframes_aligned": 2,
+      "is_initial": true
     }
   ]
 }

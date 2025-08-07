@@ -1,62 +1,11 @@
 {
-  "timestamp": "2025-08-06T23:14:57.672730",
+  "timestamp": "2025-08-07T08:10:16.218242",
   "account_number": 102820128,
   "magic_number": 50515253,
   "bot_version": "3.0_enhanced",
-  "total_trades": 2,
-  "next_batch_id": 3,
+  "total_trades": 3,
+  "next_batch_id": 4,
   "emergency_stop_active": false,
   "initial_balance": 10772.1,
-  "batches": {
-    "XAUUSD_short": {
-      "batch_id": 1,
-      "symbol": "XAUUSD",
-      "direction": "short",
-      "initial_entry_price": 3369.88,
-      "initial_sl_distance": 4.031428571428478,
-      "current_layer": 1,
-      "total_volume": 0.02,
-      "total_invested": 67.3976,
-      "breakeven_price": 3369.8799999999997,
-      "created_time": "2025-08-06T22:25:00.597814",
-      "last_layer_time": "2025-08-06T22:25:00.598336",
-      "trades": [
-        {
-          "order_id": 1010636498,
-          "layer": 1,
-          "volume": 0.02,
-          "entry_price": 3369.88,
-          "tp": 3367.3799999999997,
-          "entry_time": "2025-08-07T01:25:02",
-          "enhanced_comment": "BM01_XAUUSD_S01",
-          "trade_id": null
-        }
-      ]
-    },
-    "US500_long": {
-      "batch_id": 2,
-      "symbol": "US500",
-      "direction": "long",
-      "initial_entry_price": 6349.66,
-      "initial_sl_distance": 7.75,
-      "current_layer": 1,
-      "total_volume": 0.01,
-      "total_invested": 63.4966,
-      "breakeven_price": 6349.66,
-      "created_time": "2025-08-06T23:10:12.053046",
-      "last_layer_time": "2025-08-06T23:10:12.053046",
-      "trades": [
-        {
-          "order_id": 1010689067,
-          "layer": 1,
-          "volume": 0.01,
-          "entry_price": 6349.66,
-          "tp": 6351.66,
-          "entry_time": "2025-08-06T23:10:12.053046",
-          "enhanced_comment": "BM02_US500_BL01",
-          "trade_id": 2
-        }
-      ]
-    }
-  }
+  "batches": {}
 }

@@ -87,6 +87,22 @@
       "profit": 0,
       "comment": "BM02_US500_BL01",
       "sl_distance_pips": 0
+    },
+    {
+      "timestamp": "2025-08-07T08:01:40.309513",
+      "event_type": "executed",
+      "symbol": "BTCUSD",
+      "direction": "short",
+      "volume": 0.01,
+      "entry_price": 114503.05,
+      "tp": 114453.05,
+      "sl": null,
+      "order_id": 1011163277,
+      "layer": 1,
+      "is_martingale": false,
+      "profit": 0,
+      "comment": "BM03_BTCUSD_SL01",
+      "sl_distance_pips": 0
     }
   ]
 }
