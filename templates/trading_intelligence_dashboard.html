@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Intelligence Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .data-quality {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .quality-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .metadata-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .metadata-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .metadata-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metadata-card h3 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .metadata-card .value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .metadata-card .change {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab.active {
+            background: #4CAF50;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .pairs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pair-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pair-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .pair-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pair-symbol {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .opportunity-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .opportunity-excellent { background: #4CAF50; }
+        .opportunity-good { background: #8BC34A; }
+        .opportunity-normal { background: #FFC107; color: #000; }
+        .opportunity-poor { background: #FF5722; }
+
+        .direction-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .direction-arrow {
+            font-size: 1.2rem;
+        }
+
+        .direction-long { color: #4CAF50; }
+        .direction-short { color: #f44336; }
+        .direction-neutral { color: #FFC107; }
+
+        .pair-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .pair-details .label {
+            opacity: 0.7;
+        }
+
+        .pair-details .value {
+            font-weight: 600;
+        }
+
+        .correlation-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .correlation-low { background: #4CAF50; }
+        .correlation-medium { background: #FFC107; color: #000; }
+        .correlation-high { background: #FF5722; }
+
+        .risk-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .risk-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .risk-high { border-left-color: #f44336; }
+        .risk-medium { border-left-color: #FFC107; }
+        .risk-low { border-left-color: #4CAF50; }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .event-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 4px solid;
+        }
+
+        .event-high { border-left-color: #f44336; }
+        .event-medium { border-left-color: #FFC107; }
+
+        .event-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .event-details {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .market-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .overview-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .overview-card h3 {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .overview-card .big-value {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .correlation-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .correlation-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .correlation-value {
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+        }
+
+        .positive-correlation { background: #4CAF50; }
+        .negative-correlation { background: #f44336; }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0.7;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .pairs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .metadata-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-chart-line"></i> Trading Intelligence Dashboard</h1>
+        <div class="data-quality">
+            <div class="quality-indicator"></div>
+            <span id="data-status">Loading data...</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Metadata Overview -->
+        <div class="metadata-bar" id="metadata-bar">
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading metadata...
+            </div>
+        </div>
+
+        <!-- Market Intelligence Overview -->
+        <div class="market-overview" id="market-overview">
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading market overview...
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('pairs')">
+                <i class="fas fa-exchange-alt"></i> Trading Pairs
+            </button>
+            <button class="tab" onclick="showTab('risks')">
+                <i class="fas fa-exclamation-triangle"></i> Risk Insights
+            </button>
+            <button class="tab" onclick="showTab('events')">
+                <i class="fas fa-calendar-alt"></i> Economic Events
+            </button>
+            <button class="tab" onclick="showTab('correlations')">
+                <i class="fas fa-project-diagram"></i> Correlations
+            </button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="pairs-tab" class="tab-content active">
+            <div class="pairs-grid" id="pairs-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading trading pairs...
+                </div>
+            </div>
+        </div>
+
+        <div id="risks-tab" class="tab-content">
+            <div class="risk-section" id="risk-insights">
+                <h3><i class="fas fa-shield-alt"></i> Risk Insights</h3>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading risk analysis...
+                </div>
+            </div>
+        </div>
+
+        <div id="events-tab" class="tab-content">
+            <div class="risk-section">
+                <h3><i class="fas fa-calendar-alt"></i> High Impact Events</h3>
+                <div class="events-grid" id="high-impact-events">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading events...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="risk-section">
+                <h3><i class="fas fa-calendar"></i> Medium Impact Events</h3>
+                <div class="events-grid" id="medium-impact-events">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading events...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="correlations-tab" class="tab-content">
+            <div class="risk-section">
+                <h3><i class="fas fa-project-diagram"></i> High Correlation Clusters</h3>
+                <div class="correlation-matrix" id="correlation-clusters">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading correlations...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tradingData = null;
+
+        // Load data from your local server
+        async function loadTradingData() {
+            try {
+                const response = await fetch('/trading_intelligence.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                tradingData = await response.json();
+                
+                document.getElementById('data-status').textContent = 
+                    `Data Quality: ${(tradingData.metadata.data_quality.overall_score * 100)}% | ${tradingData.metadata.data_age_status}`;
+                
+                renderMetadata();
+                renderMarketOverview();
+                renderTradingPairs();
+                renderRiskInsights();
+                renderEvents();
+                renderCorrelations();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('data-status').textContent = 'Error loading data';
+                
+                // Show error message in all loading areas
+                document.querySelectorAll('.loading').forEach(el => {
+                    el.innerHTML = `
+                        <div style="color: #f44336;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Failed to load data from http://192.168.0.106:5000
+                            <br><small>Make sure your server is running and CORS is enabled</small>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function renderMetadata() {
+            const metadata = tradingData.metadata;
+            const metadataBar = document.getElementById('metadata-bar');
+            
+            metadataBar.innerHTML = `
+                <div class="metadata-card">
+                    <h3><i class="fas fa-clock"></i> Generated</h3>
+                    <div class="value">${new Date(metadata.generated_at).toLocaleString()}</div>
+                    <div class="change">Version ${metadata.version}</div>
+                </div>
+                <div class="metadata-card">
+                    <h3><i class="fas fa-database"></i> Data Quality</h3>
+                    <div class="value">${(metadata.data_quality.overall_score * 100).toFixed(1)}%</div>
+                    <div class="change">${metadata.data_quality.data_age_status}</div>
+                </div>
+                <div class="metadata-card">
+                    <h3><i class="fas fa-chart-bar"></i> Sources</h3>
+                    <div class="value">${metadata.data_quality.available_sources.length}</div>
+                    <div class="change">${metadata.data_quality.available_sources.join(', ')}</div>
+                </div>
+                <div class="metadata-card">
+                    <h3><i class="fas fa-hourglass-half"></i> Valid Until</h3>
+                    <div class="value">${new Date(metadata.valid_until).toLocaleTimeString()}</div>
+                    <div class="change">Auto-refresh in ${Math.round((new Date(metadata.valid_until) - new Date()) / 60000)} min</div>
+                </div>
+            `;
+        }
+
+        function renderMarketOverview() {
+            const intelligence = tradingData.market_intelligence;
+            const overview = document.getElementById('market-overview');
+            
+            overview.innerHTML = `
+                <div class="overview-card">
+                    <h3>Market Regime</h3>
+                    <div class="big-value">${intelligence.market_regime}</div>
+                    <div>Confidence: ${(intelligence.overall_confidence * 100).toFixed(0)}%</div>
+                </div>
+                <div class="overview-card">
+                    <h3>Volatility</h3>
+                    <div class="big-value">${intelligence.volatility_environment}</div>
+                    <div>Approach: ${intelligence.recommended_approach}</div>
+                </div>
+                <div class="overview-card">
+                    <h3>Correlation</h3>
+                    <div class="big-value">${intelligence.correlation_environment}</div>
+                    <div>Directional Bias: ${intelligence.directional_bias}</div>
+                </div>
+                <div class="overview-card">
+                    <h3>Event Density</h3>
+                    <div class="big-value">${intelligence.event_density}</div>
+                    <div>${tradingData.event_calendar.high_impact_events.length} high impact events</div>
+                </div>
+            `;
+        }
+
+        function renderTradingPairs() {
+            const pairs = tradingData.trading_preferences;
+            const grid = document.getElementById('pairs-grid');
+            
+            const pairCards = Object.values(pairs).map(pair => {
+                const opportunityClass = getOpportunityClass(pair.overall_opportunity);
+                const directionClass = getDirectionClass(pair.preferred_direction);
+                const correlationClass = getCorrelationClass(pair.correlation_risk_level);
+                
+                return `
+                    <div class="pair-card">
+                        <div class="correlation-badge ${correlationClass}">
+                            ${pair.correlation_risk_level} CORR
+                        </div>
+                        <div class="pair-header">
+                            <div class="pair-symbol">${pair.pair}</div>
+                            <div class="opportunity-badge ${opportunityClass}">
+                                ${pair.overall_opportunity}
+                            </div>
+                        </div>
+                        <div class="direction-indicator">
+                            <span class="direction-arrow ${directionClass}">
+                                ${getDirectionArrow(pair.preferred_direction)}
+                            </span>
+                            <span>${pair.preferred_direction} (${pair.preference_strength})</span>
+                        </div>
+                        <div class="pair-details">
+                            <div class="label">Confidence:</div>
+                            <div class="value">${(pair.directional_confidence * 100).toFixed(0)}%</div>
+                            
+                            <div class="label">Position Size:</div>
+                            <div class="value">${(pair.position_size_modifier * 100).toFixed(0)}%</div>
+                            
+                            <div class="label">Max Exposure:</div>
+                            <div class="value">${pair.max_exposure_pct}%</div>
+                            
+                            <div class="label">COT Sentiment:</div>
+                            <div class="value">${pair.cot_sentiment}</div>
+                            
+                            <div class="label">Event Risk:</div>
+                            <div class="value">${pair.event_risk_hours}h</div>
+                            
+                            <div class="label">Diversification:</div>
+                            <div class="value">${pair.diversification_score}/100</div>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">
+                            ${pair.trading_notes}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            grid.innerHTML = pairCards;
+        }
+
+        function renderRiskInsights() {
+            const risks = tradingData.risk_insights;
+            const container = document.getElementById('risk-insights');
+            
+            const riskItems = risks.map(risk => {
+                const priorityClass = risk.priority.toLowerCase();
+                return `
+                    <div class="risk-item risk-${priorityClass}">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h4>${risk.title}</h4>
+                            <span style="font-size: 0.8rem; opacity: 0.7;">${risk.priority} PRIORITY</span>
+                        </div>
+                        <p style="margin-bottom: 0.5rem;">${risk.message}</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;"><strong>Impact:</strong> ${risk.impact}</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;"><strong>Recommendation:</strong> ${risk.recommendation}</p>
+                        ${risk.affected_pairs ? `<p style="font-size: 0.8rem; margin-top: 0.5rem;"><strong>Affected Pairs:</strong> ${risk.affected_pairs.join(', ')}</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = `<h3><i class="fas fa-shield-alt"></i> Risk Insights</h3>` + riskItems;
+        }
+
+        function renderEvents() {
+            const events = tradingData.event_calendar;
+            
+            // High impact events
+            const highImpactContainer = document.getElementById('high-impact-events');
+            const highImpactEvents = events.high_impact_events.map(event => `
+                <div class="event-card event-high">
+                    <div class="event-time">${event.date} at ${event.time}</div>
+                    <div class="event-name">${event.name}</div>
+                    <div class="event-details">
+                        Currency: ${event.currency}<br>
+                        Previous: ${event.previous}<br>
+                        Consensus: ${event.consensus}
+                    </div>
+                </div>
+            `).join('');
+            
+            highImpactContainer.innerHTML = highImpactEvents;
+            
+            // Medium impact events (show first 12)
+            const mediumImpactContainer = document.getElementById('medium-impact-events');
+            const mediumImpactEvents = events.medium_impact_events.slice(0, 12).map(event => `
+                <div class="event-card event-medium">
+                    <div class="event-time">${event.date} at ${event.time}</div>
+                    <div class="event-name">${event.name}</div>
+                    <div class="event-details">
+                        Currency: ${event.currency}<br>
+                        Previous: ${event.previous}<br>
+                        Consensus: ${event.consensus}
+                    </div>
+                </div>
+            `).join('');
+            
+            mediumImpactContainer.innerHTML = mediumImpactEvents;
+        }
+
+        function renderCorrelations() {
+            const correlations = tradingData.correlation_awareness;
+            const container = document.getElementById('correlation-clusters');
+            
+            // Show top 20 correlation clusters
+            const clusters = correlations.correlation_clusters.slice(0, 20).map(cluster => {
+                const corr = cluster[0];
+                const isPositive = corr.correlation > 0;
+                return `
+                    <div class="correlation-item">
+                        <div>
+                            <strong>${corr.pair}</strong>
+                            <div style="font-size: 0.8rem; opacity: 0.7;">
+                                ${isPositive ? 'Positive' : 'Negative'} Correlation
+                            </div>
+                        </div>
+                        <div class="correlation-value ${isPositive ? 'positive-correlation' : 'negative-correlation'}">
+                            ${corr.correlation.toFixed(1)}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = clusters;
+        }
+
+        function getOpportunityClass(opportunity) {
+            switch(opportunity.toLowerCase()) {
+                case 'excellent': return 'opportunity-excellent';
+                case 'good': return 'opportunity-good';
+                case 'normal': return 'opportunity-normal';
+                case 'poor': return 'opportunity-poor';
+                default: return 'opportunity-normal';
+            }
+        }
+
+        function getDirectionClass(direction) {
+            switch(direction.toLowerCase()) {
+                case 'long': return 'direction-long';
+                case 'short': return 'direction-short';
+                case 'neutral': return 'direction-neutral';
+                default: return 'direction-neutral';
+            }
+        }
+
+        function getDirectionArrow(direction) {
+            switch(direction.toLowerCase()) {
+                case 'long': return '↗';
+                case 'short': return '↘';
+                case 'neutral': return '→';
+                default: return '→';
+            }
+        }
+
+        function getCorrelationClass(level) {
+            switch(level.toLowerCase()) {
+                case 'low': return 'correlation-low';
+                case 'medium': return 'correlation-medium';
+                case 'high': return 'correlation-high';
+                default: return 'correlation-medium';
+            }
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Initialize dashboard
+        window.onload = function() {
+            loadTradingData();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(loadTradingData, 30000);
+        };
+    </script>
+</body>
+</html>
