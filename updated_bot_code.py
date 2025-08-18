@@ -477,9 +477,19 @@ def analyze_symbol_multi_timeframe(symbol, base_timeframe):
 # ===== COMPLETE FIXED WEBHOOK MANAGER =====
 # This version includes all missing methods from the original
 
+# ===== FIXED WEBHOOK MANAGER FOR BM TRADING BOT =====
+# This replaces the webhook manager in your updated_bot_code.py
+
+import requests
+import json
+import logging
+from datetime import datetime
+import threading
+import time
+import os
 
 class FixedWebhookManager:
-    """Complete fixed webhook manager with all methods"""
+    """Enhanced webhook manager with better error handling and debugging"""
     
     def __init__(self, dashboard_url="http://localhost:5000"):
         self.dashboard_url = dashboard_url
@@ -489,28 +499,67 @@ class FixedWebhookManager:
         self.error_count = 0
         self.last_success = None
         self.last_error = None
+        self.connection_verified = False
         
         # Test connection on initialization
         self._test_connection()
         
+        # Start periodic status logging
+        self._start_status_logger()
+        
     def _test_connection(self):
         """Test connection to dashboard on startup"""
         try:
+            self.logger.info(f"🔌 Testing connection to dashboard: {self.dashboard_url}")
+            
             response = requests.get(
                 f"{self.dashboard_url}/api/dashboard_status",
-                timeout=5
+                timeout=10
             )
+            
             if response.status_code == 200:
-                self.logger.info(f"✅ Dashboard connection test successful: {self.dashboard_url}")
+                self.logger.info(f"✅ Dashboard connection successful!")
+                self.connection_verified = True
+                
+                # Test a webhook endpoint
+                test_response = requests.post(
+                    f"{self.dashboard_url}/test/webhook",
+                    json={"test": "connection"},
+                    timeout=5
+                )
+                
+                if test_response.status_code == 200:
+                    self.logger.info("✅ Webhook test successful!")
+                else:
+                    self.logger.warning(f"⚠️ Webhook test failed: {test_response.status_code}")
+                    
                 return True
             else:
                 self.logger.warning(f"⚠️ Dashboard responded with status {response.status_code}")
                 return False
+                
         except requests.exceptions.RequestException as e:
             self.logger.warning(f"🔌 Dashboard connection test failed: {e}")
-            self.logger.info("Dashboard may not be running yet - webhooks will retry automatically")
+            self.logger.info("📝 Make sure the dashboard is running: python optimized_dashboard.py")
+            self.connection_verified = False
             return False
         
+    def _start_status_logger(self):
+        """Start periodic status logging"""
+        def log_status():
+            while True:
+                try:
+                    time.sleep(300)  # Every 5 minutes
+                    if self.success_count > 0 or self.error_count > 0:
+                        total = self.success_count + self.error_count
+                        success_rate = (self.success_count / total) * 100
+                        self.logger.info(f"📡 Webhook Stats: {self.success_count}/{total} successful ({success_rate:.1f}%)")
+                except Exception as e:
+                    self.logger.error(f"Error in status logger: {e}")
+        
+        status_thread = threading.Thread(target=log_status, daemon=True)
+        status_thread.start()
+    
     def _send_webhook(self, endpoint: str, data: dict) -> bool:
         """Send data to webhook endpoint with enhanced error handling"""
         if not self.enabled:
@@ -522,21 +571,37 @@ class FixedWebhookManager:
             # Ensure data is JSON serializable
             json_data = json.loads(json.dumps(data, default=str))
             
+            # Add timestamp and source info
+            json_data['webhook_timestamp'] = datetime.now().isoformat()
+            json_data['source'] = 'BM_Trading_Bot'
+            
             response = requests.post(
                 url, 
                 json=json_data, 
-                timeout=10,  # Increased timeout
+                timeout=15,  # Increased timeout
                 headers={
                     'Content-Type': 'application/json',
-                    'User-Agent': 'BM-Trading-Bot/1.0'
+                    'User-Agent': 'BM-Trading-Bot/1.0',
+                    'X-Bot-Version': '3.0'
                 }
             )
             
             if response.status_code == 200:
                 self.success_count += 1
                 self.last_success = datetime.now()
-                self.logger.debug(f"✅ Webhook {endpoint} sent successfully")
-                return True
+                
+                # Parse response to check for additional info
+                try:
+                    response_data = response.json()
+                    if response_data.get('status') == 'success':
+                        self.logger.debug(f"✅ Webhook {endpoint} sent successfully")
+                        return True
+                    else:
+                        self.logger.warning(f"⚠️ Webhook {endpoint} processed but returned: {response_data}")
+                        return True  # Still count as success
+                except:
+                    self.logger.debug(f"✅ Webhook {endpoint} sent (no JSON response)")
+                    return True
             else:
                 self.error_count += 1
                 self.last_error = datetime.now()
@@ -545,14 +610,25 @@ class FixedWebhookManager:
                 return False
                 
         except requests.exceptions.ConnectionError as e:
-            self.logger.debug(f"🔌 Dashboard connection refused for {endpoint} - dashboard may be offline")
+            # Don't spam logs for connection errors
+            if not hasattr(self, '_last_connection_error') or \
+               (datetime.now() - self._last_connection_error).total_seconds() > 300:
+                self.logger.debug(f"🔌 Dashboard connection refused for {endpoint} - dashboard may be offline")
+                self._last_connection_error = datetime.now()
             return False
+            
         except requests.exceptions.Timeout as e:
+            self.error_count += 1
+            self.last_error = datetime.now()
             self.logger.warning(f"⏰ Webhook {endpoint} timeout: {e}")
             return False
+            
         except requests.exceptions.RequestException as e:
-            self.logger.debug(f"🔌 Webhook {endpoint} connection error: {e}")
+            self.error_count += 1
+            self.last_error = datetime.now()
+            self.logger.debug(f"🔌 Webhook {endpoint} request error: {e}")
             return False
+            
         except Exception as e:
             self.error_count += 1
             self.last_error = datetime.now()
@@ -560,13 +636,14 @@ class FixedWebhookManager:
             return False
     
     def send_live_data(self, trade_manager, account_info=None):
-        """Send current live data to dashboard - FIXED VERSION"""
+        """Send current live data to dashboard"""
         try:
             if account_info is None:
                 import MetaTrader5 as mt5
                 account_info = mt5.account_info()
                 
             if account_info is None:
+                self.logger.debug("Cannot send live data - no account info")
                 return False
             
             # Calculate profit
@@ -580,7 +657,14 @@ class FixedWebhookManager:
             # Get active positions count
             import MetaTrader5 as mt5
             positions = mt5.positions_get()
-            magic_number = getattr(trade_manager, 'magic_number', None) or 23232323  # Use from config
+            
+            # Use magic number from config or fallback
+            try:
+                from updated_bot_code import MAGIC_NUMBER
+                magic_number = MAGIC_NUMBER
+            except:
+                magic_number = 23232323  # Fallback
+                
             active_positions = len([pos for pos in positions if pos.magic == magic_number]) if positions else 0
             
             # Prepare batch data with better error handling
@@ -595,7 +679,7 @@ class FixedWebhookManager:
                                 if hasattr(batch, 'get_next_trigger_price'):
                                     next_trigger = batch.get_next_trigger_price()
                             except:
-                                pass
+                                next_trigger = None
                             
                             batch_data = {
                                 "batch_id": getattr(batch, 'batch_id', 0),
@@ -631,13 +715,13 @@ class FixedWebhookManager:
                 "last_signal_time": datetime.now().isoformat(),
                 "next_analysis": (datetime.now() + timedelta(minutes=5)).isoformat(),
                 "batches": batches_data,
-                "pairs_status": {},  # Can be populated if needed
+                "pairs_status": {},
                 "mt5_connected": True
             }
             
             success = self._send_webhook("live_data", live_data)
             if success:
-                self.logger.debug(f"📊 Live data sent: Balance=${account_info.balance:.2f}")
+                self.logger.debug(f"📊 Live data sent: Balance=${account_info.balance:.2f}, Equity=${account_info.equity:.2f}")
             return success
             
         except Exception as e:
@@ -645,7 +729,7 @@ class FixedWebhookManager:
             return False
     
     def send_account_update(self, account_info, trade_manager):
-        """Send account update for chart data - FIXED VERSION"""
+        """Send account update for chart data"""
         try:
             if account_info is None:
                 return False
@@ -666,7 +750,7 @@ class FixedWebhookManager:
             
             success = self._send_webhook("account_update", update_data)
             if success:
-                self.logger.debug(f"📈 Chart data sent")
+                self.logger.debug(f"📈 Chart data sent: Equity=${account_info.equity:.2f}")
             return success
             
         except Exception as e:
@@ -674,7 +758,7 @@ class FixedWebhookManager:
             return False
     
     def send_trade_event(self, trade_info, event_type="executed"):
-        """Send trade execution event - FIXED VERSION"""
+        """Send trade execution event"""
         try:
             trade_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -689,7 +773,7 @@ class FixedWebhookManager:
                 "layer": int(trade_info.get('layer', 1)),
                 "is_martingale": bool(trade_info.get('is_martingale', False)),
                 "profit": float(trade_info.get('profit', 0)),
-                "comment": str(trade_info.get('enhanced_comment', '')),
+                "comment": str(trade_info.get('enhanced_comment', trade_info.get('comment', ''))),
                 "sl_distance_pips": float(trade_info.get('sl_distance_pips', 0))
             }
             
@@ -703,7 +787,7 @@ class FixedWebhookManager:
             return False
     
     def send_signal_generated(self, signal):
-        """Send signal generation event - FIXED VERSION"""
+        """Send signal generation event"""
         try:
             signal_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -741,7 +825,7 @@ class FixedWebhookManager:
                 # Remove flag file
                 os.remove(reload_flag_file)
                 
-                self.logger.info(f"Configuration reload requested at {flag_time}")
+                self.logger.info(f"📝 Configuration reload requested at {flag_time}")
                 return True
                 
         except Exception as e:
@@ -754,6 +838,7 @@ class FixedWebhookManager:
         return {
             'enabled': self.enabled,
             'dashboard_url': self.dashboard_url,
+            'connection_verified': self.connection_verified,
             'success_count': self.success_count,
             'error_count': self.error_count,
             'last_success': self.last_success.isoformat() if self.last_success else None,
@@ -772,30 +857,55 @@ class FixedWebhookManager:
                 self.logger.info(f"   Last error: {status['last_error']}")
         else:
             self.logger.info("📡 Webhook Status: No attempts yet")
-
-# ===== QUICK FIX FOR YOUR BOT =====
-"""
-To fix the missing method error, replace this line in your bot code:
-
-# In your bot's check_and_reload_config method, change:
-if self.webhook_manager.check_config_reload():
-
-# To:
-try:
-    if self.webhook_manager.check_config_reload():
-        # existing code
-except AttributeError:
-    # Check config reload manually
-    reload_flag_file = "gui_data/reload_config.flag"
-    if os.path.exists(reload_flag_file):
+    
+    def test_connection_manual(self):
+        """Manual connection test that can be called anytime"""
+        self.logger.info("🧪 Running manual connection test...")
+        
         try:
-            os.remove(reload_flag_file)
-            self.logger.info("Configuration reload requested")
-            return True
-        except:
-            pass
-    return False
-"""
+            # Test dashboard status
+            status_response = requests.get(
+                f"{self.dashboard_url}/api/dashboard_status",
+                timeout=10
+            )
+            
+            if status_response.status_code == 200:
+                self.logger.info("✅ Dashboard status endpoint working")
+                
+                # Test webhook
+                test_response = requests.post(
+                    f"{self.dashboard_url}/test/webhook",
+                    json={
+                        "test": "manual_connection_test",
+                        "timestamp": datetime.now().isoformat()
+                    },
+                    timeout=10
+                )
+                
+                if test_response.status_code == 200:
+                    self.logger.info("✅ Webhook test successful")
+                    
+                    # Test simulate trade
+                    trade_response = requests.get(
+                        f"{self.dashboard_url}/test/simulate_trade",
+                        timeout=10
+                    )
+                    
+                    if trade_response.status_code == 200:
+                        self.logger.info("✅ Trade simulation successful")
+                        self.logger.info("🎉 All connection tests passed!")
+                        return True
+                    else:
+                        self.logger.warning(f"⚠️ Trade simulation failed: {trade_response.status_code}")
+                else:
+                    self.logger.warning(f"⚠️ Webhook test failed: {test_response.status_code}")
+            else:
+                self.logger.warning(f"⚠️ Dashboard status failed: {status_response.status_code}")
+                
+        except Exception as e:
+            self.logger.error(f"❌ Manual connection test failed: {e}")
+            
+        return False
     
     # ===== PART 5: ENHANCED MARTINGALE BATCH CLASS =====
 class MartingaleBatch:

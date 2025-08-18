@@ -1,5 +1,5 @@
-# ===== FIXED FLASK DASHBOARD WITH PROPER WEBHOOK HANDLING =====
-# This version properly processes webhook data and provides real-time updates
+# ===== FIXED FLASK DASHBOARD WITH ENHANCED WEBHOOK HANDLING =====
+# This version fixes the update delay issues and improves real-time updates
 
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import json
@@ -20,9 +20,9 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# ===== REAL-TIME DATA STORAGE =====
-class RealTimeDataStore:
-    """Centralized storage for real-time webhook data"""
+# ===== ENHANCED REAL-TIME DATA STORAGE =====
+class EnhancedRealTimeDataStore:
+    """Enhanced storage for real-time webhook data with better update tracking"""
     
     def __init__(self):
         # Live data storage
@@ -67,15 +67,71 @@ class RealTimeDataStore:
         # Connection status
         self.last_update = datetime.now()
         self.connection_timeout = 30  # seconds
+        self.update_count = 0
+        self.error_count = 0
         
+        # Initialize with some sample data for testing
+        self._initialize_sample_data()
+        
+    def _initialize_sample_data(self):
+        """Initialize with sample data for testing"""
+        # Add some sample account history
+        base_time = datetime.now() - timedelta(hours=1)
+        for i in range(10):
+            timestamp = base_time + timedelta(minutes=i*6)
+            balance = 10000 + (i * 50)
+            equity = balance + (i * 25)
+            
+            self.account_history["timestamps"].append(timestamp.isoformat())
+            self.account_history["balance"].append(balance)
+            self.account_history["equity"].append(equity)
+            self.account_history["profit"].append(equity - balance)
+            self.account_history["drawdown"].append(max(0, (10000 - equity) / 10000 * 100))
+        
+        # Add some sample trades
+        for i in range(5):
+            trade = {
+                'timestamp': (datetime.now() - timedelta(minutes=i*10)).isoformat(),
+                'symbol': ['EURUSD', 'GBPUSD', 'AUDUSD', 'USDCAD', 'XAUUSD'][i],
+                'direction': ['long', 'short'][i % 2],
+                'volume': 0.1 + (i * 0.05),
+                'entry_price': 1.0500 + (i * 0.0010),
+                'tp': 1.0550 + (i * 0.0010),
+                'profit': (i - 2) * 15.50,
+                'layer': 1,
+                'is_martingale': False,
+                'comment': f'BM0{i+1}_TEST_B01'
+            }
+            self.trade_log.appendleft(trade)
+        
+        # Add some sample signals
+        for i in range(3):
+            signal = {
+                'timestamp': (datetime.now() - timedelta(minutes=i*15)).isoformat(),
+                'symbol': ['BTCUSD', 'US500', 'XAUUSD'][i],
+                'direction': ['long', 'short', 'long'][i],
+                'entry_price': 50000 + (i * 1000),
+                'tp': 50500 + (i * 1000),
+                'sl_distance_pips': 20,
+                'tp_distance_pips': 50,
+                'risk_profile': ['High', 'Medium', 'Low'][i],
+                'adx_value': 25 + i * 5,
+                'rsi': 45 + i * 10,
+                'timeframes_aligned': i + 1,
+                'is_initial': True
+            }
+            self.recent_signals.appendleft(signal)
+    
     def update_live_data(self, data):
         """Update live data from webhook"""
         try:
             self.live_data.update(data)
             self.live_data["timestamp"] = datetime.now().isoformat()
             self.last_update = datetime.now()
-            logger.debug("Live data updated via webhook")
+            self.update_count += 1
+            logger.info(f"Live data updated via webhook (update #{self.update_count})")
         except Exception as e:
+            self.error_count += 1
             logger.error(f"Error updating live data: {e}")
     
     def add_account_update(self, data):
@@ -83,24 +139,22 @@ class RealTimeDataStore:
         try:
             now = datetime.now()
             
-            # Only add if enough time has passed (avoid spam)
-            if (not self.account_history["timestamps"] or 
-                (now - datetime.fromisoformat(self.account_history["timestamps"][-1])).total_seconds() > 60):
-                
-                self.account_history["timestamps"].append(now.isoformat())
-                self.account_history["balance"].append(data.get("balance", 0))
-                self.account_history["equity"].append(data.get("equity", 0))
-                self.account_history["profit"].append(data.get("profit", 0))
-                self.account_history["drawdown"].append(data.get("drawdown", 0))
-                
-                # Keep only last 1000 points
-                for key in ['timestamps', 'balance', 'equity', 'profit', 'drawdown']:
-                    if len(self.account_history[key]) > 1000:
-                        self.account_history[key] = self.account_history[key][-1000:]
-                
-                logger.debug("Account history updated")
+            # Add new data point
+            self.account_history["timestamps"].append(now.isoformat())
+            self.account_history["balance"].append(data.get("balance", 0))
+            self.account_history["equity"].append(data.get("equity", 0))
+            self.account_history["profit"].append(data.get("profit", 0))
+            self.account_history["drawdown"].append(data.get("drawdown", 0))
+            
+            # Keep only last 1000 points
+            for key in ['timestamps', 'balance', 'equity', 'profit', 'drawdown']:
+                if len(self.account_history[key]) > 1000:
+                    self.account_history[key] = self.account_history[key][-1000:]
+            
+            logger.info("Account history updated")
                 
         except Exception as e:
+            self.error_count += 1
             logger.error(f"Error adding account update: {e}")
     
     def add_trade_event(self, data):
@@ -127,6 +181,7 @@ class RealTimeDataStore:
             logger.info(f"Added trade event: {data.get('symbol')} {data.get('direction')}")
             
         except Exception as e:
+            self.error_count += 1
             logger.error(f"Error adding trade event: {e}")
     
     def add_signal(self, data):
@@ -151,6 +206,7 @@ class RealTimeDataStore:
             logger.info(f"Added signal: {data.get('symbol')} {data.get('direction')}")
             
         except Exception as e:
+            self.error_count += 1
             logger.error(f"Error adding signal: {e}")
     
     def is_connected(self):
@@ -164,26 +220,42 @@ class RealTimeDataStore:
         return {
             'connected': self.is_connected(),
             'last_update': self.last_update.isoformat(),
-            'seconds_since_update': int(time_since_update)
+            'seconds_since_update': int(time_since_update),
+            'update_count': self.update_count,
+            'error_count': self.error_count
+        }
+    
+    def get_status_summary(self):
+        """Get status summary for debugging"""
+        return {
+            'total_updates': self.update_count,
+            'total_errors': self.error_count,
+            'last_update': self.last_update.isoformat(),
+            'connected': self.is_connected(),
+            'trade_count': len(self.trade_log),
+            'signal_count': len(self.recent_signals),
+            'chart_points': len(self.account_history['timestamps'])
         }
 
 # Initialize data store
-data_store = RealTimeDataStore()
+data_store = EnhancedRealTimeDataStore()
 
-# ===== WEBHOOK ENDPOINTS =====
+# ===== ENHANCED WEBHOOK ENDPOINTS =====
 @app.route('/webhook/live_data', methods=['POST'])
 def webhook_live_data():
     """Receive live data updates from bot"""
     try:
         data = request.json
         if not data:
+            logger.warning("No data received in live_data webhook")
             return jsonify({"status": "error", "message": "No data received"}), 400
         
         data_store.update_live_data(data)
-        logger.debug("Live data webhook received")
-        return jsonify({"status": "success"})
+        logger.info("Live data webhook received and processed successfully")
+        return jsonify({"status": "success", "message": "Live data updated"})
         
     except Exception as e:
+        data_store.error_count += 1
         logger.error(f"Webhook live_data error: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
@@ -193,13 +265,15 @@ def webhook_account_update():
     try:
         data = request.json
         if not data:
+            logger.warning("No data received in account_update webhook")
             return jsonify({"status": "error", "message": "No data received"}), 400
         
         data_store.add_account_update(data)
-        logger.debug("Account update webhook received")
-        return jsonify({"status": "success"})
+        logger.info("Account update webhook received and processed successfully")
+        return jsonify({"status": "success", "message": "Account updated"})
         
     except Exception as e:
+        data_store.error_count += 1
         logger.error(f"Webhook account_update error: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
@@ -209,13 +283,15 @@ def webhook_trade_event():
     try:
         data = request.json
         if not data:
+            logger.warning("No data received in trade_event webhook")
             return jsonify({"status": "error", "message": "No data received"}), 400
         
         data_store.add_trade_event(data)
         logger.info(f"Trade event webhook: {data.get('symbol')} {data.get('direction')}")
-        return jsonify({"status": "success"})
+        return jsonify({"status": "success", "message": "Trade event added"})
         
     except Exception as e:
+        data_store.error_count += 1
         logger.error(f"Webhook trade_event error: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
@@ -225,24 +301,27 @@ def webhook_signal_generated():
     try:
         data = request.json
         if not data:
+            logger.warning("No data received in signal_generated webhook")
             return jsonify({"status": "error", "message": "No data received"}), 400
         
         data_store.add_signal(data)
         logger.info(f"Signal webhook: {data.get('symbol')} {data.get('direction')}")
-        return jsonify({"status": "success"})
+        return jsonify({"status": "success", "message": "Signal added"})
         
     except Exception as e:
+        data_store.error_count += 1
         logger.error(f"Webhook signal_generated error: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
-# ===== API ENDPOINTS (Updated to use webhook data) =====
+# ===== ENHANCED API ENDPOINTS =====
 @app.route('/api/live_data')
 def api_live_data():
-    """API endpoint for live data - now uses webhook data"""
+    """API endpoint for live data"""
     try:
-        # Add connection status
+        # Add connection status and update info
         live_data = data_store.live_data.copy()
         live_data['connection_status'] = data_store.get_connection_status()
+        live_data['data_store_status'] = data_store.get_status_summary()
         
         return jsonify(live_data)
     except Exception as e:
@@ -251,7 +330,7 @@ def api_live_data():
 
 @app.route('/api/account_history')
 def api_account_history():
-    """API endpoint for account history - now uses webhook data"""
+    """API endpoint for account history"""
     try:
         return jsonify(data_store.account_history)
     except Exception as e:
@@ -260,7 +339,7 @@ def api_account_history():
 
 @app.route('/api/trade_log')
 def api_trade_log():
-    """API endpoint for trade log - now uses webhook data"""
+    """API endpoint for trade log"""
     try:
         # Convert deque to list for JSON serialization
         trades = list(data_store.trade_log)
@@ -271,7 +350,7 @@ def api_trade_log():
 
 @app.route('/api/recent_signals')
 def api_recent_signals():
-    """API endpoint for recent signals - now uses webhook data"""
+    """API endpoint for recent signals"""
     try:
         # Convert deque to list for JSON serialization
         signals = list(data_store.recent_signals)
@@ -289,7 +368,129 @@ def api_connection_status():
         logger.error(f"Error in connection_status API: {e}")
         return jsonify({"error": "Failed to get connection status"}), 500
 
-# ===== CHART GENERATION =====
+@app.route('/api/mt5_status')
+def api_mt5_status():
+    """API endpoint for MT5 connection status"""
+    try:
+        # This would normally check actual MT5 connection
+        # For now, return based on recent webhook activity
+        is_connected = data_store.is_connected()
+        return jsonify({
+            'mt5_connected': is_connected,
+            'last_update': data_store.last_update.isoformat(),
+            'update_count': data_store.update_count
+        })
+    except Exception as e:
+        logger.error(f"Error in mt5_status API: {e}")
+        return jsonify({"error": "Failed to get MT5 status"}), 500
+
+# ===== DEBUG AND STATUS ENDPOINTS =====
+@app.route('/api/dashboard_status')
+def api_dashboard_status():
+    """Dashboard status endpoint"""
+    try:
+        status = {
+            'timestamp': datetime.now().isoformat(),
+            'uptime_seconds': int(time.time() - app.config.get('START_TIME', time.time())),
+            'data_store': data_store.get_status_summary(),
+            'connection': data_store.get_connection_status(),
+            'webhook_endpoints': [
+                '/webhook/live_data',
+                '/webhook/account_update', 
+                '/webhook/trade_event',
+                '/webhook/signal_generated'
+            ],
+            'api_endpoints': [
+                '/api/live_data',
+                '/api/account_history',
+                '/api/trade_log',
+                '/api/recent_signals'
+            ]
+        }
+        return jsonify(status)
+    except Exception as e:
+        logger.error(f"Error getting dashboard status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/debug/data_store')
+def debug_data_store():
+    """Debug endpoint to check data store contents"""
+    try:
+        debug_info = {
+            'live_data': data_store.live_data,
+            'account_history_count': len(data_store.account_history['timestamps']),
+            'trade_log_count': len(data_store.trade_log),
+            'signals_count': len(data_store.recent_signals),
+            'last_update': data_store.last_update.isoformat(),
+            'connection_status': data_store.get_connection_status(),
+            'status_summary': data_store.get_status_summary()
+        }
+        return jsonify(debug_info)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# ===== TEST ENDPOINTS FOR DEBUGGING =====
+@app.route('/test/webhook', methods=['POST'])
+def test_webhook():
+    """Test webhook endpoint for debugging"""
+    try:
+        logger.info("Test webhook called")
+        data = request.json or {"test": "data"}
+        
+        # Simulate a live data update
+        test_data = {
+            "timestamp": datetime.now().isoformat(),
+            "robot_status": "Running",
+            "account": {
+                "balance": 10000.00,
+                "equity": 10125.50,
+                "profit": 125.50
+            },
+            "active_trades": 3,
+            "test_mode": True
+        }
+        
+        data_store.update_live_data(test_data)
+        
+        return jsonify({
+            "status": "success", 
+            "message": "Test webhook processed",
+            "data_received": data,
+            "update_count": data_store.update_count
+        })
+    except Exception as e:
+        logger.error(f"Test webhook error: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/test/simulate_trade')
+def test_simulate_trade():
+    """Simulate a trade for testing"""
+    try:
+        trade_data = {
+            'timestamp': datetime.now().isoformat(),
+            'symbol': 'EURUSD',
+            'direction': 'long',
+            'volume': 0.10,
+            'entry_price': 1.0950,
+            'tp': 1.1000,
+            'profit': 45.50,
+            'layer': 1,
+            'is_martingale': False,
+            'comment': 'TEST_TRADE'
+        }
+        
+        data_store.add_trade_event(trade_data)
+        
+        return jsonify({
+            "status": "success",
+            "message": "Test trade added",
+            "trade": trade_data
+        })
+    except Exception as e:
+        logger.error(f"Test trade error: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+# ===== CHART GENERATION (Fixed) =====
 def create_balance_chart():
     """Create balance/equity chart from webhook data"""
     try:
@@ -508,49 +709,6 @@ def api_trading_intelligence():
         logger.error(f"Error in trading intelligence API: {e}")
         return jsonify({"error": "Failed to get trading intelligence data", "details": str(e)}), 500
 
-# ===== STATUS AND DEBUG ENDPOINTS =====
-@app.route('/api/dashboard_status')
-def api_dashboard_status():
-    """Dashboard status endpoint"""
-    try:
-        status = {
-            'timestamp': datetime.now().isoformat(),
-            'uptime_seconds': int(time.time() - app.config.get('START_TIME', time.time())),
-            'data_store': {
-                'live_data_age': (datetime.now() - data_store.last_update).total_seconds(),
-                'account_history_points': len(data_store.account_history['timestamps']),
-                'trade_log_count': len(data_store.trade_log),
-                'signals_count': len(data_store.recent_signals)
-            },
-            'connection': data_store.get_connection_status(),
-            'webhook_endpoints': [
-                '/webhook/live_data',
-                '/webhook/account_update', 
-                '/webhook/trade_event',
-                '/webhook/signal_generated'
-            ]
-        }
-        return jsonify(status)
-    except Exception as e:
-        logger.error(f"Error getting dashboard status: {e}")
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/debug/data_store')
-def debug_data_store():
-    """Debug endpoint to check data store contents"""
-    try:
-        debug_info = {
-            'live_data': data_store.live_data,
-            'account_history_count': len(data_store.account_history['timestamps']),
-            'trade_log_count': len(data_store.trade_log),
-            'signals_count': len(data_store.recent_signals),
-            'last_update': data_store.last_update.isoformat(),
-            'connection_status': data_store.get_connection_status()
-        }
-        return jsonify(debug_info)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 # ===== BACKGROUND TASKS =====
 def start_background_tasks():
     """Start background maintenance tasks"""
@@ -558,6 +716,9 @@ def start_background_tasks():
         """Periodic maintenance"""
         while True:
             try:
+                # Log status every 5 minutes
+                logger.info(f"📊 Dashboard Status: {data_store.update_count} updates, {data_store.error_count} errors")
+                
                 # Clean old data periodically
                 now = datetime.now()
                 
@@ -581,8 +742,6 @@ def start_background_tasks():
                 if not data_store.is_connected():
                     data_store.live_data['robot_status'] = 'Disconnected'
                 
-                logger.debug("Maintenance task completed")
-                
             except Exception as e:
                 logger.error(f"Error in maintenance task: {e}")
             
@@ -602,13 +761,15 @@ if __name__ == '__main__':
     start_background_tasks()
     
     print("="*80)
-    print("BM TRADING ROBOT - FIXED FLASK DASHBOARD")
+    print("BM TRADING ROBOT - ENHANCED FLASK DASHBOARD")
     print("="*80)
-    print("🌟 Features:")
+    print("🌟 Enhanced Features:")
     print("  ✅ Real-time webhook data processing")
     print("  ✅ Live updates for all dashboard pages")
-    print("  ✅ Proper connection status monitoring")
-    print("  ✅ Enhanced error handling and logging")
+    print("  ✅ Enhanced connection status monitoring")
+    print("  ✅ Improved error handling and logging")
+    print("  ✅ Debug endpoints for troubleshooting")
+    print("  ✅ Test endpoints for development")
     print("")
     print("📊 Dashboard URLs:")
     print("  Main Dashboard: http://localhost:5000")
@@ -629,8 +790,13 @@ if __name__ == '__main__':
     print("  Trade Event:    POST http://localhost:5000/webhook/trade_event")
     print("  Signal Event:   POST http://localhost:5000/webhook/signal_generated")
     print("")
+    print("🧪 Test Endpoints:")
+    print("  Test Webhook:   POST http://localhost:5000/test/webhook")
+    print("  Simulate Trade: GET  http://localhost:5000/test/simulate_trade")
+    print("")
     print("🔍 Debug Endpoints:")
     print("  Data Store:     http://localhost:5000/debug/data_store")
+    print("  Connection:     http://localhost:5000/api/connection_status")
     print("="*80)
     
     app.run(debug=False, host='0.0.0.0', port=5000, threaded=True)
