@@ -1,0 +1,94 @@
+{
+  "system": {
+    "master_enabled": true,
+    "log_level": "INFO",
+    "log_file": "market_intelligence.log",
+    "data_retention_days": 30
+  },
+  "scrapers": {
+    "sentiment": {
+      "enabled": true,
+      "interval_minutes": 30,
+      "threshold": 60,
+      "balanced_range": [
+        40,
+        60
+      ],
+      "output_file": "sentiment_signals.json",
+      "monitored_pairs": [
+        "AUDUSD",
+        "USDCAD",
+        "XAUUSD",
+        "EURUSD",
+        "GBPUSD"
+      ]
+    },
+    "correlation": {
+      "enabled": true,
+      "interval_minutes": 30,
+      "high_threshold": 70,
+      "negative_threshold": -70,
+      "output_file": "correlation_data.json"
+    },
+    "cot": {
+      "enabled": true,
+      "update_day": "friday",
+      "update_time": "18:00",
+      "historical_weeks": 6,
+      "output_csv": "cot_consolidated_data.csv",
+      "output_json": "cot_consolidated_data.json"
+    },
+    "calendar": {
+      "enabled": true,
+      "update_hours": [
+        6,
+        12,
+        18
+      ],
+      "days_ahead": 3,
+      "output_file": "economic_calendar.json",
+      "impact_filter": [
+        "High",
+        "Medium"
+      ]
+    }
+  },
+  "intelligence": {
+    "enabled": true,
+    "fusion_interval_minutes": 5,
+    "output_file": "market_intelligence.json",
+    "risk_weights": {
+      "sentiment": 0.25,
+      "correlation": 0.3,
+      "cot": 0.25,
+      "calendar": 0.2
+    },
+    "signal_thresholds": {
+      "strong_signal": 0.75,
+      "moderate_signal": 0.5,
+      "weak_signal": 0.25
+    }
+  },
+  "trading_pairs": {
+    "monitored": [
+      "AUDUSD",
+      "USDCAD",
+      "XAUUSD",
+      "EURUSD",
+      "GBPUSD",
+      "AUDCAD",
+      "USDCHF",
+      "GBPCAD",
+      "AUDNZD",
+      "NZDCAD",
+      "US500",
+      "BTCUSD"
+    ],
+    "priority": [
+      "XAUUSD",
+      "EURUSD",
+      "GBPUSD",
+      "AUDUSD"
+    ]
+  }
+}
