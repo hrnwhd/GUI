@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BM Trading Robot - Optimized Dashboard</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -130,32 +129,6 @@
             opacity: 0.7;
         }
 
-        .status-card.updating .value {
-            color: #FFC107;
-        }
-
-        .update-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4CAF50;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .update-indicator.show {
-            opacity: 1;
-            animation: flash 0.5s ease;
-        }
-
-        @keyframes flash {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
         .status-running {
             border-left: 4px solid #4CAF50;
         }
@@ -206,22 +179,6 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
-        }
-
-        .trade-item.new-trade {
-            animation: slideIn 0.5s ease;
-            background: rgba(76, 175, 80, 0.2);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
 
         .trade-buy {
@@ -275,16 +232,6 @@
             padding: 1rem;
             margin-bottom: 1rem;
             border-left: 4px solid #2196F3;
-            transition: all 0.3s ease;
-        }
-
-        .batch-item.updated {
-            animation: highlight 0.5s ease;
-        }
-
-        @keyframes highlight {
-            0% { background: rgba(76, 175, 80, 0.3); }
-            100% { background: rgba(0, 0, 0, 0.2); }
         }
 
         .batch-header {
@@ -315,19 +262,20 @@
             opacity: 0.7;
         }
 
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ffffff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+        .simple-chart {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .chart-placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
         }
 
         .refresh-btn {
@@ -355,16 +303,19 @@
             animation: spin 1s linear infinite;
         }
 
-        .performance-stats {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            background: rgba(0, 0, 0, 0.8);
-            color: #4CAF50;
-            padding: 0.5rem 1rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+            padding: 1rem;
             border-radius: 8px;
-            font-size: 0.8rem;
-            font-family: 'Courier New', monospace;
+            margin-bottom: 1rem;
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -399,38 +350,37 @@
     </div>
 
     <div class="container">
+        <div id="error-message" class="error-message">
+            <i class="fas fa-exclamation-triangle"></i> <span id="error-text">Connection error</span>
+        </div>
+
         <!-- Status Bar -->
         <div class="status-bar">
             <div class="status-card" id="robot-status">
-                <div class="update-indicator" id="status-indicator"></div>
                 <h3><i class="fas fa-power-off"></i> Robot Status</h3>
                 <div class="value" id="status-value">Loading...</div>
                 <div class="change" id="status-change">Checking connection...</div>
             </div>
             
             <div class="status-card">
-                <div class="update-indicator" id="balance-indicator"></div>
                 <h3><i class="fas fa-dollar-sign"></i> Account Balance</h3>
                 <div class="value" id="balance-value">$0.00</div>
                 <div class="change" id="balance-change">Equity: $0.00</div>
             </div>
             
             <div class="status-card">
-                <div class="update-indicator" id="pnl-indicator"></div>
                 <h3><i class="fas fa-chart-area"></i> P&L</h3>
                 <div class="value" id="pnl-value">$0.00</div>
                 <div class="change" id="pnl-change">0.00%</div>
             </div>
             
             <div class="status-card">
-                <div class="update-indicator" id="trades-indicator"></div>
                 <h3><i class="fas fa-layer-group"></i> Active Trades</h3>
                 <div class="value" id="trades-value">0</div>
                 <div class="change" id="trades-change">0 batches</div>
             </div>
             
             <div class="status-card">
-                <div class="update-indicator" id="drawdown-indicator"></div>
                 <h3><i class="fas fa-chart-line"></i> Drawdown</h3>
                 <div class="value" id="drawdown-value">0.00%</div>
                 <div class="change" id="drawdown-change">Max: 0.00%</div>
@@ -442,11 +392,8 @@
             <!-- Charts -->
             <div class="chart-container">
                 <h3><i class="fas fa-chart-area"></i> Account Performance</h3>
-                <div id="balance-chart" style="height: 400px;">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Loading chart data...
-                    </div>
+                <div id="balance-chart" class="simple-chart">
+                    <div class="chart-placeholder">Chart loading...</div>
                 </div>
             </div>
 
@@ -454,10 +401,7 @@
             <div class="trades-container">
                 <h3><i class="fas fa-history"></i> Active & Recent Trades</h3>
                 <div id="recent-trades">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Loading trades...
-                    </div>
+                    <div class="loading">Loading trades...</div>
                 </div>
             </div>
         </div>
@@ -465,11 +409,8 @@
         <!-- Drawdown Chart -->
         <div class="chart-container">
             <h3><i class="fas fa-chart-line"></i> Drawdown Analysis</h3>
-            <div id="drawdown-chart" style="height: 300px;">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    Loading drawdown data...
-                </div>
+            <div id="drawdown-chart" class="simple-chart">
+                <div class="chart-placeholder">Drawdown chart loading...</div>
             </div>
         </div>
 
@@ -477,10 +418,7 @@
         <div class="batches-section">
             <h3><i class="fas fa-layer-group"></i> Active Martingale Batches</h3>
             <div id="active-batches">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    Loading batch data...
-                </div>
+                <div class="loading">Loading batch data...</div>
             </div>
         </div>
     </div>
@@ -489,283 +427,204 @@
         <i class="fas fa-sync-alt"></i>
     </button>
 
-    <!-- Performance Stats -->
-    <div class="performance-stats" id="performance-stats">
-        Updates: 0 | Errors: 0 | Last: Never
-    </div>
-
     <script>
-        // Global state management
+        // ===== OPTIMIZED DASHBOARD JAVASCRIPT =====
+        // Much faster, more reliable, with better error handling
+
         let state = {
-            refreshInterval: null,
-            isRefreshing: false,
-            updateCount: 0,
+            lastDataUpdate: 0,
             errorCount: 0,
-            lastUpdate: null,
-            lastData: {},
+            updateCount: 0,
             connectionStatus: false,
-            charts: {
-                balance: null,
-                drawdown: null
-            }
+            isRefreshing: false,
+            lastTradeCount: 0,
+            lastBatchCount: 0
         };
 
-        // Optimized update intervals
-        const FAST_UPDATE_INTERVAL = 2000;  // 2 seconds for live data
-        const SLOW_UPDATE_INTERVAL = 10000; // 10 seconds for charts
-        const CONNECTION_CHECK_INTERVAL = 5000; // 5 seconds
+        // ===== CONFIGURATION =====
+        const CONFIG = {
+            updateInterval: 5000,      // 5 seconds - much slower, more reliable
+            fastUpdateInterval: 2000,  // 2 seconds for critical data
+            maxRetries: 3,
+            timeout: 10000,            // 10 second timeout
+            fallbackToJson: true       // Use JSON files as fallback
+        };
 
-        function startOptimizedUpdates() {
-            // Fast updates for live data
-            setInterval(updateLiveData, FAST_UPDATE_INTERVAL);
+        // ===== OPTIMIZED FETCH WITH FALLBACK =====
+        async function safeFetch(url, options = {}) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
             
-            // Slower updates for charts
-            setInterval(updateCharts, SLOW_UPDATE_INTERVAL);
-            
-            // Connection status checks
-            setInterval(checkConnectionStatus, CONNECTION_CHECK_INTERVAL);
-            
-            // Initial load
-            updateLiveData();
-            updateCharts();
-            updateRecentTrades();
-            updateActiveBatches();
-        }
-
-        async function fetchJSON(url) {
             try {
                 const response = await fetch(url, {
-                    cache: 'no-cache',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
-                    }
+                    ...options,
+                    signal: controller.signal,
+                    cache: 'no-cache'
                 });
+                
+                clearTimeout(timeoutId);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
                 
                 return await response.json();
+                
             } catch (error) {
-                console.error(`Error fetching ${url}:`, error);
-                state.errorCount++;
-                updatePerformanceStats();
-                return null;
-            }
-        }
-
-        async function checkConnectionStatus() {
-            try {
-                const status = await fetchJSON('/api/mt5_status');
-                if (status) {
-                    const connected = status.mt5_connected;
-                    const indicator = document.getElementById('connection-indicator');
-                    const text = document.getElementById('connection-text');
-                    
-                    if (connected !== state.connectionStatus) {
-                        state.connectionStatus = connected;
+                clearTimeout(timeoutId);
+                
+                console.warn(`Primary fetch failed for ${url}:`, error.message);
+                
+                // Try JSON fallback if enabled
+                if (CONFIG.fallbackToJson && url.includes('/api/')) {
+                    try {
+                        const jsonUrl = url.replace('/api/', '/api/json/');
+                        console.log(`Trying JSON fallback: ${jsonUrl}`);
                         
-                        if (connected) {
-                            indicator.classList.add('connected');
-                            text.textContent = 'MT5 Connected';
-                        } else {
-                            indicator.classList.remove('connected');
-                            text.textContent = 'File Mode';
+                        const fallbackResponse = await fetch(jsonUrl, {
+                            cache: 'no-cache',
+                            timeout: 5000
+                        });
+                        
+                        if (fallbackResponse.ok) {
+                            console.log(`✅ JSON fallback successful for ${url}`);
+                            return await fallbackResponse.json();
                         }
+                    } catch (fallbackError) {
+                        console.warn(`JSON fallback also failed:`, fallbackError.message);
                     }
                 }
-            } catch (error) {
-                console.error('Connection check failed:', error);
+                
+                throw error;
             }
         }
 
-        async function updateLiveData() {
+        // ===== MAIN UPDATE FUNCTIONS =====
+        async function updateDashboard() {
             if (state.isRefreshing) return;
             
             try {
-                const data = await fetchJSON('/api/live_data');
-                if (!data) return;
-
-                state.updateCount++;
-                state.lastUpdate = new Date();
-                updatePerformanceStats();
-
-                // Compare with last data to detect changes
-                const changes = detectChanges(state.lastData, data);
-                state.lastData = JSON.parse(JSON.stringify(data)); // Deep copy
-
-                // Update status with change indicators
-                updateStatusCards(data, changes);
-
+                state.isRefreshing = true;
+                hideError();
+                
+                // Get live data
+                const liveData = await safeFetch('/api/live_data');
+                if (liveData && !liveData.error) {
+                    updateStatusCards(liveData);
+                    updateConnectionStatus(liveData.connection_status);
+                    updateActiveBatches(liveData.batches || []);
+                    state.updateCount++;
+                    state.lastDataUpdate = Date.now();
+                }
+                
+                // Get recent trades (less frequently)
+                if (state.updateCount % 2 === 0) {
+                    await updateRecentTrades();
+                }
+                
+                // Get charts (even less frequently)
+                if (state.updateCount % 4 === 0) {
+                    await updateCharts();
+                }
+                
+                state.errorCount = 0; // Reset error count on success
+                
             } catch (error) {
-                console.error('Error updating live data:', error);
                 state.errorCount++;
-                updatePerformanceStats();
-            }
-        }
-
-        function detectChanges(oldData, newData) {
-            const changes = {};
-            
-            if (!oldData.account) return {};
-            
-            if (oldData.account.balance !== newData.account.balance) changes.balance = true;
-            if (oldData.account.profit !== newData.account.profit) changes.profit = true;
-            if (oldData.active_trades !== newData.active_trades) changes.trades = true;
-            if (oldData.robot_status !== newData.robot_status) changes.status = true;
-            if (oldData.drawdown_percent !== newData.drawdown_percent) changes.drawdown = true;
-            
-            return changes;
-        }
-
-        function updateStatusCards(data, changes) {
-            // Update status
-            const statusCard = document.getElementById('robot-status');
-            const statusValue = document.getElementById('status-value');
-            const statusChange = document.getElementById('status-change');
-            
-            statusValue.textContent = data.robot_status || 'Unknown';
-            statusChange.textContent = data.last_signal_time ? 
-                `Last signal: ${new Date(data.last_signal_time).toLocaleTimeString()}` : 
-                'No recent signals';
-            
-            // Update status card styling
-            statusCard.className = 'status-card';
-            if (data.robot_status === 'Running') {
-                statusCard.classList.add('status-running');
-            } else if (data.emergency_stop) {
-                statusCard.classList.add('status-emergency');
-            } else {
-                statusCard.classList.add('status-stopped');
-            }
-
-            // Show change indicators
-            if (changes.status) showUpdateIndicator('status-indicator');
-
-            // Update account data
-            if (data.account) {
-                const balanceValue = document.getElementById('balance-value');
-                const balanceChange = document.getElementById('balance-change');
+                console.error('Dashboard update error:', error);
                 
-                balanceValue.textContent = `$${data.account.balance?.toFixed(2) || '0.00'}`;
-                balanceChange.textContent = `Equity: $${data.account.equity?.toFixed(2) || '0.00'}`;
-                
-                if (changes.balance) {
-                    showUpdateIndicator('balance-indicator');
-                    balanceValue.parentElement.classList.add('updating');
-                    setTimeout(() => balanceValue.parentElement.classList.remove('updating'), 1000);
+                if (state.errorCount >= 3) {
+                    showError(`Connection issues detected. Retrying... (Error ${state.errorCount})`);
                 }
                 
-                const profit = data.account.profit || 0;
-                const pnlElement = document.getElementById('pnl-value');
-                const pnlChange = document.getElementById('pnl-change');
+                // Try to maintain connection status
+                updateConnectionStatus({ connected: false });
                 
-                pnlElement.textContent = `$${profit.toFixed(2)}`;
-                pnlElement.className = `value ${profit >= 0 ? 'profit-positive' : 'profit-negative'}`;
-                
-                const profitPercent = data.account.balance ? 
-                    ((profit / data.account.balance) * 100).toFixed(2) : '0.00';
-                pnlChange.textContent = `${profitPercent}%`;
-                
-                if (changes.profit) {
-                    showUpdateIndicator('pnl-indicator');
-                    pnlElement.parentElement.classList.add('updating');
-                    setTimeout(() => pnlElement.parentElement.classList.remove('updating'), 1000);
-                }
-            }
-
-            // Update trades info
-            const tradesValue = document.getElementById('trades-value');
-            const tradesChange = document.getElementById('trades-change');
-            
-            tradesValue.textContent = data.active_trades || 0;
-            tradesChange.textContent = `${data.active_batches || 0} batches`;
-            
-            if (changes.trades) {
-                showUpdateIndicator('trades-indicator');
-                tradesValue.parentElement.classList.add('updating');
-                setTimeout(() => tradesValue.parentElement.classList.remove('updating'), 1000);
-            }
-            
-            // Update drawdown
-            const drawdown = data.drawdown_percent || 0;
-            const drawdownElement = document.getElementById('drawdown-value');
-            const drawdownChange = document.getElementById('drawdown-change');
-            
-            drawdownElement.textContent = `${drawdown.toFixed(2)}%`;
-            drawdownElement.className = `value ${drawdown > 10 ? 'profit-negative' : ''}`;
-            drawdownChange.textContent = `Max: ${drawdown.toFixed(2)}%`;
-            
-            if (changes.drawdown) {
-                showUpdateIndicator('drawdown-indicator');
-                drawdownElement.parentElement.classList.add('updating');
-                setTimeout(() => drawdownElement.parentElement.classList.remove('updating'), 1000);
+            } finally {
+                state.isRefreshing = false;
             }
         }
 
-        function showUpdateIndicator(elementId) {
-            const indicator = document.getElementById(elementId);
-            if (indicator) {
-                indicator.classList.add('show');
-                setTimeout(() => indicator.classList.remove('show'), 2000);
-            }
-        }
-
-        async function updateCharts() {
+        function updateStatusCards(data) {
             try {
-                // Balance chart with better error handling
-                const balanceChartData = await fetch('/api/balance_chart', {cache: 'no-cache'}).then(r => r.text());
-                if (balanceChartData && balanceChartData !== '{}') {
-                    try {
-                        const chartConfig = JSON.parse(balanceChartData);
-                        chartConfig.config = { 
-                            responsive: true, 
-                            displayModeBar: false,
-                            staticPlot: false
-                        };
-                        
-                        if (state.charts.balance) {
-                            Plotly.redraw('balance-chart');
-                        } else {
-                            Plotly.newPlot('balance-chart', chartConfig.data, chartConfig.layout, chartConfig.config);
-                            state.charts.balance = true;
-                        }
-                    } catch (e) {
-                        console.error('Balance chart error:', e);
-                    }
+                // Robot Status
+                const statusCard = document.getElementById('robot-status');
+                const statusValue = document.getElementById('status-value');
+                const statusChange = document.getElementById('status-change');
+                
+                statusValue.textContent = data.robot_status || 'Unknown';
+                statusChange.textContent = data.last_signal_time ? 
+                    `Last signal: ${new Date(data.last_signal_time).toLocaleTimeString()}` : 
+                    'No recent signals';
+                
+                // Update status card styling
+                statusCard.className = 'status-card';
+                if (data.robot_status === 'Running') {
+                    statusCard.classList.add('status-running');
+                } else if (data.emergency_stop) {
+                    statusCard.classList.add('status-emergency');
+                } else {
+                    statusCard.classList.add('status-stopped');
                 }
 
-                // Drawdown chart
-                const drawdownChartData = await fetch('/api/drawdown_chart', {cache: 'no-cache'}).then(r => r.text());
-                if (drawdownChartData && drawdownChartData !== '{}') {
-                    try {
-                        const chartConfig = JSON.parse(drawdownChartData);
-                        chartConfig.config = { 
-                            responsive: true, 
-                            displayModeBar: false,
-                            staticPlot: false
-                        };
-                        
-                        if (state.charts.drawdown) {
-                            Plotly.redraw('drawdown-chart');
-                        } else {
-                            Plotly.newPlot('drawdown-chart', chartConfig.data, chartConfig.layout, chartConfig.config);
-                            state.charts.drawdown = true;
-                        }
-                    } catch (e) {
-                        console.error('Drawdown chart error:', e);
-                    }
+                // Account data
+                if (data.account) {
+                    document.getElementById('balance-value').textContent = 
+                        `${(data.account.balance || 0).toFixed(2)}`;
+                    document.getElementById('balance-change').textContent = 
+                        `Equity: ${(data.account.equity || 0).toFixed(2)}`;
+                    
+                    const profit = data.account.profit || 0;
+                    const pnlElement = document.getElementById('pnl-value');
+                    pnlElement.textContent = `${profit.toFixed(2)}`;
+                    pnlElement.className = `value ${profit >= 0 ? 'profit-positive' : 'profit-negative'}`;
+                    
+                    const profitPercent = data.account.balance ? 
+                        ((profit / data.account.balance) * 100).toFixed(2) : '0.00';
+                    document.getElementById('pnl-change').textContent = `${profitPercent}%`;
                 }
+
+                // Trades info
+                document.getElementById('trades-value').textContent = data.active_trades || 0;
+                document.getElementById('trades-change').textContent = `${data.active_batches || 0} batches`;
+                
+                // Drawdown
+                const drawdown = data.drawdown_percent || 0;
+                const drawdownElement = document.getElementById('drawdown-value');
+                drawdownElement.textContent = `${drawdown.toFixed(2)}%`;
+                drawdownElement.className = `value ${drawdown > 10 ? 'profit-negative' : ''}`;
+                document.getElementById('drawdown-change').textContent = `Max: ${drawdown.toFixed(2)}%`;
+                
             } catch (error) {
-                console.error('Error updating charts:', error);
+                console.error('Error updating status cards:', error);
+            }
+        }
+
+        function updateConnectionStatus(connectionStatus) {
+            try {
+                const indicator = document.getElementById('connection-indicator');
+                const text = document.getElementById('connection-text');
+                
+                const connected = connectionStatus?.connected || false;
+                state.connectionStatus = connected;
+                
+                if (connected) {
+                    indicator.classList.add('connected');
+                    text.textContent = 'Connected';
+                } else {
+                    indicator.classList.remove('connected');
+                    text.textContent = 'Disconnected';
+                }
+                
+            } catch (error) {
+                console.error('Error updating connection status:', error);
             }
         }
 
         async function updateRecentTrades() {
             try {
-                const trades = await fetchJSON('/api/trade_log');
-                if (!trades) return;
+                const trades = await safeFetch('/api/trade_log');
+                if (!trades || trades.error) return;
 
                 const container = document.getElementById('recent-trades');
                 
@@ -774,21 +633,19 @@
                     return;
                 }
 
-                const recentTrades = trades.slice(0, 10); // Show last 10
+                const recentTrades = trades.slice(0, 10);
                 
-                const newHtml = recentTrades.map((trade, index) => {
+                const newHtml = recentTrades.map(trade => {
                     const isLong = trade.direction === 'long';
                     const profit = trade.profit || 0;
                     const profitClass = profit >= 0 ? 'profit-positive' : 'profit-negative';
-                    const isNew = index === 0 && trades.length > (state.lastTradeCount || 0);
                     
                     return `
-                        <div class="trade-item ${isLong ? 'trade-buy' : 'trade-sell'} ${isNew ? 'new-trade' : ''}">
+                        <div class="trade-item ${isLong ? 'trade-buy' : 'trade-sell'}">
                             <div class="trade-info">
                                 <div class="trade-symbol">${trade.symbol} ${isLong ? 'BUY' : 'SELL'}</div>
                                 <div class="trade-details">
-                                    ${trade.volume} lots @ ${trade.entry_price?.toFixed ? trade.entry_price.toFixed(5) : trade.entry_price}
-                                    ${trade.comment ? `(${trade.comment})` : ''}
+                                    ${trade.volume} lots @ ${(trade.entry_price || 0).toFixed ? trade.entry_price.toFixed(5) : trade.entry_price}
                                 </div>
                                 <div class="trade-details">
                                     ${new Date(trade.timestamp).toLocaleString()}
@@ -801,53 +658,44 @@
                     `;
                 }).join('');
 
-                if (container.innerHTML !== newHtml) {
-                    container.innerHTML = newHtml;
-                }
+                container.innerHTML = newHtml;
                 
-                state.lastTradeCount = trades.length;
-
             } catch (error) {
                 console.error('Error updating trades:', error);
+                document.getElementById('recent-trades').innerHTML = 
+                    '<div class="loading">Error loading trades</div>';
             }
         }
 
-        async function updateActiveBatches() {
+        function updateActiveBatches(batches) {
             try {
-                const data = await fetchJSON('/api/live_data');
-                if (!data || !data.batches) return;
-
                 const container = document.getElementById('active-batches');
                 
-                if (!data.batches.length) {
+                if (!batches || !batches.length) {
                     container.innerHTML = '<div class="loading">No active batches</div>';
                     return;
                 }
 
-                const batchesHtml = data.batches.map(batch => {
-                    const progressPercent = (batch.current_layer / 15) * 100; // Max 15 layers
+                const batchesHtml = batches.map(batch => {
+                    const progressPercent = Math.min((batch.current_layer / 15) * 100, 100);
                     const isLong = batch.direction === 'long';
                     
                     return `
-                        <div class="batch-item" id="batch-${batch.batch_id}">
+                        <div class="batch-item">
                             <div class="batch-header">
                                 <div>
                                     <strong>${batch.symbol} ${isLong ? 'LONG' : 'SHORT'}</strong>
                                     <span style="opacity: 0.7; margin-left: 1rem;">
-                                        Batch #${batch.batch_id}
+                                        Batch #${batch.batch_id || 'N/A'}
                                     </span>
                                 </div>
                                 <div>
-                                    <strong>Layer ${batch.current_layer}/15</strong>
+                                    <strong>Layer ${batch.current_layer || 0}/15</strong>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Volume: ${batch.total_volume?.toFixed(2) || '0.00'}</span>
-                                <span>Breakeven: ${batch.breakeven_price?.toFixed(5) || '0.00000'}</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Entry: ${batch.initial_entry_price?.toFixed(5) || '0.00000'}</span>
-                                <span>Next Trigger: ${batch.next_trigger?.toFixed(5) || 'N/A'}</span>
+                                <span>Volume: ${(batch.total_volume || 0).toFixed(2)}</span>
+                                <span>Breakeven: ${(batch.breakeven_price || 0).toFixed(5)}</span>
                             </div>
                             <div class="batch-progress">
                                 <div class="batch-progress-bar" style="width: ${progressPercent}%"></div>
@@ -856,10 +704,145 @@
                     `;
                 }).join('');
 
-                if (container.innerHTML !== batchesHtml) {
-                    container.innerHTML = batchesHtml;
+                container.innerHTML = batchesHtml;
+                
+            } catch (error) {
+                console.error('Error updating batches:', error);
+            }
+        }
+
+        async function updateCharts() {
+            try {
+                // Simple chart updates without heavy Plotly
+                const balanceData = await safeFetch('/api/balance_chart');
+                if (balanceData && !balanceData.error && balanceData.timestamps) {
+                    updateSimpleChart('balance-chart', balanceData, 'balance');
+                }
+                
+                const drawdownData = await safeFetch('/api/drawdown_chart');
+                if (drawdownData && !drawdownData.error && drawdownData.timestamps) {
+                    updateSimpleChart('drawdown-chart', drawdownData, 'drawdown');
+                }
+                
+            } catch (error) {
+                console.error('Error updating charts:', error);
+            }
+        }
+
+        function updateSimpleChart(containerId, data, type) {
+            try {
+                const container = document.getElementById(containerId);
+                if (!container || !data.timestamps) return;
+                
+                // Create a simple text-based chart summary
+                let summary = '';
+                
+                if (type === 'balance') {
+                    const latestBalance = data.balance[data.balance.length - 1] || 0;
+                    const latestEquity = data.equity[data.equity.length - 1] || 0;
+                    const change = data.balance.length > 1 ? 
+                        latestEquity - data.balance[0] : 0;
                     
-                    // Add updated animation to changed batches
-                    data.batches.forEach(batch => {
-                        const element = document.getElementById(`batch-${batch.batch_id}`);
-                        if (
+                    summary = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 1rem;">
+                                Balance: ${latestBalance.toFixed(2)}
+                            </div>
+                            <div style="font-size: 1.2rem; margin-bottom: 1rem;">
+                                Equity: ${latestEquity.toFixed(2)}
+                            </div>
+                            <div style="font-size: 1rem; color: ${change >= 0 ? '#4CAF50' : '#f44336'}">
+                                Change: ${change.toFixed(2)}
+                            </div>
+                            <div style="margin-top: 1rem; opacity: 0.7; font-size: 0.8rem;">
+                                ${data.timestamps.length} data points
+                            </div>
+                        </div>
+                    `;
+                } else if (type === 'drawdown') {
+                    const maxDrawdown = Math.max(...data.drawdown, 0);
+                    const currentDrawdown = data.drawdown[data.drawdown.length - 1] || 0;
+                    
+                    summary = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 1rem;">
+                                Current: ${currentDrawdown.toFixed(2)}%
+                            </div>
+                            <div style="font-size: 1.2rem; margin-bottom: 1rem; color: #f44336;">
+                                Max: ${maxDrawdown.toFixed(2)}%
+                            </div>
+                            <div style="margin-top: 1rem; opacity: 0.7; font-size: 0.8rem;">
+                                ${data.timestamps.length} data points
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML = summary;
+                
+            } catch (error) {
+                console.error('Error updating simple chart:', error);
+            }
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 10000);
+        }
+
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function forceRefresh() {
+            const btn = document.getElementById('refresh-btn');
+            btn.classList.add('refreshing');
+            
+            state.updateCount = 0; // Force all updates
+            updateDashboard().finally(() => {
+                btn.classList.remove('refreshing');
+            });
+        }
+
+        // ===== INITIALIZATION =====
+        function startDashboard() {
+            console.log('🚀 Starting optimized dashboard...');
+            
+            // Initial update
+            updateDashboard();
+            
+            // Regular updates
+            setInterval(updateDashboard, CONFIG.updateInterval);
+            
+            // Connection check
+            setInterval(() => {
+                const timeSinceUpdate = Date.now() - state.lastDataUpdate;
+                if (timeSinceUpdate > CONFIG.updateInterval * 3) {
+                    updateConnectionStatus({ connected: false });
+                }
+            }, CONFIG.updateInterval);
+            
+            console.log('✅ Dashboard started');
+        }
+
+        // ===== STARTUP =====
+        document.addEventListener('DOMContentLoaded', startDashboard);
+        
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                console.log('Page visible - refreshing data');
+                updateDashboard();
+            }
+        });
+    </script>
+</body>
+</html>

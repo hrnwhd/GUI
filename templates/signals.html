@@ -63,134 +63,6 @@
             padding: 2rem;
         }
 
-        .signals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .signal-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .signal-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .signal-card.signal-long {
-            border-left: 4px solid #4CAF50;
-        }
-
-        .signal-card.signal-short {
-            border-left: 4px solid #f44336;
-        }
-
-        .signal-card.signal-executed {
-            background: rgba(76, 175, 80, 0.1);
-        }
-
-        .signal-card.signal-missed {
-            background: rgba(255, 152, 0, 0.1);
-        }
-
-        .signal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .signal-symbol {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .signal-direction {
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .direction-long {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-        }
-
-        .direction-short {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-        }
-
-        .signal-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .signal-detail {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-        }
-
-        .signal-detail .label {
-            opacity: 0.7;
-        }
-
-        .signal-detail .value {
-            font-weight: 500;
-        }
-
-        .signal-indicators {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 0.8rem;
-        }
-
-        .indicator {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 0.3rem 0.6rem;
-            border-radius: 12px;
-        }
-
-        .signal-time {
-            font-size: 0.8rem;
-            opacity: 0.6;
-            text-align: center;
-        }
-
-        .signal-status {
-            padding: 0.3rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .status-executed {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-        }
-
-        .status-pending {
-            background: rgba(255, 193, 7, 0.2);
-            color: #FFC107;
-        }
-
-        .status-missed {
-            background: rgba(255, 152, 0, 0.2);
-            color: #FF9800;
-        }
-
         .filters-section {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -242,25 +114,152 @@
             background: #45a049;
         }
 
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .signal-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .signal-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .signal-card.signal-long {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .signal-card.signal-short {
+            border-left: 4px solid #f44336;
+        }
+
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .signal-symbol {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .signal-direction {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .direction-long {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .direction-short {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .signal-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .signal-detail {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        .signal-detail .label {
+            opacity: 0.7;
+        }
+
+        .signal-detail .value {
+            font-weight: 500;
+        }
+
+        .signal-indicators {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .indicator {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+        }
+
+        .signal-time {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .signal-type-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .type-initial {
+            background: #2196F3;
+            color: white;
+        }
+
+        .type-martingale {
+            background: #FF9800;
+            color: white;
+        }
+
         .loading {
             text-align: center;
             padding: 3rem;
             opacity: 0.7;
         }
 
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ffffff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            opacity: 0.7;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
         }
 
         @media (max-width: 768px) {
@@ -291,6 +290,10 @@
     </div>
 
     <div class="container">
+        <div id="error-message" class="error-message">
+            <i class="fas fa-exclamation-triangle"></i> <span id="error-text">Error loading signals</span>
+        </div>
+
         <!-- Filters -->
         <div class="filters-section">
             <h3><i class="fas fa-filter"></i> Signal Filters</h3>
@@ -337,7 +340,7 @@
                 </div>
                 
                 <div class="filter-group">
-                    <button class="btn" onclick="refreshSignals()" style="background: #2196F3;">
+                    <button class="btn" onclick="loadSignals()" style="background: #2196F3;">
                         <i class="fas fa-sync-alt"></i> Refresh
                     </button>
                 </div>
@@ -346,172 +349,254 @@
 
         <!-- Signals Grid -->
         <div id="signals-container" class="signals-grid">
-            <div class="loading">
-                <div class="spinner"></div>
-                Loading recent signals...
-            </div>
+            <div class="loading">Loading recent signals...</div>
         </div>
     </div>
 
     <script>
+        // ===== OPTIMIZED SIGNALS PAGE JAVASCRIPT =====
+        
         let allSignals = [];
         let filteredSignals = [];
+        let isLoading = false;
+
+        // ===== OPTIMIZED FETCH WITH FALLBACK =====
+        async function safeFetch(url, options = {}) {
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    cache: 'no-cache',
+                    timeout: 10000
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                return await response.json();
+                
+            } catch (error) {
+                console.warn(`Primary fetch failed for ${url}:`, error.message);
+                
+                // Try JSON fallback
+                if (url.includes('/api/')) {
+                    try {
+                        const jsonUrl = url.replace('/api/', '/api/json/');
+                        const fallbackResponse = await fetch(jsonUrl, { cache: 'no-cache' });
+                        
+                        if (fallbackResponse.ok) {
+                            console.log(`✅ JSON fallback successful for ${url}`);
+                            return await fallbackResponse.json();
+                        }
+                    } catch (fallbackError) {
+                        console.warn(`JSON fallback also failed:`, fallbackError.message);
+                    }
+                }
+                
+                throw error;
+            }
+        }
 
         async function loadSignals() {
+            if (isLoading) return;
+            
             try {
-                const response = await fetch('/api/recent_signals');
-                if (!response.ok) throw new Error('Failed to load signals');
+                isLoading = true;
+                hideError();
                 
-                allSignals = await response.json();
+                const signals = await safeFetch('/api/recent_signals');
                 
-                // Sort by timestamp (newest first)
-                allSignals.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                
-                populateSymbolFilter();
-                applyFilters();
+                if (signals && !signals.error) {
+                    allSignals = Array.isArray(signals) ? signals : [];
+                    
+                    // Sort by timestamp (newest first)
+                    allSignals.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    populateSymbolFilter();
+                    applyFilters();
+                    
+                    console.log(`✅ Loaded ${allSignals.length} signals`);
+                } else {
+                    throw new Error(signals?.error || 'No data received');
+                }
                 
             } catch (error) {
                 console.error('Error loading signals:', error);
+                showError('Failed to load signals: ' + error.message);
+                
                 document.getElementById('signals-container').innerHTML = 
-                    '<div class="loading">Error loading signals: ' + error.message + '</div>';
+                    '<div class="loading">Error loading signals. Please refresh the page.</div>';
+            } finally {
+                isLoading = false;
             }
         }
 
         function populateSymbolFilter() {
-            const symbols = [...new Set(allSignals.map(s => s.symbol))].sort();
-            const symbolFilter = document.getElementById('symbol-filter');
-            
-            // Clear existing options except "All"
-            symbolFilter.innerHTML = '<option value="all">All Symbols</option>';
-            
-            symbols.forEach(symbol => {
-                const option = document.createElement('option');
-                option.value = symbol;
-                option.textContent = symbol;
-                symbolFilter.appendChild(option);
-            });
+            try {
+                const symbols = [...new Set(allSignals.map(s => s.symbol).filter(s => s))].sort();
+                const symbolFilter = document.getElementById('symbol-filter');
+                
+                // Clear existing options except "All"
+                symbolFilter.innerHTML = '<option value="all">All Symbols</option>';
+                
+                symbols.forEach(symbol => {
+                    const option = document.createElement('option');
+                    option.value = symbol;
+                    option.textContent = symbol;
+                    symbolFilter.appendChild(option);
+                });
+                
+            } catch (error) {
+                console.error('Error populating symbol filter:', error);
+            }
         }
 
         function applyFilters() {
-            const symbolFilter = document.getElementById('symbol-filter').value;
-            const directionFilter = document.getElementById('direction-filter').value;
-            const riskFilter = document.getElementById('risk-filter').value;
-            const typeFilter = document.getElementById('type-filter').value;
+            try {
+                const symbolFilter = document.getElementById('symbol-filter').value;
+                const directionFilter = document.getElementById('direction-filter').value;
+                const riskFilter = document.getElementById('risk-filter').value;
+                const typeFilter = document.getElementById('type-filter').value;
 
-            filteredSignals = allSignals.filter(signal => {
-                if (symbolFilter !== 'all' && signal.symbol !== symbolFilter) return false;
-                if (directionFilter !== 'all' && signal.direction !== directionFilter) return false;
-                if (riskFilter !== 'all' && signal.risk_profile !== riskFilter) return false;
-                if (typeFilter === 'initial' && !signal.is_initial) return false;
-                if (typeFilter === 'martingale' && signal.is_initial) return false;
+                filteredSignals = allSignals.filter(signal => {
+                    if (symbolFilter !== 'all' && signal.symbol !== symbolFilter) return false;
+                    if (directionFilter !== 'all' && signal.direction !== directionFilter) return false;
+                    if (riskFilter !== 'all' && signal.risk_profile !== riskFilter) return false;
+                    if (typeFilter === 'initial' && !signal.is_initial) return false;
+                    if (typeFilter === 'martingale' && signal.is_initial) return false;
+                    
+                    return true;
+                });
+
+                displaySignals();
                 
-                return true;
-            });
-
-            displaySignals();
+            } catch (error) {
+                console.error('Error applying filters:', error);
+            }
         }
 
         function displaySignals() {
-            const container = document.getElementById('signals-container');
-            
-            if (filteredSignals.length === 0) {
-                container.innerHTML = '<div class="loading">No signals found matching the current filters</div>';
-                return;
+            try {
+                const container = document.getElementById('signals-container');
+                
+                if (filteredSignals.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-signal"></i>
+                            <h3>No signals found</h3>
+                            <p>No signals match the current filter criteria.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const signalsHtml = filteredSignals.map(signal => {
+                    const isLong = signal.direction === 'long';
+                    const signalClass = isLong ? 'signal-long' : 'signal-short';
+                    const directionClass = isLong ? 'direction-long' : 'direction-short';
+                    const directionIcon = isLong ? 'arrow-up' : 'arrow-down';
+                    const isInitial = signal.is_initial !== false; // Default to true if undefined
+                    
+                    return `
+                        <div class="signal-card ${signalClass}">
+                            <div class="signal-type-badge ${isInitial ? 'type-initial' : 'type-martingale'}">
+                                ${isInitial ? 'Initial' : 'Martingale'}
+                            </div>
+                            
+                            <div class="signal-header">
+                                <div class="signal-symbol">${signal.symbol || 'N/A'}</div>
+                                <div class="signal-direction ${directionClass}">
+                                    <i class="fas fa-${directionIcon}"></i>
+                                    ${(signal.direction || '').toUpperCase()}
+                                </div>
+                            </div>
+                            
+                            <div class="signal-details">
+                                <div class="signal-detail">
+                                    <span class="label">Entry:</span>
+                                    <span class="value">${(signal.entry_price || 0).toFixed ? signal.entry_price.toFixed(5) : 'N/A'}</span>
+                                </div>
+                                <div class="signal-detail">
+                                    <span class="label">TP:</span>
+                                    <span class="value">${(signal.tp || 0).toFixed ? signal.tp.toFixed(5) : 'N/A'}</span>
+                                </div>
+                                <div class="signal-detail">
+                                    <span class="label">SL Pips:</span>
+                                    <span class="value">${(signal.sl_distance_pips || 0).toFixed ? signal.sl_distance_pips.toFixed(1) : 'N/A'}</span>
+                                </div>
+                                <div class="signal-detail">
+                                    <span class="label">TP Pips:</span>
+                                    <span class="value">${(signal.tp_distance_pips || 0).toFixed ? signal.tp_distance_pips.toFixed(1) : 'N/A'}</span>
+                                </div>
+                                <div class="signal-detail">
+                                    <span class="label">Risk:</span>
+                                    <span class="value">${signal.risk_profile || 'N/A'}</span>
+                                </div>
+                                <div class="signal-detail">
+                                    <span class="label">TF Aligned:</span>
+                                    <span class="value">${signal.timeframes_aligned || 1}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="signal-indicators">
+                                <div class="indicator">
+                                    <i class="fas fa-chart-line"></i>
+                                    ADX: ${(signal.adx_value || 0).toFixed ? signal.adx_value.toFixed(1) : 'N/A'}
+                                </div>
+                                <div class="indicator">
+                                    <i class="fas fa-wave-square"></i>
+                                    RSI: ${(signal.rsi || 0).toFixed ? signal.rsi.toFixed(1) : 'N/A'}
+                                </div>
+                            </div>
+                            
+                            <div class="signal-time">
+                                ${signal.timestamp ? new Date(signal.timestamp).toLocaleString() : 'Unknown time'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                container.innerHTML = signalsHtml;
+                
+            } catch (error) {
+                console.error('Error displaying signals:', error);
+                document.getElementById('signals-container').innerHTML = 
+                    '<div class="loading">Error displaying signals</div>';
             }
-
-            container.innerHTML = filteredSignals.map(signal => {
-                const isLong = signal.direction === 'long';
-                const signalClass = isLong ? 'signal-long' : 'signal-short';
-                const directionClass = isLong ? 'direction-long' : 'direction-short';
-                const directionIcon = isLong ? 'arrow-up' : 'arrow-down';
-                
-                // Determine signal status (this would need to be enhanced with actual execution tracking)
-                const signalStatus = 'executed'; // Could be 'executed', 'pending', 'missed'
-                const statusClass = `status-${signalStatus}`;
-                
-                return `
-                    <div class="signal-card ${signalClass} signal-${signalStatus}">
-                        <div class="signal-header">
-                            <div class="signal-symbol">${signal.symbol}</div>
-                            <div class="signal-direction ${directionClass}">
-                                <i class="fas fa-${directionIcon}"></i>
-                                ${signal.direction.toUpperCase()}
-                            </div>
-                        </div>
-                        
-                        <div class="signal-details">
-                            <div class="signal-detail">
-                                <span class="label">Entry:</span>
-                                <span class="value">${signal.entry_price?.toFixed(5) || 'N/A'}</span>
-                            </div>
-                            <div class="signal-detail">
-                                <span class="label">TP:</span>
-                                <span class="value">${signal.tp?.toFixed(5) || 'N/A'}</span>
-                            </div>
-                            <div class="signal-detail">
-                                <span class="label">SL Pips:</span>
-                                <span class="value">${signal.sl_distance_pips?.toFixed(1) || 'N/A'}</span>
-                            </div>
-                            <div class="signal-detail">
-                                <span class="label">TP Pips:</span>
-                                <span class="value">${signal.tp_distance_pips?.toFixed(1) || 'N/A'}</span>
-                            </div>
-                            <div class="signal-detail">
-                                <span class="label">Risk:</span>
-                                <span class="value">${signal.risk_profile || 'N/A'}</span>
-                            </div>
-                            <div class="signal-detail">
-                                <span class="label">TF Aligned:</span>
-                                <span class="value">${signal.timeframes_aligned || 1}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="signal-indicators">
-                            <div class="indicator">
-                                <i class="fas fa-chart-line"></i>
-                                ADX: ${signal.adx_value?.toFixed(1) || 'N/A'}
-                            </div>
-                            <div class="indicator">
-                                <i class="fas fa-wave-square"></i>
-                                RSI: ${signal.rsi?.toFixed(1) || 'N/A'}
-                            </div>
-                            ${signal.is_initial ? 
-                                '<div class="indicator" style="background: #2196F3; color: white;">Initial</div>' : 
-                                '<div class="indicator" style="background: #FF9800; color: white;">Martingale</div>'
-                            }
-                        </div>
-                        
-                        <div class="signal-status ${statusClass}">
-                            ${signalStatus.charAt(0).toUpperCase() + signalStatus.slice(1)}
-                        </div>
-                        
-                        <div class="signal-time">
-                            ${new Date(signal.timestamp).toLocaleString()}
-                        </div>
-                    </div>
-                `;
-            }).join('');
         }
 
-        function refreshSignals() {
-            const refreshBtn = document.querySelector('.btn[onclick="refreshSignals()"] i');
-            refreshBtn.style.animation = 'spin 1s linear infinite';
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
             
-            loadSignals().finally(() => {
-                refreshBtn.style.animation = '';
-            });
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 10000);
         }
 
-        // Auto-refresh signals every 15 seconds
-        function startAutoRefresh() {
-            setInterval(loadSignals, 15000);
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
         }
 
-        // Initialize page
+        // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Starting signals page...');
             loadSignals();
-            startAutoRefresh();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(loadSignals, 30000);
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                console.log('Page visible - refreshing signals');
+                loadSignals();
+            }
         });
     </script>
 </body>
-</html>
+</html>                

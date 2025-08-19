@@ -470,47 +470,81 @@ def analyze_symbol_multi_timeframe(symbol, base_timeframe):
     
     return analyses
 
-# ===== PART 4: WEBHOOK MANAGER CLASS =====
-# ===== BOT WEBHOOK MANAGER FIX =====
-# Add this to your bot code to fix webhook issues
-
-# ===== COMPLETE FIXED WEBHOOK MANAGER =====
-# This version includes all missing methods from the original
-
-# ===== FIXED WEBHOOK MANAGER FOR BM TRADING BOT =====
-# This replaces the webhook manager in your updated_bot_code.py
 
 import requests
 import json
 import logging
-from datetime import datetime
 import threading
 import time
 import os
+from datetime import datetime, timedelta
+from collections import deque
 
-class FixedWebhookManager:
-    """Enhanced webhook manager with better error handling and debugging"""
+class HybridWebhookManager:
+    """Enhanced webhook manager that uses both HTTP webhooks and JSON files"""
     
-    def __init__(self, dashboard_url="http://localhost:5000"):
+    def __init__(self, dashboard_url="http://localhost:5000", enable_json_backup=True):
         self.dashboard_url = dashboard_url
+        self.enable_json_backup = enable_json_backup
         self.enabled = True
         self.logger = logging.getLogger(__name__)
+        
+        # Statistics
         self.success_count = 0
         self.error_count = 0
         self.last_success = None
         self.last_error = None
         self.connection_verified = False
         
-        # Test connection on initialization
+        # JSON file paths
+        self.data_dir = "bot_data"
+        if self.enable_json_backup:
+            os.makedirs(self.data_dir, exist_ok=True)
+            
+        self.json_files = {
+            'live_data': os.path.join(self.data_dir, 'live_data.json'),
+            'trades': os.path.join(self.data_dir, 'trades.json'),
+            'signals': os.path.join(self.data_dir, 'signals.json'),
+            'account_history': os.path.join(self.data_dir, 'account_history.json')
+        }
+        
+        # In-memory buffers for JSON files
+        self.json_buffers = {
+            'trades': deque(maxlen=500),
+            'signals': deque(maxlen=100),
+            'account_history': deque(maxlen=1000)
+        }
+        
+        # Load existing JSON data
+        self._load_existing_json_data()
+        
+        # Test connection
         self._test_connection()
         
-        # Start periodic status logging
-        self._start_status_logger()
+        # Start background tasks
+        self._start_background_tasks()
         
-    def _test_connection(self):
-        """Test connection to dashboard on startup"""
+    def _load_existing_json_data(self):
+        """Load existing JSON data on startup"""
+        if not self.enable_json_backup:
+            return
+            
         try:
-            self.logger.info(f"🔌 Testing connection to dashboard: {self.dashboard_url}")
+            for data_type, file_path in self.json_files.items():
+                if os.path.exists(file_path) and data_type in self.json_buffers:
+                    with open(file_path, 'r') as f:
+                        data = json.load(f)
+                        if isinstance(data, list):
+                            self.json_buffers[data_type].extend(data)
+                            self.logger.info(f"✅ Loaded {len(data)} {data_type} from JSON")
+                        
+        except Exception as e:
+            self.logger.error(f"Error loading existing JSON data: {e}")
+    
+    def _test_connection(self):
+        """Test connection to dashboard"""
+        try:
+            self.logger.info(f"🔌 Testing dashboard connection: {self.dashboard_url}")
             
             response = requests.get(
                 f"{self.dashboard_url}/api/dashboard_status",
@@ -518,35 +552,36 @@ class FixedWebhookManager:
             )
             
             if response.status_code == 200:
-                self.logger.info(f"✅ Dashboard connection successful!")
+                self.logger.info("✅ Dashboard connection successful!")
                 self.connection_verified = True
-                
-                # Test a webhook endpoint
-                test_response = requests.post(
-                    f"{self.dashboard_url}/test/webhook",
-                    json={"test": "connection"},
-                    timeout=5
-                )
-                
-                if test_response.status_code == 200:
-                    self.logger.info("✅ Webhook test successful!")
-                else:
-                    self.logger.warning(f"⚠️ Webhook test failed: {test_response.status_code}")
-                    
                 return True
             else:
                 self.logger.warning(f"⚠️ Dashboard responded with status {response.status_code}")
-                return False
                 
         except requests.exceptions.RequestException as e:
-            self.logger.warning(f"🔌 Dashboard connection test failed: {e}")
-            self.logger.info("📝 Make sure the dashboard is running: python optimized_dashboard.py")
-            self.connection_verified = False
-            return False
+            self.logger.warning(f"🔌 Dashboard connection failed: {e}")
+            if self.enable_json_backup:
+                self.logger.info("📁 Will use JSON files as backup")
+            
+        self.connection_verified = False
+        return False
+    
+    def _start_background_tasks(self):
+        """Start background tasks for JSON file management"""
+        if not self.enable_json_backup:
+            return
+            
+        def json_writer():
+            """Background task to write JSON files"""
+            while True:
+                try:
+                    time.sleep(30)  # Write every 30 seconds
+                    self._write_json_files()
+                except Exception as e:
+                    self.logger.error(f"Error in JSON writer: {e}")
         
-    def _start_status_logger(self):
-        """Start periodic status logging"""
-        def log_status():
+        def status_logger():
+            """Background task for status logging"""
             while True:
                 try:
                     time.sleep(300)  # Every 5 minutes
@@ -554,14 +589,52 @@ class FixedWebhookManager:
                         total = self.success_count + self.error_count
                         success_rate = (self.success_count / total) * 100
                         self.logger.info(f"📡 Webhook Stats: {self.success_count}/{total} successful ({success_rate:.1f}%)")
+                        
+                        if self.enable_json_backup:
+                            self.logger.info(f"📁 JSON Backup: {sum(len(buf) for buf in self.json_buffers.values())} items buffered")
                 except Exception as e:
                     self.logger.error(f"Error in status logger: {e}")
         
-        status_thread = threading.Thread(target=log_status, daemon=True)
+        # Start background threads
+        json_thread = threading.Thread(target=json_writer, daemon=True)
+        json_thread.start()
+        
+        status_thread = threading.Thread(target=status_logger, daemon=True)
         status_thread.start()
+        
+        self.logger.info("🔄 Background tasks started")
+    
+    def _write_json_files(self):
+        """Write buffered data to JSON files"""
+        if not self.enable_json_backup:
+            return
+            
+        try:
+            # Write trades
+            if self.json_buffers['trades']:
+                trades_data = list(self.json_buffers['trades'])
+                with open(self.json_files['trades'], 'w') as f:
+                    json.dump(trades_data, f, indent=2, default=str)
+            
+            # Write signals
+            if self.json_buffers['signals']:
+                signals_data = list(self.json_buffers['signals'])
+                with open(self.json_files['signals'], 'w') as f:
+                    json.dump(signals_data, f, indent=2, default=str)
+            
+            # Write account history
+            if self.json_buffers['account_history']:
+                history_data = list(self.json_buffers['account_history'])
+                with open(self.json_files['account_history'], 'w') as f:
+                    json.dump(history_data, f, indent=2, default=str)
+            
+            self.logger.debug("💾 JSON files updated")
+            
+        except Exception as e:
+            self.logger.error(f"Error writing JSON files: {e}")
     
     def _send_webhook(self, endpoint: str, data: dict) -> bool:
-        """Send data to webhook endpoint with enhanced error handling"""
+        """Send data to webhook endpoint"""
         if not self.enabled:
             return False
             
@@ -570,15 +643,13 @@ class FixedWebhookManager:
             
             # Ensure data is JSON serializable
             json_data = json.loads(json.dumps(data, default=str))
-            
-            # Add timestamp and source info
             json_data['webhook_timestamp'] = datetime.now().isoformat()
             json_data['source'] = 'BM_Trading_Bot'
             
             response = requests.post(
                 url, 
                 json=json_data, 
-                timeout=15,  # Increased timeout
+                timeout=15,
                 headers={
                     'Content-Type': 'application/json',
                     'User-Agent': 'BM-Trading-Bot/1.0',
@@ -589,98 +660,79 @@ class FixedWebhookManager:
             if response.status_code == 200:
                 self.success_count += 1
                 self.last_success = datetime.now()
-                
-                # Parse response to check for additional info
-                try:
-                    response_data = response.json()
-                    if response_data.get('status') == 'success':
-                        self.logger.debug(f"✅ Webhook {endpoint} sent successfully")
-                        return True
-                    else:
-                        self.logger.warning(f"⚠️ Webhook {endpoint} processed but returned: {response_data}")
-                        return True  # Still count as success
-                except:
-                    self.logger.debug(f"✅ Webhook {endpoint} sent (no JSON response)")
-                    return True
+                self.logger.debug(f"✅ Webhook {endpoint} sent successfully")
+                return True
             else:
                 self.error_count += 1
                 self.last_error = datetime.now()
                 self.logger.warning(f"⚠️ Webhook {endpoint} failed: HTTP {response.status_code}")
-                self.logger.debug(f"Response: {response.text[:200]}")
                 return False
                 
-        except requests.exceptions.ConnectionError as e:
+        except requests.exceptions.ConnectionError:
             # Don't spam logs for connection errors
             if not hasattr(self, '_last_connection_error') or \
                (datetime.now() - self._last_connection_error).total_seconds() > 300:
-                self.logger.debug(f"🔌 Dashboard connection refused for {endpoint} - dashboard may be offline")
+                self.logger.debug(f"🔌 Dashboard connection refused for {endpoint}")
                 self._last_connection_error = datetime.now()
-            return False
-            
-        except requests.exceptions.Timeout as e:
-            self.error_count += 1
-            self.last_error = datetime.now()
-            self.logger.warning(f"⏰ Webhook {endpoint} timeout: {e}")
-            return False
-            
-        except requests.exceptions.RequestException as e:
-            self.error_count += 1
-            self.last_error = datetime.now()
-            self.logger.debug(f"🔌 Webhook {endpoint} request error: {e}")
             return False
             
         except Exception as e:
             self.error_count += 1
             self.last_error = datetime.now()
-            self.logger.error(f"❌ Unexpected webhook error for {endpoint}: {e}")
+            self.logger.debug(f"🔌 Webhook {endpoint} error: {e}")
             return False
     
+    def _save_to_json_buffer(self, data_type: str, data: dict):
+        """Save data to JSON buffer"""
+        if not self.enable_json_backup or data_type not in self.json_buffers:
+            return
+            
+        try:
+            # Add timestamp if not present
+            if 'timestamp' not in data:
+                data['timestamp'] = datetime.now().isoformat()
+                
+            self.json_buffers[data_type].appendleft(data.copy())
+            self.logger.debug(f"📁 Saved to {data_type} JSON buffer")
+            
+        except Exception as e:
+            self.logger.error(f"Error saving to JSON buffer {data_type}: {e}")
+    
     def send_live_data(self, trade_manager, account_info=None):
-        """Send current live data to dashboard"""
+        """Send current live data with JSON backup"""
         try:
             if account_info is None:
                 import MetaTrader5 as mt5
                 account_info = mt5.account_info()
                 
             if account_info is None:
-                self.logger.debug("Cannot send live data - no account info")
                 return False
             
-            # Calculate profit
+            # Calculate profit and drawdown
             profit = account_info.equity - account_info.balance
-            
-            # Calculate drawdown
             drawdown = 0
-            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance and account_info.equity < trade_manager.initial_balance:
-                drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance:
+                if account_info.equity < trade_manager.initial_balance:
+                    drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
             
-            # Get active positions count
+            # Get active positions
             import MetaTrader5 as mt5
             positions = mt5.positions_get()
             
-            # Use magic number from config or fallback
+            # Get magic number
             try:
-                from updated_bot_code import MAGIC_NUMBER
-                magic_number = MAGIC_NUMBER
+                magic_number = getattr(trade_manager, 'MAGIC_NUMBER', 23232323)
             except:
-                magic_number = 23232323  # Fallback
+                magic_number = 23232323
                 
             active_positions = len([pos for pos in positions if pos.magic == magic_number]) if positions else 0
             
-            # Prepare batch data with better error handling
+            # Prepare batch data
             batches_data = []
             try:
                 if hasattr(trade_manager, 'martingale_batches'):
                     for batch_key, batch in trade_manager.martingale_batches.items():
                         if hasattr(batch, 'trades') and batch.trades:
-                            # Calculate next trigger price safely
-                            next_trigger = None
-                            try:
-                                if hasattr(batch, 'get_next_trigger_price'):
-                                    next_trigger = batch.get_next_trigger_price()
-                            except:
-                                next_trigger = None
-                            
                             batch_data = {
                                 "batch_id": getattr(batch, 'batch_id', 0),
                                 "symbol": getattr(batch, 'symbol', ''),
@@ -689,7 +741,6 @@ class FixedWebhookManager:
                                 "total_volume": round(getattr(batch, 'total_volume', 0), 2),
                                 "breakeven_price": round(getattr(batch, 'breakeven_price', 0), 5),
                                 "initial_entry_price": round(getattr(batch, 'initial_entry_price', 0), 5),
-                                "next_trigger": round(next_trigger, 5) if next_trigger else None,
                                 "created_time": getattr(batch, 'created_time', datetime.now()).isoformat() if hasattr(getattr(batch, 'created_time', None), 'isoformat') else datetime.now().isoformat()
                             }
                             batches_data.append(batch_data)
@@ -712,24 +763,34 @@ class FixedWebhookManager:
                 "total_trades": getattr(trade_manager, 'total_trades', 0),
                 "emergency_stop": getattr(trade_manager, 'emergency_stop_active', False),
                 "drawdown_percent": round(drawdown, 2),
-                "last_signal_time": datetime.now().isoformat(),
-                "next_analysis": (datetime.now() + timedelta(minutes=5)).isoformat(),
                 "batches": batches_data,
-                "pairs_status": {},
                 "mt5_connected": True
             }
             
-            success = self._send_webhook("live_data", live_data)
-            if success:
-                self.logger.debug(f"📊 Live data sent: Balance=${account_info.balance:.2f}, Equity=${account_info.equity:.2f}")
-            return success
+            # Try webhook first
+            webhook_success = self._send_webhook("live_data", live_data)
+            
+            # Always save to JSON as backup
+            if self.enable_json_backup:
+                try:
+                    with open(self.json_files['live_data'], 'w') as f:
+                        json.dump(live_data, f, indent=2, default=str)
+                except Exception as e:
+                    self.logger.error(f"Error saving live data to JSON: {e}")
+            
+            if webhook_success:
+                self.logger.debug(f"📊 Live data sent via webhook")
+            elif self.enable_json_backup:
+                self.logger.debug(f"📁 Live data saved to JSON (webhook failed)")
+            
+            return webhook_success or self.enable_json_backup
             
         except Exception as e:
             self.logger.error(f"Error preparing live data: {e}")
             return False
     
     def send_account_update(self, account_info, trade_manager):
-        """Send account update for chart data"""
+        """Send account update with JSON backup"""
         try:
             if account_info is None:
                 return False
@@ -737,8 +798,9 @@ class FixedWebhookManager:
             profit = account_info.equity - account_info.balance
             drawdown = 0
             
-            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance and account_info.equity < trade_manager.initial_balance:
-                drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance:
+                if account_info.equity < trade_manager.initial_balance:
+                    drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
             
             update_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -748,17 +810,25 @@ class FixedWebhookManager:
                 "drawdown": round(drawdown, 2)
             }
             
-            success = self._send_webhook("account_update", update_data)
-            if success:
-                self.logger.debug(f"📈 Chart data sent: Equity=${account_info.equity:.2f}")
-            return success
+            # Try webhook first
+            webhook_success = self._send_webhook("account_update", update_data)
+            
+            # Save to JSON buffer
+            self._save_to_json_buffer('account_history', update_data)
+            
+            if webhook_success:
+                self.logger.debug(f"📈 Account update sent via webhook")
+            elif self.enable_json_backup:
+                self.logger.debug(f"📁 Account update saved to JSON")
+            
+            return webhook_success or self.enable_json_backup
             
         except Exception as e:
             self.logger.error(f"Error sending account update: {e}")
             return False
     
     def send_trade_event(self, trade_info, event_type="executed"):
-        """Send trade execution event"""
+        """Send trade event with JSON backup"""
         try:
             trade_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -777,17 +847,25 @@ class FixedWebhookManager:
                 "sl_distance_pips": float(trade_info.get('sl_distance_pips', 0))
             }
             
-            success = self._send_webhook("trade_event", trade_data)
-            if success:
+            # Try webhook first
+            webhook_success = self._send_webhook("trade_event", trade_data)
+            
+            # Save to JSON buffer
+            self._save_to_json_buffer('trades', trade_data)
+            
+            if webhook_success:
                 self.logger.info(f"🎯 Trade event sent: {trade_info.get('symbol')} {trade_info.get('direction')}")
-            return success
+            elif self.enable_json_backup:
+                self.logger.info(f"📁 Trade event saved to JSON: {trade_info.get('symbol')} {trade_info.get('direction')}")
+            
+            return webhook_success or self.enable_json_backup
             
         except Exception as e:
             self.logger.error(f"Error sending trade event: {e}")
             return False
     
     def send_signal_generated(self, signal):
-        """Send signal generation event"""
+        """Send signal with JSON backup"""
         try:
             signal_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -804,10 +882,18 @@ class FixedWebhookManager:
                 "is_initial": bool(signal.get('is_initial', True))
             }
             
-            success = self._send_webhook("signal_generated", signal_data)
-            if success:
+            # Try webhook first
+            webhook_success = self._send_webhook("signal_generated", signal_data)
+            
+            # Save to JSON buffer
+            self._save_to_json_buffer('signals', signal_data)
+            
+            if webhook_success:
                 self.logger.info(f"📡 Signal sent: {signal.get('symbol')} {signal.get('direction')}")
-            return success
+            elif self.enable_json_backup:
+                self.logger.info(f"📁 Signal saved to JSON: {signal.get('symbol')} {signal.get('direction')}")
+            
+            return webhook_success or self.enable_json_backup
             
         except Exception as e:
             self.logger.error(f"Error sending signal: {e}")
@@ -818,13 +904,10 @@ class FixedWebhookManager:
         try:
             reload_flag_file = "gui_data/reload_config.flag"
             if os.path.exists(reload_flag_file):
-                # Read flag file to get timestamp
                 with open(reload_flag_file, 'r') as f:
                     flag_time = f.read().strip()
                 
-                # Remove flag file
                 os.remove(reload_flag_file)
-                
                 self.logger.info(f"📝 Configuration reload requested at {flag_time}")
                 return True
                 
@@ -843,69 +926,30 @@ class FixedWebhookManager:
             'error_count': self.error_count,
             'last_success': self.last_success.isoformat() if self.last_success else None,
             'last_error': self.last_error.isoformat() if self.last_error else None,
-            'success_rate': self.success_count / (self.success_count + self.error_count) if (self.success_count + self.error_count) > 0 else 0
+            'success_rate': self.success_count / (self.success_count + self.error_count) if (self.success_count + self.error_count) > 0 else 0,
+            'json_backup_enabled': self.enable_json_backup,
+            'json_buffer_counts': {k: len(v) for k, v in self.json_buffers.items()} if self.enable_json_backup else {}
         }
     
-    def log_status(self):
-        """Log current webhook status"""
-        status = self.get_status()
-        total_attempts = status['success_count'] + status['error_count']
-        
-        if total_attempts > 0:
-            self.logger.info(f"📡 Webhook Status: {status['success_count']}/{total_attempts} successful ({status['success_rate']:.1%})")
-            if status['last_error']:
-                self.logger.info(f"   Last error: {status['last_error']}")
-        else:
-            self.logger.info("📡 Webhook Status: No attempts yet")
+    def force_json_write(self):
+        """Force immediate write of all JSON buffers"""
+        if self.enable_json_backup:
+            self._write_json_files()
+            self.logger.info("🔄 Forced JSON write completed")
     
     def test_connection_manual(self):
-        """Manual connection test that can be called anytime"""
+        """Manual connection test"""
         self.logger.info("🧪 Running manual connection test...")
+        success = self._test_connection()
         
-        try:
-            # Test dashboard status
-            status_response = requests.get(
-                f"{self.dashboard_url}/api/dashboard_status",
-                timeout=10
-            )
-            
-            if status_response.status_code == 200:
-                self.logger.info("✅ Dashboard status endpoint working")
-                
-                # Test webhook
-                test_response = requests.post(
-                    f"{self.dashboard_url}/test/webhook",
-                    json={
-                        "test": "manual_connection_test",
-                        "timestamp": datetime.now().isoformat()
-                    },
-                    timeout=10
-                )
-                
-                if test_response.status_code == 200:
-                    self.logger.info("✅ Webhook test successful")
-                    
-                    # Test simulate trade
-                    trade_response = requests.get(
-                        f"{self.dashboard_url}/test/simulate_trade",
-                        timeout=10
-                    )
-                    
-                    if trade_response.status_code == 200:
-                        self.logger.info("✅ Trade simulation successful")
-                        self.logger.info("🎉 All connection tests passed!")
-                        return True
-                    else:
-                        self.logger.warning(f"⚠️ Trade simulation failed: {trade_response.status_code}")
-                else:
-                    self.logger.warning(f"⚠️ Webhook test failed: {test_response.status_code}")
-            else:
-                self.logger.warning(f"⚠️ Dashboard status failed: {status_response.status_code}")
-                
-        except Exception as e:
-            self.logger.error(f"❌ Manual connection test failed: {e}")
-            
-        return False
+        if success:
+            self.logger.info("🎉 Manual connection test passed!")
+        else:
+            self.logger.warning("❌ Manual connection test failed")
+            if self.enable_json_backup:
+                self.logger.info("📁 JSON backup is available")
+        
+        return success
     
     # ===== PART 5: ENHANCED MARTINGALE BATCH CLASS =====
 class MartingaleBatch:
@@ -1545,7 +1589,10 @@ class EnhancedTradeManager:
         self.emergency_stop_active = False
         self.initial_balance = None
         self.next_batch_id = 1
-        self.webhook_manager = FixedWebhookManager("http://localhost:5000")
+        self.webhook_manager = HybridWebhookManager(
+            dashboard_url="http://localhost:5000",
+            enable_json_backup=True  # Set to False to disable JSON backup
+            )
         self.last_webhook_update = datetime.now()
         self.webhook_update_interval = 10  # seconds
         
