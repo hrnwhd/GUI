@@ -1,0 +1,899 @@
+{
+  "timestamp": "2025-08-17T15:59:04.754312",
+  "data_sources": {
+    "sentiment": true,
+    "correlation": true,
+    "cot": true,
+    "calendar": false
+  },
+  "pair_analysis": {
+    "AUDUSD": {
+      "pair": "AUDUSD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.00909090909090909,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.02,
+          "long_percentage": 49,
+          "short_percentage": 51,
+          "blocked_directions": []
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.2,
+          "warnings_count": 2,
+          "high_correlations": [
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDUSD-EURUSD",
+              "value": 85.6,
+              "message": "High correlation (85.6%) between AUDUSD and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "AUDUSD-USDCAD",
+              "value": -76.6,
+              "message": "Strong negative correlation (-76.6%) between AUDUSD and USDCAD - risk of opposite movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "USDCAD": {
+      "pair": "USDCAD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.09090909090909091,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.2,
+          "long_percentage": 40,
+          "short_percentage": 60,
+          "blocked_directions": [
+            "long"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 1.0,
+          "warnings_count": 11,
+          "high_correlations": [
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDSGD-USDCAD",
+              "value": 87.5,
+              "message": "High correlation (87.5%) between USDSGD and USDCAD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "NZDUSD-USDCAD",
+              "value": -85.4,
+              "message": "Strong negative correlation (-85.4%) between NZDUSD and USDCAD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDCNH-USDCAD",
+              "value": 79.2,
+              "message": "High correlation (79.2%) between USDCNH and USDCAD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "AUDUSD-USDCAD",
+              "value": -76.6,
+              "message": "Strong negative correlation (-76.6%) between AUDUSD and USDCAD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDNOK-USDCAD",
+              "value": 76.1,
+              "message": "High correlation (76.1%) between USDNOK and USDCAD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "EURUSD-USDCAD",
+              "value": -75.9,
+              "message": "Strong negative correlation (-75.9%) between EURUSD and USDCAD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCAD-EURUSD",
+              "value": -75.9,
+              "message": "Strong negative correlation (-75.9%) between USDCAD and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDPLN-USDCAD",
+              "value": 73.8,
+              "message": "High correlation (73.8%) between USDPLN and USDCAD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "GBPUSD-USDCAD",
+              "value": -72.8,
+              "message": "Strong negative correlation (-72.8%) between GBPUSD and USDCAD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCAD-GBPUSD",
+              "value": -72.8,
+              "message": "Strong negative correlation (-72.8%) between USDCAD and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDCHF-USDCAD",
+              "value": 72.0,
+              "message": "High correlation (72.0%) between USDCHF and USDCAD - risk of similar movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "XAUUSD": {
+      "pair": "XAUUSD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.07272727272727272,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": 0.16,
+          "long_percentage": 58,
+          "short_percentage": 42,
+          "blocked_directions": []
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.0,
+          "warnings_count": 0,
+          "high_correlations": []
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "EURUSD": {
+      "pair": "EURUSD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.23636363636363636,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.52,
+          "long_percentage": 24,
+          "short_percentage": 76,
+          "blocked_directions": [
+            "long"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 1.0,
+          "warnings_count": 18,
+          "high_correlations": [
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDPLN-EURUSD",
+              "value": -98.2,
+              "message": "Strong negative correlation (-98.2%) between USDPLN and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURSGD-EURUSD",
+              "value": 91.0,
+              "message": "High correlation (91.0%) between EURSGD and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDSGD-EURUSD",
+              "value": -90.4,
+              "message": "Strong negative correlation (-90.4%) between USDSGD and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDHUF-EURUSD",
+              "value": -89.9,
+              "message": "Strong negative correlation (-89.9%) between USDHUF and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCZK-EURUSD",
+              "value": -89.8,
+              "message": "Strong negative correlation (-89.8%) between USDCZK and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCHF-EURUSD",
+              "value": -88.8,
+              "message": "Strong negative correlation (-88.8%) between USDCHF and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDUSD-EURUSD",
+              "value": 85.6,
+              "message": "High correlation (85.6%) between AUDUSD and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURCAD-EURUSD",
+              "value": 83.1,
+              "message": "High correlation (83.1%) between EURCAD and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDSEK-EURUSD",
+              "value": -81.3,
+              "message": "Strong negative correlation (-81.3%) between USDSEK and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCNH-EURUSD",
+              "value": -79.3,
+              "message": "Strong negative correlation (-79.3%) between USDCNH and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDZAR-EURUSD",
+              "value": -77.2,
+              "message": "Strong negative correlation (-77.2%) between USDZAR and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "EURUSD-USDCAD",
+              "value": -75.9,
+              "message": "Strong negative correlation (-75.9%) between EURUSD and USDCAD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCAD-EURUSD",
+              "value": -75.9,
+              "message": "Strong negative correlation (-75.9%) between USDCAD and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "EURPLN-EURUSD",
+              "value": -74.2,
+              "message": "Strong negative correlation (-74.2%) between EURPLN and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURUSD-GBPUSD",
+              "value": 73.7,
+              "message": "High correlation (73.7%) between EURUSD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPUSD-EURUSD",
+              "value": 73.7,
+              "message": "High correlation (73.7%) between GBPUSD and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPTRY-EURUSD",
+              "value": 71.7,
+              "message": "High correlation (71.7%) between GBPTRY and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "NZDUSD-EURUSD",
+              "value": 70.8,
+              "message": "High correlation (70.8%) between NZDUSD and EURUSD - risk of similar movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "GBPUSD": {
+      "pair": "GBPUSD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.15454545454545454,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.34,
+          "long_percentage": 33,
+          "short_percentage": 67,
+          "blocked_directions": [
+            "long"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 1.0,
+          "warnings_count": 19,
+          "high_correlations": [
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPSGD-GBPUSD",
+              "value": 95.8,
+              "message": "High correlation (95.8%) between GBPSGD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDSGD-GBPUSD",
+              "value": -90.9,
+              "message": "Strong negative correlation (-90.9%) between USDSGD and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPCAD-GBPUSD",
+              "value": 90.3,
+              "message": "High correlation (90.3%) between GBPCAD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "NZDUSD-GBPUSD",
+              "value": 87.3,
+              "message": "High correlation (87.3%) between NZDUSD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "GBPUSD-USDJPY",
+              "value": -82.0,
+              "message": "Strong negative correlation (-82.0%) between GBPUSD and USDJPY - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDJPY-GBPUSD",
+              "value": -82.0,
+              "message": "Strong negative correlation (-82.0%) between USDJPY and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "NZDCAD-GBPUSD",
+              "value": 81.0,
+              "message": "High correlation (81.0%) between NZDCAD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDSEK-GBPUSD",
+              "value": -81.0,
+              "message": "Strong negative correlation (-81.0%) between USDSEK and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "XAUGBP-GBPUSD",
+              "value": -80.1,
+              "message": "Strong negative correlation (-80.1%) between XAUGBP and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPAUD-GBPUSD",
+              "value": 76.9,
+              "message": "High correlation (76.9%) between GBPAUD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDPLN-GBPUSD",
+              "value": -75.6,
+              "message": "Strong negative correlation (-75.6%) between USDPLN and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "XAUJPY-GBPUSD",
+              "value": -74.9,
+              "message": "Strong negative correlation (-74.9%) between XAUJPY and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURUSD-GBPUSD",
+              "value": 73.7,
+              "message": "High correlation (73.7%) between EURUSD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPUSD-EURUSD",
+              "value": 73.7,
+              "message": "High correlation (73.7%) between GBPUSD and EURUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "GBPUSD-USDCAD",
+              "value": -72.8,
+              "message": "Strong negative correlation (-72.8%) between GBPUSD and USDCAD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCAD-GBPUSD",
+              "value": -72.8,
+              "message": "Strong negative correlation (-72.8%) between USDCAD and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPMXN-GBPUSD",
+              "value": 72.3,
+              "message": "High correlation (72.3%) between GBPMXN and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDNOK-GBPUSD",
+              "value": -72.0,
+              "message": "Strong negative correlation (-72.0%) between USDNOK and GBPUSD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCNH-GBPUSD",
+              "value": -71.3,
+              "message": "Strong negative correlation (-71.3%) between USDCNH and GBPUSD - risk of opposite movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "AUDCAD": {
+      "pair": "AUDCAD",
+      "overall_signal": "BEARISH",
+      "confidence": 0.2909090909090909,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.64,
+          "long_percentage": 18,
+          "short_percentage": 82,
+          "blocked_directions": [
+            "long"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.1,
+          "warnings_count": 1,
+          "high_correlations": [
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDSGD-AUDCAD",
+              "value": 84.2,
+              "message": "High correlation (84.2%) between AUDSGD and AUDCAD - risk of similar movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "USDCHF": {
+      "pair": "USDCHF",
+      "overall_signal": "BULLISH",
+      "confidence": 0.2909090909090909,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": 0.64,
+          "long_percentage": 82,
+          "short_percentage": 18,
+          "blocked_directions": [
+            "short"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.2,
+          "warnings_count": 2,
+          "high_correlations": [
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "USDCHF-EURUSD",
+              "value": -88.8,
+              "message": "Strong negative correlation (-88.8%) between USDCHF and EURUSD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDCHF-USDCAD",
+              "value": 72.0,
+              "message": "High correlation (72.0%) between USDCHF and USDCAD - risk of similar movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "GBPCAD": {
+      "pair": "GBPCAD",
+      "overall_signal": "BEARISH",
+      "confidence": 0.3909090909090909,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.86,
+          "long_percentage": 7,
+          "short_percentage": 93,
+          "blocked_directions": [
+            "long"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.1,
+          "warnings_count": 1,
+          "high_correlations": [
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "GBPCAD-GBPUSD",
+              "value": 90.3,
+              "message": "High correlation (90.3%) between GBPCAD and GBPUSD - risk of similar movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "AUDNZD": {
+      "pair": "AUDNZD",
+      "overall_signal": "BEARISH",
+      "confidence": 0.35454545454545455,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.78,
+          "long_percentage": 11,
+          "short_percentage": 89,
+          "blocked_directions": [
+            "long"
+          ]
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 1.0,
+          "warnings_count": 26,
+          "high_correlations": [
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "GBPMXN-AUDNZD",
+              "value": -87.4,
+              "message": "Strong negative correlation (-87.4%) between GBPMXN and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDTRY-AUDNZD",
+              "value": 87.0,
+              "message": "High correlation (87.0%) between USDTRY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "SGDJPY-AUDNZD",
+              "value": 85.4,
+              "message": "High correlation (85.4%) between SGDJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "XAGAUD-AUDNZD",
+              "value": 85.2,
+              "message": "High correlation (85.2%) between XAGAUD and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDJPY-AUDNZD",
+              "value": 84.3,
+              "message": "High correlation (84.3%) between AUDJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDNZD-AUDJPY",
+              "value": 84.3,
+              "message": "High correlation (84.3%) between AUDNZD and AUDJPY - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "XAGEUR-AUDNZD",
+              "value": 84.0,
+              "message": "High correlation (84.0%) between XAGEUR and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDNZD-USDJPY",
+              "value": 82.2,
+              "message": "High correlation (82.2%) between AUDNZD and USDJPY - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDJPY-AUDNZD",
+              "value": 82.2,
+              "message": "High correlation (82.2%) between USDJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "XAUJPY-AUDNZD",
+              "value": 81.8,
+              "message": "High correlation (81.8%) between XAUJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "CADJPY-AUDNZD",
+              "value": 81.6,
+              "message": "High correlation (81.6%) between CADJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "AUDNZD-EURJPY",
+              "value": 80.6,
+              "message": "High correlation (80.6%) between AUDNZD and EURJPY - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURJPY-AUDNZD",
+              "value": 80.6,
+              "message": "High correlation (80.6%) between EURJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "XAGUSD-AUDNZD",
+              "value": 79.9,
+              "message": "High correlation (79.9%) between XAGUSD and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "GBPAUD-AUDNZD",
+              "value": -79.2,
+              "message": "Strong negative correlation (-79.2%) between GBPAUD and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "EURMXN-AUDNZD",
+              "value": -78.5,
+              "message": "Strong negative correlation (-78.5%) between EURMXN and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURGBP-AUDNZD",
+              "value": 78.1,
+              "message": "High correlation (78.1%) between EURGBP and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "EURNZD-AUDNZD",
+              "value": 78.0,
+              "message": "High correlation (78.0%) between EURNZD and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "NZDCAD-AUDNZD",
+              "value": -76.0,
+              "message": "Strong negative correlation (-76.0%) between NZDCAD and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "ZARJPY-AUDNZD",
+              "value": 75.6,
+              "message": "High correlation (75.6%) between ZARJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "EURCZK-AUDNZD",
+              "value": -74.0,
+              "message": "Strong negative correlation (-74.0%) between EURCZK and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "NZDCHF-AUDNZD",
+              "value": -73.6,
+              "message": "Strong negative correlation (-73.6%) between NZDCHF and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "USDNOK-AUDNZD",
+              "value": 72.7,
+              "message": "High correlation (72.7%) between USDNOK and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "CHFJPY-AUDNZD",
+              "value": 72.3,
+              "message": "High correlation (72.3%) between CHFJPY and AUDNZD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "GBPSGD-AUDNZD",
+              "value": -71.1,
+              "message": "Strong negative correlation (-71.1%) between GBPSGD and AUDNZD - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "NZDUSD-AUDNZD",
+              "value": -70.9,
+              "message": "Strong negative correlation (-70.9%) between NZDUSD and AUDNZD - risk of opposite movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "NZDCAD": {
+      "pair": "NZDCAD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.01818181818181818,
+      "components": {
+        "sentiment": {
+          "available": true,
+          "signal_strength": -0.04,
+          "long_percentage": 48,
+          "short_percentage": 52,
+          "blocked_directions": []
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.30000000000000004,
+          "warnings_count": 3,
+          "high_correlations": [
+            {
+              "type": "HIGH_CORRELATION",
+              "pair": "NZDCAD-GBPUSD",
+              "value": 81.0,
+              "message": "High correlation (81.0%) between NZDCAD and GBPUSD - risk of similar movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "NZDCAD-USDJPY",
+              "value": -76.7,
+              "message": "Strong negative correlation (-76.7%) between NZDCAD and USDJPY - risk of opposite movements"
+            },
+            {
+              "type": "NEGATIVE_CORRELATION",
+              "pair": "NZDCAD-AUDNZD",
+              "value": -76.0,
+              "message": "Strong negative correlation (-76.0%) between NZDCAD and AUDNZD - risk of opposite movements"
+            }
+          ]
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "US500": {
+      "pair": "US500",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.0,
+      "components": {
+        "sentiment": {
+          "available": false
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.0,
+          "warnings_count": 0,
+          "high_correlations": []
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    },
+    "BTCUSD": {
+      "pair": "BTCUSD",
+      "overall_signal": "NEUTRAL",
+      "confidence": 0.0,
+      "components": {
+        "sentiment": {
+          "available": false
+        },
+        "correlation": {
+          "available": true,
+          "risk_score": 0.0,
+          "warnings_count": 0,
+          "high_correlations": []
+        },
+        "cot": {
+          "available": false
+        },
+        "calendar": {
+          "available": false
+        }
+      },
+      "recommendations": [],
+      "risk_factors": []
+    }
+  },
+  "market_overview": {
+    "total_pairs": 12,
+    "bullish_count": 1,
+    "bearish_count": 3,
+    "neutral_count": 8,
+    "market_sentiment": "BEARISH"
+  },
+  "risk_alerts": [
+    {
+      "type": "HIGH_CORRELATION_RISK",
+      "pair": "USDCAD",
+      "severity": "MEDIUM",
+      "message": "USDCAD has 11 correlation warnings"
+    },
+    {
+      "type": "HIGH_CORRELATION_RISK",
+      "pair": "EURUSD",
+      "severity": "MEDIUM",
+      "message": "EURUSD has 18 correlation warnings"
+    },
+    {
+      "type": "HIGH_CORRELATION_RISK",
+      "pair": "GBPUSD",
+      "severity": "MEDIUM",
+      "message": "GBPUSD has 19 correlation warnings"
+    },
+    {
+      "type": "HIGH_CORRELATION_RISK",
+      "pair": "AUDNZD",
+      "severity": "MEDIUM",
+      "message": "AUDNZD has 26 correlation warnings"
+    },
+    {
+      "type": "HIGH_CORRELATION_RISK",
+      "pair": "NZDCAD",
+      "severity": "MEDIUM",
+      "message": "NZDCAD has 3 correlation warnings"
+    }
+  ]
+}
