@@ -1,0 +1,35 @@
+{
+  "timestamp": "2025-08-20T12:55:02.046672",
+  "robot_status": "Running",
+  "account": {
+    "balance": 8999.14,
+    "equity": 8999.06,
+    "margin": 1.28,
+    "free_margin": 8997.78,
+    "margin_level": 703051.56,
+    "profit": -0.08
+  },
+  "active_trades": 1,
+  "active_batches": 1,
+  "total_trades": 6,
+  "emergency_stop": false,
+  "drawdown_percent": 0,
+  "batches": [
+    {
+      "batch_id": 6,
+      "symbol": "US500",
+      "direction": "long",
+      "current_layer": 1,
+      "total_volume": 0.01,
+      "breakeven_price": 6404.81,
+      "initial_entry_price": 6404.81,
+      "created_time": "2025-08-20T12:52:28.731716",
+      "active_hedge": null
+    }
+  ],
+  "pairs_status": {},
+  "mt5_connected": true,
+  "hedging_enabled": true,
+  "webhook_timestamp": "2025-08-20T12:55:00.016717",
+  "source": "BM_Trading_Bot"
+}

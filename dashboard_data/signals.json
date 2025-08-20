@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2025-08-20T12:52:30.988197",
+    "symbol": "US500",
+    "direction": "long",
+    "entry_price": 6404.01,
+    "tp": 6411.428714285715,
+    "sl_distance_pips": 67.4428571428598,
+    "tp_distance_pips": 74.18714285714486,
+    "risk_profile": "High",
+    "adx_value": 20.188120723160896,
+    "rsi": 47.945205479452056,
+    "timeframes_aligned": 2,
+    "is_initial": true
+  }
+]

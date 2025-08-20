@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2025-08-20T12:55:02.054359",
+    "balance": 8999.14,
+    "equity": 8999.06,
+    "profit": -0.08,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T12:50:02.069988",
+    "balance": 8999.14,
+    "equity": 8999.14,
+    "profit": 0.0,
+    "drawdown": 0
+  }
+]

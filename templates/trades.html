@@ -1,188 +1,4 @@
-        function renderHedgeAnalysis() {
-            const performanceContainer = document.getElementById('hedge-performance');
-            const effectivenessContainer = document.getElementById('hedge-effectiveness');
-            
-            const analysis = currentAnalysis;
-            const hedgeDetailed = analysis.hedge_detailed;
-            
-            // Hedge performance by symbol
-            let hedgeHtml = '';
-            const hedges = analysis.hedges || {};
-            
-            if (Object.keys(hedges).length === 0) {
-                hedgeHtml = '<div class="loading">No hedge data available</div>';
-            } else {
-                Object.entries(hedges).forEach(([symbol, data]) => {
-                    const avgVolume = data.total > 0 ? (data.volume / data.total).toFixed(3) : '0';
-                    const profitPerTrade = data.total > 0 ? (data.profit / data.total).toFixed(2) : '0';
-                    
-                    hedgeHtml += `
-                        <div class="hedge-analysis">
-                            <div class="pair-header">
-                                <div class="pair-symbol">${symbol}</div>
-                                <div class="${data.profit >= 0 ? 'profit-positive' : 'profit-negative'}">
-                                    ${data.profit.toFixed(2)}
-                                </div>
-                            </div>
-                            
-                            <div class="hedge-stats">
-                                <div class="hedge-stat">
-                                    <div>Total Hedges</div>
-                                    <div>${data.total}</div>
-                                </div>
-                                <div class="hedge-stat">
-                                    <div>Avg Volume</div>
-                                    <div>${avgVolume}</div>
-                                </div>
-                                <div class="hedge-stat">
-                                    <div>Avg P&L</div>
-                                    <div class="${parseFloat(profitPerTrade) >= 0 ? 'profit-positive' : 'profit-negative'}">
-                                        ${profitPerTrade}
-                                    </div>
-                                </div>
-                                <div class="hedge-stat">
-                                    <div>Total Volume</div>
-                                    <div>${data.volume.toFixed(3)}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            performanceContainer.innerHTML = hedgeHtml;
-            
-            // Enhanced hedge effectiveness analysis
-            if (hedgeDetailed && hedgeDetailed.overall_statistics) {
-                const stats = hedgeDetailed.overall_statistics;
-                const effectiveness = hedgeDetailed.effectiveness_summary;
-                
-                effectivenessContainer.innerHTML = `
-                    <div class="metrics-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                        <div class="metric-card">
-                            <h3>Hedged Batches</h3>
-                            <div class="value">${stats.total_hedged_batches}</div>
-                            <div class="subtitle">vs ${stats.total_unhedged_batches} unhedged</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Hedge Effectiveness</h3>
-                            <div class="value ${getSuccessRateClass(effectiveness?.hedge_success_rate || 0)}">
-                                ${(effectiveness?.hedge_success_rate || 0).toFixed(1)}%
-                            </div>
-                            <div class="subtitle">Success rate</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Avg Hedge Timing</h3>
-                            <div class="value">Layer ${(stats.avg_hedge_timing || 0).toFixed(1)}</div>
-                            <div class="subtitle">When hedges activate</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Risk Reduction</h3>
-                            <div class="value profit-positive">
-                                ${(effectiveness?.risk_reduction || 0).toFixed(1)}%
-                            </div>
-                            <div class="subtitle">Avg loss reduction</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Hedged Profit</h3>
-                            <div class="value ${stats.avg_hedged_profit >= 0 ? 'profit-positive' : 'profit-negative'}">
-                                ${(stats.avg_hedged_profit || 0).toFixed(2)}
-                            </div>
-                            <div class="subtitle">Avg per hedged batch</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Unhedged Profit</h3>
-                            <div class="value ${stats.avg_unhedged_profit >= 0 ? 'profit-positive' : 'profit-negative'}">
-                                ${(stats.avg_unhedged_profit || 0).toFixed(2)}
-                            </div>
-                            <div class="subtitle">Avg per unhedged batch</div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                        <h4 style="margin-bottom: 0.5rem;">📊 Hedge Strategy Performance</h4>
-                        <div style="font-size: 0.9rem; opacity: 0.8; line-height: 1.4;">
-                            <div>• Hedge Contribution: <span class="${stats.hedge_profit_contribution >= 0 ? 'profit-positive' : 'profit-negative'}">${(stats.hedge_profit_contribution || 0).toFixed(2)}</span></div>
-                            <div>• Performance Impact: ${stats.avg_hedged_profit > stats.avg_unhedged_profit ? 'Positive' : 'Negative'} 
-                                (${((stats.avg_hedged_profit - stats.avg_unhedged_profit) || 0).toFixed(2)} difference)</div>
-                            <div>• Strategy Assessment: ${getHedgeStrategyAssessment(effectiveness)}</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                // Fallback to basic analysis
-                const totalHedges = Object.values(hedges).reduce((sum, h) => sum + h.total, 0);
-                const totalHedgeProfit = Object.values(hedges).reduce((sum, h) => sum + h.profit, 0);
-                const totalHedgeVolume = Object.values(hedges).reduce((sum, h) => sum + h.volume, 0);
-                
-                const hedgeSuccessRate = totalHedges > 0 ? 
-                    ((Object.values(hedges).filter(h => h.profit > 0).length / Object.keys(hedges).length) * 100).toFixed(1) : '0';
-                
-                effectivenessContainer.innerHTML = `
-                    <div class="metrics-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                        <div class="metric-card">
-                            <h3>Total Hedges</h3>
-                            <div class="value">${totalHedges}</div>
-                            <div class="subtitle">${Object.keys(hedges).length} symbols</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Hedge P&L</h3>
-                            <div class="value ${totalHedgeProfit >= 0 ? 'profit-positive' : 'profit-negative'}">
-                                ${totalHedgeProfit.toFixed(2)}
-                            </div>
-                            <div class="subtitle">Total hedge result</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Success Rate</h3>
-                            <div class="value ${getSuccessRateClass(parseFloat(hedgeSuccessRate))}">
-                                ${hedgeSuccessRate}%
-                            </div>
-                            <div class="subtitle">Profitable symbols</div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <h3>Total Volume</h3>
-                            <div class="value">${totalHedgeVolume.toFixed(3)}</div>
-                            <div class="subtitle">Hedge lots traded</div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                        <h4 style="margin-bottom: 0.5rem;">Hedge Strategy Analysis</h4>
-                        <div style="font-size: 0.9rem; opacity: 0.8;">
-                            ${totalHedges > 0 ? 
-                                `Average hedge size: ${(totalHedgeVolume / totalHedges).toFixed(3)} lots per hedge` : 
-                                'No hedge data available for analysis'
-                            }
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        function getHedgeStrategyAssessment(effectiveness) {
-            if (!effectiveness) return "Insufficient data";
-            
-            const successRate = effectiveness.hedge_success_rate || 0;
-            const riskReduction = effectiveness.risk_reduction || 0;
-            
-            if (successRate >= 70 && riskReduction >= 50) {
-                return "🟢 Excellent - High success with strong risk reduction";
-            } else if (successRate >= 50 && riskReduction >= 30) {
-                return "🟡 Good - Moderate success with decent protection";
-            } else if (successRate >= 30) {
-                return "🟠 Fair - Some benefit but room for improvement";
-            } else {
-                return "🔴 Poor - Consider strategy revision";
-            }
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -850,27 +666,6 @@
                     }
                 }
                 
-                // Load additional statistics
-                try {
-                    const martingaleStats = await safeFetch('/api/martingale_statistics');
-                    if (martingaleStats && !martingaleStats.error) {
-                        currentAnalysis.martingale_detailed = martingaleStats;
-                        console.log('✅ Loaded detailed martingale statistics');
-                    }
-                } catch (e) {
-                    console.log('⚠️ Martingale statistics not available');
-                }
-                
-                try {
-                    const hedgeStats = await safeFetch('/api/hedge_effectiveness');
-                    if (hedgeStats && !hedgeStats.error) {
-                        currentAnalysis.hedge_detailed = hedgeStats;
-                        console.log('✅ Loaded hedge effectiveness analysis');
-                    }
-                } catch (e) {
-                    console.log('⚠️ Hedge statistics not available');
-                }
-                
                 // Render all tabs
                 renderOverview();
                 renderMartingaleAnalysis();
@@ -942,28 +737,6 @@
                     dirData.profit += trade.profit || 0;
                     dirData.volume += trade.volume || 0;
                     if (batchId) dirData.batches.add(batchId);
-                    
-                    // Batch history
-                    if (batchId) {
-                        const batchKey = `${symbol}_${direction}_${batchId}`;
-                        if (!batchHistory[batchKey]) {
-                            batchHistory[batchKey] = {
-                                symbol,
-                                direction,
-                                batchId,
-                                trades: [],
-                                maxLayer: 0,
-                                totalProfit: 0,
-                                startTime: trade.timestamp,
-                                endTime: trade.timestamp
-                            };
-                        }
-                        
-                        batchHistory[batchKey].trades.push(trade);
-                        batchHistory[batchKey].maxLayer = Math.max(batchHistory[batchKey].maxLayer, layer);
-                        batchHistory[batchKey].totalProfit += trade.profit || 0;
-                        batchHistory[batchKey].endTime = trade.timestamp;
-                    }
                 }
             });
             
@@ -1029,36 +802,19 @@
             document.getElementById('trades-subtitle').textContent = 
                 `${summary.martingale_trades || 0} martingale, ${summary.hedge_trades || 0} hedge`;
             
-            // Total layers - use detailed analysis if available
-            let totalLayers = 0;
-            let avgLayer = '0';
+            // Calculate total layers and average
+            let totalLayers = Object.values(analysis.symbols || {}).reduce((sum, symbol) => {
+                return sum + (symbol.long?.layers?.length || 0) + (symbol.short?.layers?.length || 0);
+            }, 0);
             
-            if (analysis.martingale_detailed) {
-                const layerStats = analysis.martingale_detailed.layer_statistics || {};
-                totalLayers = Object.values(layerStats).reduce((sum, stat) => sum + (stat.count || 0), 0);
-                const totalTrades = summary.total_trades - summary.hedge_trades || 1;
-                avgLayer = totalTrades > 0 ? (totalLayers / totalTrades).toFixed(1) : '0';
-            } else {
-                // Fallback calculation
-                totalLayers = Object.values(analysis.symbols || {}).reduce((sum, symbol) => {
-                    return sum + (symbol.long?.layers?.length || 0) + (symbol.short?.layers?.length || 0);
-                }, 0);
-                avgLayer = totalLayers > 0 ? (totalLayers / (summary.total_trades - summary.hedge_trades || 1)).toFixed(1) : '0';
-            }
+            let avgLayer = totalLayers > 0 ? (totalLayers / (summary.total_trades - summary.hedge_trades || 1)).toFixed(1) : '0';
             
             document.getElementById('total-layers').textContent = totalLayers;
             document.getElementById('layers-subtitle').textContent = `Avg: ${avgLayer} layers/batch`;
             
             // Hedge trades
             document.getElementById('total-hedges').textContent = summary.hedge_trades || 0;
-            let hedgeProfit = 0;
-            
-            if (analysis.hedge_detailed) {
-                hedgeProfit = analysis.hedge_detailed.overall_statistics?.hedge_profit_contribution || 0;
-            } else {
-                hedgeProfit = Object.values(analysis.hedges || {}).reduce((sum, h) => sum + (h.profit || 0), 0);
-            }
-            
+            const hedgeProfit = Object.values(analysis.hedges || {}).reduce((sum, h) => sum + (h.profit || 0), 0);
             document.getElementById('hedges-subtitle').textContent = `P&L: ${hedgeProfit.toFixed(2)}`;
             
             // Total P&L
@@ -1345,7 +1101,7 @@
                 timelineHtml = '<div class="loading">No batch data available</div>';
             } else {
                 sortedBatches.forEach(batch => {
-                    const isCompleted = batch.totalProfit !== 0; // Assuming completed if has profit/loss
+                    const isCompleted = batch.totalProfit !== 0;
                     const duration = new Date(batch.endTime) - new Date(batch.startTime);
                     const durationHours = (duration / (1000 * 60 * 60)).toFixed(1);
                     
@@ -1362,11 +1118,6 @@
                         statusIcon = 'fas fa-clock';
                     }
                     
-                    // Check if batch had hedges
-                    const hedgeCount = allTrades.filter(t => 
-                        t.batch_id === batch.batchId && (t.is_hedge || (t.comment && t.comment.includes('HEDGE')))
-                    ).length;
-                    
                     timelineHtml += `
                         <div class="${statusClass}">
                             <div>
@@ -1375,7 +1126,6 @@
                             <div class="timeline-info">
                                 <div class="timeline-symbol">
                                     Batch #${batch.batchId} - ${batch.symbol} ${batch.direction.toUpperCase()}
-                                    ${hedgeCount > 0 ? '<i class="fas fa-shield-alt" style="color: #9C27B0; margin-left: 0.5rem;"></i>' : ''}
                                 </div>
                                 <div class="timeline-details">
                                     ${statusText} | ${batch.trades.length} trades | Max Layer: ${batch.maxLayer} | 
@@ -1383,7 +1133,6 @@
                                     P&L: <span class="${batch.totalProfit >= 0 ? 'profit-positive' : 'profit-negative'}">
                                         ${batch.totalProfit.toFixed(2)}
                                     </span>
-                                    ${hedgeCount > 0 ? ` | ${hedgeCount} hedge(s)` : ''}
                                 </div>
                             </div>
                         </div>
@@ -1413,80 +1162,6 @@
                 option.textContent = symbol;
                 symbolFilter.appendChild(option);
             });
-        }
-
-        // Add function to view detailed batch information
-        async function viewBatchDetails(batchId) {
-            try {
-                const batchData = await safeFetch(`/api/batch_performance/${batchId}`);
-                if (batchData && !batchData.error) {
-                    showBatchModal(batchData);
-                } else {
-                    console.error('Failed to load batch details');
-                }
-            } catch (error) {
-                console.error('Error loading batch details:', error);
-            }
-        }
-
-        function showBatchModal(batchData) {
-            // Create and show modal with detailed batch information
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.8); z-index: 1000; display: flex;
-                align-items: center; justify-content: center;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: #1e3c72; padding: 2rem; border-radius: 15px; max-width: 600px; width: 90%; max-height: 80%; overflow-y: auto;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <h2>Batch #${batchData.batch_id} - ${batchData.symbol} ${batchData.direction.toUpperCase()}</h2>
-                        <button onclick="this.closest('div').parentElement.remove()" style="background: #f44336; border: none; color: white; padding: 0.5rem; border-radius: 50%; cursor: pointer;">✕</button>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
-                        <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; opacity: 0.7;">Total Profit</div>
-                            <div style="font-size: 1.5rem; font-weight: 600; color: ${batchData.summary.net_profit >= 0 ? '#4CAF50' : '#f44336'};">
-                                ${batchData.summary.net_profit.toFixed(2)}
-                            </div>
-                        </div>
-                        <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; opacity: 0.7;">Max Layer</div>
-                            <div style="font-size: 1.5rem; font-weight: 600;">${batchData.summary.max_layer}</div>
-                        </div>
-                        <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; opacity: 0.7;">Duration</div>
-                            <div style="font-size: 1.5rem; font-weight: 600;">${batchData.summary.duration_hours}h</div>
-                        </div>
-                    </div>
-                    
-                    ${batchData.summary.hedge_count > 0 ? `
-                        <div style="background: rgba(156, 39, 176, 0.2); border: 1px solid #9C27B0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
-                            <h4 style="margin-bottom: 0.5rem;">🛡️ Hedge Information</h4>
-                            <div>Hedge Trades: ${batchData.summary.hedge_count}</div>
-                            <div>Hedge Volume: ${batchData.summary.hedge_volume.toFixed(3)} lots</div>
-                            <div>Hedge P&L: <span style="color: ${batchData.summary.hedge_profit >= 0 ? '#4CAF50' : '#f44336'};">${batchData.summary.hedge_profit.toFixed(2)}</span></div>
-                        </div>
-                    ` : ''}
-                    
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem;">
-                        <h4 style="margin-bottom: 0.5rem;">Layer Progression</h4>
-                        <div style="max-height: 200px; overflow-y: auto;">
-                            ${batchData.layer_progression.map(layer => `
-                                <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.9rem;">
-                                    <span>Layer ${layer.layer}</span>
-                                    <span>${layer.volume} lots @ ${layer.entry_price.toFixed(5)}</span>
-                                    <span style="color: ${layer.profit >= 0 ? '#4CAF50' : '#f44336'};">${layer.profit.toFixed(2)}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
         }
 
         function applyFilters() {
@@ -1546,4 +1221,4 @@
         });
     </script>
 </body>
-</html>
+</html> 

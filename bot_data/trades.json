@@ -1,0 +1,19 @@
+[
+  {
+    "timestamp": "2025-08-20T12:52:28.936586",
+    "event_type": "executed",
+    "symbol": "US500",
+    "direction": "long",
+    "volume": 0.01,
+    "entry_price": 6404.81,
+    "tp": 6406.81,
+    "sl": null,
+    "order_id": 1035840339,
+    "layer": 1,
+    "is_martingale": false,
+    "profit": 0.0,
+    "comment": "BM06_US500_BL01",
+    "sl_distance_pips": 0.0,
+    "is_hedge": false
+  }
+]
