@@ -1,6 +1,5 @@
-# ===== BM TRADING ROBOT - CLEAN VERSION WITH WEBHOOK READY =====
+# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 1 =====
 # Part 1: Core Imports and Configuration
-# This maintains all existing functionality while being webhook-ready
 
 import MetaTrader5 as mt5
 import pandas as pd
@@ -66,6 +65,21 @@ MARTINGALE_PROFIT_BUFFER_PIPS = CONFIG['martingale_settings']['profit_buffer_pip
 MIN_PROFIT_PERCENTAGE = CONFIG['martingale_settings']['min_profit_percentage']
 FLIRT_THRESHOLD_PIPS = CONFIG['martingale_settings']['flirt_threshold_pips']
 
+# Hedging Configuration (NEW)
+HEDGING_ENABLED = CONFIG.get('hedging_settings', {}).get('enabled', False)
+HEDGE_START_LAYER = CONFIG.get('hedging_settings', {}).get('start_layer', 7)
+HEDGE_PERCENTAGE = CONFIG.get('hedging_settings', {}).get('hedge_percentage', 50)
+LOSING_LONG_HEDGE_PARAMS = CONFIG.get('hedging_settings', {}).get('losing_long_hedge_params', {
+    'rsi_threshold': 65,
+    'adx_min': 25,
+    'min_timeframes_aligned': 1
+})
+LOSING_SHORT_HEDGE_PARAMS = CONFIG.get('hedging_settings', {}).get('losing_short_hedge_params', {
+    'rsi_threshold': 35,
+    'adx_min': 25,
+    'min_timeframes_aligned': 1
+})
+
 # Lot Size Configuration
 LOT_SIZE_MODE = CONFIG['lot_size_settings']['mode']  # "DYNAMIC" or "MANUAL"
 MANUAL_LOT_SIZE = CONFIG['lot_size_settings']['manual_lot_size']
@@ -99,8 +113,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 2 =====
+# Part 2: Utility Functions
 
-# ===== PART 2: UTILITY FUNCTIONS =====
 def get_pip_size(symbol):
     """Get pip size for different symbol types"""
     symbol = symbol.upper()
@@ -260,6 +275,9 @@ def normalize_volume(symbol, volume):
     logger.info(f"  Final normalized volume: {volume}")
     return volume
 
+# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 3 =====
+# Part 3: Position Size Calculation and Technical Analysis
+
 def calculate_position_size(symbol, stop_loss_pips, risk_amount, is_martingale=False, base_volume=None, layer=1):
     """Enhanced position size calculation with manual/dynamic switch - VERSION 3 LOGIC"""
     
@@ -348,7 +366,7 @@ def calculate_position_size(symbol, stop_loss_pips, risk_amount, is_martingale=F
     
     return normalized_size
 
-# ===== PART 3: TECHNICAL ANALYSIS =====
+# ===== TECHNICAL ANALYSIS FUNCTIONS =====
 def get_historical_data(symbol, timeframe, num_bars=500):
     """Get historical data"""
     if not mt5.symbol_select(symbol, True):
@@ -470,15 +488,248 @@ def analyze_symbol_multi_timeframe(symbol, base_timeframe):
     
     return analyses
 
+# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 4 =====
+# Part 4: Hedge Signal Generation and Execution Functions (NEW)
 
-import requests
-import json
-import logging
-import threading
-import time
-import os
-from datetime import datetime, timedelta
-from collections import deque
+def check_hedge_opportunity_sensitive(batch, current_price):
+    """
+    More sensitive TA check for hedge opportunities
+    Based on existing generate_enhanced_signals logic but with relaxed thresholds
+    """
+    if not HEDGING_ENABLED:
+        return None
+        
+    symbol = batch.symbol
+    
+    # Use existing multi-timeframe analysis
+    analyses = analyze_symbol_multi_timeframe(symbol, GLOBAL_TIMEFRAME)
+    
+    if not analyses or GLOBAL_TIMEFRAME not in analyses:
+        logger.debug(f"No analysis data for hedge check: {symbol}")
+        return None
+    
+    primary_analysis = analyses[GLOBAL_TIMEFRAME]
+    
+    # Get hedge parameters based on batch direction
+    if batch.direction == 'long':
+        # Need SHORT signal to hedge losing long
+        hedge_params = LOSING_LONG_HEDGE_PARAMS
+        target_direction = 'short'
+        
+        # More sensitive bearish detection
+        ema_bearish = primary_analysis['ema_direction'] == 'Down'
+        rsi_bearish = primary_analysis['rsi'] > hedge_params['rsi_threshold']
+        
+        trend_condition = ema_bearish and rsi_bearish
+        
+    else:
+        # Need LONG signal to hedge losing short  
+        hedge_params = LOSING_SHORT_HEDGE_PARAMS
+        target_direction = 'long'
+        
+        # More sensitive bullish detection
+        ema_bullish = primary_analysis['ema_direction'] == 'Up'
+        rsi_bullish = primary_analysis['rsi'] < hedge_params['rsi_threshold']
+        
+        trend_condition = ema_bullish and rsi_bullish
+    
+    # ADX strength check
+    adx_strong = primary_analysis['adx'] > hedge_params['adx_min']
+    
+    # Timeframe confirmation
+    timeframes_aligned = 0
+    higher_timeframes = get_higher_timeframes(GLOBAL_TIMEFRAME)
+    
+    required_alignments = hedge_params['min_timeframes_aligned']
+    
+    for tf in higher_timeframes[:required_alignments]:
+        if tf in analyses:
+            higher_analysis = analyses[tf]
+            if batch.direction == 'long':
+                # Check for bearish alignment
+                if higher_analysis['ema_direction'] == 'Down':
+                    timeframes_aligned += 1
+            else:
+                # Check for bullish alignment
+                if higher_analysis['ema_direction'] == 'Up':
+                    timeframes_aligned += 1
+    
+    # Final decision
+    hedge_valid = (trend_condition and 
+                   adx_strong and 
+                   timeframes_aligned >= required_alignments)
+    
+    if hedge_valid:
+        logger.info(f"🛡️ HEDGE SIGNAL DETECTED for {symbol} {batch.direction} batch:")
+        logger.info(f"   Target direction: {target_direction}")
+        logger.info(f"   ADX: {primary_analysis['adx']:.1f} (min: {hedge_params['adx_min']})")
+        logger.info(f"   RSI: {primary_analysis['rsi']:.1f} (threshold: {hedge_params['rsi_threshold']})")
+        logger.info(f"   Timeframes aligned: {timeframes_aligned}/{required_alignments}")
+        
+        return {
+            'type': 'hedge',
+            'symbol': symbol,
+            'direction': target_direction,
+            'entry_price': current_price,
+            'batch_being_hedged': batch,
+            'confidence': {
+                'adx': primary_analysis['adx'],
+                'rsi': primary_analysis['rsi'],
+                'timeframes_aligned': timeframes_aligned,
+                'ema_direction': primary_analysis['ema_direction']
+            }
+        }
+    else:
+        logger.debug(f"Hedge conditions not met for {symbol}: trend={trend_condition}, adx={adx_strong}, tf_align={timeframes_aligned}/{required_alignments}")
+    
+    return None
+
+def calculate_hedge_volume(batch):
+    """Calculate hedge volume based on current batch total volume"""
+    total_batch_volume = batch.total_volume
+    hedge_volume = total_batch_volume * (HEDGE_PERCENTAGE / 100)
+    
+    # Normalize hedge volume
+    normalized_hedge_volume = normalize_volume(batch.symbol, hedge_volume)
+    
+    logger.info(f"Hedge volume calculation for {batch.symbol}:")
+    logger.info(f"   Batch total volume: {total_batch_volume:.3f}")
+    logger.info(f"   Hedge percentage: {HEDGE_PERCENTAGE}%")
+    logger.info(f"   Raw hedge volume: {hedge_volume:.3f}")
+    logger.info(f"   Normalized hedge volume: {normalized_hedge_volume:.3f}")
+    
+    return normalized_hedge_volume
+
+def execute_hedge_trade(hedge_opportunity, trade_manager):
+    """Execute hedge trade with calculated percentage"""
+    
+    batch = hedge_opportunity['batch_being_hedged']
+    symbol = hedge_opportunity['symbol']
+    direction = hedge_opportunity['direction']
+    
+    # Calculate hedge volume
+    hedge_volume = calculate_hedge_volume(batch)
+    
+    if hedge_volume <= 0:
+        logger.error(f"Invalid hedge volume: {hedge_volume}")
+        return False
+    
+    # Get current price for hedge direction
+    tick = mt5.symbol_info_tick(symbol)
+    if not tick:
+        logger.error(f"Failed to get tick data for hedge: {symbol}")
+        return False
+    
+    # Determine hedge order type and price
+    if direction == 'long':
+        order_type = mt5.ORDER_TYPE_BUY
+        price = tick.ask
+    else:
+        order_type = mt5.ORDER_TYPE_SELL
+        price = tick.bid
+    
+    # Create hedge comment
+    direction_code = "B" if direction == 'long' else "S"
+    hedge_comment = f"HEDGE_B{batch.batch_id:02d}_{symbol}_{direction_code}H"
+    
+    # Create hedge order request
+    request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "symbol": symbol,
+        "volume": float(hedge_volume),
+        "type": order_type,
+        "price": float(price),
+        "deviation": 20,
+        "magic": MAGIC_NUMBER,
+        "comment": hedge_comment,
+        "type_time": mt5.ORDER_TIME_GTC,
+        "type_filling": mt5.ORDER_FILLING_IOC,
+    }
+    
+    logger.info(f"🛡️ EXECUTING HEDGE TRADE:")
+    logger.info(f"   Symbol: {symbol}")
+    logger.info(f"   Direction: {direction} (hedging {batch.direction} batch)")
+    logger.info(f"   Volume: {hedge_volume:.3f}")
+    logger.info(f"   Price: {price:.5f}")
+    logger.info(f"   Comment: {hedge_comment}")
+    logger.info(f"   Batch Layer: {batch.current_layer}")
+    logger.info(f"   Confidence: ADX={hedge_opportunity['confidence']['adx']:.1f}, RSI={hedge_opportunity['confidence']['rsi']:.1f}")
+    
+    # Execute hedge order
+    result = mt5.order_send(request)
+    
+    if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+        logger.info(f"✅ HEDGE EXECUTED SUCCESSFULLY:")
+        logger.info(f"   Order ID: {result.order}")
+        logger.info(f"   Execution Price: {result.price:.5f}")
+        logger.info(f"   Volume: {result.volume:.3f}")
+        
+        # Store hedge information in batch
+        batch.active_hedge = {
+            'direction': direction,
+            'volume': result.volume,
+            'entry_price': result.price,
+            'order_id': result.order,
+            'comment': hedge_comment,
+            'created_time': datetime.now(),
+            'confidence': hedge_opportunity['confidence']
+        }
+        
+        # Send webhook notification
+        try:
+            hedge_info = {
+                'symbol': symbol,
+                'direction': direction,
+                'volume': result.volume,
+                'entry_price': result.price,
+                'order_id': result.order,
+                'hedged_batch_id': batch.batch_id,
+                'batch_direction': batch.direction,
+                'batch_layer': batch.current_layer,
+                'hedge_percentage': HEDGE_PERCENTAGE,
+                'is_hedge': True
+            }
+            trade_manager.webhook_manager.send_trade_event(hedge_info, "hedge_executed")
+        except Exception as e:
+            logger.error(f"Hedge webhook error: {e}")
+        
+        return True
+    else:
+        logger.error(f"❌ HEDGE EXECUTION FAILED:")
+        logger.error(f"   Error code: {result.retcode if result else 'No result'}")
+        return False
+
+def validate_hedging_configuration():
+    """Validate hedging configuration on startup"""
+    logger.info("="*50)
+    logger.info("HEDGING CONFIGURATION VALIDATION")
+    logger.info("="*50)
+    
+    if HEDGING_ENABLED:
+        logger.info("✅ Hedging system: ENABLED")
+        logger.info(f"   Start layer: {HEDGE_START_LAYER}")
+        logger.info(f"   Hedge percentage: {HEDGE_PERCENTAGE}%")
+        
+        logger.info("\n🔹 Losing LONG hedge parameters:")
+        for key, value in LOSING_LONG_HEDGE_PARAMS.items():
+            logger.info(f"   {key}: {value}")
+        
+        logger.info("\n🔹 Losing SHORT hedge parameters:")
+        for key, value in LOSING_SHORT_HEDGE_PARAMS.items():
+            logger.info(f"   {key}: {value}")
+        
+        logger.info(f"\n📊 Hedge Example (Layer {HEDGE_START_LAYER}):")
+        logger.info(f"   If batch total volume = 1.27 lots")
+        logger.info(f"   Hedge volume = 1.27 × {HEDGE_PERCENTAGE}% = {1.27 * HEDGE_PERCENTAGE / 100:.3f} lots")
+        
+    else:
+        logger.info("⚠️ Hedging system: DISABLED")
+        logger.info("   All hedge-related functions will be skipped")
+    
+    logger.info("="*50)
+    
+    # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 5 =====
+# Part 5: Enhanced Webhook Manager
 
 class HybridWebhookManager:
     """Enhanced webhook manager that uses both HTTP webhooks and JSON files"""
@@ -698,135 +949,6 @@ class HybridWebhookManager:
         except Exception as e:
             self.logger.error(f"Error saving to JSON buffer {data_type}: {e}")
     
-    def send_live_data(self, trade_manager, account_info=None):
-        """Send current live data with JSON backup"""
-        try:
-            if account_info is None:
-                import MetaTrader5 as mt5
-                account_info = mt5.account_info()
-                
-            if account_info is None:
-                return False
-            
-            # Calculate profit and drawdown
-            profit = account_info.equity - account_info.balance
-            drawdown = 0
-            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance:
-                if account_info.equity < trade_manager.initial_balance:
-                    drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
-            
-            # Get active positions
-            import MetaTrader5 as mt5
-            positions = mt5.positions_get()
-            
-            # Get magic number
-            try:
-                magic_number = getattr(trade_manager, 'MAGIC_NUMBER', 23232323)
-            except:
-                magic_number = 23232323
-                
-            active_positions = len([pos for pos in positions if pos.magic == magic_number]) if positions else 0
-            
-            # Prepare batch data
-            batches_data = []
-            try:
-                if hasattr(trade_manager, 'martingale_batches'):
-                    for batch_key, batch in trade_manager.martingale_batches.items():
-                        if hasattr(batch, 'trades') and batch.trades:
-                            batch_data = {
-                                "batch_id": getattr(batch, 'batch_id', 0),
-                                "symbol": getattr(batch, 'symbol', ''),
-                                "direction": getattr(batch, 'direction', ''),
-                                "current_layer": getattr(batch, 'current_layer', 0),
-                                "total_volume": round(getattr(batch, 'total_volume', 0), 2),
-                                "breakeven_price": round(getattr(batch, 'breakeven_price', 0), 5),
-                                "initial_entry_price": round(getattr(batch, 'initial_entry_price', 0), 5),
-                                "created_time": getattr(batch, 'created_time', datetime.now()).isoformat() if hasattr(getattr(batch, 'created_time', None), 'isoformat') else datetime.now().isoformat()
-                            }
-                            batches_data.append(batch_data)
-            except Exception as e:
-                self.logger.error(f"Error preparing batch data: {e}")
-            
-            live_data = {
-                "timestamp": datetime.now().isoformat(),
-                "robot_status": "Running" if not getattr(trade_manager, 'emergency_stop_active', False) else "Emergency Stop",
-                "account": {
-                    "balance": round(account_info.balance, 2),
-                    "equity": round(account_info.equity, 2),
-                    "margin": round(account_info.margin, 2),
-                    "free_margin": round(account_info.margin_free, 2),
-                    "margin_level": round((account_info.equity / account_info.margin * 100) if account_info.margin > 0 else 0, 2),
-                    "profit": round(profit, 2)
-                },
-                "active_trades": active_positions,
-                "active_batches": len([b for b in getattr(trade_manager, 'martingale_batches', {}).values() if hasattr(b, 'trades') and b.trades]),
-                "total_trades": getattr(trade_manager, 'total_trades', 0),
-                "emergency_stop": getattr(trade_manager, 'emergency_stop_active', False),
-                "drawdown_percent": round(drawdown, 2),
-                "batches": batches_data,
-                "mt5_connected": True
-            }
-            
-            # Try webhook first
-            webhook_success = self._send_webhook("live_data", live_data)
-            
-            # Always save to JSON as backup
-            if self.enable_json_backup:
-                try:
-                    with open(self.json_files['live_data'], 'w') as f:
-                        json.dump(live_data, f, indent=2, default=str)
-                except Exception as e:
-                    self.logger.error(f"Error saving live data to JSON: {e}")
-            
-            if webhook_success:
-                self.logger.debug(f"📊 Live data sent via webhook")
-            elif self.enable_json_backup:
-                self.logger.debug(f"📁 Live data saved to JSON (webhook failed)")
-            
-            return webhook_success or self.enable_json_backup
-            
-        except Exception as e:
-            self.logger.error(f"Error preparing live data: {e}")
-            return False
-    
-    def send_account_update(self, account_info, trade_manager):
-        """Send account update with JSON backup"""
-        try:
-            if account_info is None:
-                return False
-            
-            profit = account_info.equity - account_info.balance
-            drawdown = 0
-            
-            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance:
-                if account_info.equity < trade_manager.initial_balance:
-                    drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
-            
-            update_data = {
-                "timestamp": datetime.now().isoformat(),
-                "balance": round(account_info.balance, 2),
-                "equity": round(account_info.equity, 2),
-                "profit": round(profit, 2),
-                "drawdown": round(drawdown, 2)
-            }
-            
-            # Try webhook first
-            webhook_success = self._send_webhook("account_update", update_data)
-            
-            # Save to JSON buffer
-            self._save_to_json_buffer('account_history', update_data)
-            
-            if webhook_success:
-                self.logger.debug(f"📈 Account update sent via webhook")
-            elif self.enable_json_backup:
-                self.logger.debug(f"📁 Account update saved to JSON")
-            
-            return webhook_success or self.enable_json_backup
-            
-        except Exception as e:
-            self.logger.error(f"Error sending account update: {e}")
-            return False
-    
     def send_trade_event(self, trade_info, event_type="executed"):
         """Send trade event with JSON backup"""
         try:
@@ -844,7 +966,8 @@ class HybridWebhookManager:
                 "is_martingale": bool(trade_info.get('is_martingale', False)),
                 "profit": float(trade_info.get('profit', 0)),
                 "comment": str(trade_info.get('enhanced_comment', trade_info.get('comment', ''))),
-                "sl_distance_pips": float(trade_info.get('sl_distance_pips', 0))
+                "sl_distance_pips": float(trade_info.get('sl_distance_pips', 0)),
+                "is_hedge": bool(trade_info.get('is_hedge', False))
             }
             
             # Try webhook first
@@ -864,41 +987,6 @@ class HybridWebhookManager:
             self.logger.error(f"Error sending trade event: {e}")
             return False
     
-    def send_signal_generated(self, signal):
-        """Send signal with JSON backup"""
-        try:
-            signal_data = {
-                "timestamp": datetime.now().isoformat(),
-                "symbol": str(signal.get('symbol', '')),
-                "direction": str(signal.get('direction', '')),
-                "entry_price": float(signal.get('entry_price', 0)),
-                "tp": float(signal.get('tp', 0)) if signal.get('tp') else None,
-                "sl_distance_pips": float(signal.get('sl_distance_pips', 0)),
-                "tp_distance_pips": float(signal.get('tp_distance_pips', 0)),
-                "risk_profile": str(signal.get('risk_profile', '')),
-                "adx_value": float(signal.get('adx_value', 0)),
-                "rsi": float(signal.get('rsi', 0)),
-                "timeframes_aligned": int(signal.get('timeframes_aligned', 1)),
-                "is_initial": bool(signal.get('is_initial', True))
-            }
-            
-            # Try webhook first
-            webhook_success = self._send_webhook("signal_generated", signal_data)
-            
-            # Save to JSON buffer
-            self._save_to_json_buffer('signals', signal_data)
-            
-            if webhook_success:
-                self.logger.info(f"📡 Signal sent: {signal.get('symbol')} {signal.get('direction')}")
-            elif self.enable_json_backup:
-                self.logger.info(f"📁 Signal saved to JSON: {signal.get('symbol')} {signal.get('direction')}")
-            
-            return webhook_success or self.enable_json_backup
-            
-        except Exception as e:
-            self.logger.error(f"Error sending signal: {e}")
-            return False
-    
     def check_config_reload(self) -> bool:
         """Check if configuration reload is requested"""
         try:
@@ -916,42 +1004,9 @@ class HybridWebhookManager:
             
         return False
     
-    def get_status(self):
-        """Get webhook manager status"""
-        return {
-            'enabled': self.enabled,
-            'dashboard_url': self.dashboard_url,
-            'connection_verified': self.connection_verified,
-            'success_count': self.success_count,
-            'error_count': self.error_count,
-            'last_success': self.last_success.isoformat() if self.last_success else None,
-            'last_error': self.last_error.isoformat() if self.last_error else None,
-            'success_rate': self.success_count / (self.success_count + self.error_count) if (self.success_count + self.error_count) > 0 else 0,
-            'json_backup_enabled': self.enable_json_backup,
-            'json_buffer_counts': {k: len(v) for k, v in self.json_buffers.items()} if self.enable_json_backup else {}
-        }
-    
-    def force_json_write(self):
-        """Force immediate write of all JSON buffers"""
-        if self.enable_json_backup:
-            self._write_json_files()
-            self.logger.info("🔄 Forced JSON write completed")
-    
-    def test_connection_manual(self):
-        """Manual connection test"""
-        self.logger.info("🧪 Running manual connection test...")
-        success = self._test_connection()
-        
-        if success:
-            self.logger.info("🎉 Manual connection test passed!")
-        else:
-            self.logger.warning("❌ Manual connection test failed")
-            if self.enable_json_backup:
-                self.logger.info("📁 JSON backup is available")
-        
-        return success
-    
-    # ===== PART 5: ENHANCED MARTINGALE BATCH CLASS =====
+    # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 6 =====
+# Part 6: Enhanced Martingale Batch Class with Hedging Support
+
 class MartingaleBatch:
     def __init__(self, symbol, direction, initial_sl_distance, entry_price):
         self.symbol = symbol
@@ -967,8 +1022,14 @@ class MartingaleBatch:
         self.last_layer_time = datetime.now()
         self.batch_id = None
         
-    def add_trade(self, trade):
-        """Add trade to batch and recalculate batch TP"""
+        # HEDGING SUPPORT (NEW)
+        self.active_hedge = None
+        self.hedge_history = []
+        
+    def add_trade_with_hedge_check(self, trade):
+        """
+        Enhanced version of add_trade method that returns hedge check flag
+        """
         self.current_layer += 1
         trade['layer'] = self.current_layer
         trade['batch_id'] = self.batch_id
@@ -990,6 +1051,54 @@ class MartingaleBatch:
         # Recalculate breakeven price
         if self.total_volume > 0:
             self.breakeven_price = self.total_invested / self.total_volume
+        
+        # Return flag indicating if hedge check is needed
+        return self.current_layer >= HEDGE_START_LAYER and HEDGING_ENABLED
+
+    def close_active_hedge(self):
+        """Close any active hedge for this batch"""
+        if self.active_hedge:
+            try:
+                logger.info(f"🛡️ Closing hedge for batch {self.batch_id}")
+                
+                # Get hedge position
+                positions = mt5.positions_get(symbol=self.symbol)
+                if positions:
+                    for pos in positions:
+                        if (pos.magic == MAGIC_NUMBER and 
+                            pos.comment == self.active_hedge.get('comment', '')):
+                            
+                            # Close hedge position
+                            close_request = {
+                                "action": mt5.TRADE_ACTION_DEAL,
+                                "symbol": self.symbol,
+                                "volume": pos.volume,
+                                "type": mt5.ORDER_TYPE_SELL if pos.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY,
+                                "position": pos.ticket,
+                                "magic": MAGIC_NUMBER,
+                                "comment": f"CLOSE_HEDGE_B{self.batch_id:02d}",
+                            }
+                            
+                            result = mt5.order_send(close_request)
+                            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                                logger.info(f"✅ Hedge closed successfully: {pos.ticket}")
+                                
+                                # Add to hedge history
+                                self.hedge_history.append({
+                                    'closed_time': datetime.now(),
+                                    'hedge_info': self.active_hedge.copy(),
+                                    'close_reason': 'batch_lifecycle'
+                                })
+                                
+                                self.active_hedge = None
+                                return True
+                            else:
+                                logger.error(f"❌ Failed to close hedge: {result.retcode if result else 'No result'}")
+                
+            except Exception as e:
+                logger.error(f"Error closing hedge for batch {self.batch_id}: {e}")
+        
+        return False
             
     def get_next_trigger_price(self):
         """Calculate next price level to trigger new layer"""
@@ -1155,7 +1264,9 @@ class MartingaleBatch:
                 
         return False
     
-    # ===== PART 6: ENHANCED PERSISTENCE SYSTEM =====
+    # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 7 =====
+# Part 7: Enhanced Persistence System
+
 class BotPersistence:
     def __init__(self, data_file="BM_bot_state.json"):
         self.data_file = data_file
@@ -1174,7 +1285,7 @@ class BotPersistence:
                 'timestamp': datetime.now().isoformat(),
                 'account_number': ACCOUNT_NUMBER,
                 'magic_number': MAGIC_NUMBER,
-                'bot_version': '3.0_enhanced',
+                'bot_version': '3.0_enhanced_with_hedging',
                 'total_trades': trade_manager.total_trades,
                 'next_batch_id': trade_manager.next_batch_id,
                 'emergency_stop_active': trade_manager.emergency_stop_active,
@@ -1182,9 +1293,9 @@ class BotPersistence:
                 'batches': {}
             }
             
-            # Save all martingale batches
+            # Save all martingale batches with hedging info
             for batch_key, batch in trade_manager.martingale_batches.items():
-                state_data['batches'][batch_key] = {
+                batch_data = {
                     'batch_id': batch.batch_id,
                     'symbol': batch.symbol,
                     'direction': batch.direction,
@@ -1196,7 +1307,10 @@ class BotPersistence:
                     'breakeven_price': batch.breakeven_price,
                     'created_time': batch.created_time.isoformat(),
                     'last_layer_time': batch.last_layer_time.isoformat(),
-                    'trades': []
+                    'trades': [],
+                    # HEDGING DATA (NEW)
+                    'active_hedge': batch.active_hedge,
+                    'hedge_history': batch.hedge_history
                 }
                 
                 # Save all trades in batch
@@ -1211,7 +1325,9 @@ class BotPersistence:
                         'enhanced_comment': trade.get('enhanced_comment'),
                         'trade_id': trade.get('trade_id')
                     }
-                    state_data['batches'][batch_key]['trades'].append(trade_data)
+                    batch_data['trades'].append(trade_data)
+                
+                state_data['batches'][batch_key] = batch_data
             
             # Write to file
             with open(self.data_file, 'w') as f:
@@ -1304,7 +1420,7 @@ class BotPersistence:
                     'time': pos.time
                 }
                 
-                # Parse batch info from comment (BM01_BTCUSD_B01)
+                # Parse batch info from comment (BM01_BTCUSD_B01 or HEDGE_B01_BTCUSD_SH)
                 batch_info = self.parse_comment(pos.comment)
                 parsed_pos.update(batch_info)
                 
@@ -1317,15 +1433,48 @@ class BotPersistence:
             return []
     
     def parse_comment(self, comment):
-        """Parse batch information from trade comment"""
+        """Parse batch information from trade comment including hedges"""
         try:
-            # Expected format: BM01_BTCUSD_B01 or BM01_BTCUSD_S02
-            if not comment or not comment.startswith('BM'):
-                return {'batch_id': None, 'direction': None, 'layer': None}
+            # Expected formats: 
+            # - Regular: BM01_BTCUSD_B01 or BM01_BTCUSD_S02
+            # - Hedge: HEDGE_B01_BTCUSD_SH or HEDGE_B01_BTCUSD_BH
+            # - Close Hedge: CLOSE_HEDGE_B01
+            
+            if not comment:
+                return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': False}
+            
+            # Check if it's a hedge position
+            if comment.startswith('HEDGE_'):
+                parts = comment.split('_')
+                if len(parts) >= 4:
+                    # Extract batch ID: HEDGE_B01 -> 1
+                    batch_id = int(parts[1][1:]) if parts[1][1:].isdigit() else None
+                    
+                    # Extract hedge direction: SH -> short hedge, BH -> long hedge
+                    hedge_direction = parts[3]
+                    if hedge_direction.endswith('H'):
+                        direction = 'long' if hedge_direction.startswith('B') else 'short'
+                    else:
+                        direction = None
+                        
+                    return {
+                        'batch_id': batch_id,
+                        'direction': direction,
+                        'layer': None,
+                        'is_hedge': True
+                    }
+            
+            # Check for close hedge commands
+            if comment.startswith('CLOSE_HEDGE_'):
+                return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': True}
+            
+            # Regular batch trades
+            if not comment.startswith('BM'):
+                return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': False}
             
             parts = comment.split('_')
             if len(parts) < 3:
-                return {'batch_id': None, 'direction': None, 'layer': None}
+                return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': False}
             
             # Extract batch ID: BM01 -> 1
             batch_id = int(parts[0][2:]) if parts[0][2:].isdigit() else None
@@ -1345,28 +1494,35 @@ class BotPersistence:
             return {
                 'batch_id': batch_id,
                 'direction': direction,
-                'layer': layer
+                'layer': layer,
+                'is_hedge': False
             }
             
         except Exception as e:
             logger.error(f"❌ Error parsing comment '{comment}': {e}")
-            return {'batch_id': None, 'direction': None, 'layer': None}
+            return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': False}
     
     def recover_batches(self, saved_state, mt5_positions, trade_manager):
-        """Intelligent batch recovery - merge saved state with MT5 reality"""
+        """Intelligent batch recovery - merge saved state with MT5 reality including hedges"""
         try:
             recovered_batches = {}
             
-            # Group MT5 positions by batch
+            # Group MT5 positions by batch (excluding hedges)
             mt5_batches = {}
+            hedge_positions = {}
+            
             for pos in mt5_positions:
-                if pos['batch_id'] and pos['direction']:
+                if pos.get('is_hedge'):
+                    # Store hedge positions separately
+                    if pos['batch_id']:
+                        hedge_positions[pos['batch_id']] = pos
+                elif pos['batch_id'] and pos['direction']:
                     batch_key = f"{pos['symbol']}_{pos['direction']}"
                     if batch_key not in mt5_batches:
                         mt5_batches[batch_key] = []
                     mt5_batches[batch_key].append(pos)
             
-            logger.info(f"🔍 MT5 Analysis: Found {len(mt5_batches)} active batches")
+            logger.info(f"🔍 MT5 Analysis: Found {len(mt5_batches)} active batches, {len(hedge_positions)} hedges")
             
             # Process each saved batch
             for batch_key, saved_batch in saved_state.get('batches', {}).items():
@@ -1382,19 +1538,27 @@ class BotPersistence:
                     )
                     
                     if recovered_batch:
+                        # Restore hedge information
+                        if saved_batch.get('active_hedge'):
+                            recovered_batch.active_hedge = saved_batch['active_hedge']
+                        
+                        if saved_batch.get('hedge_history'):
+                            recovered_batch.hedge_history = saved_batch['hedge_history']
+                        
                         recovered_batches[batch_key] = recovered_batch
                         
                         # Check for missed martingale opportunities
                         self.check_missed_layers(recovered_batch, mt5_batch_positions)
                         
                         logger.info(f"✅ Recovered: {batch_key} with {len(recovered_batch.trades)} active trades")
+                        
+                        # Log hedge status
+                        if recovered_batch.active_hedge:
+                            logger.info(f"   🛡️ Active hedge: {recovered_batch.active_hedge['direction']} {recovered_batch.active_hedge['volume']:.3f} lots")
                     else:
                         logger.warning(f"⚠️ Failed to reconstruct: {batch_key}")
                 else:
                     logger.info(f"🎯 Completed: {batch_key} (no MT5 positions found)")
-            
-            # Check for orphaned MT5 positions (not in saved state)
-            self.check_orphaned_positions(mt5_batches, saved_state, trade_manager)
             
             # Update trade manager
             trade_manager.martingale_batches = recovered_batches
@@ -1501,67 +1665,6 @@ class BotPersistence:
         except Exception as e:
             logger.error(f"❌ Error checking missed layers: {e}")
     
-    def check_orphaned_positions(self, mt5_batches, saved_state, trade_manager):
-        """Check for MT5 positions that aren't in our saved state"""
-        try:
-            saved_batch_keys = set(saved_state.get('batches', {}).keys())
-            mt5_batch_keys = set(mt5_batches.keys())
-            
-            orphaned_batches = mt5_batch_keys - saved_batch_keys
-            
-            if orphaned_batches:
-                logger.warning(f"🚨 ORPHANED POSITIONS DETECTED: {len(orphaned_batches)} batches")
-                
-                for batch_key in orphaned_batches:
-                    positions = mt5_batches[batch_key]
-                    logger.warning(f"   {batch_key}: {len(positions)} positions")
-                    
-                    # Try to reconstruct orphaned batch
-                    symbol, direction = batch_key.split('_')
-                    
-                    # Create emergency batch
-                    avg_entry = sum(pos['price_open'] * pos['volume'] for pos in positions) / sum(pos['volume'] for pos in positions)
-                    
-                    emergency_batch = MartingaleBatch(
-                        symbol=symbol,
-                        direction=direction,
-                        initial_sl_distance=50 * get_pip_size(symbol),  # Estimate
-                        entry_price=avg_entry
-                    )
-                    
-                    emergency_batch.batch_id = trade_manager.next_batch_id
-                    trade_manager.next_batch_id += 1
-                    
-                    # Add positions as trades
-                    for pos in sorted(positions, key=lambda x: x.get('layer', 0)):
-                        trade = {
-                            'order_id': pos['ticket'],
-                            'layer': pos.get('layer', 1),
-                            'volume': pos['volume'],
-                            'entry_price': pos['price_open'],
-                            'tp': pos['tp'],
-                            'sl': pos['sl'],
-                            'entry_time': datetime.fromtimestamp(pos['time']),
-                            'enhanced_comment': pos['comment'],
-                            'symbol': symbol,
-                            'direction': direction
-                        }
-                        emergency_batch.trades.append(trade)
-                    
-                    # Calculate totals
-                    emergency_batch.total_volume = sum(t['volume'] for t in emergency_batch.trades)
-                    emergency_batch.total_invested = sum(t['volume'] * t['entry_price'] for t in emergency_batch.trades)
-                    emergency_batch.breakeven_price = emergency_batch.total_invested / emergency_batch.total_volume
-                    emergency_batch.current_layer = len(emergency_batch.trades)
-                    
-                    # Add to trade manager
-                    trade_manager.martingale_batches[batch_key] = emergency_batch
-                    
-                    logger.info(f"🚑 EMERGENCY RECOVERY: Created batch for {batch_key}")
-        
-        except Exception as e:
-            logger.error(f"❌ Error checking orphaned positions: {e}")
-    
     def try_backup_recovery(self, trade_manager):
         """Try to recover from backup file"""
         try:
@@ -1580,7 +1683,9 @@ class BotPersistence:
             logger.error(f"❌ Backup recovery failed: {e}")
             return True  # Continue with fresh start
         
-        # ===== PART 7: ENHANCED TRADE MANAGER =====
+        # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 8 =====
+# Part 8: Enhanced Trade Manager with Hedging Support (Part 1)
+
 class EnhancedTradeManager:
     def __init__(self):
         self.active_trades = []
@@ -1650,54 +1755,14 @@ class EnhancedTradeManager:
         except Exception as e:
             logger.error(f"Error in can_trade: {e}")
             return False
-    
-    def send_periodic_webhook_updates(self):
-        """Send periodic updates to dashboard"""
-        try:
-            now = datetime.now()
-            if (now - self.last_webhook_update).total_seconds() >= self.webhook_update_interval:
-                
-                # Get account info
-                account_info = mt5.account_info()
-                if account_info:
-                    # Send live data
-                    self.webhook_manager.send_live_data(self, account_info)
-                    
-                    # Send account update for charts (less frequently)
-                    if (now - self.last_webhook_update).total_seconds() >= 30:
-                        self.webhook_manager.send_account_update(account_info, self)
-                
-                self.last_webhook_update = now
-                
-        except Exception as e:
-            logger.error(f"Error in periodic webhook updates: {e}")
 
-    def check_and_reload_config(self):
-        """Check for configuration reload request"""
-        try:
-            if self.webhook_manager.check_config_reload():
-                logger.info("🔄 Configuration reload requested from dashboard")
-                
-                # Reload configuration
-                global CONFIG
-                CONFIG = load_config()
-                
-                # Update global variables
-                self.update_global_config_variables()
-                
-                logger.info("✅ Configuration reloaded successfully")
-                return True
-                
-        except Exception as e:
-            logger.error(f"Error reloading configuration: {e}")
-            
-        return False
-
-    def update_global_config_variables(self):
-        """Update global configuration variables after reload"""
+    def update_global_config_variables_with_hedging(self):
+        """Enhanced version of update_global_config_variables with hedging support"""
         global MARTINGALE_ENABLED, MAX_MARTINGALE_LAYERS, LOT_SIZE_MODE, MANUAL_LOT_SIZE
         global PAIRS, ENHANCED_PAIR_RISK_PROFILES, PARAM_SETS, SPREAD_LIMITS
         global RISK_REDUCTION_FACTORS, MAX_POSITION_PERCENTAGES, BASE_TP_TARGETS
+        global HEDGING_ENABLED, HEDGE_START_LAYER, HEDGE_PERCENTAGE
+        global LOSING_LONG_HEDGE_PARAMS, LOSING_SHORT_HEDGE_PARAMS
         
         # Update martingale settings
         MARTINGALE_ENABLED = CONFIG['martingale_settings']['enabled']
@@ -1708,7 +1773,7 @@ class EnhancedTradeManager:
         MANUAL_LOT_SIZE = CONFIG['lot_size_settings']['manual_lot_size']
         
         # Update pairs and profiles
-        PAIRS[:] = CONFIG['trading_pairs']  # Update in place
+        PAIRS[:] = CONFIG['trading_pairs']
         ENHANCED_PAIR_RISK_PROFILES.clear()
         ENHANCED_PAIR_RISK_PROFILES.update(CONFIG['pair_risk_profiles'])
         
@@ -1728,7 +1793,91 @@ class EnhancedTradeManager:
         BASE_TP_TARGETS.clear()
         BASE_TP_TARGETS.update(CONFIG['symbol_specific_settings']['base_tp_targets'])
         
-        logger.info("Global configuration variables updated")
+        # Update hedging settings (NEW)
+        HEDGING_ENABLED = CONFIG.get('hedging_settings', {}).get('enabled', False)
+        HEDGE_START_LAYER = CONFIG.get('hedging_settings', {}).get('start_layer', 7)
+        HEDGE_PERCENTAGE = CONFIG.get('hedging_settings', {}).get('hedge_percentage', 50)
+        LOSING_LONG_HEDGE_PARAMS = CONFIG.get('hedging_settings', {}).get('losing_long_hedge_params', {})
+        LOSING_SHORT_HEDGE_PARAMS = CONFIG.get('hedging_settings', {}).get('losing_short_hedge_params', {})
+        
+        logger.info("Global configuration variables updated (including hedging)")
+
+    def close_batch_and_hedges(self, batch_key):
+        """Close batch and any associated hedges"""
+        
+        batch = self.martingale_batches.get(batch_key)
+        if not batch:
+            logger.warning(f"Batch {batch_key} not found for closing")
+            return False
+        
+        # Close active hedge first
+        if hasattr(batch, 'active_hedge') and batch.active_hedge:
+            logger.info(f"🛡️ Closing hedge for completed batch {batch_key}")
+            success = batch.close_active_hedge()
+            if success:
+                logger.info(f"✅ Hedge closed for batch {batch_key}")
+            else:
+                logger.warning(f"⚠️ Failed to close hedge for batch {batch_key}")
+        
+        # Regular batch cleanup
+        logger.info(f"🎯 Batch completed: {batch_key}")
+        del self.martingale_batches[batch_key]
+        
+        # Remove from active trades
+        symbol, direction = batch_key.split('_')
+        self.active_trades = [t for t in self.active_trades 
+                             if not (t['symbol'] == symbol and t['direction'] == direction)]
+        
+        return True
+
+    def handle_hedge_on_new_layer(self, batch, current_price):
+        """Handle hedge logic when new martingale layer is added"""
+        
+        if not HEDGING_ENABLED:
+            return False
+        
+        # If batch already has hedge, close it first (we'll create new one with updated size)
+        if hasattr(batch, 'active_hedge') and batch.active_hedge:
+            logger.info(f"🛡️ Updating hedge for new layer on {batch.symbol}")
+            batch.close_active_hedge()
+        
+        # Check if hedge is needed with current market conditions
+        hedge_opportunity = check_hedge_opportunity_sensitive(batch, current_price)
+        
+        if hedge_opportunity:
+            logger.info(f"🛡️ Hedge opportunity detected for Layer {batch.current_layer}")
+            success = execute_hedge_trade(hedge_opportunity, self)
+            
+            if success:
+                logger.info(f"✅ Hedge executed for {batch.symbol} Layer {batch.current_layer}")
+                return True
+            else:
+                logger.error(f"❌ Hedge execution failed for {batch.symbol}")
+        else:
+            logger.debug(f"No hedge signal for {batch.symbol} Layer {batch.current_layer}")
+        
+        return False
+    
+    def check_and_reload_config(self):
+        """Check for configuration reload request"""
+        try:
+            if self.webhook_manager.check_config_reload():
+                logger.info("🔄 Configuration reload requested from dashboard")
+                
+                # Reload configuration
+                global CONFIG
+                CONFIG = load_config()
+                
+                # Update global variables with hedging support
+                self.update_global_config_variables_with_hedging()
+                
+                logger.info("✅ Configuration reloaded successfully")
+                return True
+                
+        except Exception as e:
+            logger.error(f"Error reloading configuration: {e}")
+            
+        return False
     
     def has_position(self, symbol, direction):
         """Check if we already have a position for symbol+direction"""
@@ -1762,9 +1911,13 @@ class EnhancedTradeManager:
         except Exception as e:
             logger.error(f"Error creating/getting batch for {symbol} {direction}: {e}")
             return None
-    
-    def add_trade(self, trade_info):
-        """Add trade to tracking and batch management"""
+        
+        
+        # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 9 =====
+# Part 9: Enhanced Trade Manager with Hedging Support (Part 2) - COMPLETE
+
+    def add_trade_with_hedging_support(self, trade_info):
+        """Enhanced add_trade method with hedging support"""
         try:
             self.total_trades += 1
             trade_info['trade_id'] = self.total_trades
@@ -1779,28 +1932,39 @@ class EnhancedTradeManager:
                 
                 batch = self.get_or_create_batch(symbol, direction, sl_distance, entry_price)
                 if batch:
-                    batch.add_trade(trade_info)
+                    # Use enhanced add_trade method that returns hedge check flag
+                    need_hedge_check = batch.add_trade_with_hedge_check(trade_info)
                     
                     # Calculate and update batch TP with adaptive system
                     try:
                         new_tp = batch.calculate_adaptive_batch_tp()
                         if new_tp:
                             logger.info(f"Calculated adaptive batch TP: {new_tp:.5f}")
-                            # Update TP for all trades in batch (including the new one)
                             batch.update_all_tps_with_retry(new_tp)
                     except Exception as e:
                         logger.error(f"Error updating batch TP: {e}")
+                    
+                    # Check for hedge opportunity if this is a qualifying layer
+                    if need_hedge_check:
+                        try:
+                            # Get current price for hedge check
+                            tick = mt5.symbol_info_tick(symbol)
+                            if tick:
+                                current_price = tick.bid if direction == 'long' else tick.ask
+                                self.handle_hedge_on_new_layer(batch, current_price)
+                        except Exception as e:
+                            logger.error(f"Error handling hedge on new layer: {e}")
             
             self.active_trades.append(trade_info)
             
-            # 💾 SAVE STATE AFTER EVERY TRADE EXECUTION
+            # Save state after every trade execution
             try:
                 self.persistence.save_bot_state(self)
                 logger.debug("State saved successfully")
             except Exception as e:
                 logger.error(f"Failed to save state: {e}")
             
-            # ✅ SEND WEBHOOK NOTIFICATION
+            # Send webhook notification
             try:
                 self.webhook_manager.send_trade_event(trade_info, "executed")
                 logger.info("📡 Trade webhook sent successfully")
@@ -1852,7 +2016,7 @@ class EnhancedTradeManager:
                     else:
                         # Batch is empty - remove it
                         logger.info(f"Batch {batch_key} completed - all trades closed")
-                        del self.martingale_batches[batch_key]
+                        self.close_batch_and_hedges(batch_key)
             
             return True
             
@@ -1923,8 +2087,8 @@ class EnhancedTradeManager:
             logger.error(f"Error in check_martingale_opportunities_enhanced: {e}")
             return []
     
-    def monitor_batch_exits(self, current_prices):
-        """Monitor batches for TP hits and manage exits"""
+    def monitor_batch_exits_with_hedging(self, current_prices):
+        """Enhanced monitor_batch_exits with hedge management"""
         try:
             for batch_key, batch in list(self.martingale_batches.items()):
                 try:
@@ -1948,12 +2112,9 @@ class EnhancedTradeManager:
                             # All positions closed - batch completed
                             logger.info(f"🎯 Batch completed: {batch_key} - All {len(batch_tickets)} positions closed")
                             
-                            # Clean up batch
-                            del self.martingale_batches[batch_key]
+                            # Clean up batch and any hedges
+                            self.close_batch_and_hedges(batch_key)
                             
-                            # Remove from active trades
-                            self.active_trades = [t for t in self.active_trades 
-                                                if not (t['symbol'] == symbol and t['direction'] == batch.direction)]
                         else:
                             # Partial closure - update batch
                             logger.warning(f"Partial closure detected for {batch_key}")
@@ -1966,14 +2127,226 @@ class EnhancedTradeManager:
                                 batch.total_invested = sum(t['volume'] * t['entry_price'] for t in batch.trades)
                                 batch.breakeven_price = batch.total_invested / batch.total_volume if batch.total_volume > 0 else 0
                                 
+                                # Update hedge if needed (partial closure might require hedge adjustment)
+                                if hasattr(batch, 'active_hedge') and batch.active_hedge:
+                                    logger.info(f"🛡️ Adjusting hedge for partial batch closure")
+                                    current_price = current_prices[symbol]['bid'] if batch.direction == 'long' else current_prices[symbol]['ask']
+                                    self.handle_hedge_on_new_layer(batch, current_price)
+                            
                 except Exception as e:
                     logger.error(f"Error monitoring batch {batch_key}: {e}")
                     continue
                     
         except Exception as e:
-            logger.error(f"Error in monitor_batch_exits: {e}")
+            logger.error(f"Error in monitor_batch_exits_with_hedging: {e}")
+    
+    def send_periodic_webhook_updates(self):
+        """Send periodic updates to dashboard"""
+        try:
+            now = datetime.now()
+            if (now - self.last_webhook_update).total_seconds() >= self.webhook_update_interval:
+                
+                # Get account info
+                account_info = mt5.account_info()
+                if account_info:
+                    # Send live data
+                    self.webhook_manager.send_live_data(self, account_info)
+                    
+                    # Send account update for charts (less frequently)
+                    if (now - self.last_webhook_update).total_seconds() >= 30:
+                        self.webhook_manager.send_account_update(account_info, self)
+                
+                self.last_webhook_update = now
+                
+        except Exception as e:
+            logger.error(f"Error in periodic webhook updates: {e}")
+
+# Add missing webhook methods to HybridWebhookManager
+def add_missing_webhook_methods():
+    """Add missing methods to HybridWebhookManager"""
+    
+    def send_live_data(self, trade_manager, account_info=None):
+        """Send current live data with JSON backup"""
+        try:
+            if account_info is None:
+                import MetaTrader5 as mt5
+                account_info = mt5.account_info()
+                
+            if account_info is None:
+                return False
             
-            # ===== PART 8: SIGNAL GENERATION AND TRADE EXECUTION =====
+            # Calculate profit and drawdown
+            profit = account_info.equity - account_info.balance
+            drawdown = 0
+            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance:
+                if account_info.equity < trade_manager.initial_balance:
+                    drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+            
+            # Get active positions
+            import MetaTrader5 as mt5
+            positions = mt5.positions_get()
+            
+            # Get magic number
+            try:
+                magic_number = getattr(trade_manager, 'MAGIC_NUMBER', 23232323)
+            except:
+                magic_number = MAGIC_NUMBER
+                
+            active_positions = len([pos for pos in positions if pos.magic == magic_number]) if positions else 0
+            
+            # Prepare batch data
+            batches_data = []
+            try:
+                if hasattr(trade_manager, 'martingale_batches'):
+                    for batch_key, batch in trade_manager.martingale_batches.items():
+                        if hasattr(batch, 'trades') and batch.trades:
+                            batch_data = {
+                                "batch_id": getattr(batch, 'batch_id', 0),
+                                "symbol": getattr(batch, 'symbol', ''),
+                                "direction": getattr(batch, 'direction', ''),
+                                "current_layer": getattr(batch, 'current_layer', 0),
+                                "total_volume": round(getattr(batch, 'total_volume', 0), 2),
+                                "breakeven_price": round(getattr(batch, 'breakeven_price', 0), 5),
+                                "initial_entry_price": round(getattr(batch, 'initial_entry_price', 0), 5),
+                                "created_time": getattr(batch, 'created_time', datetime.now()).isoformat() if hasattr(getattr(batch, 'created_time', None), 'isoformat') else datetime.now().isoformat(),
+                                "active_hedge": getattr(batch, 'active_hedge', None)
+                            }
+                            batches_data.append(batch_data)
+            except Exception as e:
+                self.logger.error(f"Error preparing batch data: {e}")
+            
+            live_data = {
+                "timestamp": datetime.now().isoformat(),
+                "robot_status": "Running" if not getattr(trade_manager, 'emergency_stop_active', False) else "Emergency Stop",
+                "account": {
+                    "balance": round(account_info.balance, 2),
+                    "equity": round(account_info.equity, 2),
+                    "margin": round(account_info.margin, 2),
+                    "free_margin": round(account_info.margin_free, 2),
+                    "margin_level": round((account_info.equity / account_info.margin * 100) if account_info.margin > 0 else 0, 2),
+                    "profit": round(profit, 2)
+                },
+                "active_trades": active_positions,
+                "active_batches": len([b for b in getattr(trade_manager, 'martingale_batches', {}).values() if hasattr(b, 'trades') and b.trades]),
+                "total_trades": getattr(trade_manager, 'total_trades', 0),
+                "emergency_stop": getattr(trade_manager, 'emergency_stop_active', False),
+                "drawdown_percent": round(drawdown, 2),
+                "batches": batches_data,
+                "mt5_connected": True,
+                "hedging_enabled": HEDGING_ENABLED
+            }
+            
+            # Try webhook first
+            webhook_success = self._send_webhook("live_data", live_data)
+            
+            # Always save to JSON as backup
+            if self.enable_json_backup:
+                try:
+                    with open(self.json_files['live_data'], 'w') as f:
+                        json.dump(live_data, f, indent=2, default=str)
+                except Exception as e:
+                    self.logger.error(f"Error saving live data to JSON: {e}")
+            
+            if webhook_success:
+                self.logger.debug(f"📊 Live data sent via webhook")
+            elif self.enable_json_backup:
+                self.logger.debug(f"📁 Live data saved to JSON (webhook failed)")
+            
+            return webhook_success or self.enable_json_backup
+            
+        except Exception as e:
+            self.logger.error(f"Error preparing live data: {e}")
+            return False
+    
+    def send_account_update(self, account_info, trade_manager):
+        """Send account update with JSON backup"""
+        try:
+            if account_info is None:
+                return False
+            
+            profit = account_info.equity - account_info.balance
+            drawdown = 0
+            
+            if hasattr(trade_manager, 'initial_balance') and trade_manager.initial_balance:
+                if account_info.equity < trade_manager.initial_balance:
+                    drawdown = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+            
+            update_data = {
+                "timestamp": datetime.now().isoformat(),
+                "balance": round(account_info.balance, 2),
+                "equity": round(account_info.equity, 2),
+                "profit": round(profit, 2),
+                "drawdown": round(drawdown, 2)
+            }
+            
+            # Try webhook first
+            webhook_success = self._send_webhook("account_update", update_data)
+            
+            # Save to JSON buffer
+            self._save_to_json_buffer('account_history', update_data)
+            
+            if webhook_success:
+                self.logger.debug(f"📈 Account update sent via webhook")
+            elif self.enable_json_backup:
+                self.logger.debug(f"📁 Account update saved to JSON")
+            
+            return webhook_success or self.enable_json_backup
+            
+        except Exception as e:
+            self.logger.error(f"Error sending account update: {e}")
+            return False
+    
+    def send_signal_generated(self, signal):
+        """Send signal with JSON backup"""
+        try:
+            signal_data = {
+                "timestamp": datetime.now().isoformat(),
+                "symbol": str(signal.get('symbol', '')),
+                "direction": str(signal.get('direction', '')),
+                "entry_price": float(signal.get('entry_price', 0)),
+                "tp": float(signal.get('tp', 0)) if signal.get('tp') else None,
+                "sl_distance_pips": float(signal.get('sl_distance_pips', 0)),
+                "tp_distance_pips": float(signal.get('tp_distance_pips', 0)),
+                "risk_profile": str(signal.get('risk_profile', '')),
+                "adx_value": float(signal.get('adx_value', 0)),
+                "rsi": float(signal.get('rsi', 0)),
+                "timeframes_aligned": int(signal.get('timeframes_aligned', 1)),
+                "is_initial": bool(signal.get('is_initial', True))
+            }
+            
+            # Try webhook first
+            webhook_success = self._send_webhook("signal_generated", signal_data)
+            
+            # Save to JSON buffer
+            self._save_to_json_buffer('signals', signal_data)
+            
+            if webhook_success:
+                self.logger.info(f"📡 Signal sent: {signal.get('symbol')} {signal.get('direction')}")
+            elif self.enable_json_backup:
+                self.logger.info(f"📁 Signal saved to JSON: {signal.get('symbol')} {signal.get('direction')}")
+            
+            return webhook_success or self.enable_json_backup
+            
+        except Exception as e:
+            self.logger.error(f"Error sending signal: {e}")
+            return False
+    
+    # Add methods to the class
+    HybridWebhookManager.send_live_data = send_live_data
+    HybridWebhookManager.send_account_update = send_account_update
+    HybridWebhookManager.send_signal_generated = send_signal_generated
+
+# Call this to add the missing methods
+add_missing_webhook_methods()
+
+# Replace the original methods in EnhancedTradeManager
+EnhancedTradeManager.add_trade = EnhancedTradeManager.add_trade_with_hedging_support
+EnhancedTradeManager.monitor_batch_exits = EnhancedTradeManager.monitor_batch_exits_with_hedging
+EnhancedTradeManager.update_global_config_variables = EnhancedTradeManager.update_global_config_variables_with_hedging
+
+# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 10 =====
+# Part 10: Signal Generation and Trade Execution
+
 def generate_enhanced_signals(pairs, trade_manager):
     """Generate signals with multi-timeframe confirmation"""
     signals = []
@@ -2125,7 +2498,7 @@ def execute_martingale_trade(opportunity, trade_manager):
     return execute_trade(martingale_signal, trade_manager)
 
 def execute_trade(signal, trade_manager):
-    """Execute trade order with enhanced handling - VERSION 3 LOGIC"""
+    """Execute trade order with enhanced handling - VERSION 3 LOGIC with Hedging Support"""
     symbol = signal['symbol']
     direction = signal['direction']
     
@@ -2384,16 +2757,19 @@ def execute_trade(signal, trade_manager):
     
     return True
 
-# ===== PART 9: MAIN ROBOT FUNCTION =====
+# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 11 =====
+# Part 11: Main Robot Function and Configuration Helpers
+
 def run_simplified_robot():
-    """Run the simplified trading robot with enhanced error handling"""
+    """Run the simplified trading robot with enhanced error handling and hedging support"""
     logger.info("="*60)
-    logger.info("BM TRADING ROBOT STARTED - VERSION 3 WITH JSON CONFIG")
+    logger.info("BM TRADING ROBOT STARTED - VERSION 3 WITH HEDGING SYSTEM")
     logger.info("="*60)
     logger.info(f"Primary Timeframe: {CONFIG['timeframe_settings']['global_timeframe']}")
     logger.info(f"Pairs: {len(PAIRS)}")
     logger.info(f"Martingale: {MARTINGALE_ENABLED}")
     logger.info(f"Lot Size Mode: {LOT_SIZE_MODE}")
+    logger.info(f"Hedging: {HEDGING_ENABLED}")
     
     # Log configuration status
     logger.info(f"Configuration loaded from: bot_config.json")
@@ -2414,7 +2790,7 @@ def run_simplified_robot():
     logger.info(f"Connected to account: {account_info.login}")
     logger.info(f"Balance: ${account_info.balance:.2f}")
     
-    # Initialize trade manager - ENHANCED VERSION WITH RECOVERY
+    # Initialize trade manager - ENHANCED VERSION WITH RECOVERY AND HEDGING
     trade_manager = EnhancedTradeManager()
     
     try:
@@ -2554,13 +2930,13 @@ def run_simplified_robot():
                 except Exception as e:
                     logger.error(f"Error syncing with MT5: {e}")
                 
-                # Monitor batch exits
+                # Monitor batch exits with hedging support
                 try:
                     trade_manager.monitor_batch_exits(current_prices)
                 except Exception as e:
                     logger.error(f"Error monitoring batch exits: {e}")
                 
-                # Show enhanced account status with batch information
+                # Show enhanced account status with batch and hedge information
                 try:
                     account_info = mt5.account_info()
                     if account_info:
@@ -2576,7 +2952,7 @@ def run_simplified_robot():
                             pnl_pct = (pnl / trade_manager.initial_balance) * 100
                             logger.info(f"   P&L: ${pnl:.2f} ({pnl_pct:.2f}%)")
                         
-                        # Enhanced batch status
+                        # Enhanced batch status with hedging info
                         active_batches = len([b for b in trade_manager.martingale_batches.values() if b.trades])
                         if active_batches > 0:
                             logger.info(f"\n🔄 Martingale Batches: {active_batches} active")
@@ -2584,6 +2960,15 @@ def run_simplified_robot():
                                 if batch.trades:
                                     logger.info(f"   {batch_key}: Layer {batch.current_layer}/{MAX_MARTINGALE_LAYERS}")
                                     logger.info(f"     Volume: {batch.total_volume:.2f}, Breakeven: {batch.breakeven_price:.5f}")
+                                    
+                                    # Show hedge status
+                                    if hasattr(batch, 'active_hedge') and batch.active_hedge:
+                                        hedge_info = batch.active_hedge
+                                        logger.info(f"     🛡️ Active Hedge: {hedge_info['direction']} {hedge_info['volume']:.3f} lots")
+                                        logger.info(f"       Entry: {hedge_info['entry_price']:.5f}, Confidence: ADX={hedge_info['confidence']['adx']:.1f}")
+                                    elif HEDGING_ENABLED and batch.current_layer >= HEDGE_START_LAYER:
+                                        logger.info(f"     🛡️ Hedge eligible at Layer {HEDGE_START_LAYER}+")
+                                    
                                     try:
                                         next_trigger = batch.get_next_trigger_price()
                                         logger.info(f"     Next trigger: {next_trigger:.5f}")
@@ -2664,8 +3049,8 @@ def run_simplified_robot():
             logger.info("MT5 connection closed")
         except Exception as e:
             logger.error(f"Error closing MT5: {e}")
-            
-            # ===== PART 10: CONFIGURATION HELPER FUNCTIONS AND STARTUP =====
+
+# ===== CONFIGURATION HELPER FUNCTIONS =====
 def log_lot_size_configuration():
     """Log current lot size configuration"""
     logger.info("="*50)
@@ -2685,19 +3070,6 @@ def log_lot_size_configuration():
         logger.info(f"  {symbol}: Risk={config['risk']}, Range={config['min_lot']}-{config['max_lot']}")
     
     logger.info("="*50)
-
-def set_manual_lot_mode(lot_size=0.01):
-    """Quick function to switch to manual lot mode"""
-    global LOT_SIZE_MODE, MANUAL_LOT_SIZE
-    LOT_SIZE_MODE = "MANUAL"
-    MANUAL_LOT_SIZE = lot_size
-    logger.info(f"✅ Switched to MANUAL lot mode: {lot_size}")
-
-def set_dynamic_lot_mode():
-    """Quick function to switch to dynamic lot mode"""
-    global LOT_SIZE_MODE
-    LOT_SIZE_MODE = "DYNAMIC"
-    logger.info("✅ Switched to DYNAMIC lot mode")
 
 def validate_configuration():
     """Validate configuration on startup"""
@@ -2737,87 +3109,14 @@ def validate_configuration():
     
     logger.info("="*50)
 
-# ===== ADDITIONAL UTILITY FUNCTIONS FOR ROBUSTNESS =====
-def safe_get_pip_size(symbol):
-    """Safe version of get_pip_size with error handling"""
-    try:
-        return get_pip_size(symbol)
-    except Exception as e:
-        logger.error(f"Error getting pip size for {symbol}: {e}")
-        # Return sensible defaults
-        if 'JPY' in symbol.upper():
-            return 0.01
-        elif symbol.upper() in ['US500', 'NAS100', 'SPX500']:
-            return 0.1
-        elif symbol.upper() in ['XAUUSD', 'GOLD']:
-            return 0.1
-        elif symbol.upper() in ['BTCUSD', 'ETHUSD', 'XRPUSD']:
-            return 1.0
-        else:
-            return 0.0001
-
-def safe_normalize_volume(symbol, volume):
-    """Safe version of normalize_volume with error handling"""
-    try:
-        return normalize_volume(symbol, volume)
-    except Exception as e:
-        logger.error(f"Error normalizing volume for {symbol}: {e}")
-        # Return safe minimum volume
-        return 0.01
-
-def safe_calculate_position_size(symbol, stop_loss_pips, risk_amount, is_martingale=False, base_volume=None, layer=1):
-    """Safe version of calculate_position_size with error handling"""
-    try:
-        return calculate_position_size(symbol, stop_loss_pips, risk_amount, is_martingale, base_volume, layer)
-    except Exception as e:
-        logger.error(f"Error calculating position size for {symbol}: {e}")
-        # Return safe minimum volume
-        return 0.01
-
-# ===== ENHANCED MARTINGALE BATCH WITH BETTER ERROR HANDLING =====
-class SafeMartingaleBatch(MartingaleBatch):
-    """Enhanced MartingaleBatch with better error handling"""
-    
-    def calculate_adaptive_batch_tp(self, market_volatility_pips=None):
-        """Adaptive TP with error handling"""
-        try:
-            return super().calculate_adaptive_batch_tp(market_volatility_pips)
-        except Exception as e:
-            logger.error(f"Error calculating adaptive TP for {self.symbol}: {e}")
-            # Return a safe fallback TP
-            try:
-                pip_size = safe_get_pip_size(self.symbol)
-                fallback_pips = 10  # 10 pip profit as emergency fallback
-                
-                if self.direction == 'long':
-                    return self.breakeven_price + (fallback_pips * pip_size)
-                else:
-                    return self.breakeven_price - (fallback_pips * pip_size)
-            except Exception as fallback_error:
-                logger.error(f"Even fallback TP calculation failed: {fallback_error}")
-                return None
-    
-    def update_all_tps_with_retry(self, new_tp, max_attempts=3):
-        """Update TP with enhanced error handling"""
-        try:
-            return super().update_all_tps_with_retry(new_tp, max_attempts)
-        except Exception as e:
-            logger.error(f"Error updating TPs for {self.symbol}: {e}")
-            return False
-    
-    def should_add_layer(self, current_price, fast_move_threshold_seconds=30):
-        """Layer addition check with error handling"""
-        try:
-            return super().should_add_layer(current_price, fast_move_threshold_seconds)
-        except Exception as e:
-            logger.error(f"Error checking layer addition for {self.symbol}: {e}")
-            return False
-
 # ===== STARTUP VALIDATION =====
 if __name__ == "__main__":
     # Validate configuration on startup
     validate_configuration()
     log_lot_size_configuration()
     
-    # Run the robot
+    # Validate hedging configuration
+    validate_hedging_configuration()
+    
+    # Run the robot with hedging support
     run_simplified_robot()
