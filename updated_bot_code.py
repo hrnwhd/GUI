@@ -1764,6 +1764,14 @@ class EnhancedTradeManager:
         global HEDGING_ENABLED, HEDGE_START_LAYER, HEDGE_PERCENTAGE
         global LOSING_LONG_HEDGE_PARAMS, LOSING_SHORT_HEDGE_PARAMS
         
+        global EMERGENCY_DD_PERCENTAGE, MARTINGALE_PROFIT_BUFFER_PIPS
+        global MIN_PROFIT_PERCENTAGE, FLIRT_THRESHOLD_PIPS
+        
+        EMERGENCY_DD_PERCENTAGE = CONFIG['martingale_settings']['emergency_dd_percentage']
+        MARTINGALE_PROFIT_BUFFER_PIPS = CONFIG['martingale_settings']['profit_buffer_pips']
+        MIN_PROFIT_PERCENTAGE = CONFIG['martingale_settings']['min_profit_percentage']
+        FLIRT_THRESHOLD_PIPS = CONFIG['martingale_settings']['flirt_threshold_pips']
+        
         # Update martingale settings
         MARTINGALE_ENABLED = CONFIG['martingale_settings']['enabled']
         MAX_MARTINGALE_LAYERS = CONFIG['martingale_settings']['max_layers']
@@ -2188,7 +2196,7 @@ def add_missing_webhook_methods():
             
             # Get magic number
             try:
-                magic_number = getattr(trade_manager, 'MAGIC_NUMBER', 23232323)
+                magic_number = getattr(trade_manager, 'MAGIC_NUMBER', 65656565)
             except:
                 magic_number = MAGIC_NUMBER
                 

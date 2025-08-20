@@ -854,3 +854,178 @@
 2025-08-19 14:20:08,721 - SMART_INTEL - INFO -    Directional bias: {'NEUTRAL': 8, 'SHORT': 3, 'LONG': 1}
 2025-08-19 14:20:08,721 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 1 pairs showing high correlation risk
 2025-08-19 14:20:08,721 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 15:28:02,682 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - SMART TRADING INTELLIGENCE SYSTEM - PREFERENCES MODE
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - Output file: trading_intelligence.json
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - Update interval: 15 minutes
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - Monitored pairs: 12
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - Approach: Preferences & guidance instead of hard blocks
+2025-08-20 15:28:02,684 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - SMART TRADING INTELLIGENCE SYSTEM - PREFERENCES MODE
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - Output file: trading_intelligence.json
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - Update interval: 15 minutes
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - Monitored pairs: 12
+2025-08-20 15:28:10,826 - SMART_INTEL - INFO - Approach: Preferences & guidance instead of hard blocks
+2025-08-20 15:28:10,834 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:28:10,834 - SMART_INTEL - INFO - 🚀 Starting Smart Trading Intelligence Manager (Preferences Mode)...
+2025-08-20 15:28:10,834 - SMART_INTEL - INFO - 🧠 Generating initial intelligence...
+2025-08-20 15:28:10,834 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 15:28:10,847 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 15:28:10,877 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 15:28:10,921 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 15:28:10,951 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 15:28:10,977 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 15:28:10,986 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 15:28:11,030 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 15:28:11,033 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    Opportunities: {'POOR': 4, 'NORMAL': 6, 'GOOD': 2}
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    Directional bias: {'NEUTRAL': 8, 'SHORT': 3, 'LONG': 1}
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 1 pairs showing high correlation risk
+2025-08-20 15:28:11,034 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 15:28:11,036 - SMART_INTEL - INFO - ⚙️ Intelligence scheduler thread started
+2025-08-20 15:28:11,036 - SMART_INTEL - INFO - ✅ Intelligence manager started - updates every 15 minutes
+2025-08-20 15:28:11,036 - SMART_INTEL - INFO - 🎯 Smart Trading Intelligence running (Preferences Mode). Press Ctrl+C to stop.
+2025-08-20 15:31:10,811 - SMART_INTEL - INFO - 🛑 Stop signal received
+2025-08-20 15:31:11,043 - SMART_INTEL - INFO - ⚙️ Intelligence scheduler thread stopped
+2025-08-20 15:31:11,044 - SMART_INTEL - INFO - 🛑 Intelligence manager stopped
+2025-08-20 15:31:12,792 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:31:12,792 - SMART_INTEL - INFO - SMART TRADING INTELLIGENCE SYSTEM - PREFERENCES MODE
+2025-08-20 15:31:12,792 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:31:12,792 - SMART_INTEL - INFO - Output file: trading_intelligence.json
+2025-08-20 15:31:12,792 - SMART_INTEL - INFO - Update interval: 15 minutes
+2025-08-20 15:31:12,792 - SMART_INTEL - INFO - Monitored pairs: 12
+2025-08-20 15:31:12,796 - SMART_INTEL - INFO - Approach: Preferences & guidance instead of hard blocks
+2025-08-20 15:31:12,796 - SMART_INTEL - INFO - ============================================================
+2025-08-20 15:31:12,796 - SMART_INTEL - INFO - 🚀 Starting Smart Trading Intelligence Manager (Preferences Mode)...
+2025-08-20 15:31:12,796 - SMART_INTEL - INFO - 🧠 Generating initial intelligence...
+2025-08-20 15:31:12,796 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 15:31:12,796 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 15:31:12,826 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 15:31:12,858 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 15:31:12,859 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 15:31:12,863 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 15:31:12,869 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 15:31:12,898 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 15:31:12,900 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 15:31:12,902 - SMART_INTEL - INFO - ⚙️ Intelligence scheduler thread started
+2025-08-20 15:31:12,907 - SMART_INTEL - INFO - ✅ Intelligence manager started - updates every 15 minutes
+2025-08-20 15:31:12,907 - SMART_INTEL - INFO - 🎯 Smart Trading Intelligence running (Preferences Mode). Press Ctrl+C to stop.
+2025-08-20 15:46:12,952 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 15:46:12,972 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 15:46:12,980 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 15:46:12,988 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 15:46:12,992 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 15:46:12,999 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 15:46:13,008 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 15:46:13,027 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 15:46:13,029 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 15:46:13,029 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 15:46:13,030 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 15:46:13,031 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 15:46:13,032 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 15:46:13,033 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 15:46:13,033 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 15:46:13,034 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 15:46:13,036 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 16:01:13,072 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 16:01:13,082 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 16:01:13,092 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 16:01:13,098 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 16:01:13,102 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 16:01:13,106 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 16:01:13,111 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 16:01:13,131 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 16:01:13,132 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 16:01:13,133 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 16:01:13,134 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 16:01:13,134 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 16:01:13,136 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 16:01:13,136 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 16:01:13,137 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 16:01:13,137 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 16:01:13,139 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 16:16:13,194 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 16:16:13,207 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 16:16:13,218 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 16:16:13,229 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 16:16:13,235 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 16:16:13,243 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 16:16:13,249 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 16:16:13,273 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 16:16:13,275 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 16:16:13,276 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 16:16:13,277 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 16:16:13,278 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 16:16:13,279 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 16:16:13,280 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 16:16:13,282 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 16:16:13,282 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 16:16:13,284 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 16:31:13,307 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 16:31:13,313 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 16:31:13,334 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 16:31:13,345 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 16:31:13,353 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 16:31:13,362 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 16:31:13,372 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 16:31:13,394 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 16:31:13,395 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 16:31:13,396 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 16:31:13,401 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 16:31:13,403 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 16:31:13,404 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 16:31:13,407 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 16:31:13,407 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 16:31:13,411 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 16:31:13,411 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 16:46:13,454 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 16:46:13,466 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 16:46:13,476 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 16:46:13,566 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 16:46:13,569 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 16:46:13,576 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 16:46:13,581 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 16:46:13,606 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 17:01:13,630 - SMART_INTEL - INFO - 🔄 Updating trading intelligence...
+2025-08-20 17:01:13,642 - SMART_INTEL - INFO - 🧠 Generating smart trading intelligence...
+2025-08-20 17:01:13,646 - SMART_INTEL - INFO - 📖 Loaded sentiment data from sentiment_signals.json
+2025-08-20 17:01:13,662 - SMART_INTEL - INFO - 📖 Loaded correlation data from correlation_data.json
+2025-08-20 17:01:13,668 - SMART_INTEL - INFO - 📖 Loaded cot data from cot_consolidated_data.json
+2025-08-20 17:01:13,672 - SMART_INTEL - INFO - 📖 Loaded calendar data from test_calendar_output.json
+2025-08-20 17:01:13,678 - SMART_INTEL - INFO - ✅ Generated preferences for 12 pairs
+2025-08-20 17:01:13,693 - SMART_INTEL - INFO - 💾 Intelligence saved to trading_intelligence.json
+2025-08-20 17:01:13,694 - SMART_INTEL - INFO - 📊 INTELLIGENCE SUMMARY (PREFERENCES MODE):
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    Pairs analyzed: 12
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    Risk insights: 4
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    Market regime: TRENDING
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    Recommended approach: DEFENSIVE
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    Opportunities: {'NORMAL': 6, 'POOR': 3, 'GOOD': 3}
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    Directional bias: {'LONG': 3, 'SHORT': 3, 'NEUTRAL': 6}
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO -    🎯 High Correlation Environment: 3 pairs showing high correlation risk
+2025-08-20 17:01:13,695 - SMART_INTEL - INFO - ✅ Trading intelligence updated successfully
+2025-08-20 17:01:50,551 - SMART_INTEL - INFO - 🛑 Stop signal received
+2025-08-20 17:01:55,562 - SMART_INTEL - INFO - 🛑 Intelligence manager stopped

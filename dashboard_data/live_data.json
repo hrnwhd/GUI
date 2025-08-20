@@ -1,35 +1,57 @@
 {
-  "timestamp": "2025-08-20T12:55:02.046672",
+  "timestamp": "2025-08-20T17:00:02.079661",
   "robot_status": "Running",
   "account": {
-    "balance": 8999.14,
-    "equity": 8999.06,
-    "margin": 1.28,
-    "free_margin": 8997.78,
-    "margin_level": 703051.56,
-    "profit": -0.08
+    "balance": 9023.29,
+    "equity": 9020.96,
+    "margin": 13.12,
+    "free_margin": 9007.84,
+    "margin_level": 68757.32,
+    "profit": -2.33
   },
-  "active_trades": 1,
-  "active_batches": 1,
-  "total_trades": 6,
+  "active_trades": 0,
+  "active_batches": 3,
+  "total_trades": 15,
   "emergency_stop": false,
   "drawdown_percent": 0,
   "batches": [
     {
-      "batch_id": 6,
-      "symbol": "US500",
+      "batch_id": 12,
+      "symbol": "GBPCAD",
+      "direction": "short",
+      "current_layer": 1,
+      "total_volume": 0.01,
+      "breakeven_price": 1.86865,
+      "initial_entry_price": 1.86865,
+      "created_time": "2025-08-20T16:10:05.457180",
+      "active_hedge": null
+    },
+    {
+      "batch_id": 14,
+      "symbol": "GBPUSD",
       "direction": "long",
       "current_layer": 1,
       "total_volume": 0.01,
-      "breakeven_price": 6404.81,
-      "initial_entry_price": 6404.81,
-      "created_time": "2025-08-20T12:52:28.731716",
+      "breakeven_price": 1.34939,
+      "initial_entry_price": 1.34939,
+      "created_time": "2025-08-20T16:35:05.729408",
+      "active_hedge": null
+    },
+    {
+      "batch_id": 15,
+      "symbol": "XAUUSD",
+      "direction": "long",
+      "current_layer": 1,
+      "total_volume": 0.01,
+      "breakeven_price": 3340.6,
+      "initial_entry_price": 3340.6,
+      "created_time": "2025-08-20T16:40:05.759080",
       "active_hedge": null
     }
   ],
   "pairs_status": {},
   "mt5_connected": true,
   "hedging_enabled": true,
-  "webhook_timestamp": "2025-08-20T12:55:00.016717",
+  "webhook_timestamp": "2025-08-20T17:00:00.004591",
   "source": "BM_Trading_Bot"
 }

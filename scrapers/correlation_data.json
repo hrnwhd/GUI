@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T14:20:34.056233",
+  "timestamp": "2025-08-20T17:01:53.169746",
   "data_source": "MyFXBook",
   "thresholds": {
     "high_correlation": 70,
@@ -12,2136 +12,2136 @@
         "percentage": "100.0%"
       },
       "AUDJPY": {
-        "value": 53.6,
-        "percentage": "53.6%"
+        "value": 49.3,
+        "percentage": "49.3%"
       },
       "AUDNZD": {
-        "value": 42.6,
-        "percentage": "42.6%"
+        "value": 38.7,
+        "percentage": "38.7%"
       },
       "EURAUD": {
-        "value": -23.1,
-        "percentage": "-23.1%"
+        "value": -26.9,
+        "percentage": "-26.9%"
       },
       "EURJPY": {
-        "value": 54.0,
-        "percentage": "54.0%"
+        "value": 47.6,
+        "percentage": "47.6%"
       },
       "EURUSD": {
-        "value": 39.5,
-        "percentage": "39.5%"
+        "value": 32.7,
+        "percentage": "32.7%"
       },
       "GBPJPY": {
-        "value": 48.3,
-        "percentage": "48.3%"
+        "value": 43.9,
+        "percentage": "43.9%"
       },
       "GBPUSD": {
-        "value": 13.3,
-        "percentage": "13.3%"
+        "value": 11.6,
+        "percentage": "11.6%"
       },
       "USDCAD": {
-        "value": 4.0,
-        "percentage": "4.0%"
+        "value": 6.4,
+        "percentage": "6.4%"
       },
       "USDJPY": {
-        "value": 12.9,
-        "percentage": "12.9%"
+        "value": 11.7,
+        "percentage": "11.7%"
       }
     },
     "AUDCHF": {
       "AUDCAD": {
-        "value": 37.9,
-        "percentage": "37.9%"
+        "value": 51.6,
+        "percentage": "51.6%"
       },
       "AUDJPY": {
-        "value": 24.4,
-        "percentage": "24.4%"
+        "value": 32.8,
+        "percentage": "32.8%"
       },
       "AUDNZD": {
-        "value": 31.8,
-        "percentage": "31.8%"
+        "value": 37.3,
+        "percentage": "37.3%"
       },
       "EURAUD": {
-        "value": -43.3,
-        "percentage": "-43.3%"
+        "value": -43.4,
+        "percentage": "-43.4%"
       },
       "EURJPY": {
-        "value": 9.4,
-        "percentage": "9.4%"
+        "value": 18.5,
+        "percentage": "18.5%"
       },
       "EURUSD": {
-        "value": -32.4,
-        "percentage": "-32.4%"
+        "value": -26.8,
+        "percentage": "-26.8%"
       },
       "GBPJPY": {
-        "value": 25.4,
-        "percentage": "25.4%"
+        "value": 31.1,
+        "percentage": "31.1%"
       },
       "GBPUSD": {
-        "value": -16.9,
-        "percentage": "-16.9%"
+        "value": -15.4,
+        "percentage": "-15.4%"
       },
       "USDCAD": {
-        "value": 44.8,
-        "percentage": "44.8%"
+        "value": 39.5,
+        "percentage": "39.5%"
       },
       "USDJPY": {
-        "value": 28.3,
-        "percentage": "28.3%"
+        "value": 29.7,
+        "percentage": "29.7%"
       }
     },
     "AUDJPY": {
       "AUDCAD": {
-        "value": 53.6,
-        "percentage": "53.6%"
+        "value": 49.3,
+        "percentage": "49.3%"
       },
       "AUDJPY": {
         "value": 100.0,
         "percentage": "100.0%"
       },
       "AUDNZD": {
-        "value": 79.1,
-        "percentage": "79.1%"
+        "value": 77.0,
+        "percentage": "77.0%"
       },
       "EURAUD": {
-        "value": -58.4,
-        "percentage": "-58.4%"
+        "value": -61.9,
+        "percentage": "-61.9%"
       },
       "EURJPY": {
-        "value": 92.1,
-        "percentage": "92.1%"
+        "value": 90.9,
+        "percentage": "90.9%"
       },
       "EURUSD": {
-        "value": -20.6,
-        "percentage": "-20.6%"
+        "value": -28.9,
+        "percentage": "-28.9%"
       },
       "GBPJPY": {
-        "value": 55.5,
-        "percentage": "55.5%"
+        "value": 51.5,
+        "percentage": "51.5%"
       },
       "GBPUSD": {
-        "value": -56.3,
-        "percentage": "-56.3%"
+        "value": -59.6,
+        "percentage": "-59.6%"
       },
       "USDCAD": {
-        "value": 27.8,
-        "percentage": "27.8%"
+        "value": 26.3,
+        "percentage": "26.3%"
       },
       "USDJPY": {
-        "value": 81.9,
-        "percentage": "81.9%"
+        "value": 82.1,
+        "percentage": "82.1%"
       }
     },
     "AUDNZD": {
       "AUDCAD": {
-        "value": 42.6,
-        "percentage": "42.6%"
+        "value": 38.7,
+        "percentage": "38.7%"
       },
       "AUDJPY": {
-        "value": 79.1,
-        "percentage": "79.1%"
+        "value": 77.0,
+        "percentage": "77.0%"
       },
       "AUDNZD": {
         "value": 100.0,
         "percentage": "100.0%"
       },
       "EURAUD": {
-        "value": -31.0,
-        "percentage": "-31.0%"
+        "value": -29.2,
+        "percentage": "-29.2%"
       },
       "EURJPY": {
-        "value": 80.6,
-        "percentage": "80.6%"
+        "value": 80.3,
+        "percentage": "80.3%"
       },
       "EURUSD": {
-        "value": -30.4,
-        "percentage": "-30.4%"
+        "value": -38.3,
+        "percentage": "-38.3%"
       },
       "GBPJPY": {
-        "value": 33.0,
-        "percentage": "33.0%"
+        "value": 30.7,
+        "percentage": "30.7%"
       },
       "GBPUSD": {
-        "value": -67.6,
-        "percentage": "-67.6%"
+        "value": -70.3,
+        "percentage": "-70.3%"
       },
       "USDCAD": {
-        "value": 54.8,
-        "percentage": "54.8%"
+        "value": 56.9,
+        "percentage": "56.9%"
       },
       "USDJPY": {
-        "value": 80.0,
-        "percentage": "80.0%"
+        "value": 80.7,
+        "percentage": "80.7%"
       }
     },
     "AUDSGD": {
       "AUDCAD": {
-        "value": 76.3,
-        "percentage": "76.3%"
+        "value": 70.6,
+        "percentage": "70.6%"
       },
       "AUDJPY": {
-        "value": 66.1,
-        "percentage": "66.1%"
+        "value": 63.0,
+        "percentage": "63.0%"
       },
       "AUDNZD": {
-        "value": 35.3,
-        "percentage": "35.3%"
+        "value": 27.6,
+        "percentage": "27.6%"
       },
       "EURAUD": {
-        "value": -49.9,
-        "percentage": "-49.9%"
+        "value": -58.5,
+        "percentage": "-58.5%"
       },
       "EURJPY": {
-        "value": 55.5,
-        "percentage": "55.5%"
+        "value": 46.8,
+        "percentage": "46.8%"
       },
       "EURUSD": {
-        "value": 37.2,
-        "percentage": "37.2%"
+        "value": 32.0,
+        "percentage": "32.0%"
       },
       "GBPJPY": {
-        "value": 28.9,
-        "percentage": "28.9%"
+        "value": 19.3,
+        "percentage": "19.3%"
       },
       "GBPUSD": {
-        "value": -0.4,
-        "percentage": "-0.4%"
+        "value": -1.8,
+        "percentage": "-1.8%"
       },
       "USDCAD": {
-        "value": -32.6,
-        "percentage": "-32.6%"
+        "value": -38.5,
+        "percentage": "-38.5%"
       },
       "USDJPY": {
-        "value": 15.9,
-        "percentage": "15.9%"
+        "value": 11.9,
+        "percentage": "11.9%"
       }
     },
     "AUDUSD": {
       "AUDCAD": {
-        "value": 59.7,
-        "percentage": "59.7%"
+        "value": 53.5,
+        "percentage": "53.5%"
       },
       "AUDJPY": {
-        "value": 11.9,
-        "percentage": "11.9%"
+        "value": 7.2,
+        "percentage": "7.2%"
       },
       "AUDNZD": {
-        "value": -17.1,
-        "percentage": "-17.1%"
+        "value": -25.2,
+        "percentage": "-25.2%"
       },
       "EURAUD": {
-        "value": 0.3,
-        "percentage": "0.3%"
+        "value": -9.6,
+        "percentage": "-9.6%"
       },
       "EURJPY": {
-        "value": 14.4,
-        "percentage": "14.4%"
+        "value": 3.8,
+        "percentage": "3.8%"
       },
       "EURUSD": {
-        "value": 85.2,
-        "percentage": "85.2%"
+        "value": 82.4,
+        "percentage": "82.4%"
       },
       "GBPJPY": {
-        "value": 18.3,
-        "percentage": "18.3%"
+        "value": 9.3,
+        "percentage": "9.3%"
       },
       "GBPUSD": {
-        "value": 61.2,
-        "percentage": "61.2%"
+        "value": 60.3,
+        "percentage": "60.3%"
       },
       "USDCAD": {
-        "value": -77.7,
-        "percentage": "-77.7%"
+        "value": -80.8,
+        "percentage": "-80.8%"
       },
       "USDJPY": {
-        "value": -47.1,
-        "percentage": "-47.1%"
+        "value": -51.0,
+        "percentage": "-51.0%"
       }
     },
     "CADCHF": {
       "AUDCAD": {
-        "value": -46.7,
-        "percentage": "-46.7%"
+        "value": -34.5,
+        "percentage": "-34.5%"
       },
       "AUDJPY": {
-        "value": -21.3,
-        "percentage": "-21.3%"
+        "value": -9.2,
+        "percentage": "-9.2%"
       },
       "AUDNZD": {
-        "value": -5.7,
-        "percentage": "-5.7%"
+        "value": 4.7,
+        "percentage": "4.7%"
       },
       "EURAUD": {
-        "value": -21.7,
-        "percentage": "-21.7%"
+        "value": -22.2,
+        "percentage": "-22.2%"
       },
       "EURJPY": {
-        "value": -35.8,
-        "percentage": "-35.8%"
+        "value": -23.0,
+        "percentage": "-23.0%"
       },
       "EURUSD": {
-        "value": -63.4,
-        "percentage": "-63.4%"
+        "value": -58.7,
+        "percentage": "-58.7%"
       },
       "GBPJPY": {
-        "value": -15.9,
-        "percentage": "-15.9%"
-      },
-      "GBPUSD": {
-        "value": -26.9,
-        "percentage": "-26.9%"
-      },
-      "USDCAD": {
-        "value": 39.0,
-        "percentage": "39.0%"
-      },
-      "USDJPY": {
-        "value": 15.9,
-        "percentage": "15.9%"
-      }
-    },
-    "CADJPY": {
-      "AUDCAD": {
-        "value": 14.8,
-        "percentage": "14.8%"
-      },
-      "AUDJPY": {
-        "value": 91.4,
-        "percentage": "91.4%"
-      },
-      "AUDNZD": {
-        "value": 72.5,
-        "percentage": "72.5%"
-      },
-      "EURAUD": {
-        "value": -57.6,
-        "percentage": "-57.6%"
-      },
-      "EURJPY": {
-        "value": 81.8,
-        "percentage": "81.8%"
-      },
-      "EURUSD": {
-        "value": -43.5,
-        "percentage": "-43.5%"
-      },
-      "GBPJPY": {
-        "value": 41.4,
-        "percentage": "41.4%"
-      },
-      "GBPUSD": {
-        "value": -72.9,
-        "percentage": "-72.9%"
-      },
-      "USDCAD": {
-        "value": 30.9,
-        "percentage": "30.9%"
-      },
-      "USDJPY": {
-        "value": 89.9,
-        "percentage": "89.9%"
-      }
-    },
-    "CHFJPY": {
-      "AUDCAD": {
-        "value": 35.6,
-        "percentage": "35.6%"
-      },
-      "AUDJPY": {
-        "value": 88.4,
-        "percentage": "88.4%"
-      },
-      "AUDNZD": {
-        "value": 63.7,
-        "percentage": "63.7%"
-      },
-      "EURAUD": {
-        "value": -38.0,
-        "percentage": "-38.0%"
-      },
-      "EURJPY": {
-        "value": 87.6,
-        "percentage": "87.6%"
-      },
-      "EURUSD": {
-        "value": -4.7,
-        "percentage": "-4.7%"
-      },
-      "GBPJPY": {
-        "value": 43.3,
-        "percentage": "43.3%"
-      },
-      "GBPUSD": {
-        "value": -48.0,
-        "percentage": "-48.0%"
-      },
-      "USDCAD": {
-        "value": 5.6,
-        "percentage": "5.6%"
-      },
-      "USDJPY": {
-        "value": 68.2,
-        "percentage": "68.2%"
-      }
-    },
-    "CHFSGD": {
-      "AUDCAD": {
-        "value": 22.0,
-        "percentage": "22.0%"
-      },
-      "AUDJPY": {
-        "value": 26.3,
-        "percentage": "26.3%"
-      },
-      "AUDNZD": {
-        "value": -1.6,
-        "percentage": "-1.6%"
-      },
-      "EURAUD": {
-        "value": 0.1,
-        "percentage": "0.1%"
-      },
-      "EURJPY": {
-        "value": 31.1,
-        "percentage": "31.1%"
-      },
-      "EURUSD": {
-        "value": 53.0,
-        "percentage": "53.0%"
-      },
-      "GBPJPY": {
-        "value": -0.9,
-        "percentage": "-0.9%"
-      },
-      "GBPUSD": {
-        "value": 13.6,
-        "percentage": "13.6%"
-      },
-      "USDCAD": {
-        "value": -60.4,
-        "percentage": "-60.4%"
-      },
-      "USDJPY": {
-        "value": -12.1,
-        "percentage": "-12.1%"
-      }
-    },
-    "EURAUD": {
-      "AUDCAD": {
-        "value": -23.1,
-        "percentage": "-23.1%"
-      },
-      "AUDJPY": {
-        "value": -58.4,
-        "percentage": "-58.4%"
-      },
-      "AUDNZD": {
-        "value": -31.0,
-        "percentage": "-31.0%"
-      },
-      "EURAUD": {
-        "value": 100.0,
-        "percentage": "100.0%"
-      },
-      "EURJPY": {
-        "value": -22.3,
-        "percentage": "-22.3%"
-      },
-      "EURUSD": {
-        "value": 52.4,
-        "percentage": "52.4%"
-      },
-      "GBPJPY": {
-        "value": -11.6,
-        "percentage": "-11.6%"
-      },
-      "GBPUSD": {
-        "value": 48.9,
-        "percentage": "48.9%"
-      },
-      "USDCAD": {
-        "value": -18.0,
-        "percentage": "-18.0%"
-      },
-      "USDJPY": {
-        "value": -52.0,
-        "percentage": "-52.0%"
-      }
-    },
-    "EURCAD": {
-      "AUDCAD": {
-        "value": 63.0,
-        "percentage": "63.0%"
-      },
-      "AUDJPY": {
-        "value": -2.7,
-        "percentage": "-2.7%"
-      },
-      "AUDNZD": {
-        "value": 9.8,
-        "percentage": "9.8%"
-      },
-      "EURAUD": {
-        "value": 60.9,
-        "percentage": "60.9%"
-      },
-      "EURJPY": {
-        "value": 26.4,
-        "percentage": "26.4%"
-      },
-      "EURUSD": {
-        "value": 74.1,
-        "percentage": "74.1%"
-      },
-      "GBPJPY": {
-        "value": 30.4,
-        "percentage": "30.4%"
-      },
-      "GBPUSD": {
-        "value": 50.0,
-        "percentage": "50.0%"
-      },
-      "USDCAD": {
-        "value": -11.2,
-        "percentage": "-11.2%"
-      },
-      "USDJPY": {
-        "value": -30.9,
-        "percentage": "-30.9%"
-      }
-    },
-    "EURCHF": {
-      "AUDCAD": {
-        "value": 17.3,
-        "percentage": "17.3%"
-      },
-      "AUDJPY": {
-        "value": -24.8,
-        "percentage": "-24.8%"
-      },
-      "AUDNZD": {
-        "value": 5.5,
-        "percentage": "5.5%"
-      },
-      "EURAUD": {
-        "value": 42.3,
-        "percentage": "42.3%"
-      },
-      "EURJPY": {
-        "value": -8.6,
-        "percentage": "-8.6%"
-      },
-      "EURUSD": {
-        "value": 11.6,
-        "percentage": "11.6%"
-      },
-      "GBPJPY": {
-        "value": 16.4,
-        "percentage": "16.4%"
-      },
-      "GBPUSD": {
-        "value": 24.2,
-        "percentage": "24.2%"
-      },
-      "USDCAD": {
-        "value": 30.1,
-        "percentage": "30.1%"
-      },
-      "USDJPY": {
-        "value": -15.0,
-        "percentage": "-15.0%"
-      }
-    },
-    "EURCZK": {
-      "AUDCAD": {
-        "value": -51.1,
-        "percentage": "-51.1%"
-      },
-      "AUDJPY": {
-        "value": -52.3,
-        "percentage": "-52.3%"
-      },
-      "AUDNZD": {
-        "value": -73.2,
-        "percentage": "-73.2%"
-      },
-      "EURAUD": {
-        "value": -1.4,
-        "percentage": "-1.4%"
-      },
-      "EURJPY": {
-        "value": -64.0,
-        "percentage": "-64.0%"
-      },
-      "EURUSD": {
-        "value": 2.9,
-        "percentage": "2.9%"
-      },
-      "GBPJPY": {
-        "value": -30.2,
-        "percentage": "-30.2%"
-      },
-      "GBPUSD": {
-        "value": 36.2,
-        "percentage": "36.2%"
-      },
-      "USDCAD": {
-        "value": -46.7,
-        "percentage": "-46.7%"
-      },
-      "USDJPY": {
-        "value": -49.1,
-        "percentage": "-49.1%"
-      }
-    },
-    "EURGBP": {
-      "AUDCAD": {
-        "value": 23.8,
-        "percentage": "23.8%"
-      },
-      "AUDJPY": {
-        "value": 64.6,
-        "percentage": "64.6%"
-      },
-      "AUDNZD": {
-        "value": 70.8,
-        "percentage": "70.8%"
-      },
-      "EURAUD": {
-        "value": -16.3,
-        "percentage": "-16.3%"
-      },
-      "EURJPY": {
-        "value": 70.1,
-        "percentage": "70.1%"
-      },
-      "EURUSD": {
-        "value": -6.9,
-        "percentage": "-6.9%"
-      },
-      "GBPJPY": {
-        "value": -14.0,
-        "percentage": "-14.0%"
-      },
-      "GBPUSD": {
-        "value": -68.4,
-        "percentage": "-68.4%"
-      },
-      "USDCAD": {
-        "value": 16.3,
-        "percentage": "16.3%"
-      },
-      "USDJPY": {
-        "value": 56.2,
-        "percentage": "56.2%"
-      }
-    },
-    "EURHUF": {
-      "AUDCAD": {
-        "value": -61.3,
-        "percentage": "-61.3%"
-      },
-      "AUDJPY": {
-        "value": -37.4,
-        "percentage": "-37.4%"
-      },
-      "AUDNZD": {
-        "value": -57.6,
-        "percentage": "-57.6%"
-      },
-      "EURAUD": {
-        "value": -19.8,
-        "percentage": "-19.8%"
-      },
-      "EURJPY": {
-        "value": -55.7,
-        "percentage": "-55.7%"
-      },
-      "EURUSD": {
-        "value": -20.9,
-        "percentage": "-20.9%"
-      },
-      "GBPJPY": {
-        "value": -35.9,
-        "percentage": "-35.9%"
-      },
-      "GBPUSD": {
-        "value": 8.9,
-        "percentage": "8.9%"
-      },
-      "USDCAD": {
-        "value": -34.4,
-        "percentage": "-34.4%"
-      },
-      "USDJPY": {
-        "value": -26.4,
-        "percentage": "-26.4%"
-      }
-    },
-    "EURJPY": {
-      "AUDCAD": {
-        "value": 54.0,
-        "percentage": "54.0%"
-      },
-      "AUDJPY": {
-        "value": 92.1,
-        "percentage": "92.1%"
-      },
-      "AUDNZD": {
-        "value": 80.6,
-        "percentage": "80.6%"
-      },
-      "EURAUD": {
-        "value": -22.3,
-        "percentage": "-22.3%"
-      },
-      "EURJPY": {
-        "value": 100.0,
-        "percentage": "100.0%"
-      },
-      "EURUSD": {
-        "value": 0.5,
-        "percentage": "0.5%"
-      },
-      "GBPJPY": {
-        "value": 60.8,
-        "percentage": "60.8%"
-      },
-      "GBPUSD": {
-        "value": -44.4,
-        "percentage": "-44.4%"
-      },
-      "USDCAD": {
-        "value": 25.1,
-        "percentage": "25.1%"
-      },
-      "USDJPY": {
-        "value": 73.4,
-        "percentage": "73.4%"
-      }
-    },
-    "EURMXN": {
-      "AUDCAD": {
-        "value": -22.7,
-        "percentage": "-22.7%"
-      },
-      "AUDJPY": {
-        "value": -78.5,
-        "percentage": "-78.5%"
-      },
-      "AUDNZD": {
-        "value": -73.7,
-        "percentage": "-73.7%"
-      },
-      "EURAUD": {
-        "value": 50.5,
-        "percentage": "50.5%"
-      },
-      "EURJPY": {
-        "value": -69.6,
-        "percentage": "-69.6%"
-      },
-      "EURUSD": {
-        "value": 45.6,
-        "percentage": "45.6%"
-      },
-      "GBPJPY": {
-        "value": -27.2,
-        "percentage": "-27.2%"
-      },
-      "GBPUSD": {
-        "value": 72.9,
-        "percentage": "72.9%"
-      },
-      "USDCAD": {
-        "value": -45.7,
-        "percentage": "-45.7%"
-      },
-      "USDJPY": {
-        "value": -82.4,
-        "percentage": "-82.4%"
-      }
-    },
-    "EURNOK": {
-      "AUDCAD": {
-        "value": 52.9,
-        "percentage": "52.9%"
-      },
-      "AUDJPY": {
-        "value": 38.4,
-        "percentage": "38.4%"
-      },
-      "AUDNZD": {
-        "value": 52.5,
-        "percentage": "52.5%"
-      },
-      "EURAUD": {
-        "value": 24.1,
-        "percentage": "24.1%"
-      },
-      "EURJPY": {
-        "value": 58.2,
-        "percentage": "58.2%"
-      },
-      "EURUSD": {
-        "value": 35.2,
-        "percentage": "35.2%"
-      },
-      "GBPJPY": {
-        "value": 24.7,
-        "percentage": "24.7%"
-      },
-      "GBPUSD": {
-        "value": -6.5,
-        "percentage": "-6.5%"
-      },
-      "USDCAD": {
-        "value": 7.7,
-        "percentage": "7.7%"
-      },
-      "USDJPY": {
-        "value": 18.2,
-        "percentage": "18.2%"
-      }
-    },
-    "EURNZD": {
-      "AUDCAD": {
-        "value": 27.8,
-        "percentage": "27.8%"
-      },
-      "AUDJPY": {
-        "value": 41.0,
-        "percentage": "41.0%"
-      },
-      "AUDNZD": {
-        "value": 79.3,
-        "percentage": "79.3%"
-      },
-      "EURAUD": {
-        "value": 33.3,
-        "percentage": "33.3%"
-      },
-      "EURJPY": {
-        "value": 65.6,
-        "percentage": "65.6%"
-      },
-      "EURUSD": {
-        "value": 3.7,
-        "percentage": "3.7%"
-      },
-      "GBPJPY": {
-        "value": 25.6,
-        "percentage": "25.6%"
-      },
-      "GBPUSD": {
-        "value": -35.3,
-        "percentage": "-35.3%"
-      },
-      "USDCAD": {
-        "value": 42.6,
-        "percentage": "42.6%"
-      },
-      "USDJPY": {
-        "value": 45.8,
-        "percentage": "45.8%"
-      }
-    },
-    "EURPLN": {
-      "AUDCAD": {
-        "value": -20.1,
-        "percentage": "-20.1%"
-      },
-      "AUDJPY": {
-        "value": 11.4,
-        "percentage": "11.4%"
-      },
-      "AUDNZD": {
-        "value": 32.4,
-        "percentage": "32.4%"
-      },
-      "EURAUD": {
-        "value": -39.0,
-        "percentage": "-39.0%"
-      },
-      "EURJPY": {
-        "value": -5.2,
-        "percentage": "-5.2%"
-      },
-      "EURUSD": {
-        "value": -69.7,
-        "percentage": "-69.7%"
-      },
-      "GBPJPY": {
-        "value": -36.6,
-        "percentage": "-36.6%"
-      },
-      "GBPUSD": {
-        "value": -67.4,
-        "percentage": "-67.4%"
-      },
-      "USDCAD": {
-        "value": 55.2,
-        "percentage": "55.2%"
-      },
-      "USDJPY": {
-        "value": 43.0,
-        "percentage": "43.0%"
-      }
-    },
-    "EURSEK": {
-      "AUDCAD": {
-        "value": -7.7,
-        "percentage": "-7.7%"
-      },
-      "AUDJPY": {
-        "value": 34.1,
-        "percentage": "34.1%"
-      },
-      "AUDNZD": {
-        "value": 34.5,
-        "percentage": "34.5%"
-      },
-      "EURAUD": {
-        "value": -2.5,
-        "percentage": "-2.5%"
-      },
-      "EURJPY": {
-        "value": 40.1,
-        "percentage": "40.1%"
-      },
-      "EURUSD": {
-        "value": 5.0,
-        "percentage": "5.0%"
-      },
-      "GBPJPY": {
-        "value": 1.2,
-        "percentage": "1.2%"
+        "value": -5.8,
+        "percentage": "-5.8%"
       },
       "GBPUSD": {
         "value": -27.1,
         "percentage": "-27.1%"
       },
       "USDCAD": {
-        "value": -16.6,
-        "percentage": "-16.6%"
+        "value": 37.3,
+        "percentage": "37.3%"
       },
       "USDJPY": {
-        "value": 25.7,
-        "percentage": "25.7%"
+        "value": 21.4,
+        "percentage": "21.4%"
       }
     },
-    "EURSGD": {
+    "CADJPY": {
       "AUDCAD": {
-        "value": 51.9,
-        "percentage": "51.9%"
-      },
-      "AUDJPY": {
-        "value": 8.1,
-        "percentage": "8.1%"
-      },
-      "AUDNZD": {
-        "value": 4.4,
-        "percentage": "4.4%"
-      },
-      "EURAUD": {
-        "value": 51.9,
-        "percentage": "51.9%"
-      },
-      "EURJPY": {
-        "value": 34.6,
-        "percentage": "34.6%"
-      },
-      "EURUSD": {
-        "value": 89.7,
-        "percentage": "89.7%"
-      },
-      "GBPJPY": {
-        "value": 18.5,
-        "percentage": "18.5%"
-      },
-      "GBPUSD": {
-        "value": 48.3,
-        "percentage": "48.3%"
-      },
-      "USDCAD": {
-        "value": -50.3,
-        "percentage": "-50.3%"
-      },
-      "USDJPY": {
-        "value": -35.3,
-        "percentage": "-35.3%"
-      }
-    },
-    "EURTRY": {
-      "AUDCAD": {
-        "value": 68.2,
-        "percentage": "68.2%"
-      },
-      "AUDJPY": {
-        "value": 43.7,
-        "percentage": "43.7%"
-      },
-      "AUDNZD": {
-        "value": 57.1,
-        "percentage": "57.1%"
-      },
-      "EURAUD": {
-        "value": 23.3,
-        "percentage": "23.3%"
-      },
-      "EURJPY": {
-        "value": 64.4,
-        "percentage": "64.4%"
-      },
-      "EURUSD": {
-        "value": 45.1,
-        "percentage": "45.1%"
-      },
-      "GBPJPY": {
-        "value": 29.7,
-        "percentage": "29.7%"
-      },
-      "GBPUSD": {
-        "value": -1.7,
-        "percentage": "-1.7%"
-      },
-      "USDCAD": {
-        "value": 6.7,
-        "percentage": "6.7%"
-      },
-      "USDJPY": {
-        "value": 16.7,
-        "percentage": "16.7%"
-      }
-    },
-    "EURUSD": {
-      "AUDCAD": {
-        "value": 39.5,
-        "percentage": "39.5%"
-      },
-      "AUDJPY": {
-        "value": -20.6,
-        "percentage": "-20.6%"
-      },
-      "AUDNZD": {
-        "value": -30.4,
-        "percentage": "-30.4%"
-      },
-      "EURAUD": {
-        "value": 52.4,
-        "percentage": "52.4%"
-      },
-      "EURJPY": {
-        "value": 0.5,
-        "percentage": "0.5%"
-      },
-      "EURUSD": {
-        "value": 100.0,
-        "percentage": "100.0%"
-      },
-      "GBPJPY": {
-        "value": 8.9,
-        "percentage": "8.9%"
-      },
-      "GBPUSD": {
-        "value": 77.5,
-        "percentage": "77.5%"
-      },
-      "USDCAD": {
-        "value": -74.9,
-        "percentage": "-74.9%"
-      },
-      "USDJPY": {
-        "value": -67.4,
-        "percentage": "-67.4%"
-      }
-    },
-    "EURZAR": {
-      "AUDCAD": {
-        "value": -12.1,
-        "percentage": "-12.1%"
-      },
-      "AUDJPY": {
-        "value": -13.7,
-        "percentage": "-13.7%"
-      },
-      "AUDNZD": {
-        "value": -30.7,
-        "percentage": "-30.7%"
-      },
-      "EURAUD": {
-        "value": 0.3,
-        "percentage": "0.3%"
-      },
-      "EURJPY": {
-        "value": -17.4,
-        "percentage": "-17.4%"
-      },
-      "EURUSD": {
-        "value": 13.4,
-        "percentage": "13.4%"
-      },
-      "GBPJPY": {
-        "value": -29.4,
-        "percentage": "-29.4%"
-      },
-      "GBPUSD": {
-        "value": 7.1,
-        "percentage": "7.1%"
-      },
-      "USDCAD": {
-        "value": -30.4,
-        "percentage": "-30.4%"
-      },
-      "USDJPY": {
-        "value": -21.5,
-        "percentage": "-21.5%"
-      }
-    },
-    "GBPAUD": {
-      "AUDCAD": {
-        "value": -30.1,
-        "percentage": "-30.1%"
-      },
-      "AUDJPY": {
-        "value": -80.1,
-        "percentage": "-80.1%"
-      },
-      "AUDNZD": {
-        "value": -71.7,
-        "percentage": "-71.7%"
-      },
-      "EURAUD": {
-        "value": 62.0,
-        "percentage": "62.0%"
-      },
-      "EURJPY": {
-        "value": -66.8,
-        "percentage": "-66.8%"
-      },
-      "EURUSD": {
-        "value": 31.3,
-        "percentage": "31.3%"
-      },
-      "GBPJPY": {
-        "value": 5.1,
-        "percentage": "5.1%"
-      },
-      "GBPUSD": {
-        "value": 78.4,
-        "percentage": "78.4%"
-      },
-      "USDCAD": {
-        "value": -22.0,
-        "percentage": "-22.0%"
-      },
-      "USDJPY": {
-        "value": -70.5,
-        "percentage": "-70.5%"
-      }
-    },
-    "GBPCAD": {
-      "AUDCAD": {
-        "value": 19.9,
-        "percentage": "19.9%"
-      },
-      "AUDJPY": {
-        "value": -54.7,
-        "percentage": "-54.7%"
-      },
-      "AUDNZD": {
-        "value": -51.8,
-        "percentage": "-51.8%"
-      },
-      "EURAUD": {
-        "value": 51.7,
-        "percentage": "51.7%"
-      },
-      "EURJPY": {
-        "value": -40.9,
-        "percentage": "-40.9%"
-      },
-      "EURUSD": {
-        "value": 52.0,
-        "percentage": "52.0%"
-      },
-      "GBPJPY": {
-        "value": 30.4,
-        "percentage": "30.4%"
-      },
-      "GBPUSD": {
-        "value": 87.2,
-        "percentage": "87.2%"
-      },
-      "USDCAD": {
-        "value": -20.1,
-        "percentage": "-20.1%"
-      },
-      "USDJPY": {
-        "value": -65.4,
-        "percentage": "-65.4%"
-      }
-    },
-    "GBPCHF": {
-      "AUDCAD": {
-        "value": -8.1,
-        "percentage": "-8.1%"
-      },
-      "AUDJPY": {
-        "value": -60.5,
-        "percentage": "-60.5%"
-      },
-      "AUDNZD": {
-        "value": -49.1,
-        "percentage": "-49.1%"
-      },
-      "EURAUD": {
-        "value": 34.0,
-        "percentage": "34.0%"
-      },
-      "EURJPY": {
-        "value": -56.1,
-        "percentage": "-56.1%"
-      },
-      "EURUSD": {
-        "value": 11.3,
-        "percentage": "11.3%"
-      },
-      "GBPJPY": {
-        "value": 18.1,
-        "percentage": "18.1%"
-      },
-      "GBPUSD": {
-        "value": 62.7,
-        "percentage": "62.7%"
-      },
-      "USDCAD": {
-        "value": 3.6,
-        "percentage": "3.6%"
-      },
-      "USDJPY": {
-        "value": -49.4,
-        "percentage": "-49.4%"
-      }
-    },
-    "GBPJPY": {
-      "AUDCAD": {
-        "value": 48.3,
-        "percentage": "48.3%"
-      },
-      "AUDJPY": {
-        "value": 55.5,
-        "percentage": "55.5%"
-      },
-      "AUDNZD": {
-        "value": 33.0,
-        "percentage": "33.0%"
-      },
-      "EURAUD": {
-        "value": -11.6,
-        "percentage": "-11.6%"
-      },
-      "EURJPY": {
-        "value": 60.8,
-        "percentage": "60.8%"
-      },
-      "EURUSD": {
-        "value": 8.9,
-        "percentage": "8.9%"
-      },
-      "GBPJPY": {
-        "value": 100.0,
-        "percentage": "100.0%"
-      },
-      "GBPUSD": {
-        "value": 14.9,
-        "percentage": "14.9%"
-      },
-      "USDCAD": {
-        "value": 16.6,
-        "percentage": "16.6%"
-      },
-      "USDJPY": {
-        "value": 39.0,
-        "percentage": "39.0%"
-      }
-    },
-    "GBPMXN": {
-      "AUDCAD": {
-        "value": -26.0,
-        "percentage": "-26.0%"
-      },
-      "AUDJPY": {
-        "value": -79.8,
-        "percentage": "-79.8%"
-      },
-      "AUDNZD": {
-        "value": -80.5,
-        "percentage": "-80.5%"
-      },
-      "EURAUD": {
-        "value": 38.0,
-        "percentage": "38.0%"
-      },
-      "EURJPY": {
-        "value": -77.5,
-        "percentage": "-77.5%"
-      },
-      "EURUSD": {
-        "value": 30.1,
-        "percentage": "30.1%"
-      },
-      "GBPJPY": {
-        "value": -8.6,
-        "percentage": "-8.6%"
-      },
-      "GBPUSD": {
-        "value": 78.4,
-        "percentage": "78.4%"
-      },
-      "USDCAD": {
-        "value": -35.2,
-        "percentage": "-35.2%"
-      },
-      "USDJPY": {
-        "value": -77.6,
-        "percentage": "-77.6%"
-      }
-    },
-    "GBPNOK": {
-      "AUDCAD": {
-        "value": 24.5,
-        "percentage": "24.5%"
-      },
-      "AUDJPY": {
-        "value": -32.3,
-        "percentage": "-32.3%"
-      },
-      "AUDNZD": {
-        "value": -26.7,
-        "percentage": "-26.7%"
-      },
-      "EURAUD": {
-        "value": 39.5,
-        "percentage": "39.5%"
-      },
-      "EURJPY": {
-        "value": -19.6,
-        "percentage": "-19.6%"
-      },
-      "EURUSD": {
-        "value": 41.0,
-        "percentage": "41.0%"
-      },
-      "GBPJPY": {
-        "value": 38.7,
-        "percentage": "38.7%"
-      },
-      "GBPUSD": {
-        "value": 67.3,
-        "percentage": "67.3%"
-      },
-      "USDCAD": {
-        "value": -11.1,
-        "percentage": "-11.1%"
-      },
-      "USDJPY": {
-        "value": -42.9,
-        "percentage": "-42.9%"
-      }
-    },
-    "GBPNZD": {
-      "AUDCAD": {
-        "value": 2.8,
-        "percentage": "2.8%"
-      },
-      "AUDJPY": {
-        "value": -28.5,
-        "percentage": "-28.5%"
-      },
-      "AUDNZD": {
-        "value": 5.8,
-        "percentage": "5.8%"
-      },
-      "EURAUD": {
-        "value": 55.3,
-        "percentage": "55.3%"
-      },
-      "EURJPY": {
-        "value": -7.7,
-        "percentage": "-7.7%"
-      },
-      "EURUSD": {
         "value": 11.6,
         "percentage": "11.6%"
       },
-      "GBPJPY": {
-        "value": 43.8,
-        "percentage": "43.8%"
+      "AUDJPY": {
+        "value": 92.0,
+        "percentage": "92.0%"
       },
-      "GBPUSD": {
+      "AUDNZD": {
+        "value": 70.8,
+        "percentage": "70.8%"
+      },
+      "EURAUD": {
+        "value": -58.9,
+        "percentage": "-58.9%"
+      },
+      "EURJPY": {
+        "value": 82.3,
+        "percentage": "82.3%"
+      },
+      "EURUSD": {
+        "value": -48.2,
+        "percentage": "-48.2%"
+      },
+      "GBPJPY": {
         "value": 38.7,
         "percentage": "38.7%"
       },
+      "GBPUSD": {
+        "value": -73.8,
+        "percentage": "-73.8%"
+      },
       "USDCAD": {
-        "value": 28.3,
-        "percentage": "28.3%"
+        "value": 27.5,
+        "percentage": "27.5%"
       },
       "USDJPY": {
-        "value": -13.5,
-        "percentage": "-13.5%"
+        "value": 88.7,
+        "percentage": "88.7%"
       }
     },
-    "GBPSEK": {
+    "CHFJPY": {
       "AUDCAD": {
-        "value": -32.6,
-        "percentage": "-32.6%"
+        "value": 25.9,
+        "percentage": "25.9%"
       },
       "AUDJPY": {
-        "value": -42.8,
-        "percentage": "-42.8%"
+        "value": 88.0,
+        "percentage": "88.0%"
       },
       "AUDNZD": {
-        "value": -49.8,
-        "percentage": "-49.8%"
+        "value": 61.5,
+        "percentage": "61.5%"
       },
       "EURAUD": {
-        "value": 15.5,
-        "percentage": "15.5%"
+        "value": -43.2,
+        "percentage": "-43.2%"
       },
       "EURJPY": {
-        "value": -44.0,
-        "percentage": "-44.0%"
+        "value": 85.5,
+        "percentage": "85.5%"
       },
       "EURUSD": {
-        "value": 12.1,
-        "percentage": "12.1%"
+        "value": -16.3,
+        "percentage": "-16.3%"
       },
       "GBPJPY": {
-        "value": 15.4,
-        "percentage": "15.4%"
+        "value": 38.1,
+        "percentage": "38.1%"
       },
       "GBPUSD": {
-        "value": 52.6,
-        "percentage": "52.6%"
+        "value": -54.1,
+        "percentage": "-54.1%"
       },
       "USDCAD": {
-        "value": -32.6,
-        "percentage": "-32.6%"
+        "value": 6.9,
+        "percentage": "6.9%"
       },
       "USDJPY": {
-        "value": -41.0,
-        "percentage": "-41.0%"
+        "value": 70.5,
+        "percentage": "70.5%"
       }
     },
-    "GBPSGD": {
+    "CHFSGD": {
       "AUDCAD": {
-        "value": 7.1,
-        "percentage": "7.1%"
+        "value": 9.0,
+        "percentage": "9.0%"
       },
       "AUDJPY": {
-        "value": -59.5,
-        "percentage": "-59.5%"
+        "value": 19.7,
+        "percentage": "19.7%"
       },
       "AUDNZD": {
-        "value": -67.5,
-        "percentage": "-67.5%"
+        "value": -11.2,
+        "percentage": "-11.2%"
+      },
+      "EURAUD": {
+        "value": -7.5,
+        "percentage": "-7.5%"
+      },
+      "EURJPY": {
+        "value": 19.7,
+        "percentage": "19.7%"
+      },
+      "EURUSD": {
+        "value": 47.7,
+        "percentage": "47.7%"
+      },
+      "GBPJPY": {
+        "value": -12.4,
+        "percentage": "-12.4%"
+      },
+      "GBPUSD": {
+        "value": 12.0,
+        "percentage": "12.0%"
+      },
+      "USDCAD": {
+        "value": -63.9,
+        "percentage": "-63.9%"
+      },
+      "USDJPY": {
+        "value": -16.5,
+        "percentage": "-16.5%"
+      }
+    },
+    "EURAUD": {
+      "AUDCAD": {
+        "value": -26.9,
+        "percentage": "-26.9%"
+      },
+      "AUDJPY": {
+        "value": -61.9,
+        "percentage": "-61.9%"
+      },
+      "AUDNZD": {
+        "value": -29.2,
+        "percentage": "-29.2%"
+      },
+      "EURAUD": {
+        "value": 100.0,
+        "percentage": "100.0%"
+      },
+      "EURJPY": {
+        "value": -23.7,
+        "percentage": "-23.7%"
+      },
+      "EURUSD": {
+        "value": 48.3,
+        "percentage": "48.3%"
+      },
+      "GBPJPY": {
+        "value": -9.7,
+        "percentage": "-9.7%"
+      },
+      "GBPUSD": {
+        "value": 45.8,
+        "percentage": "45.8%"
+      },
+      "USDCAD": {
+        "value": -7.1,
+        "percentage": "-7.1%"
+      },
+      "USDJPY": {
+        "value": -47.9,
+        "percentage": "-47.9%"
+      }
+    },
+    "EURCAD": {
+      "AUDCAD": {
+        "value": 55.4,
+        "percentage": "55.4%"
+      },
+      "AUDJPY": {
+        "value": -14.4,
+        "percentage": "-14.4%"
+      },
+      "AUDNZD": {
+        "value": 5.2,
+        "percentage": "5.2%"
+      },
+      "EURAUD": {
+        "value": 65.1,
+        "percentage": "65.1%"
+      },
+      "EURJPY": {
+        "value": 17.3,
+        "percentage": "17.3%"
+      },
+      "EURUSD": {
+        "value": 67.5,
+        "percentage": "67.5%"
+      },
+      "GBPJPY": {
+        "value": 26.6,
+        "percentage": "26.6%"
+      },
+      "GBPUSD": {
+        "value": 48.9,
+        "percentage": "48.9%"
+      },
+      "USDCAD": {
+        "value": -1.1,
+        "percentage": "-1.1%"
+      },
+      "USDJPY": {
+        "value": -32.1,
+        "percentage": "-32.1%"
+      }
+    },
+    "EURCHF": {
+      "AUDCAD": {
+        "value": 25.2,
+        "percentage": "25.2%"
+      },
+      "AUDJPY": {
+        "value": -22.5,
+        "percentage": "-22.5%"
+      },
+      "AUDNZD": {
+        "value": 10.4,
+        "percentage": "10.4%"
       },
       "EURAUD": {
         "value": 47.1,
         "percentage": "47.1%"
       },
       "EURJPY": {
-        "value": -49.2,
-        "percentage": "-49.2%"
+        "value": -2.0,
+        "percentage": "-2.0%"
       },
       "EURUSD": {
-        "value": 59.9,
-        "percentage": "59.9%"
+        "value": 16.1,
+        "percentage": "16.1%"
       },
       "GBPJPY": {
-        "value": 23.7,
-        "percentage": "23.7%"
+        "value": 22.7,
+        "percentage": "22.7%"
       },
       "GBPUSD": {
-        "value": 95.8,
-        "percentage": "95.8%"
+        "value": 25.1,
+        "percentage": "25.1%"
       },
       "USDCAD": {
-        "value": -45.7,
-        "percentage": "-45.7%"
+        "value": 33.0,
+        "percentage": "33.0%"
       },
       "USDJPY": {
-        "value": -76.7,
-        "percentage": "-76.7%"
+        "value": -12.7,
+        "percentage": "-12.7%"
       }
     },
-    "GBPTRY": {
+    "EURCZK": {
       "AUDCAD": {
-        "value": 63.0,
-        "percentage": "63.0%"
+        "value": -45.0,
+        "percentage": "-45.0%"
       },
       "AUDJPY": {
-        "value": 3.0,
-        "percentage": "3.0%"
+        "value": -46.2,
+        "percentage": "-46.2%"
       },
       "AUDNZD": {
-        "value": 14.7,
-        "percentage": "14.7%"
+        "value": -72.0,
+        "percentage": "-72.0%"
+      },
+      "EURAUD": {
+        "value": -4.9,
+        "percentage": "-4.9%"
+      },
+      "EURJPY": {
+        "value": -60.4,
+        "percentage": "-60.4%"
+      },
+      "EURUSD": {
+        "value": 12.4,
+        "percentage": "12.4%"
+      },
+      "GBPJPY": {
+        "value": -27.3,
+        "percentage": "-27.3%"
+      },
+      "GBPUSD": {
+        "value": 39.3,
+        "percentage": "39.3%"
+      },
+      "USDCAD": {
+        "value": -53.1,
+        "percentage": "-53.1%"
+      },
+      "USDJPY": {
+        "value": -49.9,
+        "percentage": "-49.9%"
+      }
+    },
+    "EURGBP": {
+      "AUDCAD": {
+        "value": 17.4,
+        "percentage": "17.4%"
+      },
+      "AUDJPY": {
+        "value": 62.6,
+        "percentage": "62.6%"
+      },
+      "AUDNZD": {
+        "value": 69.0,
+        "percentage": "69.0%"
+      },
+      "EURAUD": {
+        "value": -18.7,
+        "percentage": "-18.7%"
+      },
+      "EURJPY": {
+        "value": 67.9,
+        "percentage": "67.9%"
+      },
+      "EURUSD": {
+        "value": -13.7,
+        "percentage": "-13.7%"
+      },
+      "GBPJPY": {
+        "value": -20.0,
+        "percentage": "-20.0%"
+      },
+      "GBPUSD": {
+        "value": -71.7,
+        "percentage": "-71.7%"
+      },
+      "USDCAD": {
+        "value": 16.2,
+        "percentage": "16.2%"
+      },
+      "USDJPY": {
+        "value": 56.0,
+        "percentage": "56.0%"
+      }
+    },
+    "EURHUF": {
+      "AUDCAD": {
+        "value": -53.5,
+        "percentage": "-53.5%"
+      },
+      "AUDJPY": {
+        "value": -28.1,
+        "percentage": "-28.1%"
+      },
+      "AUDNZD": {
+        "value": -55.0,
+        "percentage": "-55.0%"
+      },
+      "EURAUD": {
+        "value": -25.7,
+        "percentage": "-25.7%"
+      },
+      "EURJPY": {
+        "value": -49.7,
+        "percentage": "-49.7%"
+      },
+      "EURUSD": {
+        "value": -10.7,
+        "percentage": "-10.7%"
+      },
+      "GBPJPY": {
+        "value": -33.1,
+        "percentage": "-33.1%"
+      },
+      "GBPUSD": {
+        "value": 11.8,
+        "percentage": "11.8%"
+      },
+      "USDCAD": {
+        "value": -44.2,
+        "percentage": "-44.2%"
+      },
+      "USDJPY": {
+        "value": -27.1,
+        "percentage": "-27.1%"
+      }
+    },
+    "EURJPY": {
+      "AUDCAD": {
+        "value": 47.6,
+        "percentage": "47.6%"
+      },
+      "AUDJPY": {
+        "value": 90.9,
+        "percentage": "90.9%"
+      },
+      "AUDNZD": {
+        "value": 80.3,
+        "percentage": "80.3%"
+      },
+      "EURAUD": {
+        "value": -23.7,
+        "percentage": "-23.7%"
+      },
+      "EURJPY": {
+        "value": 100.0,
+        "percentage": "100.0%"
+      },
+      "EURUSD": {
+        "value": -10.2,
+        "percentage": "-10.2%"
+      },
+      "GBPJPY": {
+        "value": 58.3,
+        "percentage": "58.3%"
+      },
+      "GBPUSD": {
+        "value": -49.7,
+        "percentage": "-49.7%"
+      },
+      "USDCAD": {
+        "value": 29.4,
+        "percentage": "29.4%"
+      },
+      "USDJPY": {
+        "value": 76.1,
+        "percentage": "76.1%"
+      }
+    },
+    "EURMXN": {
+      "AUDCAD": {
+        "value": -15.4,
+        "percentage": "-15.4%"
+      },
+      "AUDJPY": {
+        "value": -77.2,
+        "percentage": "-77.2%"
+      },
+      "AUDNZD": {
+        "value": -71.6,
+        "percentage": "-71.6%"
+      },
+      "EURAUD": {
+        "value": 53.7,
+        "percentage": "53.7%"
+      },
+      "EURJPY": {
+        "value": -66.7,
+        "percentage": "-66.7%"
+      },
+      "EURUSD": {
+        "value": 55.6,
+        "percentage": "55.6%"
+      },
+      "GBPJPY": {
+        "value": -22.1,
+        "percentage": "-22.1%"
+      },
+      "GBPUSD": {
+        "value": 76.7,
+        "percentage": "76.7%"
+      },
+      "USDCAD": {
+        "value": -44.4,
+        "percentage": "-44.4%"
+      },
+      "USDJPY": {
+        "value": -82.7,
+        "percentage": "-82.7%"
+      }
+    },
+    "EURNOK": {
+      "AUDCAD": {
+        "value": 41.6,
+        "percentage": "41.6%"
+      },
+      "AUDJPY": {
+        "value": 28.0,
+        "percentage": "28.0%"
+      },
+      "AUDNZD": {
+        "value": 50.8,
+        "percentage": "50.8%"
+      },
+      "EURAUD": {
+        "value": 28.8,
+        "percentage": "28.8%"
+      },
+      "EURJPY": {
+        "value": 50.6,
+        "percentage": "50.6%"
+      },
+      "EURUSD": {
+        "value": 23.1,
+        "percentage": "23.1%"
+      },
+      "GBPJPY": {
+        "value": 18.3,
+        "percentage": "18.3%"
+      },
+      "GBPUSD": {
+        "value": -11.7,
+        "percentage": "-11.7%"
+      },
+      "USDCAD": {
+        "value": 19.3,
+        "percentage": "19.3%"
+      },
+      "USDJPY": {
+        "value": 19.2,
+        "percentage": "19.2%"
+      }
+    },
+    "EURNZD": {
+      "AUDCAD": {
+        "value": 20.1,
+        "percentage": "20.1%"
+      },
+      "AUDJPY": {
+        "value": 33.5,
+        "percentage": "33.5%"
+      },
+      "AUDNZD": {
+        "value": 77.4,
+        "percentage": "77.4%"
+      },
+      "EURAUD": {
+        "value": 37.9,
+        "percentage": "37.9%"
+      },
+      "EURJPY": {
+        "value": 62.0,
+        "percentage": "62.0%"
+      },
+      "EURUSD": {
+        "value": -4.9,
+        "percentage": "-4.9%"
+      },
+      "GBPJPY": {
+        "value": 23.5,
+        "percentage": "23.5%"
+      },
+      "GBPUSD": {
+        "value": -37.3,
+        "percentage": "-37.3%"
+      },
+      "USDCAD": {
+        "value": 50.1,
+        "percentage": "50.1%"
+      },
+      "USDJPY": {
+        "value": 46.2,
+        "percentage": "46.2%"
+      }
+    },
+    "EURPLN": {
+      "AUDCAD": {
+        "value": -13.0,
+        "percentage": "-13.0%"
+      },
+      "AUDJPY": {
+        "value": 18.8,
+        "percentage": "18.8%"
+      },
+      "AUDNZD": {
+        "value": 36.7,
+        "percentage": "36.7%"
+      },
+      "EURAUD": {
+        "value": -40.3,
+        "percentage": "-40.3%"
+      },
+      "EURJPY": {
+        "value": 1.6,
+        "percentage": "1.6%"
+      },
+      "EURUSD": {
+        "value": -66.3,
+        "percentage": "-66.3%"
+      },
+      "GBPJPY": {
+        "value": -34.4,
+        "percentage": "-34.4%"
+      },
+      "GBPUSD": {
+        "value": -66.8,
+        "percentage": "-66.8%"
+      },
+      "USDCAD": {
+        "value": 48.0,
+        "percentage": "48.0%"
+      },
+      "USDJPY": {
+        "value": 43.8,
+        "percentage": "43.8%"
+      }
+    },
+    "EURSEK": {
+      "AUDCAD": {
+        "value": -12.2,
+        "percentage": "-12.2%"
+      },
+      "AUDJPY": {
+        "value": 32.6,
+        "percentage": "32.6%"
+      },
+      "AUDNZD": {
+        "value": 33.3,
+        "percentage": "33.3%"
+      },
+      "EURAUD": {
+        "value": -3.0,
+        "percentage": "-3.0%"
+      },
+      "EURJPY": {
+        "value": 39.2,
+        "percentage": "39.2%"
+      },
+      "EURUSD": {
+        "value": 2.2,
+        "percentage": "2.2%"
+      },
+      "GBPJPY": {
+        "value": -0.9,
+        "percentage": "-0.9%"
+      },
+      "GBPUSD": {
+        "value": -28.0,
+        "percentage": "-28.0%"
+      },
+      "USDCAD": {
+        "value": -15.1,
+        "percentage": "-15.1%"
+      },
+      "USDJPY": {
+        "value": 25.3,
+        "percentage": "25.3%"
+      }
+    },
+    "EURSGD": {
+      "AUDCAD": {
+        "value": 44.6,
+        "percentage": "44.6%"
+      },
+      "AUDJPY": {
+        "value": -0.9,
+        "percentage": "-0.9%"
+      },
+      "AUDNZD": {
+        "value": -2.8,
+        "percentage": "-2.8%"
+      },
+      "EURAUD": {
+        "value": 50.5,
+        "percentage": "50.5%"
+      },
+      "EURJPY": {
+        "value": 25.6,
+        "percentage": "25.6%"
+      },
+      "EURUSD": {
+        "value": 88.8,
+        "percentage": "88.8%"
+      },
+      "GBPJPY": {
+        "value": 11.4,
+        "percentage": "11.4%"
+      },
+      "GBPUSD": {
+        "value": 49.3,
+        "percentage": "49.3%"
+      },
+      "USDCAD": {
+        "value": -49.0,
+        "percentage": "-49.0%"
+      },
+      "USDJPY": {
+        "value": -39.9,
+        "percentage": "-39.9%"
+      }
+    },
+    "EURTRY": {
+      "AUDCAD": {
+        "value": 61.7,
+        "percentage": "61.7%"
+      },
+      "AUDJPY": {
+        "value": 36.1,
+        "percentage": "36.1%"
+      },
+      "AUDNZD": {
+        "value": 55.4,
+        "percentage": "55.4%"
+      },
+      "EURAUD": {
+        "value": 25.6,
+        "percentage": "25.6%"
+      },
+      "EURJPY": {
+        "value": 59.1,
+        "percentage": "59.1%"
+      },
+      "EURUSD": {
+        "value": 36.8,
+        "percentage": "36.8%"
+      },
+      "GBPJPY": {
+        "value": 24.4,
+        "percentage": "24.4%"
+      },
+      "GBPUSD": {
+        "value": -5.3,
+        "percentage": "-5.3%"
+      },
+      "USDCAD": {
+        "value": 14.6,
+        "percentage": "14.6%"
+      },
+      "USDJPY": {
+        "value": 16.9,
+        "percentage": "16.9%"
+      }
+    },
+    "EURUSD": {
+      "AUDCAD": {
+        "value": 32.7,
+        "percentage": "32.7%"
+      },
+      "AUDJPY": {
+        "value": -28.9,
+        "percentage": "-28.9%"
+      },
+      "AUDNZD": {
+        "value": -38.3,
+        "percentage": "-38.3%"
+      },
+      "EURAUD": {
+        "value": 48.3,
+        "percentage": "48.3%"
+      },
+      "EURJPY": {
+        "value": -10.2,
+        "percentage": "-10.2%"
+      },
+      "EURUSD": {
+        "value": 100.0,
+        "percentage": "100.0%"
+      },
+      "GBPJPY": {
+        "value": 2.1,
+        "percentage": "2.1%"
+      },
+      "GBPUSD": {
+        "value": 78.9,
+        "percentage": "78.9%"
+      },
+      "USDCAD": {
+        "value": -74.4,
+        "percentage": "-74.4%"
+      },
+      "USDJPY": {
+        "value": -72.1,
+        "percentage": "-72.1%"
+      }
+    },
+    "EURZAR": {
+      "AUDCAD": {
+        "value": -10.6,
+        "percentage": "-10.6%"
+      },
+      "AUDJPY": {
+        "value": -11.5,
+        "percentage": "-11.5%"
+      },
+      "AUDNZD": {
+        "value": -30.9,
+        "percentage": "-30.9%"
+      },
+      "EURAUD": {
+        "value": -3.0,
+        "percentage": "-3.0%"
+      },
+      "EURJPY": {
+        "value": -17.1,
+        "percentage": "-17.1%"
+      },
+      "EURUSD": {
+        "value": 16.2,
+        "percentage": "16.2%"
+      },
+      "GBPJPY": {
+        "value": -29.9,
+        "percentage": "-29.9%"
+      },
+      "GBPUSD": {
+        "value": 7.8,
+        "percentage": "7.8%"
+      },
+      "USDCAD": {
+        "value": -33.0,
+        "percentage": "-33.0%"
+      },
+      "USDJPY": {
+        "value": -22.0,
+        "percentage": "-22.0%"
+      }
+    },
+    "GBPAUD": {
+      "AUDCAD": {
+        "value": -27.0,
+        "percentage": "-27.0%"
+      },
+      "AUDJPY": {
+        "value": -79.9,
+        "percentage": "-79.9%"
+      },
+      "AUDNZD": {
+        "value": -68.3,
+        "percentage": "-68.3%"
+      },
+      "EURAUD": {
+        "value": 65.3,
+        "percentage": "65.3%"
+      },
+      "EURJPY": {
+        "value": -64.6,
+        "percentage": "-64.6%"
+      },
+      "EURUSD": {
+        "value": 35.3,
+        "percentage": "35.3%"
+      },
+      "GBPJPY": {
+        "value": 10.2,
+        "percentage": "10.2%"
+      },
+      "GBPUSD": {
+        "value": 78.7,
+        "percentage": "78.7%"
+      },
+      "USDCAD": {
+        "value": -16.3,
+        "percentage": "-16.3%"
+      },
+      "USDJPY": {
+        "value": -67.8,
+        "percentage": "-67.8%"
+      }
+    },
+    "GBPCAD": {
+      "AUDCAD": {
+        "value": 19.1,
+        "percentage": "19.1%"
+      },
+      "AUDJPY": {
+        "value": -58.1,
+        "percentage": "-58.1%"
+      },
+      "AUDNZD": {
+        "value": -51.3,
+        "percentage": "-51.3%"
+      },
+      "EURAUD": {
+        "value": 53.7,
+        "percentage": "53.7%"
+      },
+      "EURJPY": {
+        "value": -43.3,
+        "percentage": "-43.3%"
+      },
+      "EURUSD": {
+        "value": 51.0,
+        "percentage": "51.0%"
+      },
+      "GBPJPY": {
+        "value": 31.5,
+        "percentage": "31.5%"
+      },
+      "GBPUSD": {
+        "value": 85.5,
+        "percentage": "85.5%"
+      },
+      "USDCAD": {
+        "value": -13.3,
+        "percentage": "-13.3%"
+      },
+      "USDJPY": {
+        "value": -63.2,
+        "percentage": "-63.2%"
+      }
+    },
+    "GBPCHF": {
+      "AUDCAD": {
+        "value": 1.0,
+        "percentage": "1.0%"
+      },
+      "AUDJPY": {
+        "value": -58.2,
+        "percentage": "-58.2%"
+      },
+      "AUDNZD": {
+        "value": -45.1,
+        "percentage": "-45.1%"
+      },
+      "EURAUD": {
+        "value": 38.9,
+        "percentage": "38.9%"
+      },
+      "EURJPY": {
+        "value": -51.2,
+        "percentage": "-51.2%"
+      },
+      "EURUSD": {
+        "value": 18.9,
+        "percentage": "18.9%"
+      },
+      "GBPJPY": {
+        "value": 26.1,
+        "percentage": "26.1%"
+      },
+      "GBPUSD": {
+        "value": 66.0,
+        "percentage": "66.0%"
+      },
+      "USDCAD": {
+        "value": 5.5,
+        "percentage": "5.5%"
+      },
+      "USDJPY": {
+        "value": -48.2,
+        "percentage": "-48.2%"
+      }
+    },
+    "GBPJPY": {
+      "AUDCAD": {
+        "value": 43.9,
+        "percentage": "43.9%"
+      },
+      "AUDJPY": {
+        "value": 51.5,
+        "percentage": "51.5%"
+      },
+      "AUDNZD": {
+        "value": 30.7,
+        "percentage": "30.7%"
+      },
+      "EURAUD": {
+        "value": -9.7,
+        "percentage": "-9.7%"
+      },
+      "EURJPY": {
+        "value": 58.3,
+        "percentage": "58.3%"
+      },
+      "EURUSD": {
+        "value": 2.1,
+        "percentage": "2.1%"
+      },
+      "GBPJPY": {
+        "value": 100.0,
+        "percentage": "100.0%"
+      },
+      "GBPUSD": {
+        "value": 13.4,
+        "percentage": "13.4%"
+      },
+      "USDCAD": {
+        "value": 21.1,
+        "percentage": "21.1%"
+      },
+      "USDJPY": {
+        "value": 39.4,
+        "percentage": "39.4%"
+      }
+    },
+    "GBPMXN": {
+      "AUDCAD": {
+        "value": -18.6,
+        "percentage": "-18.6%"
+      },
+      "AUDJPY": {
+        "value": -78.5,
+        "percentage": "-78.5%"
+      },
+      "AUDNZD": {
+        "value": -78.8,
+        "percentage": "-78.8%"
       },
       "EURAUD": {
         "value": 41.3,
         "percentage": "41.3%"
       },
       "EURJPY": {
-        "value": 24.0,
-        "percentage": "24.0%"
+        "value": -75.2,
+        "percentage": "-75.2%"
       },
       "EURUSD": {
-        "value": 59.8,
-        "percentage": "59.8%"
+        "value": 39.7,
+        "percentage": "39.7%"
       },
       "GBPJPY": {
-        "value": 46.2,
-        "percentage": "46.2%"
+        "value": -2.4,
+        "percentage": "-2.4%"
       },
       "GBPUSD": {
-        "value": 50.3,
-        "percentage": "50.3%"
+        "value": 82.9,
+        "percentage": "82.9%"
       },
       "USDCAD": {
-        "value": -4.8,
-        "percentage": "-4.8%"
+        "value": -34.6,
+        "percentage": "-34.6%"
       },
       "USDJPY": {
-        "value": -23.0,
-        "percentage": "-23.0%"
+        "value": -78.1,
+        "percentage": "-78.1%"
       }
     },
-    "GBPUSD": {
+    "GBPNOK": {
       "AUDCAD": {
-        "value": 13.3,
-        "percentage": "13.3%"
+        "value": 16.7,
+        "percentage": "16.7%"
       },
       "AUDJPY": {
-        "value": -56.3,
-        "percentage": "-56.3%"
+        "value": -41.3,
+        "percentage": "-41.3%"
       },
       "AUDNZD": {
-        "value": -67.6,
-        "percentage": "-67.6%"
+        "value": -29.7,
+        "percentage": "-29.7%"
       },
       "EURAUD": {
-        "value": 48.9,
-        "percentage": "48.9%"
+        "value": 43.3,
+        "percentage": "43.3%"
       },
       "EURJPY": {
-        "value": -44.4,
-        "percentage": "-44.4%"
+        "value": -27.8,
+        "percentage": "-27.8%"
       },
       "EURUSD": {
-        "value": 77.5,
-        "percentage": "77.5%"
+        "value": 34.1,
+        "percentage": "34.1%"
       },
       "GBPJPY": {
-        "value": 14.9,
-        "percentage": "14.9%"
+        "value": 36.8,
+        "percentage": "36.8%"
       },
       "GBPUSD": {
-        "value": 100.0,
-        "percentage": "100.0%"
+        "value": 65.1,
+        "percentage": "65.1%"
       },
       "USDCAD": {
-        "value": -65.4,
-        "percentage": "-65.4%"
+        "value": -1.6,
+        "percentage": "-1.6%"
       },
       "USDJPY": {
-        "value": -85.2,
-        "percentage": "-85.2%"
+        "value": -42.2,
+        "percentage": "-42.2%"
       }
     },
-    "NOKJPY": {
+    "GBPNZD": {
       "AUDCAD": {
-        "value": 19.2,
-        "percentage": "19.2%"
+        "value": 2.0,
+        "percentage": "2.0%"
       },
       "AUDJPY": {
-        "value": 77.5,
-        "percentage": "77.5%"
+        "value": -30.8,
+        "percentage": "-30.8%"
       },
       "AUDNZD": {
-        "value": 51.6,
-        "percentage": "51.6%"
+        "value": 7.9,
+        "percentage": "7.9%"
       },
       "EURAUD": {
-        "value": -46.2,
-        "percentage": "-46.2%"
+        "value": 59.5,
+        "percentage": "59.5%"
       },
       "EURJPY": {
-        "value": 70.3,
-        "percentage": "70.3%"
+        "value": -6.4,
+        "percentage": "-6.4%"
       },
       "EURUSD": {
-        "value": -29.1,
-        "percentage": "-29.1%"
+        "value": 9.1,
+        "percentage": "9.1%"
       },
       "GBPJPY": {
-        "value": 51.6,
-        "percentage": "51.6%"
+        "value": 45.6,
+        "percentage": "45.6%"
       },
       "GBPUSD": {
+        "value": 36.0,
+        "percentage": "36.0%"
+      },
+      "USDCAD": {
+        "value": 35.5,
+        "percentage": "35.5%"
+      },
+      "USDJPY": {
+        "value": -10.3,
+        "percentage": "-10.3%"
+      }
+    },
+    "GBPSEK": {
+      "AUDCAD": {
+        "value": -29.3,
+        "percentage": "-29.3%"
+      },
+      "AUDJPY": {
+        "value": -40.9,
+        "percentage": "-40.9%"
+      },
+      "AUDNZD": {
         "value": -47.7,
         "percentage": "-47.7%"
-      },
-      "USDCAD": {
-        "value": 23.1,
-        "percentage": "23.1%"
-      },
-      "USDJPY": {
-        "value": 72.4,
-        "percentage": "72.4%"
-      }
-    },
-    "NOKSEK": {
-      "AUDCAD": {
-        "value": -56.2,
-        "percentage": "-56.2%"
-      },
-      "AUDJPY": {
-        "value": -8.7,
-        "percentage": "-8.7%"
-      },
-      "AUDNZD": {
-        "value": -21.3,
-        "percentage": "-21.3%"
-      },
-      "EURAUD": {
-        "value": -25.4,
-        "percentage": "-25.4%"
-      },
-      "EURJPY": {
-        "value": -22.9,
-        "percentage": "-22.9%"
-      },
-      "EURUSD": {
-        "value": -29.5,
-        "percentage": "-29.5%"
-      },
-      "GBPJPY": {
-        "value": -22.7,
-        "percentage": "-22.7%"
-      },
-      "GBPUSD": {
-        "value": -15.9,
-        "percentage": "-15.9%"
-      },
-      "USDCAD": {
-        "value": -21.0,
-        "percentage": "-21.0%"
-      },
-      "USDJPY": {
-        "value": 3.4,
-        "percentage": "3.4%"
-      }
-    },
-    "NZDCAD": {
-      "AUDCAD": {
-        "value": 23.7,
-        "percentage": "23.7%"
-      },
-      "AUDJPY": {
-        "value": -48.2,
-        "percentage": "-48.2%"
-      },
-      "AUDNZD": {
-        "value": -77.8,
-        "percentage": "-77.8%"
       },
       "EURAUD": {
         "value": 17.6,
         "percentage": "17.6%"
       },
       "EURJPY": {
-        "value": -49.4,
-        "percentage": "-49.4%"
+        "value": -41.3,
+        "percentage": "-41.3%"
       },
       "EURUSD": {
-        "value": 60.3,
-        "percentage": "60.3%"
+        "value": 17.1,
+        "percentage": "17.1%"
       },
       "GBPJPY": {
-        "value": -2.6,
-        "percentage": "-2.6%"
+        "value": 20.0,
+        "percentage": "20.0%"
       },
       "GBPUSD": {
-        "value": 81.8,
-        "percentage": "81.8%"
+        "value": 54.4,
+        "percentage": "54.4%"
       },
       "USDCAD": {
-        "value": -56.0,
-        "percentage": "-56.0%"
+        "value": -31.1,
+        "percentage": "-31.1%"
       },
       "USDJPY": {
-        "value": -77.3,
-        "percentage": "-77.3%"
+        "value": -40.1,
+        "percentage": "-40.1%"
+      }
+    },
+    "GBPSGD": {
+      "AUDCAD": {
+        "value": 7.7,
+        "percentage": "7.7%"
+      },
+      "AUDJPY": {
+        "value": -61.4,
+        "percentage": "-61.4%"
+      },
+      "AUDNZD": {
+        "value": -68.2,
+        "percentage": "-68.2%"
+      },
+      "EURAUD": {
+        "value": 46.2,
+        "percentage": "46.2%"
+      },
+      "EURJPY": {
+        "value": -51.8,
+        "percentage": "-51.8%"
+      },
+      "EURUSD": {
+        "value": 62.1,
+        "percentage": "62.1%"
+      },
+      "GBPJPY": {
+        "value": 24.6,
+        "percentage": "24.6%"
+      },
+      "GBPUSD": {
+        "value": 95.9,
+        "percentage": "95.9%"
+      },
+      "USDCAD": {
+        "value": -42.6,
+        "percentage": "-42.6%"
+      },
+      "USDJPY": {
+        "value": -76.2,
+        "percentage": "-76.2%"
+      }
+    },
+    "GBPTRY": {
+      "AUDCAD": {
+        "value": 56.6,
+        "percentage": "56.6%"
+      },
+      "AUDJPY": {
+        "value": -7.2,
+        "percentage": "-7.2%"
+      },
+      "AUDNZD": {
+        "value": 10.5,
+        "percentage": "10.5%"
+      },
+      "EURAUD": {
+        "value": 44.6,
+        "percentage": "44.6%"
+      },
+      "EURJPY": {
+        "value": 15.4,
+        "percentage": "15.4%"
+      },
+      "EURUSD": {
+        "value": 53.2,
+        "percentage": "53.2%"
+      },
+      "GBPJPY": {
+        "value": 43.4,
+        "percentage": "43.4%"
+      },
+      "GBPUSD": {
+        "value": 49.5,
+        "percentage": "49.5%"
+      },
+      "USDCAD": {
+        "value": 3.7,
+        "percentage": "3.7%"
+      },
+      "USDJPY": {
+        "value": -24.0,
+        "percentage": "-24.0%"
+      }
+    },
+    "GBPUSD": {
+      "AUDCAD": {
+        "value": 11.6,
+        "percentage": "11.6%"
+      },
+      "AUDJPY": {
+        "value": -59.6,
+        "percentage": "-59.6%"
+      },
+      "AUDNZD": {
+        "value": -70.3,
+        "percentage": "-70.3%"
+      },
+      "EURAUD": {
+        "value": 45.8,
+        "percentage": "45.8%"
+      },
+      "EURJPY": {
+        "value": -49.7,
+        "percentage": "-49.7%"
+      },
+      "EURUSD": {
+        "value": 78.9,
+        "percentage": "78.9%"
+      },
+      "GBPJPY": {
+        "value": 13.4,
+        "percentage": "13.4%"
+      },
+      "GBPUSD": {
+        "value": 100.0,
+        "percentage": "100.0%"
+      },
+      "USDCAD": {
+        "value": -62.7,
+        "percentage": "-62.7%"
+      },
+      "USDJPY": {
+        "value": -85.8,
+        "percentage": "-85.8%"
+      }
+    },
+    "NOKJPY": {
+      "AUDCAD": {
+        "value": 21.8,
+        "percentage": "21.8%"
+      },
+      "AUDJPY": {
+        "value": 81.0,
+        "percentage": "81.0%"
+      },
+      "AUDNZD": {
+        "value": 51.7,
+        "percentage": "51.7%"
+      },
+      "EURAUD": {
+        "value": -47.3,
+        "percentage": "-47.3%"
+      },
+      "EURJPY": {
+        "value": 74.4,
+        "percentage": "74.4%"
+      },
+      "EURUSD": {
+        "value": -28.4,
+        "percentage": "-28.4%"
+      },
+      "GBPJPY": {
+        "value": 51.6,
+        "percentage": "51.6%"
+      },
+      "GBPUSD": {
+        "value": -47.0,
+        "percentage": "-47.0%"
+      },
+      "USDCAD": {
+        "value": 18.1,
+        "percentage": "18.1%"
+      },
+      "USDJPY": {
+        "value": 71.1,
+        "percentage": "71.1%"
+      }
+    },
+    "NOKSEK": {
+      "AUDCAD": {
+        "value": -47.5,
+        "percentage": "-47.5%"
+      },
+      "AUDJPY": {
+        "value": 3.0,
+        "percentage": "3.0%"
+      },
+      "AUDNZD": {
+        "value": -16.5,
+        "percentage": "-16.5%"
+      },
+      "EURAUD": {
+        "value": -29.0,
+        "percentage": "-29.0%"
+      },
+      "EURJPY": {
+        "value": -11.9,
+        "percentage": "-11.9%"
+      },
+      "EURUSD": {
+        "value": -18.9,
+        "percentage": "-18.9%"
+      },
+      "GBPJPY": {
+        "value": -17.4,
+        "percentage": "-17.4%"
+      },
+      "GBPUSD": {
+        "value": -13.6,
+        "percentage": "-13.6%"
+      },
+      "USDCAD": {
+        "value": -30.6,
+        "percentage": "-30.6%"
+      },
+      "USDJPY": {
+        "value": 4.4,
+        "percentage": "4.4%"
+      }
+    },
+    "NZDCAD": {
+      "AUDCAD": {
+        "value": 23.6,
+        "percentage": "23.6%"
+      },
+      "AUDJPY": {
+        "value": -49.8,
+        "percentage": "-49.8%"
+      },
+      "AUDNZD": {
+        "value": -80.4,
+        "percentage": "-80.4%"
+      },
+      "EURAUD": {
+        "value": 13.9,
+        "percentage": "13.9%"
+      },
+      "EURJPY": {
+        "value": -54.3,
+        "percentage": "-54.3%"
+      },
+      "EURUSD": {
+        "value": 61.7,
+        "percentage": "61.7%"
+      },
+      "GBPJPY": {
+        "value": -4.7,
+        "percentage": "-4.7%"
+      },
+      "GBPUSD": {
+        "value": 81.6,
+        "percentage": "81.6%"
+      },
+      "USDCAD": {
+        "value": -55.7,
+        "percentage": "-55.7%"
+      },
+      "USDJPY": {
+        "value": -77.9,
+        "percentage": "-77.9%"
       }
     },
     "NZDCHF": {
       "AUDCAD": {
-        "value": -14.1,
-        "percentage": "-14.1%"
+        "value": -1.1,
+        "percentage": "-1.1%"
       },
       "AUDJPY": {
-        "value": -58.4,
-        "percentage": "-58.4%"
+        "value": -52.9,
+        "percentage": "-52.9%"
       },
       "AUDNZD": {
-        "value": -73.2,
-        "percentage": "-73.2%"
+        "value": -72.6,
+        "percentage": "-72.6%"
       },
       "EURAUD": {
-        "value": -0.9,
-        "percentage": "-0.9%"
+        "value": -2.2,
+        "percentage": "-2.2%"
       },
       "EURJPY": {
-        "value": -70.5,
-        "percentage": "-70.5%"
+        "value": -66.5,
+        "percentage": "-66.5%"
       },
       "EURUSD": {
-        "value": 5.6,
-        "percentage": "5.6%"
+        "value": 18.2,
+        "percentage": "18.2%"
       },
       "GBPJPY": {
-        "value": -13.9,
-        "percentage": "-13.9%"
+        "value": -8.1,
+        "percentage": "-8.1%"
       },
       "GBPUSD": {
-        "value": 52.1,
-        "percentage": "52.1%"
+        "value": 58.4,
+        "percentage": "58.4%"
       },
       "USDCAD": {
-        "value": -20.2,
-        "percentage": "-20.2%"
+        "value": -27.1,
+        "percentage": "-27.1%"
       },
       "USDJPY": {
-        "value": -56.3,
-        "percentage": "-56.3%"
+        "value": -58.6,
+        "percentage": "-58.6%"
       }
     },
     "NZDJPY": {
       "AUDCAD": {
-        "value": 42.2,
-        "percentage": "42.2%"
+        "value": 37.7,
+        "percentage": "37.7%"
       },
       "AUDJPY": {
-        "value": 79.0,
-        "percentage": "79.0%"
+        "value": 77.8,
+        "percentage": "77.8%"
       },
       "AUDNZD": {
-        "value": 25.1,
-        "percentage": "25.1%"
+        "value": 19.9,
+        "percentage": "19.9%"
       },
       "EURAUD": {
-        "value": -60.8,
-        "percentage": "-60.8%"
+        "value": -65.7,
+        "percentage": "-65.7%"
       },
       "EURJPY": {
-        "value": 65.2,
-        "percentage": "65.2%"
+        "value": 60.8,
+        "percentage": "60.8%"
       },
       "EURUSD": {
-        "value": -1.9,
-        "percentage": "-1.9%"
+        "value": -6.5,
+        "percentage": "-6.5%"
       },
       "GBPJPY": {
-        "value": 54.9,
-        "percentage": "54.9%"
+        "value": 49.0,
+        "percentage": "49.0%"
       },
       "GBPUSD": {
-        "value": -21.4,
-        "percentage": "-21.4%"
+        "value": -22.4,
+        "percentage": "-22.4%"
       },
       "USDCAD": {
-        "value": -10.8,
-        "percentage": "-10.8%"
+        "value": -15.4,
+        "percentage": "-15.4%"
       },
       "USDJPY": {
-        "value": 49.6,
-        "percentage": "49.6%"
+        "value": 46.7,
+        "percentage": "46.7%"
       }
     },
     "NZDUSD": {
       "AUDCAD": {
-        "value": 12.5,
-        "percentage": "12.5%"
+        "value": 10.9,
+        "percentage": "10.9%"
       },
       "AUDJPY": {
-        "value": -43.3,
-        "percentage": "-43.3%"
+        "value": -43.4,
+        "percentage": "-43.4%"
       },
       "AUDNZD": {
-        "value": -75.6,
-        "percentage": "-75.6%"
+        "value": -78.1,
+        "percentage": "-78.1%"
       },
       "EURAUD": {
-        "value": 19.6,
-        "percentage": "19.6%"
+        "value": 11.6,
+        "percentage": "11.6%"
       },
       "EURJPY": {
-        "value": -42.9,
-        "percentage": "-42.9%"
+        "value": -47.8,
+        "percentage": "-47.8%"
       },
       "EURUSD": {
-        "value": 75.9,
-        "percentage": "75.9%"
+        "value": 76.8,
+        "percentage": "76.8%"
       },
       "GBPJPY": {
-        "value": -10.3,
-        "percentage": "-10.3%"
+        "value": -14.2,
+        "percentage": "-14.2%"
       },
       "GBPUSD": {
-        "value": 83.7,
-        "percentage": "83.7%"
+        "value": 82.1,
+        "percentage": "82.1%"
       },
       "USDCAD": {
-        "value": -86.5,
-        "percentage": "-86.5%"
+        "value": -87.0,
+        "percentage": "-87.0%"
       },
       "USDJPY": {
-        "value": -83.0,
-        "percentage": "-83.0%"
+        "value": -83.1,
+        "percentage": "-83.1%"
       }
     },
     "SEKJPY": {
       "AUDCAD": {
-        "value": 61.3,
-        "percentage": "61.3%"
+        "value": 56.8,
+        "percentage": "56.8%"
       },
       "AUDJPY": {
-        "value": 76.0,
-        "percentage": "76.0%"
+        "value": 73.4,
+        "percentage": "73.4%"
       },
       "AUDNZD": {
-        "value": 62.9,
-        "percentage": "62.9%"
+        "value": 61.2,
+        "percentage": "61.2%"
       },
       "EURAUD": {
-        "value": -21.2,
-        "percentage": "-21.2%"
+        "value": -21.8,
+        "percentage": "-21.8%"
       },
       "EURJPY": {
-        "value": 80.7,
-        "percentage": "80.7%"
+        "value": 78.8,
+        "percentage": "78.8%"
       },
       "EURUSD": {
-        "value": -2.2,
-        "percentage": "-2.2%"
+        "value": -11.6,
+        "percentage": "-11.6%"
       },
       "GBPJPY": {
-        "value": 64.5,
-        "percentage": "64.5%"
+        "value": 62.3,
+        "percentage": "62.3%"
       },
       "GBPUSD": {
-        "value": -29.2,
-        "percentage": "-29.2%"
+        "value": -32.8,
+        "percentage": "-32.8%"
       },
       "USDCAD": {
-        "value": 36.4,
-        "percentage": "36.4%"
+        "value": 40.0,
+        "percentage": "40.0%"
       },
       "USDJPY": {
-        "value": 61.4,
-        "percentage": "61.4%"
+        "value": 62.8,
+        "percentage": "62.8%"
       }
     },
     "SGDJPY": {
       "AUDCAD": {
-        "value": 29.8,
-        "percentage": "29.8%"
+        "value": 25.8,
+        "percentage": "25.8%"
       },
       "AUDJPY": {
-        "value": 93.2,
-        "percentage": "93.2%"
+        "value": 92.2,
+        "percentage": "92.2%"
       },
       "AUDNZD": {
-        "value": 81.6,
-        "percentage": "81.6%"
+        "value": 81.1,
+        "percentage": "81.1%"
       },
       "EURAUD": {
-        "value": -49.6,
-        "percentage": "-49.6%"
+        "value": -47.6,
+        "percentage": "-47.6%"
       },
       "EURJPY": {
-        "value": 88.0,
-        "percentage": "88.0%"
+        "value": 88.7,
+        "percentage": "88.7%"
       },
       "EURUSD": {
-        "value": -44.8,
-        "percentage": "-44.8%"
+        "value": -52.5,
+        "percentage": "-52.5%"
       },
       "GBPJPY": {
-        "value": 55.6,
-        "percentage": "55.6%"
+        "value": 54.2,
+        "percentage": "54.2%"
       },
       "GBPUSD": {
-        "value": -70.8,
-        "percentage": "-70.8%"
+        "value": -73.1,
+        "percentage": "-73.1%"
       },
       "USDCAD": {
-        "value": 51.2,
-        "percentage": "51.2%"
+        "value": 52.4,
+        "percentage": "52.4%"
       },
       "USDJPY": {
-        "value": 95.3,
-        "percentage": "95.3%"
+        "value": 95.9,
+        "percentage": "95.9%"
       }
     },
     "USDCAD": {
       "AUDCAD": {
-        "value": 4.0,
-        "percentage": "4.0%"
+        "value": 6.4,
+        "percentage": "6.4%"
       },
       "AUDJPY": {
-        "value": 27.8,
-        "percentage": "27.8%"
+        "value": 26.3,
+        "percentage": "26.3%"
       },
       "AUDNZD": {
-        "value": 54.8,
-        "percentage": "54.8%"
+        "value": 56.9,
+        "percentage": "56.9%"
       },
       "EURAUD": {
-        "value": -18.0,
-        "percentage": "-18.0%"
+        "value": -7.1,
+        "percentage": "-7.1%"
       },
       "EURJPY": {
-        "value": 25.1,
-        "percentage": "25.1%"
+        "value": 29.4,
+        "percentage": "29.4%"
       },
       "EURUSD": {
-        "value": -74.9,
-        "percentage": "-74.9%"
+        "value": -74.4,
+        "percentage": "-74.4%"
       },
       "GBPJPY": {
-        "value": 16.6,
-        "percentage": "16.6%"
+        "value": 21.1,
+        "percentage": "21.1%"
       },
       "GBPUSD": {
-        "value": -65.4,
-        "percentage": "-65.4%"
+        "value": -62.7,
+        "percentage": "-62.7%"
       },
       "USDCAD": {
         "value": 100.0,
         "percentage": "100.0%"
       },
       "USDJPY": {
-        "value": 69.3,
-        "percentage": "69.3%"
+        "value": 68.7,
+        "percentage": "68.7%"
       }
     },
     "USDCHF": {
       "AUDCAD": {
-        "value": -25.6,
-        "percentage": "-25.6%"
+        "value": -14.4,
+        "percentage": "-14.4%"
       },
       "AUDJPY": {
-        "value": 4.3,
-        "percentage": "4.3%"
+        "value": 12.9,
+        "percentage": "12.9%"
       },
       "AUDNZD": {
-        "value": 30.3,
-        "percentage": "30.3%"
+        "value": 41.1,
+        "percentage": "41.1%"
       },
       "EURAUD": {
-        "value": -23.6,
-        "percentage": "-23.6%"
+        "value": -16.4,
+        "percentage": "-16.4%"
       },
       "EURJPY": {
-        "value": -5.8,
-        "percentage": "-5.8%"
+        "value": 7.7,
+        "percentage": "7.7%"
       },
       "EURUSD": {
-        "value": -83.3,
-        "percentage": "-83.3%"
+        "value": -81.5,
+        "percentage": "-81.5%"
       },
       "GBPJPY": {
-        "value": 0.7,
-        "percentage": "0.7%"
+        "value": 11.1,
+        "percentage": "11.1%"
       },
       "GBPUSD": {
-        "value": -56.0,
-        "percentage": "-56.0%"
+        "value": -57.0,
+        "percentage": "-57.0%"
       },
       "USDCAD": {
-        "value": 84.2,
-        "percentage": "84.2%"
+        "value": 87.4,
+        "percentage": "87.4%"
       },
       "USDJPY": {
-        "value": 51.8,
-        "percentage": "51.8%"
+        "value": 58.0,
+        "percentage": "58.0%"
       }
     },
     "USDCNH": {
       "AUDCAD": {
-        "value": -18.7,
-        "percentage": "-18.7%"
+        "value": -18.1,
+        "percentage": "-18.1%"
       },
       "AUDJPY": {
-        "value": 28.1,
-        "percentage": "28.1%"
+        "value": 29.1,
+        "percentage": "29.1%"
       },
       "AUDNZD": {
-        "value": 52.0,
-        "percentage": "52.0%"
+        "value": 54.5,
+        "percentage": "54.5%"
       },
       "EURAUD": {
-        "value": -19.8,
-        "percentage": "-19.8%"
+        "value": -15.0,
+        "percentage": "-15.0%"
       },
       "EURJPY": {
-        "value": 24.0,
-        "percentage": "24.0%"
+        "value": 27.8,
+        "percentage": "27.8%"
       },
       "EURUSD": {
-        "value": -76.1,
-        "percentage": "-76.1%"
+        "value": -78.0,
+        "percentage": "-78.0%"
       },
       "GBPJPY": {
-        "value": 12.7,
-        "percentage": "12.7%"
+        "value": 15.4,
+        "percentage": "15.4%"
       },
       "GBPUSD": {
-        "value": -67.8,
-        "percentage": "-67.8%"
+        "value": -67.4,
+        "percentage": "-67.4%"
       },
       "USDCAD": {
-        "value": 82.3,
-        "percentage": "82.3%"
+        "value": 81.3,
+        "percentage": "81.3%"
       },
       "USDJPY": {
-        "value": 70.1,
-        "percentage": "70.1%"
+        "value": 70.8,
+        "percentage": "70.8%"
       }
     },
     "USDCZK": {
       "AUDCAD": {
-        "value": -60.5,
-        "percentage": "-60.5%"
+        "value": -53.8,
+        "percentage": "-53.8%"
       },
       "AUDJPY": {
-        "value": -8.7,
-        "percentage": "-8.7%"
+        "value": 1.5,
+        "percentage": "1.5%"
       },
       "AUDNZD": {
-        "value": -9.8,
-        "percentage": "-9.8%"
+        "value": -2.9,
+        "percentage": "-2.9%"
       },
       "EURAUD": {
-        "value": -46.5,
-        "percentage": "-46.5%"
+        "value": -46.6,
+        "percentage": "-46.6%"
       },
       "EURJPY": {
-        "value": -33.1,
-        "percentage": "-33.1%"
+        "value": -23.3,
+        "percentage": "-23.3%"
       },
       "EURUSD": {
-        "value": -87.1,
-        "percentage": "-87.1%"
+        "value": -85.7,
+        "percentage": "-85.7%"
       },
       "GBPJPY": {
-        "value": -23.6,
-        "percentage": "-23.6%"
+        "value": -16.9,
+        "percentage": "-16.9%"
       },
       "GBPUSD": {
-        "value": -50.4,
-        "percentage": "-50.4%"
+        "value": -51.8,
+        "percentage": "-51.8%"
       },
       "USDCAD": {
-        "value": 43.7,
-        "percentage": "43.7%"
+        "value": 41.1,
+        "percentage": "41.1%"
       },
       "USDJPY": {
-        "value": 34.8,
-        "percentage": "34.8%"
+        "value": 39.7,
+        "percentage": "39.7%"
       }
     },
     "USDHUF": {
       "AUDCAD": {
-        "value": -60.9,
-        "percentage": "-60.9%"
+        "value": -54.2,
+        "percentage": "-54.2%"
       },
       "AUDJPY": {
-        "value": -3.8,
-        "percentage": "-3.8%"
+        "value": 7.1,
+        "percentage": "7.1%"
       },
       "AUDNZD": {
-        "value": -6.3,
-        "percentage": "-6.3%"
+        "value": -0.1,
+        "percentage": "-0.1%"
       },
       "EURAUD": {
-        "value": -49.5,
-        "percentage": "-49.5%"
+        "value": -51.6,
+        "percentage": "-51.6%"
       },
       "EURJPY": {
-        "value": -28.9,
-        "percentage": "-28.9%"
+        "value": -19.3,
+        "percentage": "-19.3%"
       },
       "EURUSD": {
-        "value": -86.6,
-        "percentage": "-86.6%"
+        "value": -83.9,
+        "percentage": "-83.9%"
       },
       "GBPJPY": {
-        "value": -24.3,
-        "percentage": "-24.3%"
+        "value": -18.9,
+        "percentage": "-18.9%"
       },
       "GBPUSD": {
-        "value": -53.8,
-        "percentage": "-53.8%"
+        "value": -54.6,
+        "percentage": "-54.6%"
       },
       "USDCAD": {
-        "value": 39.9,
-        "percentage": "39.9%"
+        "value": 34.3,
+        "percentage": "34.3%"
       },
       "USDJPY": {
-        "value": 37.6,
-        "percentage": "37.6%"
+        "value": 41.4,
+        "percentage": "41.4%"
       }
     },
     "USDJPY": {
       "AUDCAD": {
-        "value": 12.9,
-        "percentage": "12.9%"
+        "value": 11.7,
+        "percentage": "11.7%"
       },
       "AUDJPY": {
-        "value": 81.9,
-        "percentage": "81.9%"
+        "value": 82.1,
+        "percentage": "82.1%"
       },
       "AUDNZD": {
-        "value": 80.0,
-        "percentage": "80.0%"
+        "value": 80.7,
+        "percentage": "80.7%"
       },
       "EURAUD": {
-        "value": -52.0,
-        "percentage": "-52.0%"
+        "value": -47.9,
+        "percentage": "-47.9%"
       },
       "EURJPY": {
-        "value": 73.4,
-        "percentage": "73.4%"
+        "value": 76.1,
+        "percentage": "76.1%"
       },
       "EURUSD": {
-        "value": -67.4,
-        "percentage": "-67.4%"
+        "value": -72.1,
+        "percentage": "-72.1%"
       },
       "GBPJPY": {
-        "value": 39.0,
-        "percentage": "39.0%"
+        "value": 39.4,
+        "percentage": "39.4%"
       },
       "GBPUSD": {
-        "value": -85.2,
-        "percentage": "-85.2%"
+        "value": -85.8,
+        "percentage": "-85.8%"
       },
       "USDCAD": {
-        "value": 69.3,
-        "percentage": "69.3%"
+        "value": 68.7,
+        "percentage": "68.7%"
       },
       "USDJPY": {
         "value": 100.0,
@@ -2150,128 +2150,128 @@
     },
     "USDMXN": {
       "AUDCAD": {
-        "value": -59.4,
-        "percentage": "-59.4%"
+        "value": -50.7,
+        "percentage": "-50.7%"
       },
       "AUDJPY": {
-        "value": -52.0,
-        "percentage": "-52.0%"
+        "value": -47.9,
+        "percentage": "-47.9%"
       },
       "AUDNZD": {
-        "value": -38.2,
-        "percentage": "-38.2%"
+        "value": -32.2,
+        "percentage": "-32.2%"
       },
       "EURAUD": {
-        "value": -5.7,
-        "percentage": "-5.7%"
+        "value": 2.1,
+        "percentage": "2.1%"
       },
       "EURJPY": {
-        "value": -64.8,
-        "percentage": "-64.8%"
+        "value": -57.6,
+        "percentage": "-57.6%"
       },
       "EURUSD": {
-        "value": -55.9,
-        "percentage": "-55.9%"
+        "value": -50.5,
+        "percentage": "-50.5%"
       },
       "GBPJPY": {
-        "value": -34.3,
-        "percentage": "-34.3%"
+        "value": -25.4,
+        "percentage": "-25.4%"
       },
       "GBPUSD": {
-        "value": -8.9,
-        "percentage": "-8.9%"
+        "value": -6.4,
+        "percentage": "-6.4%"
       },
       "USDCAD": {
-        "value": 30.9,
-        "percentage": "30.9%"
+        "value": 34.2,
+        "percentage": "34.2%"
       },
       "USDJPY": {
-        "value": -10.0,
-        "percentage": "-10.0%"
+        "value": -7.2,
+        "percentage": "-7.2%"
       }
     },
     "USDNOK": {
       "AUDCAD": {
-        "value": 0.6,
-        "percentage": "0.6%"
+        "value": -3.3,
+        "percentage": "-3.3%"
       },
       "AUDJPY": {
-        "value": 49.8,
-        "percentage": "49.8%"
+        "value": 45.9,
+        "percentage": "45.9%"
       },
       "AUDNZD": {
-        "value": 68.9,
-        "percentage": "68.9%"
+        "value": 68.5,
+        "percentage": "68.5%"
       },
       "EURAUD": {
-        "value": -34.4,
-        "percentage": "-34.4%"
+        "value": -26.7,
+        "percentage": "-26.7%"
       },
       "EURJPY": {
-        "value": 43.7,
-        "percentage": "43.7%"
+        "value": 43.1,
+        "percentage": "43.1%"
       },
       "EURUSD": {
-        "value": -72.0,
-        "percentage": "-72.0%"
+        "value": -77.6,
+        "percentage": "-77.6%"
       },
       "GBPJPY": {
-        "value": 10.4,
-        "percentage": "10.4%"
+        "value": 10.7,
+        "percentage": "10.7%"
       },
       "GBPUSD": {
-        "value": -81.1,
-        "percentage": "-81.1%"
+        "value": -80.8,
+        "percentage": "-80.8%"
       },
       "USDCAD": {
-        "value": 78.8,
-        "percentage": "78.8%"
+        "value": 81.1,
+        "percentage": "81.1%"
       },
       "USDJPY": {
-        "value": 80.4,
-        "percentage": "80.4%"
+        "value": 79.8,
+        "percentage": "79.8%"
       }
     },
     "USDPLN": {
       "AUDCAD": {
-        "value": -36.2,
-        "percentage": "-36.2%"
+        "value": -28.9,
+        "percentage": "-28.9%"
       },
       "AUDJPY": {
-        "value": 19.2,
-        "percentage": "19.2%"
+        "value": 28.0,
+        "percentage": "28.0%"
       },
       "AUDNZD": {
-        "value": 32.5,
-        "percentage": "32.5%"
+        "value": 40.3,
+        "percentage": "40.3%"
       },
       "EURAUD": {
-        "value": -52.9,
-        "percentage": "-52.9%"
+        "value": -50.4,
+        "percentage": "-50.4%"
       },
       "EURJPY": {
-        "value": -2.4,
-        "percentage": "-2.4%"
+        "value": 7.9,
+        "percentage": "7.9%"
       },
       "EURUSD": {
-        "value": -97.8,
-        "percentage": "-97.8%"
+        "value": -97.5,
+        "percentage": "-97.5%"
       },
       "GBPJPY": {
-        "value": -18.0,
-        "percentage": "-18.0%"
+        "value": -12.3,
+        "percentage": "-12.3%"
       },
       "GBPUSD": {
-        "value": -79.6,
-        "percentage": "-79.6%"
+        "value": -81.2,
+        "percentage": "-81.2%"
       },
       "USDCAD": {
-        "value": 73.8,
-        "percentage": "73.8%"
+        "value": 71.9,
+        "percentage": "71.9%"
       },
       "USDJPY": {
-        "value": 64.5,
-        "percentage": "64.5%"
+        "value": 68.9,
+        "percentage": "68.9%"
       }
     },
     "USDRUB": {
@@ -2318,502 +2318,502 @@
     },
     "USDSEK": {
       "AUDCAD": {
-        "value": -38.6,
-        "percentage": "-38.6%"
+        "value": -34.7,
+        "percentage": "-34.7%"
       },
       "AUDJPY": {
-        "value": 36.6,
-        "percentage": "36.6%"
+        "value": 42.6,
+        "percentage": "42.6%"
       },
       "AUDNZD": {
-        "value": 44.6,
-        "percentage": "44.6%"
+        "value": 50.1,
+        "percentage": "50.1%"
       },
       "EURAUD": {
-        "value": -46.5,
-        "percentage": "-46.5%"
+        "value": -42.4,
+        "percentage": "-42.4%"
       },
       "EURJPY": {
-        "value": 22.0,
-        "percentage": "22.0%"
+        "value": 30.6,
+        "percentage": "30.6%"
       },
       "EURUSD": {
-        "value": -82.7,
-        "percentage": "-82.7%"
+        "value": -82.2,
+        "percentage": "-82.2%"
       },
       "GBPJPY": {
-        "value": -6.9,
-        "percentage": "-6.9%"
+        "value": -2.2,
+        "percentage": "-2.2%"
       },
       "GBPUSD": {
-        "value": -81.3,
-        "percentage": "-81.3%"
+        "value": -81.6,
+        "percentage": "-81.6%"
       },
       "USDCAD": {
-        "value": 54.3,
-        "percentage": "54.3%"
+        "value": 53.1,
+        "percentage": "53.1%"
       },
       "USDJPY": {
-        "value": 71.9,
-        "percentage": "71.9%"
+        "value": 74.4,
+        "percentage": "74.4%"
       }
     },
     "USDSGD": {
       "AUDCAD": {
-        "value": -19.9,
-        "percentage": "-19.9%"
+        "value": -15.2,
+        "percentage": "-15.2%"
       },
       "AUDJPY": {
-        "value": 43.0,
-        "percentage": "43.0%"
+        "value": 48.0,
+        "percentage": "48.0%"
       },
       "AUDNZD": {
-        "value": 57.0,
-        "percentage": "57.0%"
+        "value": 62.4,
+        "percentage": "62.4%"
       },
       "EURAUD": {
-        "value": -45.4,
-        "percentage": "-45.4%"
+        "value": -39.8,
+        "percentage": "-39.8%"
       },
       "EURJPY": {
-        "value": 30.0,
-        "percentage": "30.0%"
+        "value": 38.3,
+        "percentage": "38.3%"
       },
       "EURUSD": {
-        "value": -92.1,
-        "percentage": "-92.1%"
+        "value": -92.4,
+        "percentage": "-92.4%"
       },
       "GBPJPY": {
-        "value": 0.8,
-        "percentage": "0.8%"
+        "value": 5.7,
+        "percentage": "5.7%"
       },
       "GBPUSD": {
-        "value": -90.5,
-        "percentage": "-90.5%"
+        "value": -90.6,
+        "percentage": "-90.6%"
       },
       "USDCAD": {
-        "value": 84.6,
-        "percentage": "84.6%"
+        "value": 83.5,
+        "percentage": "83.5%"
       },
       "USDJPY": {
-        "value": 84.7,
-        "percentage": "84.7%"
+        "value": 86.9,
+        "percentage": "86.9%"
       }
     },
     "USDTHB": {
       "AUDCAD": {
-        "value": -42.6,
-        "percentage": "-42.6%"
+        "value": -33.4,
+        "percentage": "-33.4%"
       },
       "AUDJPY": {
-        "value": -35.9,
-        "percentage": "-35.9%"
+        "value": -30.7,
+        "percentage": "-30.7%"
       },
       "AUDNZD": {
-        "value": -41.0,
-        "percentage": "-41.0%"
+        "value": -35.2,
+        "percentage": "-35.2%"
       },
       "EURAUD": {
-        "value": -3.9,
-        "percentage": "-3.9%"
+        "value": 3.7,
+        "percentage": "3.7%"
       },
       "EURJPY": {
-        "value": -45.8,
-        "percentage": "-45.8%"
+        "value": -36.8,
+        "percentage": "-36.8%"
       },
       "EURUSD": {
-        "value": -44.9,
-        "percentage": "-44.9%"
+        "value": -39.1,
+        "percentage": "-39.1%"
       },
       "GBPJPY": {
-        "value": -1.3,
-        "percentage": "-1.3%"
+        "value": 9.2,
+        "percentage": "9.2%"
       },
       "GBPUSD": {
-        "value": 2.3,
-        "percentage": "2.3%"
+        "value": 4.9,
+        "percentage": "4.9%"
       },
       "USDCAD": {
-        "value": 28.9,
-        "percentage": "28.9%"
+        "value": 31.7,
+        "percentage": "31.7%"
       },
       "USDJPY": {
-        "value": -2.5,
-        "percentage": "-2.5%"
+        "value": 0.7,
+        "percentage": "0.7%"
       }
     },
     "USDTRY": {
       "AUDCAD": {
-        "value": 40.8,
-        "percentage": "40.8%"
+        "value": 35.1,
+        "percentage": "35.1%"
       },
       "AUDJPY": {
-        "value": 64.6,
-        "percentage": "64.6%"
+        "value": 59.3,
+        "percentage": "59.3%"
       },
       "AUDNZD": {
-        "value": 86.5,
-        "percentage": "86.5%"
+        "value": 85.5,
+        "percentage": "85.5%"
       },
       "EURAUD": {
-        "value": -15.6,
-        "percentage": "-15.6%"
+        "value": -10.7,
+        "percentage": "-10.7%"
       },
       "EURJPY": {
-        "value": 70.8,
-        "percentage": "70.8%"
+        "value": 68.5,
+        "percentage": "68.5%"
+      },
+      "EURUSD": {
+        "value": -39.4,
+        "percentage": "-39.4%"
+      },
+      "GBPJPY": {
+        "value": 23.2,
+        "percentage": "23.2%"
+      },
+      "GBPUSD": {
+        "value": -66.5,
+        "percentage": "-66.5%"
+      },
+      "USDCAD": {
+        "value": 70.5,
+        "percentage": "70.5%"
+      },
+      "USDJPY": {
+        "value": 73.0,
+        "percentage": "73.0%"
+      }
+    },
+    "USDZAR": {
+      "AUDCAD": {
+        "value": -32.6,
+        "percentage": "-32.6%"
+      },
+      "AUDJPY": {
+        "value": 15.3,
+        "percentage": "15.3%"
+      },
+      "AUDNZD": {
+        "value": 9.8,
+        "percentage": "9.8%"
+      },
+      "EURAUD": {
+        "value": -42.5,
+        "percentage": "-42.5%"
+      },
+      "EURJPY": {
+        "value": -4.6,
+        "percentage": "-4.6%"
+      },
+      "EURUSD": {
+        "value": -70.2,
+        "percentage": "-70.2%"
+      },
+      "GBPJPY": {
+        "value": -24.3,
+        "percentage": "-24.3%"
+      },
+      "GBPUSD": {
+        "value": -59.2,
+        "percentage": "-59.2%"
+      },
+      "USDCAD": {
+        "value": 37.5,
+        "percentage": "37.5%"
+      },
+      "USDJPY": {
+        "value": 42.9,
+        "percentage": "42.9%"
+      }
+    },
+    "XAGAUD": {
+      "AUDCAD": {
+        "value": 34.0,
+        "percentage": "34.0%"
+      },
+      "AUDJPY": {
+        "value": 78.8,
+        "percentage": "78.8%"
+      },
+      "AUDNZD": {
+        "value": 84.3,
+        "percentage": "84.3%"
+      },
+      "EURAUD": {
+        "value": -31.2,
+        "percentage": "-31.2%"
+      },
+      "EURJPY": {
+        "value": 81.5,
+        "percentage": "81.5%"
+      },
+      "EURUSD": {
+        "value": -24.1,
+        "percentage": "-24.1%"
+      },
+      "GBPJPY": {
+        "value": 34.1,
+        "percentage": "34.1%"
+      },
+      "GBPUSD": {
+        "value": -59.0,
+        "percentage": "-59.0%"
+      },
+      "USDCAD": {
+        "value": 32.2,
+        "percentage": "32.2%"
+      },
+      "USDJPY": {
+        "value": 71.5,
+        "percentage": "71.5%"
+      }
+    },
+    "XAGEUR": {
+      "AUDCAD": {
+        "value": 36.4,
+        "percentage": "36.4%"
+      },
+      "AUDJPY": {
+        "value": 83.6,
+        "percentage": "83.6%"
+      },
+      "AUDNZD": {
+        "value": 83.5,
+        "percentage": "83.5%"
+      },
+      "EURAUD": {
+        "value": -45.5,
+        "percentage": "-45.5%"
+      },
+      "EURJPY": {
+        "value": 79.9,
+        "percentage": "79.9%"
       },
       "EURUSD": {
         "value": -30.3,
         "percentage": "-30.3%"
       },
       "GBPJPY": {
-        "value": 25.3,
-        "percentage": "25.3%"
+        "value": 33.1,
+        "percentage": "33.1%"
       },
       "GBPUSD": {
-        "value": -64.1,
-        "percentage": "-64.1%"
-      },
-      "USDCAD": {
-        "value": 65.6,
-        "percentage": "65.6%"
-      },
-      "USDJPY": {
-        "value": 72.5,
-        "percentage": "72.5%"
-      }
-    },
-    "USDZAR": {
-      "AUDCAD": {
-        "value": -39.2,
-        "percentage": "-39.2%"
-      },
-      "AUDJPY": {
-        "value": 7.2,
-        "percentage": "7.2%"
-      },
-      "AUDNZD": {
-        "value": 4.4,
-        "percentage": "4.4%"
-      },
-      "EURAUD": {
-        "value": -43.6,
-        "percentage": "-43.6%"
-      },
-      "EURJPY": {
-        "value": -13.1,
-        "percentage": "-13.1%"
-      },
-      "EURUSD": {
-        "value": -72.9,
-        "percentage": "-72.9%"
-      },
-      "GBPJPY": {
-        "value": -28.6,
-        "percentage": "-28.6%"
-      },
-      "GBPUSD": {
-        "value": -58.8,
-        "percentage": "-58.8%"
-      },
-      "USDCAD": {
-        "value": 41.0,
-        "percentage": "41.0%"
-      },
-      "USDJPY": {
-        "value": 40.1,
-        "percentage": "40.1%"
-      }
-    },
-    "XAGAUD": {
-      "AUDCAD": {
-        "value": 36.9,
-        "percentage": "36.9%"
-      },
-      "AUDJPY": {
-        "value": 79.8,
-        "percentage": "79.8%"
-      },
-      "AUDNZD": {
-        "value": 84.7,
-        "percentage": "84.7%"
-      },
-      "EURAUD": {
-        "value": -32.0,
-        "percentage": "-32.0%"
-      },
-      "EURJPY": {
-        "value": 81.0,
-        "percentage": "81.0%"
-      },
-      "EURUSD": {
-        "value": -18.4,
-        "percentage": "-18.4%"
-      },
-      "GBPJPY": {
-        "value": 36.1,
-        "percentage": "36.1%"
-      },
-      "GBPUSD": {
-        "value": -57.1,
-        "percentage": "-57.1%"
+        "value": -62.7,
+        "percentage": "-62.7%"
       },
       "USDCAD": {
         "value": 31.3,
         "percentage": "31.3%"
       },
       "USDJPY": {
-        "value": 71.4,
-        "percentage": "71.4%"
-      }
-    },
-    "XAGEUR": {
-      "AUDCAD": {
-        "value": 38.4,
-        "percentage": "38.4%"
-      },
-      "AUDJPY": {
-        "value": 83.7,
-        "percentage": "83.7%"
-      },
-      "AUDNZD": {
-        "value": 84.2,
-        "percentage": "84.2%"
-      },
-      "EURAUD": {
-        "value": -45.6,
-        "percentage": "-45.6%"
-      },
-      "EURJPY": {
-        "value": 79.2,
-        "percentage": "79.2%"
-      },
-      "EURUSD": {
-        "value": -25.3,
-        "percentage": "-25.3%"
-      },
-      "GBPJPY": {
-        "value": 35.2,
-        "percentage": "35.2%"
-      },
-      "GBPUSD": {
-        "value": -61.1,
-        "percentage": "-61.1%"
-      },
-      "USDCAD": {
-        "value": 32.1,
-        "percentage": "32.1%"
-      },
-      "USDJPY": {
-        "value": 74.7,
-        "percentage": "74.7%"
+        "value": 74.4,
+        "percentage": "74.4%"
       }
     },
     "XAGUSD": {
       "AUDCAD": {
-        "value": 50.7,
-        "percentage": "50.7%"
+        "value": 47.1,
+        "percentage": "47.1%"
       },
       "AUDJPY": {
-        "value": 80.5,
-        "percentage": "80.5%"
+        "value": 79.4,
+        "percentage": "79.4%"
       },
       "AUDNZD": {
-        "value": 78.1,
-        "percentage": "78.1%"
+        "value": 76.6,
+        "percentage": "76.6%"
       },
       "EURAUD": {
-        "value": -31.9,
-        "percentage": "-31.9%"
+        "value": -33.9,
+        "percentage": "-33.9%"
       },
       "EURJPY": {
-        "value": 82.0,
-        "percentage": "82.0%"
+        "value": 81.0,
+        "percentage": "81.0%"
       },
       "EURUSD": {
-        "value": 2.5,
-        "percentage": "2.5%"
+        "value": -3.6,
+        "percentage": "-3.6%"
       },
       "GBPJPY": {
-        "value": 39.1,
-        "percentage": "39.1%"
+        "value": 35.5,
+        "percentage": "35.5%"
       },
       "GBPUSD": {
-        "value": -40.9,
-        "percentage": "-40.9%"
+        "value": -43.4,
+        "percentage": "-43.4%"
       },
       "USDCAD": {
-        "value": 11.6,
-        "percentage": "11.6%"
+        "value": 11.8,
+        "percentage": "11.8%"
       },
       "USDJPY": {
-        "value": 57.9,
-        "percentage": "57.9%"
+        "value": 57.8,
+        "percentage": "57.8%"
       }
     },
     "XAUAUD": {
       "AUDCAD": {
-        "value": -28.1,
-        "percentage": "-28.1%"
+        "value": -20.2,
+        "percentage": "-20.2%"
       },
       "AUDJPY": {
-        "value": 11.3,
-        "percentage": "11.3%"
+        "value": 18.9,
+        "percentage": "18.9%"
       },
       "AUDNZD": {
-        "value": 45.4,
-        "percentage": "45.4%"
+        "value": 53.8,
+        "percentage": "53.8%"
       },
       "EURAUD": {
-        "value": -2.4,
-        "percentage": "-2.4%"
+        "value": 1.0,
+        "percentage": "1.0%"
       },
       "EURJPY": {
-        "value": 13.1,
-        "percentage": "13.1%"
+        "value": 24.7,
+        "percentage": "24.7%"
       },
       "EURUSD": {
-        "value": -42.0,
-        "percentage": "-42.0%"
-      },
-      "GBPJPY": {
-        "value": -27.9,
-        "percentage": "-27.9%"
-      },
-      "GBPUSD": {
-        "value": -56.8,
-        "percentage": "-56.8%"
-      },
-      "USDCAD": {
-        "value": 37.4,
-        "percentage": "37.4%"
-      },
-      "USDJPY": {
-        "value": 37.1,
-        "percentage": "37.1%"
-      }
-    },
-    "XAUEUR": {
-      "AUDCAD": {
-        "value": -18.8,
-        "percentage": "-18.8%"
-      },
-      "AUDJPY": {
-        "value": 29.8,
-        "percentage": "29.8%"
-      },
-      "AUDNZD": {
-        "value": 52.6,
-        "percentage": "52.6%"
-      },
-      "EURAUD": {
-        "value": -35.5,
-        "percentage": "-35.5%"
-      },
-      "EURJPY": {
-        "value": 19.4,
-        "percentage": "19.4%"
-      },
-      "EURUSD": {
-        "value": -56.8,
-        "percentage": "-56.8%"
-      },
-      "GBPJPY": {
-        "value": -22.5,
-        "percentage": "-22.5%"
-      },
-      "GBPUSD": {
-        "value": -69.4,
-        "percentage": "-69.4%"
-      },
-      "USDCAD": {
-        "value": 40.9,
-        "percentage": "40.9%"
-      },
-      "USDJPY": {
-        "value": 51.9,
-        "percentage": "51.9%"
-      }
-    },
-    "XAUGBP": {
-      "AUDCAD": {
-        "value": -4.6,
-        "percentage": "-4.6%"
-      },
-      "AUDJPY": {
-        "value": 48.7,
-        "percentage": "48.7%"
-      },
-      "AUDNZD": {
-        "value": 68.5,
-        "percentage": "68.5%"
-      },
-      "EURAUD": {
-        "value": -33.3,
-        "percentage": "-33.3%"
-      },
-      "EURJPY": {
-        "value": 43.2,
-        "percentage": "43.2%"
-      },
-      "EURUSD": {
-        "value": -45.6,
-        "percentage": "-45.6%"
+        "value": -37.2,
+        "percentage": "-37.2%"
       },
       "GBPJPY": {
         "value": -22.6,
         "percentage": "-22.6%"
       },
       "GBPUSD": {
-        "value": -80.1,
-        "percentage": "-80.1%"
+        "value": -57.3,
+        "percentage": "-57.3%"
       },
       "USDCAD": {
-        "value": 37.4,
-        "percentage": "37.4%"
+        "value": 36.5,
+        "percentage": "36.5%"
       },
       "USDJPY": {
-        "value": 62.0,
-        "percentage": "62.0%"
+        "value": 40.3,
+        "percentage": "40.3%"
+      }
+    },
+    "XAUEUR": {
+      "AUDCAD": {
+        "value": -9.4,
+        "percentage": "-9.4%"
+      },
+      "AUDJPY": {
+        "value": 39.9,
+        "percentage": "39.9%"
+      },
+      "AUDNZD": {
+        "value": 60.8,
+        "percentage": "60.8%"
+      },
+      "EURAUD": {
+        "value": -35.2,
+        "percentage": "-35.2%"
+      },
+      "EURJPY": {
+        "value": 31.5,
+        "percentage": "31.5%"
+      },
+      "EURUSD": {
+        "value": -52.4,
+        "percentage": "-52.4%"
+      },
+      "GBPJPY": {
+        "value": -17.9,
+        "percentage": "-17.9%"
+      },
+      "GBPUSD": {
+        "value": -70.2,
+        "percentage": "-70.2%"
+      },
+      "USDCAD": {
+        "value": 36.7,
+        "percentage": "36.7%"
+      },
+      "USDJPY": {
+        "value": 55.0,
+        "percentage": "55.0%"
+      }
+    },
+    "XAUGBP": {
+      "AUDCAD": {
+        "value": -0.1,
+        "percentage": "-0.1%"
+      },
+      "AUDJPY": {
+        "value": 54.0,
+        "percentage": "54.0%"
+      },
+      "AUDNZD": {
+        "value": 71.8,
+        "percentage": "71.8%"
+      },
+      "EURAUD": {
+        "value": -33.1,
+        "percentage": "-33.1%"
+      },
+      "EURJPY": {
+        "value": 49.9,
+        "percentage": "49.9%"
+      },
+      "EURUSD": {
+        "value": -43.7,
+        "percentage": "-43.7%"
+      },
+      "GBPJPY": {
+        "value": -21.0,
+        "percentage": "-21.0%"
+      },
+      "GBPUSD": {
+        "value": -79.8,
+        "percentage": "-79.8%"
+      },
+      "USDCAD": {
+        "value": 33.2,
+        "percentage": "33.2%"
+      },
+      "USDJPY": {
+        "value": 62.4,
+        "percentage": "62.4%"
       }
     },
     "XAUJPY": {
       "AUDCAD": {
-        "value": 13.0,
-        "percentage": "13.0%"
+        "value": 15.5,
+        "percentage": "15.5%"
       },
       "AUDJPY": {
-        "value": 70.5,
-        "percentage": "70.5%"
+        "value": 73.7,
+        "percentage": "73.7%"
       },
       "AUDNZD": {
-        "value": 81.7,
-        "percentage": "81.7%"
+        "value": 83.6,
+        "percentage": "83.6%"
       },
       "EURAUD": {
-        "value": -37.8,
-        "percentage": "-37.8%"
+        "value": -36.7,
+        "percentage": "-36.7%"
       },
       "EURJPY": {
-        "value": 67.1,
-        "percentage": "67.1%"
+        "value": 72.3,
+        "percentage": "72.3%"
       },
       "EURUSD": {
-        "value": -42.7,
-        "percentage": "-42.7%"
+        "value": -43.2,
+        "percentage": "-43.2%"
       },
       "GBPJPY": {
-        "value": 15.3,
-        "percentage": "15.3%"
+        "value": 16.2,
+        "percentage": "16.2%"
       },
       "GBPUSD": {
-        "value": -75.5,
-        "percentage": "-75.5%"
+        "value": -75.4,
+        "percentage": "-75.4%"
       },
       "USDCAD": {
-        "value": 43.9,
-        "percentage": "43.9%"
+        "value": 40.9,
+        "percentage": "40.9%"
       },
       "USDJPY": {
         "value": 77.7,
@@ -2822,170 +2822,170 @@
     },
     "XAUUSD": {
       "AUDCAD": {
-        "value": 6.5,
-        "percentage": "6.5%"
+        "value": 12.0,
+        "percentage": "12.0%"
       },
       "AUDJPY": {
-        "value": 21.1,
-        "percentage": "21.1%"
+        "value": 25.9,
+        "percentage": "25.9%"
       },
       "AUDNZD": {
-        "value": 40.9,
-        "percentage": "40.9%"
+        "value": 43.0,
+        "percentage": "43.0%"
       },
       "EURAUD": {
-        "value": -3.1,
-        "percentage": "-3.1%"
+        "value": -5.6,
+        "percentage": "-5.6%"
       },
       "EURJPY": {
-        "value": 24.8,
-        "percentage": "24.8%"
+        "value": 29.9,
+        "percentage": "29.9%"
       },
       "EURUSD": {
-        "value": 6.5,
-        "percentage": "6.5%"
+        "value": 11.1,
+        "percentage": "11.1%"
       },
       "GBPJPY": {
-        "value": -19.3,
-        "percentage": "-19.3%"
+        "value": -18.3,
+        "percentage": "-18.3%"
       },
       "GBPUSD": {
-        "value": -25.7,
-        "percentage": "-25.7%"
+        "value": -24.7,
+        "percentage": "-24.7%"
       },
       "USDCAD": {
-        "value": -6.9,
-        "percentage": "-6.9%"
+        "value": -11.1,
+        "percentage": "-11.1%"
       },
       "USDJPY": {
-        "value": 12.6,
-        "percentage": "12.6%"
+        "value": 12.4,
+        "percentage": "12.4%"
       }
     },
     "XPDUSD": {
       "AUDCAD": {
-        "value": 14.3,
-        "percentage": "14.3%"
+        "value": 4.0,
+        "percentage": "4.0%"
       },
       "AUDJPY": {
-        "value": 67.6,
-        "percentage": "67.6%"
+        "value": 65.5,
+        "percentage": "65.5%"
       },
       "AUDNZD": {
-        "value": 46.6,
-        "percentage": "46.6%"
+        "value": 41.8,
+        "percentage": "41.8%"
       },
       "EURAUD": {
-        "value": -46.8,
-        "percentage": "-46.8%"
+        "value": -53.2,
+        "percentage": "-53.2%"
       },
       "EURJPY": {
-        "value": 59.1,
-        "percentage": "59.1%"
+        "value": 53.2,
+        "percentage": "53.2%"
       },
       "EURUSD": {
-        "value": -16.4,
-        "percentage": "-16.4%"
+        "value": -25.7,
+        "percentage": "-25.7%"
       },
       "GBPJPY": {
-        "value": 9.7,
-        "percentage": "9.7%"
+        "value": 1.6,
+        "percentage": "1.6%"
       },
       "GBPUSD": {
-        "value": -52.7,
-        "percentage": "-52.7%"
+        "value": -56.6,
+        "percentage": "-56.6%"
       },
       "USDCAD": {
-        "value": -1.9,
-        "percentage": "-1.9%"
+        "value": -4.5,
+        "percentage": "-4.5%"
       },
       "USDJPY": {
-        "value": 54.0,
-        "percentage": "54.0%"
+        "value": 53.0,
+        "percentage": "53.0%"
       }
     },
     "XPTUSD": {
       "AUDCAD": {
-        "value": 19.9,
-        "percentage": "19.9%"
+        "value": 9.1,
+        "percentage": "9.1%"
       },
       "AUDJPY": {
-        "value": 33.8,
-        "percentage": "33.8%"
+        "value": 29.1,
+        "percentage": "29.1%"
       },
       "AUDNZD": {
-        "value": 2.4,
-        "percentage": "2.4%"
+        "value": -5.7,
+        "percentage": "-5.7%"
       },
       "EURAUD": {
-        "value": -5.1,
-        "percentage": "-5.1%"
+        "value": -13.2,
+        "percentage": "-13.2%"
       },
       "EURJPY": {
-        "value": 38.3,
-        "percentage": "38.3%"
+        "value": 29.1,
+        "percentage": "29.1%"
       },
       "EURUSD": {
-        "value": 46.1,
-        "percentage": "46.1%"
+        "value": 40.9,
+        "percentage": "40.9%"
       },
       "GBPJPY": {
-        "value": 27.5,
-        "percentage": "27.5%"
+        "value": 19.3,
+        "percentage": "19.3%"
       },
       "GBPUSD": {
-        "value": 19.4,
-        "percentage": "19.4%"
+        "value": 18.2,
+        "percentage": "18.2%"
       },
       "USDCAD": {
-        "value": -57.4,
-        "percentage": "-57.4%"
+        "value": -60.5,
+        "percentage": "-60.5%"
       },
       "USDJPY": {
-        "value": -3.9,
-        "percentage": "-3.9%"
+        "value": -7.3,
+        "percentage": "-7.3%"
       }
     },
     "ZARJPY": {
       "AUDCAD": {
-        "value": 45.1,
-        "percentage": "45.1%"
+        "value": 38.8,
+        "percentage": "38.8%"
       },
       "AUDJPY": {
-        "value": 75.6,
-        "percentage": "75.6%"
+        "value": 72.1,
+        "percentage": "72.1%"
       },
       "AUDNZD": {
-        "value": 75.1,
-        "percentage": "75.1%"
+        "value": 74.2,
+        "percentage": "74.2%"
       },
       "EURAUD": {
-        "value": -17.2,
-        "percentage": "-17.2%"
+        "value": -15.8,
+        "percentage": "-15.8%"
       },
       "EURJPY": {
-        "value": 83.2,
-        "percentage": "83.2%"
+        "value": 81.6,
+        "percentage": "81.6%"
       },
       "EURUSD": {
-        "value": -7.3,
-        "percentage": "-7.3%"
+        "value": -17.0,
+        "percentage": "-17.0%"
       },
       "GBPJPY": {
-        "value": 62.8,
-        "percentage": "62.8%"
+        "value": 60.9,
+        "percentage": "60.9%"
       },
       "GBPUSD": {
-        "value": -35.7,
-        "percentage": "-35.7%"
+        "value": -39.2,
+        "percentage": "-39.2%"
       },
       "USDCAD": {
-        "value": 34.4,
-        "percentage": "34.4%"
+        "value": 39.3,
+        "percentage": "39.3%"
       },
       "USDJPY": {
-        "value": 66.1,
-        "percentage": "66.1%"
+        "value": 67.6,
+        "percentage": "67.6%"
       }
     }
   },
@@ -2993,410 +2993,410 @@
     "highest_correlations": [
       {
         "pair": "GBPSGD-GBPUSD",
-        "value": 95.8
+        "value": 95.9
       },
       {
         "pair": "SGDJPY-USDJPY",
-        "value": 95.3
+        "value": 95.9
       },
       {
         "pair": "SGDJPY-AUDJPY",
-        "value": 93.2
-      },
-      {
-        "pair": "AUDJPY-EURJPY",
-        "value": 92.1
-      },
-      {
-        "pair": "EURJPY-AUDJPY",
-        "value": 92.1
+        "value": 92.2
       },
       {
         "pair": "CADJPY-AUDJPY",
-        "value": 91.4
+        "value": 92.0
       },
       {
-        "pair": "CADJPY-USDJPY",
-        "value": 89.9
+        "pair": "AUDJPY-EURJPY",
+        "value": 90.9
+      },
+      {
+        "pair": "EURJPY-AUDJPY",
+        "value": 90.9
       },
       {
         "pair": "EURSGD-EURUSD",
-        "value": 89.7
+        "value": 88.8
       },
       {
-        "pair": "CHFJPY-AUDJPY",
-        "value": 88.4
+        "pair": "CADJPY-USDJPY",
+        "value": 88.7
       },
       {
         "pair": "SGDJPY-EURJPY",
+        "value": 88.7
+      },
+      {
+        "pair": "CHFJPY-AUDJPY",
         "value": 88.0
       }
     ],
     "strongest_negative_correlations": [
       {
         "pair": "USDPLN-EURUSD",
-        "value": -97.8
+        "value": -97.5
       },
       {
         "pair": "USDSGD-EURUSD",
-        "value": -92.1
+        "value": -92.4
       },
       {
         "pair": "USDSGD-GBPUSD",
-        "value": -90.5
-      },
-      {
-        "pair": "USDCZK-EURUSD",
-        "value": -87.1
-      },
-      {
-        "pair": "USDHUF-EURUSD",
-        "value": -86.6
+        "value": -90.6
       },
       {
         "pair": "NZDUSD-USDCAD",
-        "value": -86.5
+        "value": -87.0
       },
       {
         "pair": "GBPUSD-USDJPY",
-        "value": -85.2
+        "value": -85.8
       },
       {
         "pair": "USDJPY-GBPUSD",
-        "value": -85.2
+        "value": -85.8
       },
       {
-        "pair": "USDCHF-EURUSD",
-        "value": -83.3
+        "pair": "USDCZK-EURUSD",
+        "value": -85.7
+      },
+      {
+        "pair": "USDHUF-EURUSD",
+        "value": -83.9
       },
       {
         "pair": "NZDUSD-USDJPY",
-        "value": -83.0
+        "value": -83.1
+      },
+      {
+        "pair": "EURMXN-USDJPY",
+        "value": -82.7
       }
     ],
     "currency_summary": {
       "AUDCAD": {
-        "avg_correlation": 27.233333333333334,
-        "max_correlation": 54.0,
-        "min_correlation": -23.1,
+        "avg_correlation": 23.88888888888889,
+        "max_correlation": 49.3,
+        "min_correlation": -26.9,
         "correlation_count": 9
       },
       "AUDCHF": {
-        "avg_correlation": 10.940000000000001,
-        "max_correlation": 44.8,
-        "min_correlation": -43.3,
+        "avg_correlation": 15.49,
+        "max_correlation": 51.6,
+        "min_correlation": -43.4,
         "correlation_count": 10
       },
       "AUDJPY": {
-        "avg_correlation": 28.299999999999997,
-        "max_correlation": 92.1,
-        "min_correlation": -58.4,
+        "avg_correlation": 25.188888888888886,
+        "max_correlation": 90.9,
+        "min_correlation": -61.9,
         "correlation_count": 9
       },
       "AUDNZD": {
-        "avg_correlation": 26.788888888888888,
-        "max_correlation": 80.6,
-        "min_correlation": -67.6,
+        "avg_correlation": 25.166666666666668,
+        "max_correlation": 80.7,
+        "min_correlation": -70.3,
         "correlation_count": 9
       },
       "AUDSGD": {
-        "avg_correlation": 23.229999999999997,
-        "max_correlation": 76.3,
-        "min_correlation": -49.9,
+        "avg_correlation": 17.240000000000002,
+        "max_correlation": 70.6,
+        "min_correlation": -58.5,
         "correlation_count": 10
       },
       "AUDUSD": {
-        "avg_correlation": 10.91,
-        "max_correlation": 85.2,
-        "min_correlation": -77.7,
+        "avg_correlation": 4.99,
+        "max_correlation": 82.4,
+        "min_correlation": -80.8,
         "correlation_count": 10
       },
       "CADCHF": {
-        "avg_correlation": -18.25,
-        "max_correlation": 39.0,
-        "min_correlation": -63.4,
+        "avg_correlation": -11.71,
+        "max_correlation": 37.3,
+        "min_correlation": -58.7,
         "correlation_count": 10
       },
       "CADJPY": {
-        "avg_correlation": 24.869999999999997,
-        "max_correlation": 91.4,
-        "min_correlation": -72.9,
+        "avg_correlation": 23.07,
+        "max_correlation": 92.0,
+        "min_correlation": -73.8,
         "correlation_count": 10
       },
       "CHFJPY": {
-        "avg_correlation": 30.169999999999998,
-        "max_correlation": 88.4,
-        "min_correlation": -48.0,
+        "avg_correlation": 26.28,
+        "max_correlation": 88.0,
+        "min_correlation": -54.1,
         "correlation_count": 10
       },
       "CHFSGD": {
-        "avg_correlation": 7.110000000000001,
-        "max_correlation": 53.0,
-        "min_correlation": -60.4,
+        "avg_correlation": -0.3399999999999997,
+        "max_correlation": 47.7,
+        "min_correlation": -63.9,
         "correlation_count": 10
       },
       "EURAUD": {
-        "avg_correlation": -12.78888888888889,
-        "max_correlation": 52.4,
-        "min_correlation": -58.4,
+        "avg_correlation": -12.477777777777778,
+        "max_correlation": 48.3,
+        "min_correlation": -61.9,
         "correlation_count": 9
       },
       "EURCAD": {
-        "avg_correlation": 26.98,
-        "max_correlation": 74.1,
-        "min_correlation": -30.9,
+        "avg_correlation": 23.84,
+        "max_correlation": 67.5,
+        "min_correlation": -32.1,
         "correlation_count": 10
       },
       "EURCHF": {
-        "avg_correlation": 9.9,
-        "max_correlation": 42.3,
-        "min_correlation": -24.8,
+        "avg_correlation": 14.24,
+        "max_correlation": 47.1,
+        "min_correlation": -22.5,
         "correlation_count": 10
       },
       "EURCZK": {
-        "avg_correlation": -32.89,
-        "max_correlation": 36.2,
-        "min_correlation": -73.2,
+        "avg_correlation": -30.71,
+        "max_correlation": 39.3,
+        "min_correlation": -72.0,
         "correlation_count": 10
       },
       "EURGBP": {
-        "avg_correlation": 19.619999999999997,
-        "max_correlation": 70.8,
-        "min_correlation": -68.4,
+        "avg_correlation": 16.5,
+        "max_correlation": 69.0,
+        "min_correlation": -71.7,
         "correlation_count": 10
       },
       "EURHUF": {
-        "avg_correlation": -34.05,
-        "max_correlation": 8.9,
-        "min_correlation": -61.3,
+        "avg_correlation": -31.53,
+        "max_correlation": 11.8,
+        "min_correlation": -55.0,
         "correlation_count": 10
       },
       "EURJPY": {
-        "avg_correlation": 35.53333333333333,
-        "max_correlation": 92.1,
-        "min_correlation": -44.4,
+        "avg_correlation": 33.22222222222222,
+        "max_correlation": 90.9,
+        "min_correlation": -49.7,
         "correlation_count": 9
       },
       "EURMXN": {
-        "avg_correlation": -23.080000000000002,
-        "max_correlation": 72.9,
-        "min_correlation": -82.4,
+        "avg_correlation": -19.41,
+        "max_correlation": 76.7,
+        "min_correlation": -82.7,
         "correlation_count": 10
       },
       "EURNOK": {
-        "avg_correlation": 30.54,
-        "max_correlation": 58.2,
-        "min_correlation": -6.5,
+        "avg_correlation": 26.8,
+        "max_correlation": 50.8,
+        "min_correlation": -11.7,
         "correlation_count": 10
       },
       "EURNZD": {
-        "avg_correlation": 32.94,
-        "max_correlation": 79.3,
-        "min_correlation": -35.3,
+        "avg_correlation": 30.85,
+        "max_correlation": 77.4,
+        "min_correlation": -37.3,
         "correlation_count": 10
       },
       "EURPLN": {
-        "avg_correlation": -9.600000000000001,
-        "max_correlation": 55.2,
-        "min_correlation": -69.7,
+        "avg_correlation": -7.1899999999999995,
+        "max_correlation": 48.0,
+        "min_correlation": -66.8,
         "correlation_count": 10
       },
       "EURSEK": {
-        "avg_correlation": 8.67,
-        "max_correlation": 40.1,
-        "min_correlation": -27.1,
+        "avg_correlation": 7.340000000000001,
+        "max_correlation": 39.2,
+        "min_correlation": -28.0,
         "correlation_count": 10
       },
       "EURSGD": {
-        "avg_correlation": 22.18,
-        "max_correlation": 89.7,
-        "min_correlation": -50.3,
+        "avg_correlation": 17.759999999999998,
+        "max_correlation": 88.8,
+        "min_correlation": -49.0,
         "correlation_count": 10
       },
       "EURTRY": {
-        "avg_correlation": 35.32,
-        "max_correlation": 68.2,
-        "min_correlation": -1.7,
+        "avg_correlation": 32.53,
+        "max_correlation": 61.7,
+        "min_correlation": -5.3,
         "correlation_count": 10
       },
       "EURUSD": {
-        "avg_correlation": -1.6111111111111125,
-        "max_correlation": 77.5,
-        "min_correlation": -74.9,
+        "avg_correlation": -6.877777777777776,
+        "max_correlation": 78.9,
+        "min_correlation": -74.4,
         "correlation_count": 9
       },
       "EURZAR": {
-        "avg_correlation": -13.440000000000001,
-        "max_correlation": 13.4,
-        "min_correlation": -30.7,
+        "avg_correlation": -13.4,
+        "max_correlation": 16.2,
+        "min_correlation": -33.0,
         "correlation_count": 10
       },
       "GBPAUD": {
-        "avg_correlation": -16.439999999999998,
-        "max_correlation": 78.4,
-        "min_correlation": -80.1,
+        "avg_correlation": -13.440000000000001,
+        "max_correlation": 78.7,
+        "min_correlation": -79.9,
         "correlation_count": 10
       },
       "GBPCAD": {
-        "avg_correlation": 0.8299999999999997,
-        "max_correlation": 87.2,
-        "min_correlation": -65.4,
+        "avg_correlation": 1.1600000000000006,
+        "max_correlation": 85.5,
+        "min_correlation": -63.2,
         "correlation_count": 10
       },
       "GBPCHF": {
-        "avg_correlation": -9.35,
-        "max_correlation": 62.7,
-        "min_correlation": -60.5,
+        "avg_correlation": -4.630000000000001,
+        "max_correlation": 66.0,
+        "min_correlation": -58.2,
         "correlation_count": 10
       },
       "GBPJPY": {
-        "avg_correlation": 29.488888888888887,
-        "max_correlation": 60.8,
-        "min_correlation": -11.6,
+        "avg_correlation": 27.855555555555554,
+        "max_correlation": 58.3,
+        "min_correlation": -9.7,
         "correlation_count": 9
       },
       "GBPMXN": {
-        "avg_correlation": -23.869999999999997,
-        "max_correlation": 78.4,
-        "min_correlation": -80.5,
+        "avg_correlation": -20.229999999999997,
+        "max_correlation": 82.9,
+        "min_correlation": -78.8,
         "correlation_count": 10
       },
       "GBPNOK": {
-        "avg_correlation": 7.840000000000001,
-        "max_correlation": 67.3,
-        "min_correlation": -42.9,
+        "avg_correlation": 5.339999999999999,
+        "max_correlation": 65.1,
+        "min_correlation": -42.2,
         "correlation_count": 10
       },
       "GBPNZD": {
-        "avg_correlation": 13.66,
-        "max_correlation": 55.3,
-        "min_correlation": -28.5,
+        "avg_correlation": 14.809999999999999,
+        "max_correlation": 59.5,
+        "min_correlation": -30.8,
         "correlation_count": 10
       },
       "GBPSEK": {
-        "avg_correlation": -14.719999999999999,
-        "max_correlation": 52.6,
-        "min_correlation": -49.8,
-        "correlation_count": 10
-      },
-      "GBPSGD": {
-        "avg_correlation": -6.500000000000002,
-        "max_correlation": 95.8,
-        "min_correlation": -76.7,
-        "correlation_count": 10
-      },
-      "GBPTRY": {
-        "avg_correlation": 27.45,
-        "max_correlation": 63.0,
-        "min_correlation": -23.0,
-        "correlation_count": 10
-      },
-      "GBPUSD": {
-        "avg_correlation": -18.255555555555556,
-        "max_correlation": 77.5,
-        "min_correlation": -85.2,
-        "correlation_count": 9
-      },
-      "NOKJPY": {
-        "avg_correlation": 24.27,
-        "max_correlation": 77.5,
+        "avg_correlation": -12.129999999999999,
+        "max_correlation": 54.4,
         "min_correlation": -47.7,
         "correlation_count": 10
       },
+      "GBPSGD": {
+        "avg_correlation": -6.369999999999999,
+        "max_correlation": 95.9,
+        "min_correlation": -76.2,
+        "correlation_count": 10
+      },
+      "GBPTRY": {
+        "avg_correlation": 24.57,
+        "max_correlation": 56.6,
+        "min_correlation": -24.0,
+        "correlation_count": 10
+      },
+      "GBPUSD": {
+        "avg_correlation": -19.822222222222223,
+        "max_correlation": 78.9,
+        "min_correlation": -85.8,
+        "correlation_count": 9
+      },
+      "NOKJPY": {
+        "avg_correlation": 24.7,
+        "max_correlation": 81.0,
+        "min_correlation": -47.3,
+        "correlation_count": 10
+      },
       "NOKSEK": {
-        "avg_correlation": -22.02,
-        "max_correlation": 3.4,
-        "min_correlation": -56.2,
+        "avg_correlation": -17.8,
+        "max_correlation": 4.4,
+        "min_correlation": -47.5,
         "correlation_count": 10
       },
       "NZDCAD": {
-        "avg_correlation": -12.790000000000001,
-        "max_correlation": 81.8,
-        "min_correlation": -77.8,
+        "avg_correlation": -14.2,
+        "max_correlation": 81.6,
+        "min_correlation": -80.4,
         "correlation_count": 10
       },
       "NZDCHF": {
-        "avg_correlation": -24.979999999999997,
-        "max_correlation": 52.1,
-        "min_correlation": -73.2,
+        "avg_correlation": -21.25,
+        "max_correlation": 58.4,
+        "min_correlation": -72.6,
         "correlation_count": 10
       },
       "NZDJPY": {
-        "avg_correlation": 22.110000000000003,
-        "max_correlation": 79.0,
-        "min_correlation": -60.8,
+        "avg_correlation": 18.19,
+        "max_correlation": 77.8,
+        "min_correlation": -65.7,
         "correlation_count": 10
       },
       "NZDUSD": {
-        "avg_correlation": -14.989999999999998,
-        "max_correlation": 83.7,
-        "min_correlation": -86.5,
+        "avg_correlation": -17.22,
+        "max_correlation": 82.1,
+        "min_correlation": -87.0,
         "correlation_count": 10
       },
       "SEKJPY": {
-        "avg_correlation": 39.06,
-        "max_correlation": 80.7,
-        "min_correlation": -29.2,
+        "avg_correlation": 36.910000000000004,
+        "max_correlation": 78.8,
+        "min_correlation": -32.8,
         "correlation_count": 10
       },
       "SGDJPY": {
-        "avg_correlation": 32.95,
-        "max_correlation": 95.3,
-        "min_correlation": -70.8,
+        "avg_correlation": 31.71,
+        "max_correlation": 95.9,
+        "min_correlation": -73.1,
         "correlation_count": 10
       },
       "USDCAD": {
-        "avg_correlation": 4.3666666666666645,
-        "max_correlation": 69.3,
-        "min_correlation": -74.9,
+        "avg_correlation": 7.177777777777777,
+        "max_correlation": 68.7,
+        "min_correlation": -74.4,
         "correlation_count": 9
       },
       "USDCHF": {
-        "avg_correlation": -2.3,
-        "max_correlation": 84.2,
-        "min_correlation": -83.3,
+        "avg_correlation": 4.890000000000001,
+        "max_correlation": 87.4,
+        "min_correlation": -81.5,
         "correlation_count": 10
       },
       "USDCNH": {
-        "avg_correlation": 8.68,
-        "max_correlation": 82.3,
-        "min_correlation": -76.1,
+        "avg_correlation": 10.04,
+        "max_correlation": 81.3,
+        "min_correlation": -78.0,
         "correlation_count": 10
       },
       "USDCZK": {
-        "avg_correlation": -24.119999999999997,
-        "max_correlation": 43.7,
-        "min_correlation": -87.1,
+        "avg_correlation": -19.869999999999997,
+        "max_correlation": 41.1,
+        "min_correlation": -85.7,
         "correlation_count": 10
       },
       "USDHUF": {
-        "avg_correlation": -23.66,
-        "max_correlation": 39.9,
-        "min_correlation": -86.6,
+        "avg_correlation": -19.98,
+        "max_correlation": 41.4,
+        "min_correlation": -83.9,
         "correlation_count": 10
       },
       "USDJPY": {
-        "avg_correlation": 16.87777777777778,
-        "max_correlation": 81.9,
-        "min_correlation": -85.2,
+        "avg_correlation": 16.98888888888889,
+        "max_correlation": 82.1,
+        "min_correlation": -85.8,
         "correlation_count": 9
       },
       "USDMXN": {
-        "avg_correlation": -29.830000000000002,
-        "max_correlation": 30.9,
-        "min_correlation": -64.8,
+        "avg_correlation": -24.16,
+        "max_correlation": 34.2,
+        "min_correlation": -57.6,
         "correlation_count": 10
       },
       "USDNOK": {
-        "avg_correlation": 14.510000000000002,
-        "max_correlation": 80.4,
-        "min_correlation": -81.1,
+        "avg_correlation": 14.069999999999999,
+        "max_correlation": 81.1,
+        "min_correlation": -80.8,
         "correlation_count": 10
       },
       "USDPLN": {
-        "avg_correlation": -9.69,
-        "max_correlation": 73.8,
-        "min_correlation": -97.8,
+        "avg_correlation": -5.329999999999999,
+        "max_correlation": 71.9,
+        "min_correlation": -97.5,
         "correlation_count": 10
       },
       "USDRUB": {
@@ -3406,531 +3406,543 @@
         "correlation_count": 10
       },
       "USDSEK": {
-        "avg_correlation": -2.6599999999999993,
-        "max_correlation": 71.9,
-        "min_correlation": -82.7,
+        "avg_correlation": 0.7700000000000012,
+        "max_correlation": 74.4,
+        "min_correlation": -82.2,
         "correlation_count": 10
       },
       "USDSGD": {
-        "avg_correlation": 5.220000000000001,
-        "max_correlation": 84.7,
-        "min_correlation": -92.1,
+        "avg_correlation": 8.680000000000001,
+        "max_correlation": 86.9,
+        "min_correlation": -92.4,
         "correlation_count": 10
       },
       "USDTHB": {
-        "avg_correlation": -18.669999999999998,
-        "max_correlation": 28.9,
-        "min_correlation": -45.8,
+        "avg_correlation": -12.5,
+        "max_correlation": 31.7,
+        "min_correlation": -39.1,
         "correlation_count": 10
       },
       "USDTRY": {
-        "avg_correlation": 31.609999999999996,
-        "max_correlation": 86.5,
-        "min_correlation": -64.1,
+        "avg_correlation": 29.85,
+        "max_correlation": 85.5,
+        "min_correlation": -66.5,
         "correlation_count": 10
       },
       "USDZAR": {
-        "avg_correlation": -16.35,
-        "max_correlation": 41.0,
-        "min_correlation": -72.9,
+        "avg_correlation": -12.790000000000001,
+        "max_correlation": 42.9,
+        "min_correlation": -70.2,
         "correlation_count": 10
       },
       "XAGAUD": {
-        "avg_correlation": 31.369999999999997,
-        "max_correlation": 84.7,
-        "min_correlation": -57.1,
+        "avg_correlation": 30.21,
+        "max_correlation": 84.3,
+        "min_correlation": -59.0,
         "correlation_count": 10
       },
       "XAGEUR": {
-        "avg_correlation": 29.55,
-        "max_correlation": 84.2,
-        "min_correlation": -61.1,
+        "avg_correlation": 28.369999999999997,
+        "max_correlation": 83.6,
+        "min_correlation": -62.7,
         "correlation_count": 10
       },
       "XAGUSD": {
-        "avg_correlation": 32.96,
-        "max_correlation": 82.0,
-        "min_correlation": -40.9,
+        "avg_correlation": 30.830000000000002,
+        "max_correlation": 81.0,
+        "min_correlation": -43.4,
         "correlation_count": 10
       },
       "XAUAUD": {
-        "avg_correlation": -1.2899999999999998,
-        "max_correlation": 45.4,
-        "min_correlation": -56.8,
+        "avg_correlation": 3.789999999999999,
+        "max_correlation": 53.8,
+        "min_correlation": -57.3,
         "correlation_count": 10
       },
       "XAUEUR": {
-        "avg_correlation": -0.8400000000000005,
-        "max_correlation": 52.6,
-        "min_correlation": -69.4,
+        "avg_correlation": 3.88,
+        "max_correlation": 60.8,
+        "min_correlation": -70.2,
         "correlation_count": 10
       },
       "XAUGBP": {
-        "avg_correlation": 7.360000000000001,
-        "max_correlation": 68.5,
-        "min_correlation": -80.1,
+        "avg_correlation": 9.36,
+        "max_correlation": 71.8,
+        "min_correlation": -79.8,
         "correlation_count": 10
       },
       "XAUJPY": {
-        "avg_correlation": 21.32,
-        "max_correlation": 81.7,
-        "min_correlation": -75.5,
+        "avg_correlation": 22.46,
+        "max_correlation": 83.6,
+        "min_correlation": -75.4,
         "correlation_count": 10
       },
       "XAUUSD": {
-        "avg_correlation": 5.74,
-        "max_correlation": 40.9,
-        "min_correlation": -25.7,
+        "avg_correlation": 7.459999999999999,
+        "max_correlation": 43.0,
+        "min_correlation": -24.7,
         "correlation_count": 10
       },
       "XPDUSD": {
-        "avg_correlation": 13.35,
-        "max_correlation": 67.6,
-        "min_correlation": -52.7,
+        "avg_correlation": 7.909999999999999,
+        "max_correlation": 65.5,
+        "min_correlation": -56.6,
         "correlation_count": 10
       },
       "XPTUSD": {
-        "avg_correlation": 12.1,
-        "max_correlation": 46.1,
-        "min_correlation": -57.4,
+        "avg_correlation": 5.9,
+        "max_correlation": 40.9,
+        "min_correlation": -60.5,
         "correlation_count": 10
       },
       "ZARJPY": {
-        "avg_correlation": 38.209999999999994,
-        "max_correlation": 83.2,
-        "min_correlation": -35.7,
+        "avg_correlation": 36.25,
+        "max_correlation": 81.6,
+        "min_correlation": -39.2,
         "correlation_count": 10
       }
     },
     "correlation_statistics": {
       "total_pairs": 700,
-      "avg_correlation": 5.8748571428571426,
-      "max_correlation": 95.8,
-      "min_correlation": -97.8,
+      "avg_correlation": 6.041142857142858,
+      "max_correlation": 95.9,
+      "min_correlation": -97.5,
       "high_correlation_count": 74,
-      "negative_correlation_count": 42
+      "negative_correlation_count": 45
     }
   },
   "warnings": [
     {
       "type": "NEGATIVE_CORRELATION",
       "pair": "USDPLN-EURUSD",
-      "value": -97.8,
-      "message": "Strong negative correlation (-97.8%) between USDPLN and EURUSD - risk of opposite movements"
+      "value": -97.5,
+      "message": "Strong negative correlation (-97.5%) between USDPLN and EURUSD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "GBPSGD-GBPUSD",
-      "value": 95.8,
-      "message": "High correlation (95.8%) between GBPSGD and GBPUSD - risk of similar movements"
+      "value": 95.9,
+      "message": "High correlation (95.9%) between GBPSGD and GBPUSD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "SGDJPY-USDJPY",
-      "value": 95.3,
-      "message": "High correlation (95.3%) between SGDJPY and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "SGDJPY-AUDJPY",
-      "value": 93.2,
-      "message": "High correlation (93.2%) between SGDJPY and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDJPY-EURJPY",
-      "value": 92.1,
-      "message": "High correlation (92.1%) between AUDJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "EURJPY-AUDJPY",
-      "value": 92.1,
-      "message": "High correlation (92.1%) between EURJPY and AUDJPY - risk of similar movements"
+      "value": 95.9,
+      "message": "High correlation (95.9%) between SGDJPY and USDJPY - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
       "pair": "USDSGD-EURUSD",
-      "value": -92.1,
-      "message": "Strong negative correlation (-92.1%) between USDSGD and EURUSD - risk of opposite movements"
+      "value": -92.4,
+      "message": "Strong negative correlation (-92.4%) between USDSGD and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "SGDJPY-AUDJPY",
+      "value": 92.2,
+      "message": "High correlation (92.2%) between SGDJPY and AUDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "CADJPY-AUDJPY",
-      "value": 91.4,
-      "message": "High correlation (91.4%) between CADJPY and AUDJPY - risk of similar movements"
+      "value": 92.0,
+      "message": "High correlation (92.0%) between CADJPY and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "AUDJPY-EURJPY",
+      "value": 90.9,
+      "message": "High correlation (90.9%) between AUDJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "EURJPY-AUDJPY",
+      "value": 90.9,
+      "message": "High correlation (90.9%) between EURJPY and AUDJPY - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
       "pair": "USDSGD-GBPUSD",
-      "value": -90.5,
-      "message": "Strong negative correlation (-90.5%) between USDSGD and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "CADJPY-USDJPY",
-      "value": 89.9,
-      "message": "High correlation (89.9%) between CADJPY and USDJPY - risk of similar movements"
+      "value": -90.6,
+      "message": "Strong negative correlation (-90.6%) between USDSGD and GBPUSD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "EURSGD-EURUSD",
-      "value": 89.7,
-      "message": "High correlation (89.7%) between EURSGD and EURUSD - risk of similar movements"
+      "value": 88.8,
+      "message": "High correlation (88.8%) between EURSGD and EURUSD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "CHFJPY-AUDJPY",
-      "value": 88.4,
-      "message": "High correlation (88.4%) between CHFJPY and AUDJPY - risk of similar movements"
+      "pair": "CADJPY-USDJPY",
+      "value": 88.7,
+      "message": "High correlation (88.7%) between CADJPY and USDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "SGDJPY-EURJPY",
+      "value": 88.7,
+      "message": "High correlation (88.7%) between SGDJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "CHFJPY-AUDJPY",
       "value": 88.0,
-      "message": "High correlation (88.0%) between SGDJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "CHFJPY-EURJPY",
-      "value": 87.6,
-      "message": "High correlation (87.6%) between CHFJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "GBPCAD-GBPUSD",
-      "value": 87.2,
-      "message": "High correlation (87.2%) between GBPCAD and GBPUSD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDCZK-EURUSD",
-      "value": -87.1,
-      "message": "Strong negative correlation (-87.1%) between USDCZK and EURUSD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDHUF-EURUSD",
-      "value": -86.6,
-      "message": "Strong negative correlation (-86.6%) between USDHUF and EURUSD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDUSD-USDCAD",
-      "value": -86.5,
-      "message": "Strong negative correlation (-86.5%) between NZDUSD and USDCAD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDTRY-AUDNZD",
-      "value": 86.5,
-      "message": "High correlation (86.5%) between USDTRY and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDUSD-EURUSD",
-      "value": 85.2,
-      "message": "High correlation (85.2%) between AUDUSD and EURUSD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPUSD-USDJPY",
-      "value": -85.2,
-      "message": "Strong negative correlation (-85.2%) between GBPUSD and USDJPY - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDJPY-GBPUSD",
-      "value": -85.2,
-      "message": "Strong negative correlation (-85.2%) between USDJPY and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDSGD-USDJPY",
-      "value": 84.7,
-      "message": "High correlation (84.7%) between USDSGD and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGAUD-AUDNZD",
-      "value": 84.7,
-      "message": "High correlation (84.7%) between XAGAUD and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDSGD-USDCAD",
-      "value": 84.6,
-      "message": "High correlation (84.6%) between USDSGD and USDCAD - risk of similar movements"
+      "message": "High correlation (88.0%) between CHFJPY and AUDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "USDCHF-USDCAD",
-      "value": 84.2,
-      "message": "High correlation (84.2%) between USDCHF and USDCAD - risk of similar movements"
+      "value": 87.4,
+      "message": "High correlation (87.4%) between USDCHF and USDCAD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "NZDUSD-USDCAD",
+      "value": -87.0,
+      "message": "Strong negative correlation (-87.0%) between NZDUSD and USDCAD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "XAGEUR-AUDNZD",
-      "value": 84.2,
-      "message": "High correlation (84.2%) between XAGEUR and AUDNZD - risk of similar movements"
+      "pair": "USDSGD-USDJPY",
+      "value": 86.9,
+      "message": "High correlation (86.9%) between USDSGD and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPUSD-USDJPY",
+      "value": -85.8,
+      "message": "Strong negative correlation (-85.8%) between GBPUSD and USDJPY - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDJPY-GBPUSD",
+      "value": -85.8,
+      "message": "Strong negative correlation (-85.8%) between USDJPY and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDCZK-EURUSD",
+      "value": -85.7,
+      "message": "Strong negative correlation (-85.7%) between USDCZK and EURUSD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "NZDUSD-GBPUSD",
-      "value": 83.7,
-      "message": "High correlation (83.7%) between NZDUSD and GBPUSD - risk of similar movements"
+      "pair": "CHFJPY-EURJPY",
+      "value": 85.5,
+      "message": "High correlation (85.5%) between CHFJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "GBPCAD-GBPUSD",
+      "value": 85.5,
+      "message": "High correlation (85.5%) between GBPCAD and GBPUSD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDTRY-AUDNZD",
+      "value": 85.5,
+      "message": "High correlation (85.5%) between USDTRY and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGAUD-AUDNZD",
+      "value": 84.3,
+      "message": "High correlation (84.3%) between XAGAUD and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDHUF-EURUSD",
+      "value": -83.9,
+      "message": "Strong negative correlation (-83.9%) between USDHUF and EURUSD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "XAGEUR-AUDJPY",
-      "value": 83.7,
-      "message": "High correlation (83.7%) between XAGEUR and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDCHF-EURUSD",
-      "value": -83.3,
-      "message": "Strong negative correlation (-83.3%) between USDCHF and EURUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "ZARJPY-EURJPY",
-      "value": 83.2,
-      "message": "High correlation (83.2%) between ZARJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDUSD-USDJPY",
-      "value": -83.0,
-      "message": "Strong negative correlation (-83.0%) between NZDUSD and USDJPY - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDSEK-EURUSD",
-      "value": -82.7,
-      "message": "Strong negative correlation (-82.7%) between USDSEK and EURUSD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "EURMXN-USDJPY",
-      "value": -82.4,
-      "message": "Strong negative correlation (-82.4%) between EURMXN and USDJPY - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDCNH-USDCAD",
-      "value": 82.3,
-      "message": "High correlation (82.3%) between USDCNH and USDCAD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGUSD-EURJPY",
-      "value": 82.0,
-      "message": "High correlation (82.0%) between XAGUSD and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDJPY-USDJPY",
-      "value": 81.9,
-      "message": "High correlation (81.9%) between AUDJPY and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDJPY-AUDJPY",
-      "value": 81.9,
-      "message": "High correlation (81.9%) between USDJPY and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "CADJPY-EURJPY",
-      "value": 81.8,
-      "message": "High correlation (81.8%) between CADJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "NZDCAD-GBPUSD",
-      "value": 81.8,
-      "message": "High correlation (81.8%) between NZDCAD and GBPUSD - risk of similar movements"
+      "value": 83.6,
+      "message": "High correlation (83.6%) between XAGEUR and AUDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "XAUJPY-AUDNZD",
-      "value": 81.7,
-      "message": "High correlation (81.7%) between XAUJPY and AUDNZD - risk of similar movements"
+      "value": 83.6,
+      "message": "High correlation (83.6%) between XAUJPY and AUDNZD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "SGDJPY-AUDNZD",
-      "value": 81.6,
-      "message": "High correlation (81.6%) between SGDJPY and AUDNZD - risk of similar movements"
+      "pair": "USDSGD-USDCAD",
+      "value": 83.5,
+      "message": "High correlation (83.5%) between USDSGD and USDCAD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGEUR-AUDNZD",
+      "value": 83.5,
+      "message": "High correlation (83.5%) between XAGEUR and AUDNZD - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
-      "pair": "USDSEK-GBPUSD",
-      "value": -81.3,
-      "message": "Strong negative correlation (-81.3%) between USDSEK and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDNOK-GBPUSD",
-      "value": -81.1,
-      "message": "Strong negative correlation (-81.1%) between USDNOK and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGAUD-EURJPY",
-      "value": 81.0,
-      "message": "High correlation (81.0%) between XAGAUD and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "SEKJPY-EURJPY",
-      "value": 80.7,
-      "message": "High correlation (80.7%) between SEKJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDNZD-EURJPY",
-      "value": 80.6,
-      "message": "High correlation (80.6%) between AUDNZD and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "EURJPY-AUDNZD",
-      "value": 80.6,
-      "message": "High correlation (80.6%) between EURJPY and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPMXN-AUDNZD",
-      "value": -80.5,
-      "message": "Strong negative correlation (-80.5%) between GBPMXN and AUDNZD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGUSD-AUDJPY",
-      "value": 80.5,
-      "message": "High correlation (80.5%) between XAGUSD and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDNOK-USDJPY",
-      "value": 80.4,
-      "message": "High correlation (80.4%) between USDNOK and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPAUD-AUDJPY",
-      "value": -80.1,
-      "message": "Strong negative correlation (-80.1%) between GBPAUD and AUDJPY - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "XAUGBP-GBPUSD",
-      "value": -80.1,
-      "message": "Strong negative correlation (-80.1%) between XAUGBP and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDNZD-USDJPY",
-      "value": 80.0,
-      "message": "High correlation (80.0%) between AUDNZD and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDJPY-AUDNZD",
-      "value": 80.0,
-      "message": "High correlation (80.0%) between USDJPY and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPMXN-AUDJPY",
-      "value": -79.8,
-      "message": "Strong negative correlation (-79.8%) between GBPMXN and AUDJPY - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGAUD-AUDJPY",
-      "value": 79.8,
-      "message": "High correlation (79.8%) between XAGAUD and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDPLN-GBPUSD",
-      "value": -79.6,
-      "message": "Strong negative correlation (-79.6%) between USDPLN and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "EURNZD-AUDNZD",
-      "value": 79.3,
-      "message": "High correlation (79.3%) between EURNZD and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGEUR-EURJPY",
-      "value": 79.2,
-      "message": "High correlation (79.2%) between XAGEUR and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDJPY-AUDNZD",
-      "value": 79.1,
-      "message": "High correlation (79.1%) between AUDJPY and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDNZD-AUDJPY",
-      "value": 79.1,
-      "message": "High correlation (79.1%) between AUDNZD and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "NZDJPY-AUDJPY",
-      "value": 79.0,
-      "message": "High correlation (79.0%) between NZDJPY and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDNOK-USDCAD",
-      "value": 78.8,
-      "message": "High correlation (78.8%) between USDNOK and USDCAD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "EURMXN-AUDJPY",
-      "value": -78.5,
-      "message": "Strong negative correlation (-78.5%) between EURMXN and AUDJPY - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "GBPAUD-GBPUSD",
-      "value": 78.4,
-      "message": "High correlation (78.4%) between GBPAUD and GBPUSD - risk of similar movements"
+      "pair": "NZDUSD-USDJPY",
+      "value": -83.1,
+      "message": "Strong negative correlation (-83.1%) between NZDUSD and USDJPY - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "GBPMXN-GBPUSD",
-      "value": 78.4,
-      "message": "High correlation (78.4%) between GBPMXN and GBPUSD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGUSD-AUDNZD",
-      "value": 78.1,
-      "message": "High correlation (78.1%) between XAGUSD and AUDNZD - risk of similar movements"
+      "value": 82.9,
+      "message": "High correlation (82.9%) between GBPMXN and GBPUSD - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDCAD-AUDNZD",
-      "value": -77.8,
-      "message": "Strong negative correlation (-77.8%) between NZDCAD and AUDNZD - risk of opposite movements"
+      "pair": "EURMXN-USDJPY",
+      "value": -82.7,
+      "message": "Strong negative correlation (-82.7%) between EURMXN and USDJPY - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "AUDUSD-EURUSD",
+      "value": 82.4,
+      "message": "High correlation (82.4%) between AUDUSD and EURUSD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "CADJPY-EURJPY",
+      "value": 82.3,
+      "message": "High correlation (82.3%) between CADJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDSEK-EURUSD",
+      "value": -82.2,
+      "message": "Strong negative correlation (-82.2%) between USDSEK and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "AUDJPY-USDJPY",
+      "value": 82.1,
+      "message": "High correlation (82.1%) between AUDJPY and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "NZDUSD-GBPUSD",
+      "value": 82.1,
+      "message": "High correlation (82.1%) between NZDUSD and GBPUSD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDJPY-AUDJPY",
+      "value": 82.1,
+      "message": "High correlation (82.1%) between USDJPY and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "NZDCAD-GBPUSD",
+      "value": 81.6,
+      "message": "High correlation (81.6%) between NZDCAD and GBPUSD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDSEK-GBPUSD",
+      "value": -81.6,
+      "message": "Strong negative correlation (-81.6%) between USDSEK and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "ZARJPY-EURJPY",
+      "value": 81.6,
+      "message": "High correlation (81.6%) between ZARJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDCHF-EURUSD",
+      "value": -81.5,
+      "message": "Strong negative correlation (-81.5%) between USDCHF and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGAUD-EURJPY",
+      "value": 81.5,
+      "message": "High correlation (81.5%) between XAGAUD and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDCNH-USDCAD",
+      "value": 81.3,
+      "message": "High correlation (81.3%) between USDCNH and USDCAD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDPLN-GBPUSD",
+      "value": -81.2,
+      "message": "Strong negative correlation (-81.2%) between USDPLN and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "SGDJPY-AUDNZD",
+      "value": 81.1,
+      "message": "High correlation (81.1%) between SGDJPY and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDNOK-USDCAD",
+      "value": 81.1,
+      "message": "High correlation (81.1%) between USDNOK and USDCAD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "NOKJPY-AUDJPY",
+      "value": 81.0,
+      "message": "High correlation (81.0%) between NOKJPY and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGUSD-EURJPY",
+      "value": 81.0,
+      "message": "High correlation (81.0%) between XAGUSD and EURJPY - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
       "pair": "AUDUSD-USDCAD",
-      "value": -77.7,
-      "message": "Strong negative correlation (-77.7%) between AUDUSD and USDCAD - risk of opposite movements"
+      "value": -80.8,
+      "message": "Strong negative correlation (-80.8%) between AUDUSD and USDCAD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDNOK-GBPUSD",
+      "value": -80.8,
+      "message": "Strong negative correlation (-80.8%) between USDNOK and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "AUDNZD-USDJPY",
+      "value": 80.7,
+      "message": "High correlation (80.7%) between AUDNZD and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDJPY-AUDNZD",
+      "value": 80.7,
+      "message": "High correlation (80.7%) between USDJPY and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "NZDCAD-AUDNZD",
+      "value": -80.4,
+      "message": "Strong negative correlation (-80.4%) between NZDCAD and AUDNZD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "AUDNZD-EURJPY",
+      "value": 80.3,
+      "message": "High correlation (80.3%) between AUDNZD and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "EURJPY-AUDNZD",
+      "value": 80.3,
+      "message": "High correlation (80.3%) between EURJPY and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPAUD-AUDJPY",
+      "value": -79.9,
+      "message": "Strong negative correlation (-79.9%) between GBPAUD and AUDJPY - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGEUR-EURJPY",
+      "value": 79.9,
+      "message": "High correlation (79.9%) between XAGEUR and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDNOK-USDJPY",
+      "value": 79.8,
+      "message": "High correlation (79.8%) between USDNOK and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "XAUGBP-GBPUSD",
+      "value": -79.8,
+      "message": "Strong negative correlation (-79.8%) between XAUGBP and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGUSD-AUDJPY",
+      "value": 79.4,
+      "message": "High correlation (79.4%) between XAGUSD and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "EURUSD-GBPUSD",
+      "value": 78.9,
+      "message": "High correlation (78.9%) between EURUSD and GBPUSD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "GBPUSD-EURUSD",
+      "value": 78.9,
+      "message": "High correlation (78.9%) between GBPUSD and EURUSD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPMXN-AUDNZD",
+      "value": -78.8,
+      "message": "Strong negative correlation (-78.8%) between GBPMXN and AUDNZD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "SEKJPY-EURJPY",
+      "value": 78.8,
+      "message": "High correlation (78.8%) between SEKJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGAUD-AUDJPY",
+      "value": 78.8,
+      "message": "High correlation (78.8%) between XAGAUD and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "GBPAUD-GBPUSD",
+      "value": 78.7,
+      "message": "High correlation (78.7%) between GBPAUD and GBPUSD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPMXN-AUDJPY",
+      "value": -78.5,
+      "message": "Strong negative correlation (-78.5%) between GBPMXN and AUDJPY - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPMXN-USDJPY",
+      "value": -78.1,
+      "message": "Strong negative correlation (-78.1%) between GBPMXN and USDJPY - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "NZDUSD-AUDNZD",
+      "value": -78.1,
+      "message": "Strong negative correlation (-78.1%) between NZDUSD and AUDNZD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDCNH-EURUSD",
+      "value": -78.0,
+      "message": "Strong negative correlation (-78.0%) between USDCNH and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "NZDCAD-USDJPY",
+      "value": -77.9,
+      "message": "Strong negative correlation (-77.9%) between NZDCAD and USDJPY - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "NZDJPY-AUDJPY",
+      "value": 77.8,
+      "message": "High correlation (77.8%) between NZDJPY and AUDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
@@ -3940,195 +3952,183 @@
     },
     {
       "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPMXN-USDJPY",
+      "pair": "USDNOK-EURUSD",
       "value": -77.6,
-      "message": "Strong negative correlation (-77.6%) between GBPMXN and USDJPY - risk of opposite movements"
+      "message": "Strong negative correlation (-77.6%) between USDNOK and EURUSD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "EURUSD-GBPUSD",
-      "value": 77.5,
-      "message": "High correlation (77.5%) between EURUSD and GBPUSD - risk of similar movements"
+      "pair": "EURNZD-AUDNZD",
+      "value": 77.4,
+      "message": "High correlation (77.4%) between EURNZD and AUDNZD - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPMXN-EURJPY",
-      "value": -77.5,
-      "message": "Strong negative correlation (-77.5%) between GBPMXN and EURJPY - risk of opposite movements"
+      "pair": "EURMXN-AUDJPY",
+      "value": -77.2,
+      "message": "Strong negative correlation (-77.2%) between EURMXN and AUDJPY - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "GBPUSD-EURUSD",
-      "value": 77.5,
-      "message": "High correlation (77.5%) between GBPUSD and EURUSD - risk of similar movements"
+      "pair": "AUDJPY-AUDNZD",
+      "value": 77.0,
+      "message": "High correlation (77.0%) between AUDJPY and AUDNZD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "NOKJPY-AUDJPY",
-      "value": 77.5,
-      "message": "High correlation (77.5%) between NOKJPY and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDCAD-USDJPY",
-      "value": -77.3,
-      "message": "Strong negative correlation (-77.3%) between NZDCAD and USDJPY - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPSGD-USDJPY",
-      "value": -76.7,
-      "message": "Strong negative correlation (-76.7%) between GBPSGD and USDJPY - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "AUDSGD-AUDCAD",
-      "value": 76.3,
-      "message": "High correlation (76.3%) between AUDSGD and AUDCAD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDCNH-EURUSD",
-      "value": -76.1,
-      "message": "Strong negative correlation (-76.1%) between USDCNH and EURUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "SEKJPY-AUDJPY",
-      "value": 76.0,
-      "message": "High correlation (76.0%) between SEKJPY and AUDJPY - risk of similar movements"
+      "pair": "AUDNZD-AUDJPY",
+      "value": 77.0,
+      "message": "High correlation (77.0%) between AUDNZD and AUDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "NZDUSD-EURUSD",
-      "value": 75.9,
-      "message": "High correlation (75.9%) between NZDUSD and EURUSD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDUSD-AUDNZD",
-      "value": -75.6,
-      "message": "Strong negative correlation (-75.6%) between NZDUSD and AUDNZD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "ZARJPY-AUDJPY",
-      "value": 75.6,
-      "message": "High correlation (75.6%) between ZARJPY and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "XAUJPY-GBPUSD",
-      "value": -75.5,
-      "message": "Strong negative correlation (-75.5%) between XAUJPY and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "ZARJPY-AUDNZD",
-      "value": 75.1,
-      "message": "High correlation (75.1%) between ZARJPY and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "EURUSD-USDCAD",
-      "value": -74.9,
-      "message": "Strong negative correlation (-74.9%) between EURUSD and USDCAD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDCAD-EURUSD",
-      "value": -74.9,
-      "message": "Strong negative correlation (-74.9%) between USDCAD and EURUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAGEUR-USDJPY",
-      "value": 74.7,
-      "message": "High correlation (74.7%) between XAGEUR and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "EURCAD-EURUSD",
-      "value": 74.1,
-      "message": "High correlation (74.1%) between EURCAD and EURUSD - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDPLN-USDCAD",
-      "value": 73.8,
-      "message": "High correlation (73.8%) between USDPLN and USDCAD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "EURMXN-AUDNZD",
-      "value": -73.7,
-      "message": "Strong negative correlation (-73.7%) between EURMXN and AUDNZD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "EURJPY-USDJPY",
-      "value": 73.4,
-      "message": "High correlation (73.4%) between EURJPY and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDJPY-EURJPY",
-      "value": 73.4,
-      "message": "High correlation (73.4%) between USDJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "EURCZK-AUDNZD",
-      "value": -73.2,
-      "message": "Strong negative correlation (-73.2%) between EURCZK and AUDNZD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDCHF-AUDNZD",
-      "value": -73.2,
-      "message": "Strong negative correlation (-73.2%) between NZDCHF and AUDNZD - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "CADJPY-GBPUSD",
-      "value": -72.9,
-      "message": "Strong negative correlation (-72.9%) between CADJPY and GBPUSD - risk of opposite movements"
+      "value": 76.8,
+      "message": "High correlation (76.8%) between NZDUSD and EURUSD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "EURMXN-GBPUSD",
-      "value": 72.9,
-      "message": "High correlation (72.9%) between EURMXN and GBPUSD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "USDZAR-EURUSD",
-      "value": -72.9,
-      "message": "Strong negative correlation (-72.9%) between USDZAR and EURUSD - risk of opposite movements"
+      "value": 76.7,
+      "message": "High correlation (76.7%) between EURMXN and GBPUSD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "CADJPY-AUDNZD",
-      "value": 72.5,
-      "message": "High correlation (72.5%) between CADJPY and AUDNZD - risk of similar movements"
+      "pair": "XAGUSD-AUDNZD",
+      "value": 76.6,
+      "message": "High correlation (76.6%) between XAGUSD and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPSGD-USDJPY",
+      "value": -76.2,
+      "message": "Strong negative correlation (-76.2%) between GBPSGD and USDJPY - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "EURJPY-USDJPY",
+      "value": 76.1,
+      "message": "High correlation (76.1%) between EURJPY and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDJPY-EURJPY",
+      "value": 76.1,
+      "message": "High correlation (76.1%) between USDJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "XAUJPY-GBPUSD",
+      "value": -75.4,
+      "message": "Strong negative correlation (-75.4%) between XAUJPY and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPMXN-EURJPY",
+      "value": -75.2,
+      "message": "Strong negative correlation (-75.2%) between GBPMXN and EURJPY - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "EURUSD-USDCAD",
+      "value": -74.4,
+      "message": "Strong negative correlation (-74.4%) between EURUSD and USDCAD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "NOKJPY-EURJPY",
+      "value": 74.4,
+      "message": "High correlation (74.4%) between NOKJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDCAD-EURUSD",
+      "value": -74.4,
+      "message": "Strong negative correlation (-74.4%) between USDCAD and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDSEK-USDJPY",
+      "value": 74.4,
+      "message": "High correlation (74.4%) between USDSEK and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAGEUR-USDJPY",
+      "value": 74.4,
+      "message": "High correlation (74.4%) between XAGEUR and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "ZARJPY-AUDNZD",
+      "value": 74.2,
+      "message": "High correlation (74.2%) between ZARJPY and AUDNZD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "CADJPY-GBPUSD",
+      "value": -73.8,
+      "message": "Strong negative correlation (-73.8%) between CADJPY and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAUJPY-AUDJPY",
+      "value": 73.7,
+      "message": "High correlation (73.7%) between XAUJPY and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "SEKJPY-AUDJPY",
+      "value": 73.4,
+      "message": "High correlation (73.4%) between SEKJPY and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "SGDJPY-GBPUSD",
+      "value": -73.1,
+      "message": "Strong negative correlation (-73.1%) between SGDJPY and GBPUSD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "USDTRY-USDJPY",
-      "value": 72.5,
-      "message": "High correlation (72.5%) between USDTRY and USDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "NOKJPY-USDJPY",
-      "value": 72.4,
-      "message": "High correlation (72.4%) between NOKJPY and USDJPY - risk of similar movements"
+      "value": 73.0,
+      "message": "High correlation (73.0%) between USDTRY and USDJPY - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
-      "pair": "USDNOK-EURUSD",
+      "pair": "NZDCHF-AUDNZD",
+      "value": -72.6,
+      "message": "Strong negative correlation (-72.6%) between NZDCHF and AUDNZD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAUJPY-EURJPY",
+      "value": 72.3,
+      "message": "High correlation (72.3%) between XAUJPY and EURJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "EURUSD-USDJPY",
+      "value": -72.1,
+      "message": "Strong negative correlation (-72.1%) between EURUSD and USDJPY - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDJPY-EURUSD",
+      "value": -72.1,
+      "message": "Strong negative correlation (-72.1%) between USDJPY and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "ZARJPY-AUDJPY",
+      "value": 72.1,
+      "message": "High correlation (72.1%) between ZARJPY and AUDJPY - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "EURCZK-AUDNZD",
       "value": -72.0,
-      "message": "Strong negative correlation (-72.0%) between USDNOK and EURUSD - risk of opposite movements"
+      "message": "Strong negative correlation (-72.0%) between EURCZK and AUDNZD - risk of opposite movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
@@ -4138,75 +4138,93 @@
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "USDSEK-USDJPY",
+      "pair": "USDPLN-USDCAD",
       "value": 71.9,
-      "message": "High correlation (71.9%) between USDSEK and USDJPY - risk of similar movements"
+      "message": "High correlation (71.9%) between USDPLN and USDCAD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "XAUGBP-AUDNZD",
+      "value": 71.8,
+      "message": "High correlation (71.8%) between XAUGBP and AUDNZD - risk of similar movements"
     },
     {
       "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPAUD-AUDNZD",
+      "pair": "EURGBP-GBPUSD",
       "value": -71.7,
-      "message": "Strong negative correlation (-71.7%) between GBPAUD and AUDNZD - risk of opposite movements"
+      "message": "Strong negative correlation (-71.7%) between EURGBP and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "EURMXN-AUDNZD",
+      "value": -71.6,
+      "message": "Strong negative correlation (-71.6%) between EURMXN and AUDNZD - risk of opposite movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "XAGAUD-USDJPY",
-      "value": 71.4,
-      "message": "High correlation (71.4%) between XAGAUD and USDJPY - risk of similar movements"
+      "value": 71.5,
+      "message": "High correlation (71.5%) between XAGAUD and USDJPY - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
-      "pair": "EURGBP-AUDNZD",
+      "pair": "NOKJPY-USDJPY",
+      "value": 71.1,
+      "message": "High correlation (71.1%) between NOKJPY and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "CADJPY-AUDNZD",
       "value": 70.8,
-      "message": "High correlation (70.8%) between EURGBP and AUDNZD - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "SGDJPY-GBPUSD",
-      "value": -70.8,
-      "message": "Strong negative correlation (-70.8%) between SGDJPY and GBPUSD - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "USDTRY-EURJPY",
-      "value": 70.8,
-      "message": "High correlation (70.8%) between USDTRY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "GBPAUD-USDJPY",
-      "value": -70.5,
-      "message": "Strong negative correlation (-70.5%) between GBPAUD and USDJPY - risk of opposite movements"
-    },
-    {
-      "type": "NEGATIVE_CORRELATION",
-      "pair": "NZDCHF-EURJPY",
-      "value": -70.5,
-      "message": "Strong negative correlation (-70.5%) between NZDCHF and EURJPY - risk of opposite movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "XAUJPY-AUDJPY",
-      "value": 70.5,
-      "message": "High correlation (70.5%) between XAUJPY and AUDJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "NOKJPY-EURJPY",
-      "value": 70.3,
-      "message": "High correlation (70.3%) between NOKJPY and EURJPY - risk of similar movements"
-    },
-    {
-      "type": "HIGH_CORRELATION",
-      "pair": "EURGBP-EURJPY",
-      "value": 70.1,
-      "message": "High correlation (70.1%) between EURGBP and EURJPY - risk of similar movements"
+      "message": "High correlation (70.8%) between CADJPY and AUDNZD - risk of similar movements"
     },
     {
       "type": "HIGH_CORRELATION",
       "pair": "USDCNH-USDJPY",
-      "value": 70.1,
-      "message": "High correlation (70.1%) between USDCNH and USDJPY - risk of similar movements"
+      "value": 70.8,
+      "message": "High correlation (70.8%) between USDCNH and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "AUDSGD-AUDCAD",
+      "value": 70.6,
+      "message": "High correlation (70.6%) between AUDSGD and AUDCAD - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "CHFJPY-USDJPY",
+      "value": 70.5,
+      "message": "High correlation (70.5%) between CHFJPY and USDJPY - risk of similar movements"
+    },
+    {
+      "type": "HIGH_CORRELATION",
+      "pair": "USDTRY-USDCAD",
+      "value": 70.5,
+      "message": "High correlation (70.5%) between USDTRY and USDCAD - risk of similar movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "AUDNZD-GBPUSD",
+      "value": -70.3,
+      "message": "Strong negative correlation (-70.3%) between AUDNZD and GBPUSD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "GBPUSD-AUDNZD",
+      "value": -70.3,
+      "message": "Strong negative correlation (-70.3%) between GBPUSD and AUDNZD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "USDZAR-EURUSD",
+      "value": -70.2,
+      "message": "Strong negative correlation (-70.2%) between USDZAR and EURUSD - risk of opposite movements"
+    },
+    {
+      "type": "NEGATIVE_CORRELATION",
+      "pair": "XAUEUR-GBPUSD",
+      "value": -70.2,
+      "message": "Strong negative correlation (-70.2%) between XAUEUR and GBPUSD - risk of opposite movements"
     }
   ],
   "monitored_pairs_analysis": {
@@ -4214,13 +4232,13 @@
       "high_positive_correlations": [
         {
           "symbol": "EURUSD",
-          "correlation": 85.2
+          "correlation": 82.4
         }
       ],
       "high_negative_correlations": [
         {
           "symbol": "USDCAD",
-          "correlation": -77.7
+          "correlation": -80.8
         }
       ],
       "total_correlations": 10,
@@ -4236,7 +4254,7 @@
       "high_negative_correlations": [
         {
           "symbol": "EURUSD",
-          "correlation": -74.9
+          "correlation": -74.4
         }
       ],
       "total_correlations": 10,
@@ -4250,13 +4268,17 @@
         },
         {
           "symbol": "GBPUSD",
-          "correlation": 77.5
+          "correlation": 78.9
         }
       ],
       "high_negative_correlations": [
         {
           "symbol": "USDCAD",
-          "correlation": -74.9
+          "correlation": -74.4
+        },
+        {
+          "symbol": "USDJPY",
+          "correlation": -72.1
         }
       ],
       "total_correlations": 10,
@@ -4266,7 +4288,7 @@
       "high_positive_correlations": [
         {
           "symbol": "EURUSD",
-          "correlation": 77.5
+          "correlation": 78.9
         },
         {
           "symbol": "GBPUSD",
@@ -4275,8 +4297,12 @@
       ],
       "high_negative_correlations": [
         {
+          "symbol": "AUDNZD",
+          "correlation": -70.3
+        },
+        {
           "symbol": "USDJPY",
-          "correlation": -85.2
+          "correlation": -85.8
         }
       ],
       "total_correlations": 10,
@@ -4297,13 +4323,13 @@
       "high_positive_correlations": [
         {
           "symbol": "USDCAD",
-          "correlation": 84.2
+          "correlation": 87.4
         }
       ],
       "high_negative_correlations": [
         {
           "symbol": "EURUSD",
-          "correlation": -83.3
+          "correlation": -81.5
         }
       ],
       "total_correlations": 10,
@@ -4313,7 +4339,7 @@
       "high_positive_correlations": [
         {
           "symbol": "GBPUSD",
-          "correlation": 87.2
+          "correlation": 85.5
         }
       ],
       "high_negative_correlations": [],
@@ -4324,7 +4350,7 @@
       "high_positive_correlations": [
         {
           "symbol": "AUDJPY",
-          "correlation": 79.1
+          "correlation": 77.0
         },
         {
           "symbol": "AUDNZD",
@@ -4332,32 +4358,37 @@
         },
         {
           "symbol": "EURJPY",
-          "correlation": 80.6
+          "correlation": 80.3
         },
         {
           "symbol": "USDJPY",
-          "correlation": 80.0
+          "correlation": 80.7
         }
       ],
-      "high_negative_correlations": [],
+      "high_negative_correlations": [
+        {
+          "symbol": "GBPUSD",
+          "correlation": -70.3
+        }
+      ],
       "total_correlations": 10,
-      "risk_level": "MEDIUM"
+      "risk_level": "HIGH"
     },
     "NZDCAD": {
       "high_positive_correlations": [
         {
           "symbol": "GBPUSD",
-          "correlation": 81.8
+          "correlation": 81.6
         }
       ],
       "high_negative_correlations": [
         {
           "symbol": "AUDNZD",
-          "correlation": -77.8
+          "correlation": -80.4
         },
         {
           "symbol": "USDJPY",
-          "correlation": -77.3
+          "correlation": -77.9
         }
       ],
       "total_correlations": 10,

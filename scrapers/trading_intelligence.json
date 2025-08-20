@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "generated_at": "2025-08-19T14:20:08.705733",
+    "generated_at": "2025-08-20T17:01:13.673772",
     "version": "2.0",
     "approach": "PREFERENCES_BASED",
-    "valid_until": "2025-08-19T14:50:08.705733",
+    "valid_until": "2025-08-20T17:31:13.673772",
     "data_quality": {
       "overall_score": 1.0,
       "available_sources": [
@@ -19,12 +19,12 @@
   "trading_preferences": {
     "AUDUSD": {
       "pair": "AUDUSD",
-      "timestamp": "2025-08-19T14:20:08.705733",
-      "preferred_direction": "NEUTRAL",
-      "preference_strength": "WEAK",
-      "alternative_direction": "ACCEPTABLE",
-      "directional_confidence": 0.5,
-      "position_size_modifier": 0.544,
+      "timestamp": "2025-08-20T17:01:13.673772",
+      "preferred_direction": "LONG",
+      "preference_strength": "STRONG",
+      "alternative_direction": "CAUTION",
+      "directional_confidence": 0.9,
+      "position_size_modifier": 0.68,
       "max_exposure_pct": 80,
       "risk_adjustment": "CONSERVATIVE",
       "size_adjustment_reason": [
@@ -34,12 +34,12 @@
       "correlated_pairs": [
         {
           "pair": "EURUSD",
-          "correlation": 85.2,
+          "correlation": 82.4,
           "type": "POSITIVE"
         },
         {
           "pair": "USDCAD",
-          "correlation": -77.7,
+          "correlation": -80.8,
           "type": "NEGATIVE"
         }
       ],
@@ -55,23 +55,23 @@
       "contrarian_signal": true,
       "institutional_bias": "BEARISH",
       "cot_strength": 1.0,
-      "overall_opportunity": "POOR",
+      "overall_opportunity": "NORMAL",
       "key_factors": [
-        "Sentiment: 58% Long, 42% Short",
+        "Sentiment: 81% Long, 19% Short",
         "Correlation risk: MEDIUM",
         "Events: 6 high, 14 medium impact",
         "COT: Extreme bearish positioning (-51.3%)"
       ],
-      "trading_notes": "Overall opportunity: POOR (score: 29.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.54x normal | ⚠️ Contrarian signal: Extreme COT positioning suggests potential reversal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.705733"
+      "trading_notes": "Overall opportunity: NORMAL (score: 59.5/100) | Preferred direction: LONG (STRONG) | Position size: 0.68x normal | ⚠️ Contrarian signal: Extreme COT positioning suggests potential reversal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
+      "last_updated": "2025-08-20T17:01:13.673772"
     },
     "USDCAD": {
       "pair": "USDCAD",
-      "timestamp": "2025-08-19T14:20:08.705733",
-      "preferred_direction": "NEUTRAL",
+      "timestamp": "2025-08-20T17:01:13.673772",
+      "preferred_direction": "SHORT",
       "preference_strength": "WEAK",
-      "alternative_direction": "AVOID",
-      "directional_confidence": 0.5,
+      "alternative_direction": "CAUTION",
+      "directional_confidence": 0.9,
       "position_size_modifier": 0.544,
       "max_exposure_pct": 80,
       "risk_adjustment": "CONSERVATIVE",
@@ -82,7 +82,7 @@
       "correlated_pairs": [
         {
           "pair": "EURUSD",
-          "correlation": -74.9,
+          "correlation": -74.4,
           "type": "NEGATIVE"
         },
         {
@@ -105,20 +105,20 @@
       "cot_strength": 0.8148000000000001,
       "overall_opportunity": "POOR",
       "key_factors": [
-        "Sentiment: 35% Long, 65% Short",
+        "Sentiment: 23% Long, 77% Short",
         "Correlation risk: MEDIUM",
         "Events: 6 high, 14 medium impact",
         "COT: Extreme bearish positioning (-40.7%)"
       ],
-      "trading_notes": "Overall opportunity: POOR (score: 29.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.54x normal | ⚠️ Contrarian signal: Extreme COT positioning suggests potential reversal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.706738"
+      "trading_notes": "Overall opportunity: POOR (score: 39.5/100) | Preferred direction: SHORT (WEAK) | Position size: 0.54x normal | ⚠️ Contrarian signal: Extreme COT positioning suggests potential reversal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
+      "last_updated": "2025-08-20T17:01:13.673772"
     },
     "XAUUSD": {
       "pair": "XAUUSD",
-      "timestamp": "2025-08-19T14:20:08.706738",
+      "timestamp": "2025-08-20T17:01:13.674772",
       "preferred_direction": "NEUTRAL",
       "preference_strength": "WEAK",
-      "alternative_direction": "AVOID",
+      "alternative_direction": "ACCEPTABLE",
       "directional_confidence": 0.5,
       "position_size_modifier": 0.6400000000000001,
       "max_exposure_pct": 100,
@@ -140,27 +140,27 @@
       "cot_strength": 1.0,
       "overall_opportunity": "POOR",
       "key_factors": [
-        "Sentiment: 64% Long, 36% Short",
+        "Sentiment: 54% Long, 46% Short",
         "Events: 3 high, 10 medium impact",
         "COT: Extreme bullish positioning (51.4%)"
       ],
       "trading_notes": "Overall opportunity: POOR (score: 35.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.64x normal | ⚠️ Contrarian signal: Extreme COT positioning suggests potential reversal | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.706738"
+      "last_updated": "2025-08-20T17:01:13.674772"
     },
     "EURUSD": {
       "pair": "EURUSD",
-      "timestamp": "2025-08-19T14:20:08.706738",
-      "preferred_direction": "SHORT",
-      "preference_strength": "MODERATE",
-      "alternative_direction": "ACCEPTABLE",
-      "directional_confidence": 0.8400000000000001,
-      "position_size_modifier": 0.68,
-      "max_exposure_pct": 80,
+      "timestamp": "2025-08-20T17:01:13.674772",
+      "preferred_direction": "NEUTRAL",
+      "preference_strength": "WEAK",
+      "alternative_direction": "AVOID",
+      "directional_confidence": 0.5,
+      "position_size_modifier": 0.5,
+      "max_exposure_pct": 60,
       "risk_adjustment": "CONSERVATIVE",
       "size_adjustment_reason": [
-        "High correlation with 3 pairs"
+        "High correlation with 4 pairs"
       ],
-      "correlation_risk_level": "MEDIUM",
+      "correlation_risk_level": "HIGH",
       "correlated_pairs": [
         {
           "pair": "EURUSD",
@@ -169,17 +169,22 @@
         },
         {
           "pair": "GBPUSD",
-          "correlation": 77.5,
+          "correlation": 78.9,
           "type": "POSITIVE"
         },
         {
           "pair": "USDCAD",
-          "correlation": -74.9,
+          "correlation": -74.4,
+          "type": "NEGATIVE"
+        },
+        {
+          "pair": "USDJPY",
+          "correlation": -72.1,
           "type": "NEGATIVE"
         }
       ],
-      "diversification_score": 60,
-      "correlation_impact": "MODERATE",
+      "diversification_score": 30,
+      "correlation_impact": "SIGNIFICANT",
       "event_risk_hours": 24,
       "optimal_entry_window": "AFTER_EVENTS",
       "hold_duration_guidance": "SHORT",
@@ -190,33 +195,38 @@
       "contrarian_signal": false,
       "institutional_bias": "NEUTRAL",
       "cot_strength": 0.2798,
-      "overall_opportunity": "NORMAL",
+      "overall_opportunity": "POOR",
       "key_factors": [
-        "Sentiment: 33% Long, 67% Short",
-        "Correlation risk: MEDIUM",
+        "Sentiment: 38% Long, 62% Short",
+        "Correlation risk: HIGH",
         "Events: 4 high, 13 medium impact"
       ],
-      "trading_notes": "Overall opportunity: NORMAL (score: 58.0/100) | Preferred direction: SHORT (MODERATE) | Position size: 0.68x normal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.706738"
+      "trading_notes": "Overall opportunity: POOR (score: 33.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.50x normal | 📊 HIGH correlation risk - consider diversification | ⏰ 24h until high-impact events",
+      "last_updated": "2025-08-20T17:01:13.674772"
     },
     "GBPUSD": {
       "pair": "GBPUSD",
-      "timestamp": "2025-08-19T14:20:08.706738",
+      "timestamp": "2025-08-20T17:01:13.674772",
       "preferred_direction": "NEUTRAL",
       "preference_strength": "WEAK",
       "alternative_direction": "AVOID",
       "directional_confidence": 0.5,
-      "position_size_modifier": 0.68,
-      "max_exposure_pct": 80,
+      "position_size_modifier": 0.5599999999999999,
+      "max_exposure_pct": 60,
       "risk_adjustment": "CONSERVATIVE",
       "size_adjustment_reason": [
-        "High correlation with 3 pairs"
+        "High correlation with 4 pairs"
       ],
-      "correlation_risk_level": "MEDIUM",
+      "correlation_risk_level": "HIGH",
       "correlated_pairs": [
         {
+          "pair": "AUDNZD",
+          "correlation": -70.3,
+          "type": "NEGATIVE"
+        },
+        {
           "pair": "EURUSD",
-          "correlation": 77.5,
+          "correlation": 78.9,
           "type": "POSITIVE"
         },
         {
@@ -226,12 +236,12 @@
         },
         {
           "pair": "USDJPY",
-          "correlation": -85.2,
+          "correlation": -85.8,
           "type": "NEGATIVE"
         }
       ],
-      "diversification_score": 60,
-      "correlation_impact": "MODERATE",
+      "diversification_score": 30,
+      "correlation_impact": "SIGNIFICANT",
       "event_risk_hours": 24,
       "optimal_entry_window": "AFTER_EVENTS",
       "hold_duration_guidance": "SHORT",
@@ -244,20 +254,20 @@
       "cot_strength": 0.3618,
       "overall_opportunity": "NORMAL",
       "key_factors": [
-        "Sentiment: 37% Long, 63% Short",
-        "Correlation risk: MEDIUM",
+        "Sentiment: 40% Long, 60% Short",
+        "Correlation risk: HIGH",
         "Events: 4 high, 12 medium impact",
         "COT: Bearish positioning (-18.1%)"
       ],
-      "trading_notes": "Overall opportunity: NORMAL (score: 49.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.68x normal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.706738"
+      "trading_notes": "Overall opportunity: NORMAL (score: 43.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.56x normal | 📊 HIGH correlation risk - consider diversification | ⏰ 24h until high-impact events",
+      "last_updated": "2025-08-20T17:01:13.674772"
     },
     "AUDCAD": {
       "pair": "AUDCAD",
-      "timestamp": "2025-08-19T14:20:08.707252",
+      "timestamp": "2025-08-20T17:01:13.674772",
       "preferred_direction": "NEUTRAL",
       "preference_strength": "WEAK",
-      "alternative_direction": "ACCEPTABLE",
+      "alternative_direction": "AVOID",
       "directional_confidence": 0.5,
       "position_size_modifier": 0.8,
       "max_exposure_pct": 100,
@@ -287,16 +297,16 @@
       "cot_strength": 0.0,
       "overall_opportunity": "NORMAL",
       "key_factors": [
-        "Sentiment: 45% Long, 55% Short",
+        "Sentiment: 62% Long, 38% Short",
         "Correlation risk: LOW",
         "Events: 6 high, 8 medium impact"
       ],
       "trading_notes": "Overall opportunity: NORMAL (score: 45.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.80x normal | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "last_updated": "2025-08-20T17:01:13.674772"
     },
     "USDCHF": {
       "pair": "USDCHF",
-      "timestamp": "2025-08-19T14:20:08.707252",
+      "timestamp": "2025-08-20T17:01:13.674772",
       "preferred_direction": "LONG",
       "preference_strength": "STRONG",
       "alternative_direction": "CAUTION",
@@ -311,12 +321,12 @@
       "correlated_pairs": [
         {
           "pair": "EURUSD",
-          "correlation": -83.3,
+          "correlation": -81.5,
           "type": "NEGATIVE"
         },
         {
           "pair": "USDCAD",
-          "correlation": 84.2,
+          "correlation": 87.4,
           "type": "POSITIVE"
         }
       ],
@@ -340,11 +350,11 @@
         "COT: Bearish positioning (-34.9%)"
       ],
       "trading_notes": "Overall opportunity: GOOD (score: 79.5/100) | Preferred direction: LONG (STRONG) | Position size: 0.75x normal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "last_updated": "2025-08-20T17:01:13.674772"
     },
     "GBPCAD": {
       "pair": "GBPCAD",
-      "timestamp": "2025-08-19T14:20:08.707252",
+      "timestamp": "2025-08-20T17:01:13.675773",
       "preferred_direction": "SHORT",
       "preference_strength": "STRONG",
       "alternative_direction": "CAUTION",
@@ -359,7 +369,7 @@
       "correlated_pairs": [
         {
           "pair": "GBPUSD",
-          "correlation": 87.2,
+          "correlation": 85.5,
           "type": "POSITIVE"
         }
       ],
@@ -377,16 +387,16 @@
       "cot_strength": 0.0,
       "overall_opportunity": "GOOD",
       "key_factors": [
-        "Sentiment: 11% Long, 89% Short",
+        "Sentiment: 9% Long, 91% Short",
         "Correlation risk: LOW",
         "Events: 4 high, 6 medium impact"
       ],
       "trading_notes": "Overall opportunity: GOOD (score: 75.5/100) | Preferred direction: SHORT (STRONG) | Position size: 0.88x normal | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "last_updated": "2025-08-20T17:01:13.675773"
     },
     "AUDNZD": {
       "pair": "AUDNZD",
-      "timestamp": "2025-08-19T14:20:08.707252",
+      "timestamp": "2025-08-20T17:01:13.675773",
       "preferred_direction": "SHORT",
       "preference_strength": "STRONG",
       "alternative_direction": "CAUTION",
@@ -395,13 +405,13 @@
       "max_exposure_pct": 60,
       "risk_adjustment": "CONSERVATIVE",
       "size_adjustment_reason": [
-        "High correlation with 4 pairs"
+        "High correlation with 5 pairs"
       ],
       "correlation_risk_level": "HIGH",
       "correlated_pairs": [
         {
           "pair": "AUDJPY",
-          "correlation": 79.1,
+          "correlation": 77.0,
           "type": "POSITIVE"
         },
         {
@@ -411,12 +421,17 @@
         },
         {
           "pair": "EURJPY",
-          "correlation": 80.6,
+          "correlation": 80.3,
           "type": "POSITIVE"
         },
         {
+          "pair": "GBPUSD",
+          "correlation": -70.3,
+          "type": "NEGATIVE"
+        },
+        {
           "pair": "USDJPY",
-          "correlation": 80.0,
+          "correlation": 80.7,
           "type": "POSITIVE"
         }
       ],
@@ -434,21 +449,21 @@
       "cot_strength": 0.0,
       "overall_opportunity": "NORMAL",
       "key_factors": [
-        "Sentiment: 22% Long, 78% Short",
+        "Sentiment: 9% Long, 91% Short",
         "Correlation risk: HIGH",
         "Events: 3 high, 7 medium impact"
       ],
       "trading_notes": "Overall opportunity: NORMAL (score: 63.5/100) | Preferred direction: SHORT (STRONG) | Position size: 0.56x normal | 📊 HIGH correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "last_updated": "2025-08-20T17:01:13.675773"
     },
     "NZDCAD": {
       "pair": "NZDCAD",
-      "timestamp": "2025-08-19T14:20:08.707252",
-      "preferred_direction": "NEUTRAL",
-      "preference_strength": "WEAK",
-      "alternative_direction": "ACCEPTABLE",
-      "directional_confidence": 0.5,
-      "position_size_modifier": 0.544,
+      "timestamp": "2025-08-20T17:01:13.676773",
+      "preferred_direction": "LONG",
+      "preference_strength": "STRONG",
+      "alternative_direction": "CAUTION",
+      "directional_confidence": 0.9,
+      "position_size_modifier": 0.7480000000000001,
       "max_exposure_pct": 80,
       "risk_adjustment": "CONSERVATIVE",
       "size_adjustment_reason": [
@@ -458,17 +473,17 @@
       "correlated_pairs": [
         {
           "pair": "AUDNZD",
-          "correlation": -77.8,
+          "correlation": -80.4,
           "type": "NEGATIVE"
         },
         {
           "pair": "GBPUSD",
-          "correlation": 81.8,
+          "correlation": 81.6,
           "type": "POSITIVE"
         },
         {
           "pair": "USDJPY",
-          "correlation": -77.3,
+          "correlation": -77.9,
           "type": "NEGATIVE"
         }
       ],
@@ -484,18 +499,18 @@
       "contrarian_signal": false,
       "institutional_bias": "NEUTRAL",
       "cot_strength": 0.0,
-      "overall_opportunity": "POOR",
+      "overall_opportunity": "GOOD",
       "key_factors": [
-        "Sentiment: 53% Long, 47% Short",
+        "Sentiment: 83% Long, 17% Short",
         "Correlation risk: MEDIUM",
         "Events: 3 high, 7 medium impact"
       ],
-      "trading_notes": "Overall opportunity: POOR (score: 39.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.54x normal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "trading_notes": "Overall opportunity: GOOD (score: 69.5/100) | Preferred direction: LONG (STRONG) | Position size: 0.75x normal | 📊 MEDIUM correlation risk - consider diversification | ⏰ 24h until high-impact events",
+      "last_updated": "2025-08-20T17:01:13.676773"
     },
     "US500": {
       "pair": "US500",
-      "timestamp": "2025-08-19T14:20:08.707252",
+      "timestamp": "2025-08-20T17:01:13.676773",
       "preferred_direction": "NEUTRAL",
       "preference_strength": "WEAK",
       "alternative_direction": "ACCEPTABLE",
@@ -523,11 +538,11 @@
         "Events: 3 high, 10 medium impact"
       ],
       "trading_notes": "Overall opportunity: NORMAL (score: 45.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.80x normal | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "last_updated": "2025-08-20T17:01:13.676773"
     },
     "BTCUSD": {
       "pair": "BTCUSD",
-      "timestamp": "2025-08-19T14:20:08.707252",
+      "timestamp": "2025-08-20T17:01:13.676773",
       "preferred_direction": "NEUTRAL",
       "preference_strength": "WEAK",
       "alternative_direction": "ACCEPTABLE",
@@ -555,313 +570,306 @@
         "Events: 3 high, 10 medium impact"
       ],
       "trading_notes": "Overall opportunity: NORMAL (score: 45.5/100) | Preferred direction: NEUTRAL (WEAK) | Position size: 0.80x normal | ⏰ 24h until high-impact events",
-      "last_updated": "2025-08-19T14:20:08.707252"
+      "last_updated": "2025-08-20T17:01:13.676773"
     }
   },
   "market_intelligence": {
-    "timestamp": "2025-08-19T14:20:08.707252",
+    "timestamp": "2025-08-20T17:01:13.676773",
     "market_regime": "TRENDING",
     "volatility_environment": "HIGH",
-    "directional_bias": "RISK_OFF",
+    "directional_bias": "NEUTRAL",
     "correlation_environment": "HIGH",
     "event_density": "HIGH",
     "recommended_approach": "DEFENSIVE",
     "key_themes": [
-      "Risk-off sentiment dominant",
       "High correlation environment - reduced diversification",
       "12 high-impact events this week"
     ],
     "overall_confidence": 0.75
   },
   "correlation_awareness": {
-    "timestamp": "2025-08-19T14:20:08.707252",
+    "timestamp": "2025-08-20T17:01:13.676773",
     "correlation_clusters": [
       [
         {
           "pair": "GBPSGD-GBPUSD",
-          "correlation": 95.8
+          "correlation": 95.9
         }
       ],
       [
         {
           "pair": "SGDJPY-USDJPY",
-          "correlation": 95.3
+          "correlation": 95.9
         }
       ],
       [
         {
           "pair": "SGDJPY-AUDJPY",
-          "correlation": 93.2
-        }
-      ],
-      [
-        {
-          "pair": "AUDJPY-EURJPY",
-          "correlation": 92.1
-        }
-      ],
-      [
-        {
-          "pair": "EURJPY-AUDJPY",
-          "correlation": 92.1
+          "correlation": 92.2
         }
       ],
       [
         {
           "pair": "CADJPY-AUDJPY",
-          "correlation": 91.4
+          "correlation": 92.0
         }
       ],
       [
         {
-          "pair": "CADJPY-USDJPY",
-          "correlation": 89.9
+          "pair": "AUDJPY-EURJPY",
+          "correlation": 90.9
+        }
+      ],
+      [
+        {
+          "pair": "EURJPY-AUDJPY",
+          "correlation": 90.9
         }
       ],
       [
         {
           "pair": "EURSGD-EURUSD",
-          "correlation": 89.7
+          "correlation": 88.8
         }
       ],
       [
         {
-          "pair": "CHFJPY-AUDJPY",
-          "correlation": 88.4
+          "pair": "CADJPY-USDJPY",
+          "correlation": 88.7
         }
       ],
       [
         {
           "pair": "SGDJPY-EURJPY",
+          "correlation": 88.7
+        }
+      ],
+      [
+        {
+          "pair": "CHFJPY-AUDJPY",
           "correlation": 88.0
         }
       ],
       [
         {
-          "pair": "CHFJPY-EURJPY",
-          "correlation": 87.6
-        }
-      ],
-      [
-        {
-          "pair": "GBPCAD-GBPUSD",
-          "correlation": 87.2
-        }
-      ],
-      [
-        {
-          "pair": "USDTRY-AUDNZD",
-          "correlation": 86.5
-        }
-      ],
-      [
-        {
-          "pair": "AUDUSD-EURUSD",
-          "correlation": 85.2
+          "pair": "USDCHF-USDCAD",
+          "correlation": 87.4
         }
       ],
       [
         {
           "pair": "USDSGD-USDJPY",
-          "correlation": 84.7
+          "correlation": 86.9
+        }
+      ],
+      [
+        {
+          "pair": "CHFJPY-EURJPY",
+          "correlation": 85.5
+        }
+      ],
+      [
+        {
+          "pair": "GBPCAD-GBPUSD",
+          "correlation": 85.5
+        }
+      ],
+      [
+        {
+          "pair": "USDTRY-AUDNZD",
+          "correlation": 85.5
         }
       ],
       [
         {
           "pair": "XAGAUD-AUDNZD",
-          "correlation": 84.7
-        }
-      ],
-      [
-        {
-          "pair": "USDSGD-USDCAD",
-          "correlation": 84.6
-        }
-      ],
-      [
-        {
-          "pair": "USDCHF-USDCAD",
-          "correlation": 84.2
-        }
-      ],
-      [
-        {
-          "pair": "XAGEUR-AUDNZD",
-          "correlation": 84.2
-        }
-      ],
-      [
-        {
-          "pair": "NZDUSD-GBPUSD",
-          "correlation": 83.7
+          "correlation": 84.3
         }
       ],
       [
         {
           "pair": "XAGEUR-AUDJPY",
-          "correlation": 83.7
-        }
-      ],
-      [
-        {
-          "pair": "ZARJPY-EURJPY",
-          "correlation": 83.2
-        }
-      ],
-      [
-        {
-          "pair": "USDCNH-USDCAD",
-          "correlation": 82.3
-        }
-      ],
-      [
-        {
-          "pair": "XAGUSD-EURJPY",
-          "correlation": 82.0
-        }
-      ],
-      [
-        {
-          "pair": "AUDJPY-USDJPY",
-          "correlation": 81.9
-        }
-      ],
-      [
-        {
-          "pair": "USDJPY-AUDJPY",
-          "correlation": 81.9
-        }
-      ],
-      [
-        {
-          "pair": "CADJPY-EURJPY",
-          "correlation": 81.8
-        }
-      ],
-      [
-        {
-          "pair": "NZDCAD-GBPUSD",
-          "correlation": 81.8
+          "correlation": 83.6
         }
       ],
       [
         {
           "pair": "XAUJPY-AUDNZD",
-          "correlation": 81.7
+          "correlation": 83.6
         }
       ],
       [
         {
-          "pair": "SGDJPY-AUDNZD",
+          "pair": "USDSGD-USDCAD",
+          "correlation": 83.5
+        }
+      ],
+      [
+        {
+          "pair": "XAGEUR-AUDNZD",
+          "correlation": 83.5
+        }
+      ],
+      [
+        {
+          "pair": "GBPMXN-GBPUSD",
+          "correlation": 82.9
+        }
+      ],
+      [
+        {
+          "pair": "AUDUSD-EURUSD",
+          "correlation": 82.4
+        }
+      ],
+      [
+        {
+          "pair": "CADJPY-EURJPY",
+          "correlation": 82.3
+        }
+      ],
+      [
+        {
+          "pair": "AUDJPY-USDJPY",
+          "correlation": 82.1
+        }
+      ],
+      [
+        {
+          "pair": "NZDUSD-GBPUSD",
+          "correlation": 82.1
+        }
+      ],
+      [
+        {
+          "pair": "USDJPY-AUDJPY",
+          "correlation": 82.1
+        }
+      ],
+      [
+        {
+          "pair": "NZDCAD-GBPUSD",
+          "correlation": 81.6
+        }
+      ],
+      [
+        {
+          "pair": "ZARJPY-EURJPY",
           "correlation": 81.6
         }
       ],
       [
         {
           "pair": "XAGAUD-EURJPY",
+          "correlation": 81.5
+        }
+      ],
+      [
+        {
+          "pair": "USDCNH-USDCAD",
+          "correlation": 81.3
+        }
+      ],
+      [
+        {
+          "pair": "SGDJPY-AUDNZD",
+          "correlation": 81.1
+        }
+      ],
+      [
+        {
+          "pair": "USDNOK-USDCAD",
+          "correlation": 81.1
+        }
+      ],
+      [
+        {
+          "pair": "NOKJPY-AUDJPY",
           "correlation": 81.0
         }
       ],
       [
         {
-          "pair": "SEKJPY-EURJPY",
+          "pair": "XAGUSD-EURJPY",
+          "correlation": 81.0
+        }
+      ],
+      [
+        {
+          "pair": "AUDNZD-USDJPY",
+          "correlation": 80.7
+        }
+      ],
+      [
+        {
+          "pair": "USDJPY-AUDNZD",
           "correlation": 80.7
         }
       ],
       [
         {
           "pair": "AUDNZD-EURJPY",
-          "correlation": 80.6
+          "correlation": 80.3
         }
       ],
       [
         {
           "pair": "EURJPY-AUDNZD",
-          "correlation": 80.6
-        }
-      ],
-      [
-        {
-          "pair": "XAGUSD-AUDJPY",
-          "correlation": 80.5
-        }
-      ],
-      [
-        {
-          "pair": "USDNOK-USDJPY",
-          "correlation": 80.4
-        }
-      ],
-      [
-        {
-          "pair": "AUDNZD-USDJPY",
-          "correlation": 80.0
-        }
-      ],
-      [
-        {
-          "pair": "USDJPY-AUDNZD",
-          "correlation": 80.0
-        }
-      ],
-      [
-        {
-          "pair": "XAGAUD-AUDJPY",
-          "correlation": 79.8
-        }
-      ],
-      [
-        {
-          "pair": "EURNZD-AUDNZD",
-          "correlation": 79.3
+          "correlation": 80.3
         }
       ],
       [
         {
           "pair": "XAGEUR-EURJPY",
-          "correlation": 79.2
+          "correlation": 79.9
         }
       ],
       [
         {
-          "pair": "AUDJPY-AUDNZD",
-          "correlation": 79.1
+          "pair": "USDNOK-USDJPY",
+          "correlation": 79.8
         }
       ],
       [
         {
-          "pair": "AUDNZD-AUDJPY",
-          "correlation": 79.1
+          "pair": "XAGUSD-AUDJPY",
+          "correlation": 79.4
         }
       ],
       [
         {
-          "pair": "NZDJPY-AUDJPY",
-          "correlation": 79.0
+          "pair": "EURUSD-GBPUSD",
+          "correlation": 78.9
         }
       ],
       [
         {
-          "pair": "USDNOK-USDCAD",
+          "pair": "GBPUSD-EURUSD",
+          "correlation": 78.9
+        }
+      ],
+      [
+        {
+          "pair": "SEKJPY-EURJPY",
+          "correlation": 78.8
+        }
+      ],
+      [
+        {
+          "pair": "XAGAUD-AUDJPY",
           "correlation": 78.8
         }
       ],
       [
         {
           "pair": "GBPAUD-GBPUSD",
-          "correlation": 78.4
+          "correlation": 78.7
         }
       ],
       [
         {
-          "pair": "GBPMXN-GBPUSD",
-          "correlation": 78.4
-        }
-      ],
-      [
-        {
-          "pair": "XAGUSD-AUDNZD",
-          "correlation": 78.1
+          "pair": "NZDJPY-AUDJPY",
+          "correlation": 77.8
         }
       ],
       [
@@ -872,50 +880,50 @@
       ],
       [
         {
-          "pair": "EURUSD-GBPUSD",
-          "correlation": 77.5
+          "pair": "EURNZD-AUDNZD",
+          "correlation": 77.4
         }
       ],
       [
         {
-          "pair": "GBPUSD-EURUSD",
-          "correlation": 77.5
+          "pair": "AUDJPY-AUDNZD",
+          "correlation": 77.0
         }
       ],
       [
         {
-          "pair": "NOKJPY-AUDJPY",
-          "correlation": 77.5
-        }
-      ],
-      [
-        {
-          "pair": "AUDSGD-AUDCAD",
-          "correlation": 76.3
-        }
-      ],
-      [
-        {
-          "pair": "SEKJPY-AUDJPY",
-          "correlation": 76.0
+          "pair": "AUDNZD-AUDJPY",
+          "correlation": 77.0
         }
       ],
       [
         {
           "pair": "NZDUSD-EURUSD",
-          "correlation": 75.9
+          "correlation": 76.8
         }
       ],
       [
         {
-          "pair": "ZARJPY-AUDJPY",
-          "correlation": 75.6
+          "pair": "EURMXN-GBPUSD",
+          "correlation": 76.7
         }
       ],
       [
         {
-          "pair": "ZARJPY-AUDNZD",
-          "correlation": 75.1
+          "pair": "XAGUSD-AUDNZD",
+          "correlation": 76.6
+        }
+      ],
+      [
+        {
+          "pair": "EURJPY-USDJPY",
+          "correlation": 76.1
+        }
+      ],
+      [
+        {
+          "pair": "USDJPY-EURJPY",
+          "correlation": 76.1
         }
       ]
     ],
@@ -926,11 +934,11 @@
       },
       {
         "pair": "AUDCHF",
-        "low_correlation_count": 5
+        "low_correlation_count": 4
       },
       {
         "pair": "AUDSGD",
-        "low_correlation_count": 3
+        "low_correlation_count": 4
       },
       {
         "pair": "AUDUSD",
@@ -938,69 +946,69 @@
       },
       {
         "pair": "CADCHF",
-        "low_correlation_count": 6
+        "low_correlation_count": 7
       }
     ],
     "risk_concentrations": [
       {
         "type": "NEGATIVE_CORRELATION",
         "pair": "USDPLN-EURUSD",
-        "value": -97.8,
-        "message": "Strong negative correlation (-97.8%) between USDPLN and EURUSD - risk of opposite movements"
+        "value": -97.5,
+        "message": "Strong negative correlation (-97.5%) between USDPLN and EURUSD - risk of opposite movements"
       },
       {
         "type": "HIGH_CORRELATION",
         "pair": "GBPSGD-GBPUSD",
-        "value": 95.8,
-        "message": "High correlation (95.8%) between GBPSGD and GBPUSD - risk of similar movements"
+        "value": 95.9,
+        "message": "High correlation (95.9%) between GBPSGD and GBPUSD - risk of similar movements"
       },
       {
         "type": "HIGH_CORRELATION",
         "pair": "SGDJPY-USDJPY",
-        "value": 95.3,
-        "message": "High correlation (95.3%) between SGDJPY and USDJPY - risk of similar movements"
-      },
-      {
-        "type": "HIGH_CORRELATION",
-        "pair": "SGDJPY-AUDJPY",
-        "value": 93.2,
-        "message": "High correlation (93.2%) between SGDJPY and AUDJPY - risk of similar movements"
-      },
-      {
-        "type": "HIGH_CORRELATION",
-        "pair": "AUDJPY-EURJPY",
-        "value": 92.1,
-        "message": "High correlation (92.1%) between AUDJPY and EURJPY - risk of similar movements"
-      },
-      {
-        "type": "HIGH_CORRELATION",
-        "pair": "EURJPY-AUDJPY",
-        "value": 92.1,
-        "message": "High correlation (92.1%) between EURJPY and AUDJPY - risk of similar movements"
+        "value": 95.9,
+        "message": "High correlation (95.9%) between SGDJPY and USDJPY - risk of similar movements"
       },
       {
         "type": "NEGATIVE_CORRELATION",
         "pair": "USDSGD-EURUSD",
-        "value": -92.1,
-        "message": "Strong negative correlation (-92.1%) between USDSGD and EURUSD - risk of opposite movements"
+        "value": -92.4,
+        "message": "Strong negative correlation (-92.4%) between USDSGD and EURUSD - risk of opposite movements"
+      },
+      {
+        "type": "HIGH_CORRELATION",
+        "pair": "SGDJPY-AUDJPY",
+        "value": 92.2,
+        "message": "High correlation (92.2%) between SGDJPY and AUDJPY - risk of similar movements"
       },
       {
         "type": "HIGH_CORRELATION",
         "pair": "CADJPY-AUDJPY",
-        "value": 91.4,
-        "message": "High correlation (91.4%) between CADJPY and AUDJPY - risk of similar movements"
+        "value": 92.0,
+        "message": "High correlation (92.0%) between CADJPY and AUDJPY - risk of similar movements"
+      },
+      {
+        "type": "HIGH_CORRELATION",
+        "pair": "AUDJPY-EURJPY",
+        "value": 90.9,
+        "message": "High correlation (90.9%) between AUDJPY and EURJPY - risk of similar movements"
+      },
+      {
+        "type": "HIGH_CORRELATION",
+        "pair": "EURJPY-AUDJPY",
+        "value": 90.9,
+        "message": "High correlation (90.9%) between EURJPY and AUDJPY - risk of similar movements"
       },
       {
         "type": "NEGATIVE_CORRELATION",
         "pair": "USDSGD-GBPUSD",
-        "value": -90.5,
-        "message": "Strong negative correlation (-90.5%) between USDSGD and GBPUSD - risk of opposite movements"
+        "value": -90.6,
+        "message": "Strong negative correlation (-90.6%) between USDSGD and GBPUSD - risk of opposite movements"
       },
       {
         "type": "HIGH_CORRELATION",
-        "pair": "CADJPY-USDJPY",
-        "value": 89.9,
-        "message": "High correlation (89.9%) between CADJPY and USDJPY - risk of similar movements"
+        "pair": "EURSGD-EURUSD",
+        "value": 88.8,
+        "message": "High correlation (88.8%) between EURSGD and EURUSD - risk of similar movements"
       }
     ],
     "correlation_strength": "VERY_HIGH",
@@ -1012,7 +1020,7 @@
     ]
   },
   "event_calendar": {
-    "timestamp": "2025-08-19T14:20:08.707252",
+    "timestamp": "2025-08-20T17:01:13.677797",
     "high_impact_events": [
       {
         "name": "Westpac Consumer Confidence Change (Aug)",
@@ -1451,13 +1459,15 @@
       "type": "CORRELATION_AWARENESS",
       "priority": "HIGH",
       "title": "High Correlation Environment",
-      "message": "1 pairs showing high correlation risk",
+      "message": "3 pairs showing high correlation risk",
       "affected_pairs": [
+        "EURUSD",
+        "GBPUSD",
         "AUDNZD"
       ],
       "recommendation": "Consider reducing individual position sizes and improving diversification",
       "impact": "Portfolio concentration risk increased",
-      "timestamp": "2025-08-19T14:20:08.707252"
+      "timestamp": "2025-08-20T17:01:13.678763"
     },
     {
       "type": "CONTRARIAN_OPPORTUNITY",
@@ -1471,7 +1481,7 @@
       ],
       "recommendation": "Watch for potential trend reversals - extreme positioning often precedes turns",
       "impact": "Potential trend reversal opportunity",
-      "timestamp": "2025-08-19T14:20:08.707252"
+      "timestamp": "2025-08-20T17:01:13.678763"
     },
     {
       "type": "EVENT_RISK_AWARENESS",
@@ -1494,22 +1504,21 @@
       ],
       "recommendation": "Consider timing entries around events or reducing size before volatility",
       "impact": "Increased short-term volatility expected",
-      "timestamp": "2025-08-19T14:20:08.707252"
+      "timestamp": "2025-08-20T17:01:13.678763"
     },
     {
       "type": "LIMITED_OPPORTUNITY",
       "priority": "LOW",
       "title": "Limited Trading Opportunities",
-      "message": "4 pairs showing poor opportunity scores",
+      "message": "3 pairs showing poor opportunity scores",
       "affected_pairs": [
-        "AUDUSD",
         "USDCAD",
         "XAUUSD",
-        "NZDCAD"
+        "EURUSD"
       ],
       "recommendation": "Focus capital on higher-opportunity pairs or wait for better setups",
       "impact": "Lower expected returns on these pairs",
-      "timestamp": "2025-08-19T14:20:08.707252"
+      "timestamp": "2025-08-20T17:01:13.678763"
     }
   ]
 }

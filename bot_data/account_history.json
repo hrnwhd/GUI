@@ -1,5 +1,271 @@
 [
   {
+    "timestamp": "2025-08-20T17:00:02.081828",
+    "balance": 9023.29,
+    "equity": 9020.96,
+    "profit": -2.33,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:55:02.058451",
+    "balance": 9018.29,
+    "equity": 9019.24,
+    "profit": 0.95,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:50:02.114845",
+    "balance": 9018.29,
+    "equity": 9017.61,
+    "profit": -0.68,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:45:02.126902",
+    "balance": 9018.29,
+    "equity": 9015.02,
+    "profit": -3.27,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:40:02.095400",
+    "balance": 9018.29,
+    "equity": 9016.66,
+    "profit": -1.63,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:35:02.088277",
+    "balance": 9018.29,
+    "equity": 9016.83,
+    "profit": -1.46,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:30:02.076159",
+    "balance": 9013.29,
+    "equity": 9013.7,
+    "profit": 0.41,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:25:02.106549",
+    "balance": 9013.29,
+    "equity": 9011.97,
+    "profit": -1.32,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:20:02.091145",
+    "balance": 9010.79,
+    "equity": 9011.77,
+    "profit": 0.98,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:15:02.070528",
+    "balance": 9010.79,
+    "equity": 9010.38,
+    "profit": -0.41,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:10:02.076451",
+    "balance": 9010.79,
+    "equity": 9010.79,
+    "profit": 0.0,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:05:02.093608",
+    "balance": 9010.79,
+    "equity": 9010.79,
+    "profit": 0.0,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T16:00:02.092617",
+    "balance": 9008.29,
+    "equity": 9009.87,
+    "profit": 1.58,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:55:02.085309",
+    "balance": 9003.19,
+    "equity": 9006.61,
+    "profit": 3.42,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:50:02.100255",
+    "balance": 9003.19,
+    "equity": 9003.28,
+    "profit": 0.09,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:45:02.104537",
+    "balance": 9003.19,
+    "equity": 9001.8,
+    "profit": -1.39,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:40:02.084570",
+    "balance": 9003.19,
+    "equity": 9004.31,
+    "profit": 1.12,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:35:02.093369",
+    "balance": 9003.19,
+    "equity": 9004.48,
+    "profit": 1.29,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:30:02.055929",
+    "balance": 9003.19,
+    "equity": 9004.37,
+    "profit": 1.18,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:25:02.060679",
+    "balance": 9003.19,
+    "equity": 9003.34,
+    "profit": 0.15,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:20:02.177861",
+    "balance": 9003.19,
+    "equity": 9003.19,
+    "profit": 0.0,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:15:02.053212",
+    "balance": 9000.69,
+    "equity": 9002.26,
+    "profit": 1.57,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:10:02.051605",
+    "balance": 9000.69,
+    "equity": 9001.71,
+    "profit": 1.02,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:05:02.053029",
+    "balance": 9000.69,
+    "equity": 8999.84,
+    "profit": -0.85,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T15:00:02.048486",
+    "balance": 9000.69,
+    "equity": 8999.8,
+    "profit": -0.89,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T14:58:18.995917",
+    "balance": 9000.69,
+    "equity": 9000.69,
+    "profit": 0.0,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T14:29:56.741743",
+    "balance": 8999.35,
+    "equity": 9000.59,
+    "profit": 1.24,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T14:15:02.111678",
+    "balance": 8999.15,
+    "equity": 8998.6,
+    "profit": -0.55,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T14:09:58.208244",
+    "balance": 8999.15,
+    "equity": 8999.82,
+    "profit": 0.67,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T14:00:02.083519",
+    "balance": 8999.15,
+    "equity": 8999.16,
+    "profit": 0.01,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:55:02.162527",
+    "balance": 8999.15,
+    "equity": 9000.22,
+    "profit": 1.07,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:50:02.071940",
+    "balance": 8998.75,
+    "equity": 8999.0,
+    "profit": 0.25,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:46:24.464643",
+    "balance": 8998.75,
+    "equity": 8997.96,
+    "profit": -0.79,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:40:02.089747",
+    "balance": 8998.75,
+    "equity": 8999.38,
+    "profit": 0.63,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:35:02.101348",
+    "balance": 8998.75,
+    "equity": 8998.73,
+    "profit": -0.02,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:30:02.865462",
+    "balance": 8998.75,
+    "equity": 8998.75,
+    "profit": 0.0,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:05:02.067987",
+    "balance": 8999.14,
+    "equity": 8998.85,
+    "profit": -0.29,
+    "drawdown": 0
+  },
+  {
+    "timestamp": "2025-08-20T13:00:02.098941",
+    "balance": 8999.14,
+    "equity": 8998.95,
+    "profit": -0.19,
+    "drawdown": 0
+  },
+  {
     "timestamp": "2025-08-20T12:55:02.054359",
     "balance": 8999.14,
     "equity": 8999.06,
