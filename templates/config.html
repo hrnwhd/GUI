@@ -78,6 +78,9 @@
             font-weight: 300;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .form-grid {
@@ -168,6 +171,43 @@
             color: #4CAF50;
         }
 
+        .risk-parameters {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .risk-param-group {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .risk-param-group h4 {
+            margin-bottom: 1rem;
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        .symbol-settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .symbol-setting {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .symbol-setting h5 {
+            margin-bottom: 0.5rem;
+            color: #4CAF50;
+        }
+
         .btn {
             padding: 0.75rem 2rem;
             border: none;
@@ -217,29 +257,6 @@
             margin-top: 2rem;
         }
 
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-        }
-
-        .status-running {
-            background: #4CAF50;
-            animation: pulse 2s infinite;
-        }
-
-        .status-stopped {
-            background: #f44336;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
         .success-message {
             background: rgba(76, 175, 80, 0.2);
             border: 1px solid #4CAF50;
@@ -260,6 +277,42 @@
             display: none;
         }
 
+        .collapsible {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 8px;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            transition: background 0.3s;
+        }
+
+        .collapsible:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .collapsible.active {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .collapsible-content {
+            display: none;
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .collapsible-content.show {
+            display: block;
+            max-height: 500px;
+        }
+
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
@@ -271,6 +324,10 @@
             
             .container {
                 padding: 1rem;
+            }
+
+            .risk-parameters {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -302,18 +359,18 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>Account Number</label>
-                    <input type="number" id="account_number" placeholder="42903786">
+                    <input type="number" id="account_number" placeholder="102820128">
                 </div>
                 <div class="form-group">
                     <label>Magic Number</label>
-                    <input type="number" id="magic_number" placeholder="50515253">
+                    <input type="number" id="magic_number" placeholder="23232323">
                 </div>
             </div>
         </div>
 
-        <!-- Trading Settings -->
+        <!-- Timeframe Settings -->
         <div class="config-section">
-            <h2><i class="fas fa-chart-line"></i> Trading Settings</h2>
+            <h2><i class="fas fa-clock"></i> Timeframe Settings</h2>
             <div class="form-grid">
                 <div class="form-group">
                     <label>Global Timeframe</label>
@@ -327,6 +384,13 @@
                         <option value="D1">D1 - Daily</option>
                     </select>
                 </div>
+            </div>
+        </div>
+
+        <!-- Lot Size Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-calculator"></i> Lot Size Settings</h2>
+            <div class="form-grid">
                 <div class="form-group">
                     <label>Lot Size Mode</label>
                     <select id="lot_size_mode">
@@ -371,6 +435,64 @@
                     <label>Min Profit %</label>
                     <input type="number" id="min_profit_percentage" step="0.1" placeholder="1">
                 </div>
+                <div class="form-group">
+                    <label>Flirt Threshold (Pips)</label>
+                    <input type="number" id="flirt_threshold_pips" placeholder="10">
+                </div>
+            </div>
+        </div>
+
+        <!-- Hedging Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-shield-alt"></i> Hedging Settings</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="hedging_enabled">
+                        <label>Enable Hedging</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Start Layer</label>
+                    <input type="number" id="hedging_start_layer" min="1" max="15" placeholder="2">
+                </div>
+                <div class="form-group">
+                    <label>Hedge Percentage</label>
+                    <input type="number" id="hedge_percentage" min="0" max="100" placeholder="50">
+                </div>
+            </div>
+            
+            <!-- Hedging Parameters Sub-sections -->
+            <h3 style="margin: 1.5rem 0 1rem 0; color: #4CAF50;">Losing Long Hedge Parameters</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>RSI Threshold</label>
+                    <input type="number" id="losing_long_rsi_threshold" min="0" max="100" placeholder="65">
+                </div>
+                <div class="form-group">
+                    <label>ADX Minimum</label>
+                    <input type="number" id="losing_long_adx_min" min="0" max="100" placeholder="25">
+                </div>
+                <div class="form-group">
+                    <label>Min Timeframes Aligned</label>
+                    <input type="number" id="losing_long_min_timeframes" min="1" max="5" placeholder="1">
+                </div>
+            </div>
+
+            <h3 style="margin: 1.5rem 0 1rem 0; color: #4CAF50;">Losing Short Hedge Parameters</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>RSI Threshold</label>
+                    <input type="number" id="losing_short_rsi_threshold" min="0" max="100" placeholder="35">
+                </div>
+                <div class="form-group">
+                    <label>ADX Minimum</label>
+                    <input type="number" id="losing_short_adx_min" min="0" max="100" placeholder="25">
+                </div>
+                <div class="form-group">
+                    <label>Min Timeframes Aligned</label>
+                    <input type="number" id="losing_short_min_timeframes" min="1" max="5" placeholder="1">
+                </div>
             </div>
         </div>
 
@@ -382,11 +504,107 @@
             </div>
         </div>
 
-        <!-- Risk Profiles -->
+        <!-- Pair Risk Profiles -->
         <div class="config-section">
-            <h2><i class="fas fa-shield-alt"></i> Risk Profiles</h2>
-            <div id="risk-profiles" class="risk-profiles">
+            <h2><i class="fas fa-chart-bar"></i> Pair Risk Profiles</h2>
+            <div id="pair-risk-profiles" class="risk-profiles">
                 <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Trading Schedule -->
+        <div class="config-section">
+            <h2><i class="fas fa-calendar-alt"></i> Trading Schedule</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Trading Days (0=Sunday, 1=Monday, etc.)</label>
+                    <input type="text" id="trading_days" placeholder="0,1,2,3,4">
+                </div>
+                <div class="form-group">
+                    <label>Trading Hours Start</label>
+                    <input type="number" id="trading_hours_start" min="0" max="23" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Trading Hours End</label>
+                    <input type="number" id="trading_hours_end" min="0" max="23" placeholder="23">
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Parameters -->
+        <div class="config-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> Risk Parameters</h2>
+            <div class="risk-parameters" id="risk-parameters">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Symbol Specific Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-cog"></i> Symbol Specific Settings</h2>
+            
+            <!-- Base TP Targets -->
+            <button class="collapsible" onclick="toggleCollapsible(this)">
+                <i class="fas fa-bullseye"></i> Base TP Targets
+            </button>
+            <div class="collapsible-content">
+                <div class="symbol-settings" id="base-tp-targets">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Max Position Percentages -->
+            <button class="collapsible" onclick="toggleCollapsible(this)">
+                <i class="fas fa-percentage"></i> Max Position Percentages
+            </button>
+            <div class="collapsible-content">
+                <div class="symbol-settings" id="max-position-percentages">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Risk Reduction Factors -->
+            <button class="collapsible" onclick="toggleCollapsible(this)">
+                <i class="fas fa-shield-alt"></i> Risk Reduction Factors
+            </button>
+            <div class="collapsible-content">
+                <div class="symbol-settings" id="risk-reduction-factors">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Spread Limits -->
+            <button class="collapsible" onclick="toggleCollapsible(this)">
+                <i class="fas fa-expand-arrows-alt"></i> Spread Limits
+            </button>
+            <div class="collapsible-content">
+                <div class="symbol-settings" id="spread-limits">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Logging Settings -->
+        <div class="config-section">
+            <h2><i class="fas fa-file-alt"></i> Logging Settings</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Log Level</label>
+                    <select id="log_level">
+                        <option value="DEBUG">DEBUG</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARNING">WARNING</option>
+                        <option value="ERROR">ERROR</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Log File</label>
+                    <input type="text" id="log_file" placeholder="bm_robot.log">
+                </div>
+                <div class="form-group">
+                    <label>Log Format</label>
+                    <input type="text" id="log_format" placeholder="%(asctime)s - %(levelname)s - %(message)s">
+                </div>
             </div>
         </div>
 
@@ -433,7 +651,7 @@
             document.getElementById('global_timeframe').value = config.timeframe_settings?.global_timeframe || 'M5';
 
             // Lot size settings
-            document.getElementById('lot_size_mode').value = config.lot_size_settings?.mode || 'DYNAMIC';
+            document.getElementById('lot_size_mode').value = config.lot_size_settings?.mode || 'MANUAL';
             document.getElementById('manual_lot_size').value = config.lot_size_settings?.manual_lot_size || 0.01;
 
             // Martingale settings
@@ -443,18 +661,48 @@
             document.getElementById('emergency_dd_percentage').value = config.martingale_settings?.emergency_dd_percentage || 50;
             document.getElementById('profit_buffer_pips').value = config.martingale_settings?.profit_buffer_pips || 5;
             document.getElementById('min_profit_percentage').value = config.martingale_settings?.min_profit_percentage || 1;
+            document.getElementById('flirt_threshold_pips').value = config.martingale_settings?.flirt_threshold_pips || 10;
+
+            // Hedging settings
+            document.getElementById('hedging_enabled').checked = config.hedging_settings?.enabled || false;
+            document.getElementById('hedging_start_layer').value = config.hedging_settings?.start_layer || 2;
+            document.getElementById('hedge_percentage').value = config.hedging_settings?.hedge_percentage || 50;
+            
+            // Hedging parameters
+            document.getElementById('losing_long_rsi_threshold').value = config.hedging_settings?.losing_long_hedge_params?.rsi_threshold || 65;
+            document.getElementById('losing_long_adx_min').value = config.hedging_settings?.losing_long_hedge_params?.adx_min || 25;
+            document.getElementById('losing_long_min_timeframes').value = config.hedging_settings?.losing_long_hedge_params?.min_timeframes_aligned || 1;
+            
+            document.getElementById('losing_short_rsi_threshold').value = config.hedging_settings?.losing_short_hedge_params?.rsi_threshold || 35;
+            document.getElementById('losing_short_adx_min').value = config.hedging_settings?.losing_short_hedge_params?.adx_min || 25;
+            document.getElementById('losing_short_min_timeframes').value = config.hedging_settings?.losing_short_hedge_params?.min_timeframes_aligned || 1;
+
+            // Trading schedule
+            document.getElementById('trading_days').value = (config.pair_trading_schedule?.trading_days || []).join(',');
+            document.getElementById('trading_hours_start').value = config.pair_trading_schedule?.trading_hours?.start || 0;
+            document.getElementById('trading_hours_end').value = config.pair_trading_schedule?.trading_hours?.end || 23;
+
+            // Logging settings
+            document.getElementById('log_level').value = config.logging_settings?.level || 'INFO';
+            document.getElementById('log_file').value = config.logging_settings?.log_file || 'bm_robot.log';
+            document.getElementById('log_format').value = config.logging_settings?.format || '%(asctime)s - %(levelname)s - %(message)s';
 
             // Trading pairs
             populateTradingPairs(config.trading_pairs || []);
 
-            // Risk profiles
-            populateRiskProfiles(config.pair_risk_profiles || {});
+            // Pair risk profiles
+            populatePairRiskProfiles(config.pair_risk_profiles || {});
+
+            // Risk parameters
+            populateRiskParameters(config.risk_parameters || {});
+
+            // Symbol specific settings
+            populateSymbolSpecificSettings(config.symbol_specific_settings || {});
         }
 
         function populateTradingPairs(pairs) {
             const container = document.getElementById('trading-pairs');
-            const allPairs = ['AUDUSD', 'USDCAD', 'XAUUSD', 'EURUSD', 'GBPUSD', 
-                             'AUDCAD', 'USDCHF', 'GBPCAD', 'AUDNZD', 'NZDCAD', 'US500', 'BTCUSD'];
+            const allPairs = ['USDCAD', 'XAUUSD', 'EURUSD', 'GBPUSD', 'AUDCAD', 'USDCHF', 'GBPCAD', 'AUDNZD', 'NZDCAD', 'US500', 'BTCUSD'];
             
             container.innerHTML = allPairs.map(pair => {
                 const isSelected = pairs.includes(pair);
@@ -469,8 +717,8 @@
             }).join('');
         }
 
-        function populateRiskProfiles(profiles) {
-            const container = document.getElementById('risk-profiles');
+        function populatePairRiskProfiles(profiles) {
+            const container = document.getElementById('pair-risk-profiles');
             const riskLevels = ['Low', 'Medium', 'High'];
             
             container.innerHTML = Object.entries(profiles).map(([symbol, profile]) => `
@@ -500,40 +748,184 @@
             `).join('');
         }
 
+        function populateRiskParameters(riskParams) {
+            const container = document.getElementById('risk-parameters');
+            const riskLevels = ['Low', 'Medium', 'High'];
+            
+            container.innerHTML = riskLevels.map(level => {
+                const params = riskParams[level] || {};
+                return `
+                    <div class="risk-param-group">
+                        <h4>${level} Risk</h4>
+                        <div class="form-group">
+                            <label>ADX Threshold</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="adx_threshold" 
+                                   value="${params.adx_threshold || ''}" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>ATR Multiplier</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="atr_multiplier" 
+                                   value="${params.atr_multiplier || ''}" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>EMA Buffer %</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="ema_buffer_pct" 
+                                   value="${params.ema_buffer_pct || ''}" step="0.001">
+                        </div>
+                        <div class="form-group">
+                            <label>Max ADX Strength</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="max_adx_strength" 
+                                   value="${params.max_adx_strength || ''}" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Min ADX Strength</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="min_adx_strength" 
+                                   value="${params.min_adx_strength || ''}" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Min Timeframes</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="min_timeframes" 
+                                   value="${params.min_timeframes || ''}" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Min Volatility Pips</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="min_volatility_pips" 
+                                   value="${params.min_volatility_pips || ''}" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Risk Per Trade %</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="risk_per_trade_pct" 
+                                   value="${params.risk_per_trade_pct || ''}" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Risk Reward Ratio Long</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="risk_reward_ratio_long" 
+                                   value="${params.risk_reward_ratio_long || ''}" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Risk Reward Ratio Short</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="risk_reward_ratio_short" 
+                                   value="${params.risk_reward_ratio_short || ''}" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>RSI Overbought</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="rsi_overbought" 
+                                   value="${params.rsi_overbought || ''}" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label>RSI Oversold</label>
+                            <input type="number" class="risk-param" data-level="${level}" data-param="rsi_oversold" 
+                                   value="${params.rsi_oversold || ''}" step="1">
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function populateSymbolSpecificSettings(symbolSettings) {
+            // Base TP Targets
+            const baseTpContainer = document.getElementById('base-tp-targets');
+            const baseTpTargets = symbolSettings.base_tp_targets || {};
+            baseTpContainer.innerHTML = Object.entries(baseTpTargets).map(([symbol, value]) => `
+                <div class="symbol-setting">
+                    <h5>${symbol}</h5>
+                    <input type="number" class="symbol-specific" data-category="base_tp_targets" data-symbol="${symbol}" 
+                           value="${value}" placeholder="15">
+                </div>
+            `).join('');
+
+            // Max Position Percentages
+            const maxPosContainer = document.getElementById('max-position-percentages');
+            const maxPositions = symbolSettings.max_position_percentages || {};
+            maxPosContainer.innerHTML = Object.entries(maxPositions).map(([symbol, value]) => `
+                <div class="symbol-setting">
+                    <h5>${symbol}</h5>
+                    <input type="number" class="symbol-specific" data-category="max_position_percentages" data-symbol="${symbol}" 
+                           value="${value}" step="0.01" placeholder="0.05">
+                </div>
+            `).join('');
+
+            // Risk Reduction Factors
+            const riskReductionContainer = document.getElementById('risk-reduction-factors');
+            const riskReductions = symbolSettings.risk_reduction_factors || {};
+            riskReductionContainer.innerHTML = Object.entries(riskReductions).map(([symbol, value]) => `
+                <div class="symbol-setting">
+                    <h5>${symbol}</h5>
+                    <input type="number" class="symbol-specific" data-category="risk_reduction_factors" data-symbol="${symbol}" 
+                           value="${value}" step="0.1" placeholder="1.0">
+                </div>
+            `).join('');
+
+            // Spread Limits
+            const spreadLimitsContainer = document.getElementById('spread-limits');
+            const spreadLimits = symbolSettings.spread_limits || {};
+            spreadLimitsContainer.innerHTML = Object.entries(spreadLimits).map(([symbol, value]) => `
+                <div class="symbol-setting">
+                    <h5>${symbol}</h5>
+                    <input type="number" class="symbol-specific" data-category="spread_limits" data-symbol="${symbol}" 
+                           value="${value}" placeholder="5">
+                </div>
+            `).join('');
+        }
+
         function collectFormData() {
             const config = {
                 account_settings: {
-                    account_number: parseInt(document.getElementById('account_number').value),
-                    magic_number: parseInt(document.getElementById('magic_number').value)
+                    account_number: parseInt(document.getElementById('account_number').value) || 0,
+                    magic_number: parseInt(document.getElementById('magic_number').value) || 0
                 },
                 timeframe_settings: {
                     global_timeframe: document.getElementById('global_timeframe').value
                 },
                 lot_size_settings: {
                     mode: document.getElementById('lot_size_mode').value,
-                    manual_lot_size: parseFloat(document.getElementById('manual_lot_size').value)
+                    manual_lot_size: parseFloat(document.getElementById('manual_lot_size').value) || 0.01
                 },
                 martingale_settings: {
                     enabled: document.getElementById('martingale_enabled').checked,
-                    max_layers: parseInt(document.getElementById('max_layers').value),
-                    multiplier: parseFloat(document.getElementById('multiplier').value),
-                    emergency_dd_percentage: parseFloat(document.getElementById('emergency_dd_percentage').value),
-                    profit_buffer_pips: parseInt(document.getElementById('profit_buffer_pips').value),
-                    min_profit_percentage: parseFloat(document.getElementById('min_profit_percentage').value),
-                    flirt_threshold_pips: 10
+                    max_layers: parseInt(document.getElementById('max_layers').value) || 15,
+                    multiplier: parseFloat(document.getElementById('multiplier').value) || 2,
+                    emergency_dd_percentage: parseFloat(document.getElementById('emergency_dd_percentage').value) || 50,
+                    profit_buffer_pips: parseInt(document.getElementById('profit_buffer_pips').value) || 5,
+                    min_profit_percentage: parseFloat(document.getElementById('min_profit_percentage').value) || 1,
+                    flirt_threshold_pips: parseInt(document.getElementById('flirt_threshold_pips').value) || 10
+                },
+                hedging_settings: {
+                    enabled: document.getElementById('hedging_enabled').checked,
+                    start_layer: parseInt(document.getElementById('hedging_start_layer').value) || 2,
+                    hedge_percentage: parseInt(document.getElementById('hedge_percentage').value) || 50,
+                    losing_long_hedge_params: {
+                        rsi_threshold: parseInt(document.getElementById('losing_long_rsi_threshold').value) || 65,
+                        adx_min: parseInt(document.getElementById('losing_long_adx_min').value) || 25,
+                        min_timeframes_aligned: parseInt(document.getElementById('losing_long_min_timeframes').value) || 1
+                    },
+                    losing_short_hedge_params: {
+                        rsi_threshold: parseInt(document.getElementById('losing_short_rsi_threshold').value) || 35,
+                        adx_min: parseInt(document.getElementById('losing_short_adx_min').value) || 25,
+                        min_timeframes_aligned: parseInt(document.getElementById('losing_short_min_timeframes').value) || 1
+                    }
                 },
                 trading_pairs: [],
                 pair_risk_profiles: {},
                 pair_trading_schedule: {
-                    trading_days: [0, 1, 2, 3, 4],
+                    trading_days: document.getElementById('trading_days').value.split(',').map(d => parseInt(d.trim())).filter(d => !isNaN(d)),
                     trading_hours: {
-                        start: 0,
-                        end: 23
+                        start: parseInt(document.getElementById('trading_hours_start').value) || 0,
+                        end: parseInt(document.getElementById('trading_hours_end').value) || 23
                     }
                 },
-                risk_parameters: currentConfig.risk_parameters || {},
-                symbol_specific_settings: currentConfig.symbol_specific_settings || {},
-                logging_settings: currentConfig.logging_settings || {}
+                risk_parameters: {},
+                symbol_specific_settings: {
+                    base_tp_targets: {},
+                    max_position_percentages: {},
+                    risk_reduction_factors: {},
+                    spread_limits: {}
+                },
+                logging_settings: {
+                    level: document.getElementById('log_level').value,
+                    log_file: document.getElementById('log_file').value,
+                    format: document.getElementById('log_format').value
+                }
             };
 
             // Collect selected trading pairs
@@ -545,14 +937,38 @@
             document.querySelectorAll('.risk-profile').forEach(profileElement => {
                 const symbol = profileElement.querySelector('.risk-level').dataset.symbol;
                 const risk = profileElement.querySelector('.risk-level').value;
-                const minLot = parseFloat(profileElement.querySelector('.min-lot').value);
-                const maxLot = parseFloat(profileElement.querySelector('.max-lot').value);
+                const minLot = parseFloat(profileElement.querySelector('.min-lot').value) || 0.01;
+                const maxLot = parseFloat(profileElement.querySelector('.max-lot').value) || 1.0;
 
                 config.pair_risk_profiles[symbol] = {
                     risk: risk,
                     min_lot: minLot,
                     max_lot: maxLot
                 };
+            });
+
+            // Collect risk parameters
+            const riskLevels = ['Low', 'Medium', 'High'];
+            riskLevels.forEach(level => {
+                config.risk_parameters[level] = {};
+                document.querySelectorAll(`.risk-param[data-level="${level}"]`).forEach(input => {
+                    const param = input.dataset.param;
+                    const value = parseFloat(input.value);
+                    if (!isNaN(value)) {
+                        config.risk_parameters[level][param] = value;
+                    }
+                });
+            });
+
+            // Collect symbol specific settings
+            document.querySelectorAll('.symbol-specific').forEach(input => {
+                const category = input.dataset.category;
+                const symbol = input.dataset.symbol;
+                const value = parseFloat(input.value);
+                
+                if (!isNaN(value)) {
+                    config.symbol_specific_settings[category][symbol] = value;
+                }
             });
 
             return config;
@@ -598,17 +1014,16 @@
 
         function resetConfiguration() {
             if (confirm('Are you sure you want to reset to default configuration? This cannot be undone.')) {
-                // Reset to default values
                 const defaultConfig = {
                     account_settings: {
-                        account_number: 42903786,
-                        magic_number: 50515253
+                        account_number: 102820128,
+                        magic_number: 23232323
                     },
                     timeframe_settings: {
                         global_timeframe: "M5"
                     },
                     lot_size_settings: {
-                        mode: "DYNAMIC",
+                        mode: "MANUAL",
                         manual_lot_size: 0.01
                     },
                     martingale_settings: {
@@ -617,23 +1032,148 @@
                         multiplier: 2,
                         emergency_dd_percentage: 50,
                         profit_buffer_pips: 5,
-                        min_profit_percentage: 1
+                        min_profit_percentage: 1,
+                        flirt_threshold_pips: 10
                     },
-                    trading_pairs: ["AUDUSD", "USDCAD", "XAUUSD", "EURUSD", "GBPUSD", 
-                                   "AUDCAD", "USDCHF", "GBPCAD", "AUDNZD", "NZDCAD", "US500", "BTCUSD"],
+                    hedging_settings: {
+                        enabled: true,
+                        start_layer: 2,
+                        hedge_percentage: 50,
+                        losing_long_hedge_params: {
+                            rsi_threshold: 65,
+                            adx_min: 25,
+                            min_timeframes_aligned: 1
+                        },
+                        losing_short_hedge_params: {
+                            rsi_threshold: 35,
+                            adx_min: 25,
+                            min_timeframes_aligned: 1
+                        }
+                    },
+                    trading_pairs: ["USDCAD", "XAUUSD", "EURUSD", "GBPUSD", "AUDCAD", "USDCHF", "GBPCAD", "AUDNZD", "NZDCAD", "US500", "BTCUSD"],
                     pair_risk_profiles: {
-                        "AUDUSD": {"risk": "Medium", "max_lot": 1.0, "min_lot": 0.01},
-                        "USDCAD": {"risk": "Low", "max_lot": 0.5, "min_lot": 0.01},
-                        "US500": {"risk": "High", "max_lot": 0.1, "min_lot": 0.01},
-                        "XAUUSD": {"risk": "High", "max_lot": 0.2, "min_lot": 0.01},
-                        "BTCUSD": {"risk": "Medium", "max_lot": 0.05, "min_lot": 0.01},
-                        "EURUSD": {"risk": "Medium", "max_lot": 1.0, "min_lot": 0.01},
-                        "GBPUSD": {"risk": "Medium", "max_lot": 1.0, "min_lot": 0.01},
-                        "AUDCAD": {"risk": "Low", "max_lot": 0.3, "min_lot": 0.01},
-                        "USDCHF": {"risk": "Medium", "max_lot": 0.5, "min_lot": 0.01},
-                        "GBPCAD": {"risk": "Low", "max_lot": 0.3, "min_lot": 0.01},
-                        "AUDNZD": {"risk": "Medium", "max_lot": 0.5, "min_lot": 0.01},
-                        "NZDCAD": {"risk": "Low", "max_lot": 0.3, "min_lot": 0.01}
+                        "AUDCAD": {"risk": "Low", "min_lot": 0.01, "max_lot": 0.3},
+                        "AUDNZD": {"risk": "Medium", "min_lot": 0.01, "max_lot": 0.5},
+                        "AUDUSD": {"risk": "Medium", "min_lot": 0.01, "max_lot": 1},
+                        "BTCUSD": {"risk": "Medium", "min_lot": 0.01, "max_lot": 0.05},
+                        "EURUSD": {"risk": "Medium", "min_lot": 0.01, "max_lot": 1},
+                        "GBPCAD": {"risk": "Low", "min_lot": 0.01, "max_lot": 0.3},
+                        "GBPUSD": {"risk": "Medium", "min_lot": 0.01, "max_lot": 1},
+                        "NZDCAD": {"risk": "Low", "min_lot": 0.01, "max_lot": 0.3},
+                        "US500": {"risk": "High", "min_lot": 0.01, "max_lot": 0.1},
+                        "USDCAD": {"risk": "Low", "min_lot": 0.01, "max_lot": 0.5},
+                        "USDCHF": {"risk": "Medium", "min_lot": 0.01, "max_lot": 0.5},
+                        "USDJPY": {"risk": "Low", "min_lot": 0.01, "max_lot": 1},
+                        "XAUUSD": {"risk": "High", "min_lot": 0.01, "max_lot": 0.2}
+                    },
+                    pair_trading_schedule: {
+                        trading_days: [0, 1, 2, 3, 4],
+                        trading_hours: {
+                            start: 0,
+                            end: 23
+                        }
+                    },
+                    risk_parameters: {
+                        "High": {
+                            "adx_threshold": 20,
+                            "atr_multiplier": 2,
+                            "ema_buffer_pct": 0.008,
+                            "max_adx_strength": 70,
+                            "min_adx_strength": 20,
+                            "min_timeframes": 1,
+                            "min_volatility_pips": 3,
+                            "risk_per_trade_pct": 0.2,
+                            "risk_reward_ratio_long": 1.1,
+                            "risk_reward_ratio_short": 1.1,
+                            "rsi_overbought": 70,
+                            "rsi_oversold": 30
+                        },
+                        "Low": {
+                            "adx_threshold": 25,
+                            "atr_multiplier": 1.5,
+                            "ema_buffer_pct": 0.005,
+                            "max_adx_strength": 60,
+                            "min_adx_strength": 25,
+                            "min_timeframes": 3,
+                            "min_volatility_pips": 5,
+                            "risk_per_trade_pct": 0.05,
+                            "risk_reward_ratio_long": 1.5,
+                            "risk_reward_ratio_short": 1.5,
+                            "rsi_overbought": 70,
+                            "rsi_oversold": 30
+                        },
+                        "Medium": {
+                            "adx_threshold": 25,
+                            "atr_multiplier": 1.5,
+                            "ema_buffer_pct": 0.005,
+                            "max_adx_strength": 60,
+                            "min_adx_strength": 25,
+                            "min_timeframes": 2,
+                            "min_volatility_pips": 5,
+                            "risk_per_trade_pct": 0.1,
+                            "risk_reward_ratio_long": 1.3,
+                            "risk_reward_ratio_short": 1.3,
+                            "rsi_overbought": 70,
+                            "rsi_oversold": 30
+                        }
+                    },
+                    symbol_specific_settings: {
+                        base_tp_targets: {
+                            "AUDCAD": 15,
+                            "AUDNZD": 10,
+                            "AUDUSD": 12,
+                            "BTCUSD": 50,
+                            "ETHUSD": 40,
+                            "EURUSD": 15,
+                            "GBPCAD": 18,
+                            "GBPUSD": 15,
+                            "NZDCAD": 12,
+                            "US500": 20,
+                            "USDCAD": 12,
+                            "USDJPY": 12,
+                            "XAUUSD": 25,
+                            "XRPUSD": 30,
+                            "default": 15
+                        },
+                        max_position_percentages: {
+                            "BTCUSD": 0.02,
+                            "ETHUSD": 0.02,
+                            "US500": 0.01,
+                            "USDCHF": 0.05,
+                            "XAUUSD": 0.03,
+                            "default": 0.05
+                        },
+                        risk_reduction_factors: {
+                            "AUDCAD": 0.7,
+                            "BTCUSD": 0.3,
+                            "ETHUSD": 0.3,
+                            "EURCAD": 0.7,
+                            "GBPCAD": 0.6,
+                            "NAS100": 0.2,
+                            "NZDCAD": 0.7,
+                            "US500": 0.2,
+                            "USDCAD": 0.8,
+                            "USDCHF": 0.6,
+                            "XAUUSD": 0.4,
+                            "XRPUSD": 0.3
+                        },
+                        spread_limits: {
+                            "AUDCAD": 10,
+                            "BTCUSD": 100,
+                            "ETHUSD": 50,
+                            "GBPCAD": 12,
+                            "NZDCAD": 12,
+                            "US500": 50,
+                            "USDCAD": 8,
+                            "USDCHF": 8,
+                            "XAUUSD": 15,
+                            "default": 5
+                        }
+                    },
+                    logging_settings: {
+                        format: "%(asctime)s - %(levelname)s - %(message)s",
+                        level: "INFO",
+                        log_file: "bm_robot.log"
                     }
                 };
                 
@@ -658,6 +1198,19 @@
                 document.getElementById('error-text').textContent = message;
                 errorElement.style.display = 'block';
                 setTimeout(() => errorElement.style.display = 'none', 8000);
+            }
+        }
+
+        function toggleCollapsible(element) {
+            element.classList.toggle('active');
+            const content = element.nextElementSibling;
+            
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                content.classList.remove('show');
+            } else {
+                content.style.display = 'block';
+                content.classList.add('show');
             }
         }
 
