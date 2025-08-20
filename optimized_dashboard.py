@@ -507,6 +507,293 @@ def start_background_tasks():
     maintenance_thread = threading.Thread(target=maintenance_task, daemon=True)
     maintenance_thread.start()
     logger.info("🧹 Background maintenance started")
+    
+    # Add these routes to your optimized_dashboard.py file
+# Insert them before the "if __name__ == '__main__':" line
+
+import re
+from collections import defaultdict
+
+@app.route('/api/enhanced_trade_analysis')
+def api_enhanced_trade_analysis():
+    """Provide comprehensive trade analysis including martingale and hedge performance"""
+    try:
+        # Get trade data
+        trades_data = list(data_store.trade_log)
+        
+        # Get current batch state
+        live_data = data_store.live_data
+        current_batches = live_data.get('batches', [])
+        
+        # Parse all trades to extract batch information
+        parsed_trades = []
+        for trade in trades_data:
+            parsed_info = parse_trade_comment_enhanced(trade.get('comment', '') or trade.get('enhanced_comment', ''))
+            parsed_trade = {**trade, **parsed_info}
+            parsed_trades.append(parsed_trade)
+        
+        # Initialize analysis structures
+        symbol_analysis = defaultdict(lambda: {'long': defaultdict(int), 'short': defaultdict(int)})
+        hedge_analysis = defaultdict(lambda: {'total': 0, 'profit': 0, 'volume': 0, 'trades': []})
+        batch_history = {}
+        layer_distribution = defaultdict(int)
+        
+        # Process each trade
+        for trade in parsed_trades:
+            symbol = trade.get('symbol')
+            direction = trade.get('direction')
+            is_hedge = trade.get('is_hedge', False)
+            layer = trade.get('layer', 1)
+            batch_id = trade.get('batch_id')
+            profit = trade.get('profit', 0)
+            volume = trade.get('volume', 0)
+            
+            if not symbol:
+                continue
+            
+            if is_hedge:
+                # Hedge analysis
+                hedge_data = hedge_analysis[symbol]
+                hedge_data['total'] += 1
+                hedge_data['profit'] += profit
+                hedge_data['volume'] += volume
+                hedge_data['trades'].append(trade)
+            else:
+                # Regular trade analysis
+                if direction in ['long', 'short']:
+                    dir_data = symbol_analysis[symbol][direction]
+                    dir_data['trades'] += 1
+                    dir_data['profit'] += profit
+                    dir_data['volume'] += volume
+                    dir_data['max_layer'] = max(dir_data.get('max_layer', 0), layer)
+                    
+                    # Track layers
+                    if 'layers' not in dir_data:
+                        dir_data['layers'] = []
+                    dir_data['layers'].append(layer)
+                    
+                    # Track batches
+                    if 'batches' not in dir_data:
+                        dir_data['batches'] = set()
+                    if batch_id:
+                        dir_data['batches'].add(batch_id)
+                    
+                    # Layer distribution
+                    layer_distribution[layer] += 1
+                    
+                    # Batch history
+                    if batch_id:
+                        batch_key = f"{symbol}_{direction}_{batch_id}"
+                        if batch_key not in batch_history:
+                            batch_history[batch_key] = {
+                                'symbol': symbol,
+                                'direction': direction,
+                                'batch_id': batch_id,
+                                'trades': [],
+                                'max_layer': 0,
+                                'total_profit': 0,
+                                'total_volume': 0,
+                                'start_time': trade.get('timestamp'),
+                                'end_time': trade.get('timestamp'),
+                                'is_active': False,
+                                'hedge_count': 0
+                            }
+                        
+                        batch_info = batch_history[batch_key]
+                        batch_info['trades'].append(trade)
+                        batch_info['max_layer'] = max(batch_info['max_layer'], layer)
+                        batch_info['total_profit'] += profit
+                        batch_info['total_volume'] += volume
+                        batch_info['end_time'] = trade.get('timestamp')
+        
+        # Check which batches are still active and count hedges
+        for batch in current_batches:
+            batch_id = batch.get('batch_id')
+            symbol = batch.get('symbol')
+            direction = batch.get('direction')
+            
+            if batch_id and symbol and direction:
+                batch_key = f"{symbol}_{direction}_{batch_id}"
+                if batch_key in batch_history:
+                    batch_history[batch_key]['is_active'] = True
+        
+        # Count hedge trades for each batch
+        for trade in parsed_trades:
+            if trade.get('is_hedge') and trade.get('batch_id'):
+                for batch_key, batch_info in batch_history.items():
+                    if batch_info['batch_id'] == trade.get('batch_id'):
+                        batch_info['hedge_count'] += 1
+        
+        # Convert sets to counts for JSON serialization
+        for symbol_data in symbol_analysis.values():
+            for direction_data in symbol_data.values():
+                if 'batches' in direction_data:
+                    direction_data['batch_count'] = len(direction_data['batches'])
+                    direction_data['batches'] = list(direction_data['batches'])
+        
+        # Calculate summary statistics
+        total_trades = len(parsed_trades)
+        martingale_trades = len([t for t in parsed_trades if t.get('layer', 1) > 1])
+        hedge_trades = len([t for t in parsed_trades if t.get('is_hedge', False)])
+        total_profit = sum(t.get('profit', 0) for t in parsed_trades)
+        
+        # Success rate analysis
+        completed_batches = [b for b in batch_history.values() if not b['is_active']]
+        winning_batches = len([b for b in completed_batches if b['total_profit'] > 0])
+        total_completed = len(completed_batches)
+        success_rate = (winning_batches / total_completed * 100) if total_completed > 0 else 0
+        
+        # Best performing pair
+        best_pair = None
+        best_profit = float('-inf')
+        for symbol, data in symbol_analysis.items():
+            symbol_profit = data['long']['profit'] + data['short']['profit']
+            if symbol_profit > best_profit:
+                best_profit = symbol_profit
+                best_pair = symbol
+        
+        return jsonify({
+            'summary': {
+                'total_trades': total_trades,
+                'martingale_trades': martingale_trades,
+                'hedge_trades': hedge_trades,
+                'total_profit': total_profit,
+                'success_rate': success_rate,
+                'winning_batches': winning_batches,
+                'total_batches': total_completed,
+                'best_pair': best_pair,
+                'best_profit': best_profit if best_pair else 0
+            },
+            'symbols': dict(symbol_analysis),
+            'hedges': dict(hedge_analysis),
+            'batches': batch_history,
+            'layer_distribution': dict(layer_distribution),
+            'current_batches': current_batches,
+            'analysis_timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        logger.error(f"Error in enhanced trade analysis: {e}")
+        return jsonify({"error": "Failed to analyze trades"}), 500
+
+def parse_trade_comment_enhanced(comment):
+    """Enhanced trade comment parser"""
+    if not comment:
+        return {'batch_id': None, 'direction': None, 'layer': 1, 'is_hedge': False}
+    
+    # Hedge patterns: HEDGE_B01_BTCUSD_SH, HEDGE_B01_BTCUSD_BH
+    hedge_pattern = r'HEDGE_B(\d+)_([A-Z0-9]+)_([BS])H'
+    hedge_match = re.search(hedge_pattern, comment)
+    
+    if hedge_match:
+        batch_id = int(hedge_match.group(1))
+        direction = 'long' if hedge_match.group(3) == 'B' else 'short'
+        return {'batch_id': batch_id, 'direction': direction, 'layer': 1, 'is_hedge': True}
+    
+    # Regular trade patterns: BM01_EURUSD_B01, BM04_GBPCAD_BL01
+    regular_pattern = r'BM(\d+)_([A-Z0-9]+)_([BS])L?(\d+)'
+    regular_match = re.search(regular_pattern, comment)
+    
+    if regular_match:
+        batch_id = int(regular_match.group(1))
+        direction = 'long' if regular_match.group(3) == 'B' else 'short'
+        layer = int(regular_match.group(4))
+        return {'batch_id': batch_id, 'direction': direction, 'layer': layer, 'is_hedge': False}
+    
+    # Fallback for other patterns
+    if 'HEDGE' in comment.upper():
+        return {'batch_id': None, 'direction': None, 'layer': 1, 'is_hedge': True}
+    
+    return {'batch_id': None, 'direction': None, 'layer': 1, 'is_hedge': False}
+
+# Optional: Add batch performance endpoint
+@app.route('/api/batch_performance/<int:batch_id>')
+def api_batch_performance(batch_id):
+    """Get detailed performance for a specific batch"""
+    try:
+        trades_data = list(data_store.trade_log)
+        
+        # Filter trades for this batch
+        batch_trades = []
+        hedge_trades = []
+        
+        for trade in trades_data:
+            parsed_info = parse_trade_comment_enhanced(trade.get('comment', '') or trade.get('enhanced_comment', ''))
+            if parsed_info['batch_id'] == batch_id:
+                if parsed_info['is_hedge']:
+                    hedge_trades.append({**trade, **parsed_info})
+                else:
+                    batch_trades.append({**trade, **parsed_info})
+        
+        if not batch_trades:
+            return jsonify({"error": "Batch not found"}), 404
+        
+        # Sort trades by layer
+        batch_trades.sort(key=lambda x: x.get('layer', 1))
+        
+        # Basic batch info
+        first_trade = batch_trades[0]
+        symbol = first_trade.get('symbol')
+        direction = first_trade.get('direction')
+        
+        # Calculate metrics
+        total_volume = sum(t.get('volume', 0) for t in batch_trades)
+        total_profit = sum(t.get('profit', 0) for t in batch_trades)
+        max_layer = max(t.get('layer', 1) for t in batch_trades)
+        
+        # Hedge analysis
+        hedge_volume = sum(t.get('volume', 0) for t in hedge_trades)
+        hedge_profit = sum(t.get('profit', 0) for t in hedge_trades)
+        
+        # Timeline
+        start_time = min(t.get('timestamp', '') for t in batch_trades)
+        end_time = max(t.get('timestamp', '') for t in batch_trades)
+        
+        # Calculate duration
+        duration_hours = 0
+        try:
+            start = datetime.fromisoformat(start_time.replace('Z', '+00:00'))
+            end = datetime.fromisoformat(end_time.replace('Z', '+00:00'))
+            duration_hours = (end - start).total_seconds() / 3600
+        except:
+            duration_hours = 0
+        
+        # Layer progression
+        layer_progression = []
+        for trade in batch_trades:
+            layer_progression.append({
+                'layer': trade.get('layer', 1),
+                'volume': trade.get('volume', 0),
+                'entry_price': trade.get('entry_price', 0),
+                'timestamp': trade.get('timestamp'),
+                'profit': trade.get('profit', 0)
+            })
+        
+        return jsonify({
+            'batch_id': batch_id,
+            'symbol': symbol,
+            'direction': direction,
+            'summary': {
+                'total_trades': len(batch_trades),
+                'total_volume': total_volume,
+                'total_profit': total_profit,
+                'max_layer': max_layer,
+                'start_time': start_time,
+                'end_time': end_time,
+                'duration_hours': round(duration_hours, 2),
+                'hedge_count': len(hedge_trades),
+                'hedge_volume': hedge_volume,
+                'hedge_profit': hedge_profit,
+                'net_profit': total_profit + hedge_profit
+            },
+            'layer_progression': layer_progression,
+            'hedge_trades': hedge_trades,
+            'batch_trades': batch_trades
+        })
+        
+    except Exception as e:
+        logger.error(f"Error analyzing batch {batch_id}: {e}")
+        return jsonify({"error": "Failed to analyze batch"}), 500
 
 if __name__ == '__main__':
     # Record start time
