@@ -1916,8 +1916,10 @@ class BotPersistence:
         self.backup_file = data_file + ".backup"
     
     def load_and_recover_state(self, trade_manager):
-        """Enhanced load state with bulletproof validation"""
+        """Enhanced load state with bulletproof validation and error handling"""
         try:
+            logger.info("🔄 STARTING ENHANCED STATE RECOVERY...")
+            
             # Create recovery system with validation
             recovery_system = EnhancedRecoverySystem(self, ACCOUNT_NUMBER)
             
@@ -1927,27 +1929,67 @@ class BotPersistence:
                 logger.info("🆕 No saved state found - starting fresh")
                 return True
             
+            logger.info(f"📁 Found saved state with {len(saved_state.get('batches', {}))} batches")
+            
             # Validate saved state integrity
             if not recovery_system.validate_saved_state_integrity(saved_state):
                 logger.error("❌ Saved state validation failed - starting fresh")
+                logger.warning("   Moving corrupted state to backup...")
+                try:
+                    import shutil
+                    backup_corrupted = f"{self.data_file}.corrupted_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+                    shutil.move(self.data_file, backup_corrupted)
+                    logger.info(f"   Corrupted state backed up to: {backup_corrupted}")
+                except Exception as e:
+                    logger.error(f"   Failed to backup corrupted state: {e}")
                 return True
             
             # Cross-validate with MT5
-            if not recovery_system.cross_validate_with_mt5(saved_state):
-                logger.warning("⚠️ MT5 cross-validation issues detected")
+            try:
+                if not recovery_system.cross_validate_with_mt5(saved_state):
+                    logger.warning("⚠️ MT5 cross-validation detected discrepancies")
+                    logger.warning("   Will proceed but prioritize MT5 reality")
+            except Exception as e:
+                logger.warning(f"⚠️ MT5 cross-validation failed: {e}")
+                logger.warning("   Proceeding with saved state only")
             
-            # Get current MT5 positions
-            mt5_positions = self.get_mt5_positions()
+            # Get current MT5 positions with enhanced error handling
+            try:
+                mt5_positions = self.get_mt5_positions()
+                logger.info(f"🔍 Found {len(mt5_positions)} MT5 positions to analyze")
+            except Exception as e:
+                logger.error(f"❌ Failed to get MT5 positions: {e}")
+                logger.warning("   Will attempt recovery without MT5 validation")
+                mt5_positions = []
             
-            # Perform intelligent recovery
-            recovered_batches = self.recover_batches(saved_state, mt5_positions, trade_manager)
-            
-            logger.info(f"🔄 Recovery complete: {len(recovered_batches)} batches restored")
-            return True
-            
+            # Perform intelligent recovery with enhanced error handling
+            try:
+                recovered_batches = self.recover_batches(saved_state, mt5_positions, trade_manager)
+                logger.info(f"✅ Recovery complete: {len(recovered_batches)} batches restored")
+                
+                # Update trade manager counters
+                trade_manager.next_batch_id = saved_state.get('next_batch_id', 1)
+                trade_manager.total_trades = saved_state.get('total_trades', 0)
+                trade_manager.initial_balance = saved_state.get('initial_balance')
+                
+                logger.info(f"📊 Recovery summary:")
+                logger.info(f"   Next batch ID: {trade_manager.next_batch_id}")
+                logger.info(f"   Total trades: {trade_manager.total_trades}")
+                logger.info(f"   Initial balance: ${trade_manager.initial_balance:.2f}" if trade_manager.initial_balance else "   Initial balance: Not set")
+                
+                return True
+                
+            except Exception as e:
+                logger.error(f"❌ Batch recovery failed: {e}")
+                logger.warning("   Attempting backup recovery...")
+                return self.try_backup_recovery(trade_manager)
+                
         except Exception as e:
-            logger.error(f"❌ Recovery failed: {e}")
-            return self.try_backup_recovery(trade_manager)
+            logger.error(f"❌ Critical recovery error: {e}")
+            logger.warning("   Starting fresh to avoid crashes")
+            import traceback
+            logger.error(f"   Detailed error: {traceback.format_exc()}")
+            return True  # Start fresh rather than crash
     
     
     def save_bot_state(self, trade_manager):
@@ -2016,6 +2058,62 @@ class BotPersistence:
             
         except Exception as e:
             logger.error(f"❌ Failed to save state: {e}")
+            return False
+        
+    
+    # ===== NEW VALIDATION METHOD =====
+    def validate_individual_batch(self, batch_key, batch_data):
+        """Validate individual batch data with detailed logging"""
+        try:
+            logger.debug(f"   Validating batch: {batch_key}")
+            
+            # Check required fields
+            required_fields = ['batch_id', 'symbol', 'direction', 'trades']
+            for field in required_fields:
+                if field not in batch_data:
+                    logger.warning(f"   Missing required field '{field}' in batch {batch_key}")
+                    return False
+            
+            # Validate batch ID
+            batch_id = batch_data.get('batch_id')
+            if not isinstance(batch_id, int) or batch_id <= 0:
+                logger.warning(f"   Invalid batch_id in {batch_key}: {batch_id}")
+                return False
+            
+            # Validate symbol
+            symbol = batch_data.get('symbol')
+            if not isinstance(symbol, str) or len(symbol) < 3:
+                logger.warning(f"   Invalid symbol in {batch_key}: {symbol}")
+                return False
+            
+            # Validate direction
+            direction = batch_data.get('direction')
+            if direction not in ['long', 'short']:
+                logger.warning(f"   Invalid direction in {batch_key}: {direction}")
+                return False
+            
+            # Validate trades array
+            trades = batch_data.get('trades', [])
+            if not isinstance(trades, list):
+                logger.warning(f"   Invalid trades data type in {batch_key}")
+                return False
+            
+            # Validate each trade
+            for i, trade in enumerate(trades):
+                if not isinstance(trade, dict):
+                    logger.warning(f"   Invalid trade #{i} in {batch_key}")
+                    return False
+                
+                # Check essential trade fields
+                if 'order_id' not in trade or 'volume' not in trade or 'entry_price' not in trade:
+                    logger.warning(f"   Missing essential fields in trade #{i} of {batch_key}")
+                    return False
+            
+            logger.debug(f"   ✅ Batch {batch_key} validation passed")
+            return True
+            
+        except Exception as e:
+            logger.warning(f"   ❌ Error validating batch {batch_key}: {e}")
             return False
     
     def load_and_recover_state(self, trade_manager):
@@ -2181,8 +2279,10 @@ class BotPersistence:
             logger.error(f"❌ Error parsing comment '{comment}': {e}")
             return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': False}
     
+    
+    # ===== ENHANCED BATCH RECOVERY WITH BETTER ERROR HANDLING =====
     def recover_batches(self, saved_state, mt5_positions, trade_manager):
-        """Intelligent batch recovery - merge saved state with MT5 reality including hedges"""
+        """Enhanced batch recovery with individual batch error handling"""
         try:
             recovered_batches = {}
             
@@ -2191,81 +2291,137 @@ class BotPersistence:
             hedge_positions = {}
             
             for pos in mt5_positions:
-                if pos.get('is_hedge'):
-                    # Store hedge positions separately
-                    if pos['batch_id']:
-                        hedge_positions[pos['batch_id']] = pos
-                elif pos['batch_id'] and pos['direction']:
-                    batch_key = f"{pos['symbol']}_{pos['direction']}"
-                    if batch_key not in mt5_batches:
-                        mt5_batches[batch_key] = []
-                    mt5_batches[batch_key].append(pos)
+                try:
+                    if pos.get('is_hedge'):
+                        # Store hedge positions separately
+                        if pos['batch_id']:
+                            hedge_positions[pos['batch_id']] = pos
+                    elif pos['batch_id'] and pos['direction']:
+                        batch_key = f"{pos['symbol']}_{pos['direction']}"
+                        if batch_key not in mt5_batches:
+                            mt5_batches[batch_key] = []
+                        mt5_batches[batch_key].append(pos)
+                except Exception as e:
+                    logger.warning(f"⚠️ Error processing MT5 position: {e}")
+                    continue
             
             logger.info(f"🔍 MT5 Analysis: Found {len(mt5_batches)} active batches, {len(hedge_positions)} hedges")
             
-            # Process each saved batch
+            # Process each saved batch individually with error handling
             for batch_key, saved_batch in saved_state.get('batches', {}).items():
-                logger.info(f"\n🔄 Recovering batch: {batch_key}")
-                
-                # Check if this batch still exists in MT5
-                if batch_key in mt5_batches:
-                    mt5_batch_positions = mt5_batches[batch_key]
+                try:
+                    logger.info(f"\n🔄 Recovering batch: {batch_key}")
                     
-                    # Reconstruct batch from MT5 positions
-                    recovered_batch = self.reconstruct_batch_from_mt5(
-                        saved_batch, mt5_batch_positions, trade_manager
-                    )
+                    # Validate batch data first
+                    if not self.validate_individual_batch(batch_key, saved_batch):
+                        logger.warning(f"⚠️ Skipping invalid batch: {batch_key}")
+                        continue
                     
-                    if recovered_batch:
-                        # Restore hedge information
-                        if saved_batch.get('active_hedge'):
-                            recovered_batch.active_hedge = saved_batch['active_hedge']
+                    # Check if this batch still exists in MT5
+                    if batch_key in mt5_batches:
+                        mt5_batch_positions = mt5_batches[batch_key]
                         
-                        if saved_batch.get('hedge_history'):
-                            recovered_batch.hedge_history = saved_batch['hedge_history']
-                        
-                        recovered_batches[batch_key] = recovered_batch
-                        
-                        # Check for missed martingale opportunities
-                        self.check_missed_layers(recovered_batch, mt5_batch_positions)
-                        
-                        logger.info(f"✅ Recovered: {batch_key} with {len(recovered_batch.trades)} active trades")
-                        
-                        # Log hedge status
-                        if recovered_batch.active_hedge:
-                            logger.info(f"   🛡️ Active hedge: {recovered_batch.active_hedge['direction']} {recovered_batch.active_hedge['volume']:.3f} lots")
+                        # Reconstruct batch from MT5 positions
+                        try:
+                            recovered_batch = self.reconstruct_batch_from_mt5(
+                                saved_batch, mt5_batch_positions, trade_manager
+                            )
+                            
+                            if recovered_batch:
+                                # Restore hedge information safely
+                                try:
+                                    if saved_batch.get('active_hedge'):
+                                        recovered_batch.active_hedge = saved_batch['active_hedge']
+                                        logger.debug(f"   Restored active hedge for {batch_key}")
+                                    
+                                    if saved_batch.get('hedge_history'):
+                                        recovered_batch.hedge_history = saved_batch['hedge_history']
+                                        logger.debug(f"   Restored hedge history for {batch_key}")
+                                except Exception as e:
+                                    logger.warning(f"⚠️ Failed to restore hedge info for {batch_key}: {e}")
+                                
+                                recovered_batches[batch_key] = recovered_batch
+                                
+                                # Check for missed martingale opportunities
+                                try:
+                                    self.check_missed_layers(recovered_batch, mt5_batch_positions)
+                                except Exception as e:
+                                    logger.warning(f"⚠️ Error checking missed layers for {batch_key}: {e}")
+                                
+                                logger.info(f"✅ Recovered: {batch_key} with {len(recovered_batch.trades)} active trades")
+                                
+                                # Log hedge status
+                                if hasattr(recovered_batch, 'active_hedge') and recovered_batch.active_hedge:
+                                    hedge_info = recovered_batch.active_hedge
+                                    logger.info(f"   🛡️ Active hedge: {hedge_info['direction']} {hedge_info['volume']:.3f} lots")
+                            else:
+                                logger.warning(f"⚠️ Failed to reconstruct: {batch_key}")
+                                
+                        except Exception as e:
+                            logger.error(f"❌ Error reconstructing batch {batch_key}: {e}")
+                            continue
+                            
                     else:
-                        logger.warning(f"⚠️ Failed to reconstruct: {batch_key}")
-                else:
-                    logger.info(f"🎯 Completed: {batch_key} (no MT5 positions found)")
+                        logger.info(f"🎯 Completed: {batch_key} (no MT5 positions found)")
+                        
+                except Exception as e:
+                    logger.error(f"❌ Critical error processing batch {batch_key}: {e}")
+                    logger.warning(f"   Skipping batch {batch_key} to prevent crash")
+                    continue
             
-            # Update trade manager
-            trade_manager.martingale_batches = recovered_batches
-            trade_manager.next_batch_id = saved_state.get('next_batch_id', 1)
-            trade_manager.total_trades = saved_state.get('total_trades', 0)
-            trade_manager.initial_balance = saved_state.get('initial_balance')
+            # Update trade manager safely
+            try:
+                trade_manager.martingale_batches = recovered_batches
+                logger.info(f"✅ Successfully updated trade manager with {len(recovered_batches)} batches")
+            except Exception as e:
+                logger.error(f"❌ Error updating trade manager: {e}")
+                # Don't fail - just log and continue
             
             return recovered_batches
             
         except Exception as e:
-            logger.error(f"❌ Error in batch recovery: {e}")
+            logger.error(f"❌ Critical error in batch recovery: {e}")
+            logger.warning("   Returning empty batches to prevent crash")
             return {}
+
     
+        # ===== ENHANCED BATCH RECONSTRUCTION =====
     def reconstruct_batch_from_mt5(self, saved_batch, mt5_positions, trade_manager):
-        """Reconstruct a batch from MT5 positions and saved data"""
+        """Enhanced batch reconstruction with better error handling"""
         try:
-            # Create new batch object
-            batch = MartingaleBatch(
-                symbol=saved_batch['symbol'],
-                direction=saved_batch['direction'],
-                initial_sl_distance=saved_batch['initial_sl_distance'],
-                entry_price=saved_batch['initial_entry_price']
-            )
+            logger.debug(f"   Reconstructing batch from MT5 positions...")
             
-            # Restore batch properties
-            batch.batch_id = saved_batch['batch_id']
-            batch.created_time = datetime.fromisoformat(saved_batch['created_time'])
-            batch.last_layer_time = datetime.fromisoformat(saved_batch['last_layer_time'])
+            # Create new batch object with validation
+            try:
+                batch = MartingaleBatch(
+                    symbol=saved_batch['symbol'],
+                    direction=saved_batch['direction'],
+                    initial_sl_distance=saved_batch.get('initial_sl_distance', 0.001),
+                    entry_price=saved_batch.get('initial_entry_price', 0)
+                )
+            except Exception as e:
+                logger.error(f"   Failed to create batch object: {e}")
+                return None
+            
+            # Restore batch properties safely
+            try:
+                batch.batch_id = saved_batch['batch_id']
+                
+                # Parse timestamps safely
+                try:
+                    batch.created_time = datetime.fromisoformat(saved_batch['created_time'])
+                except:
+                    batch.created_time = datetime.now()
+                    logger.warning(f"   Using current time for created_time")
+                
+                try:
+                    batch.last_layer_time = datetime.fromisoformat(saved_batch['last_layer_time'])
+                except:
+                    batch.last_layer_time = datetime.now()
+                    logger.warning(f"   Using current time for last_layer_time")
+                    
+            except Exception as e:
+                logger.warning(f"   Error restoring batch properties: {e}")
             
             # Reconstruct trades from MT5 positions
             batch.trades = []
@@ -2273,44 +2429,62 @@ class BotPersistence:
             batch.total_volume = 0
             batch.total_invested = 0
             
-            # Sort MT5 positions by layer
-            sorted_positions = sorted(mt5_positions, key=lambda x: x.get('layer', 0))
+            # Sort MT5 positions by layer safely
+            try:
+                sorted_positions = sorted(mt5_positions, key=lambda x: x.get('layer', 1))
+            except Exception as e:
+                logger.warning(f"   Error sorting positions: {e}")
+                sorted_positions = mt5_positions
             
             for pos in sorted_positions:
-                trade = {
-                    'order_id': pos['ticket'],
-                    'layer': pos.get('layer', 1),
-                    'volume': pos['volume'],
-                    'entry_price': pos['price_open'],
-                    'tp': pos['tp'],
-                    'sl': pos['sl'],
-                    'entry_time': datetime.fromtimestamp(pos['time']),
-                    'enhanced_comment': pos['comment'],
-                    'symbol': pos['symbol'],
-                    'direction': saved_batch['direction']
-                }
-                
-                batch.trades.append(trade)
-                batch.total_volume += trade['volume']
-                batch.total_invested += trade['volume'] * trade['entry_price']
-                batch.current_layer = max(batch.current_layer, trade['layer'])
+                try:
+                    trade = {
+                        'order_id': pos['ticket'],
+                        'layer': pos.get('layer', 1),
+                        'volume': pos['volume'],
+                        'entry_price': pos['price_open'],
+                        'tp': pos['tp'],
+                        'sl': pos['sl'],
+                        'entry_time': datetime.fromtimestamp(pos['time']) if pos.get('time') else datetime.now(),
+                        'enhanced_comment': pos.get('comment', ''),
+                        'symbol': pos['symbol'],
+                        'direction': saved_batch['direction']
+                    }
+                    
+                    batch.trades.append(trade)
+                    batch.total_volume += trade['volume']
+                    batch.total_invested += trade['volume'] * trade['entry_price']
+                    batch.current_layer = max(batch.current_layer, trade['layer'])
+                    
+                except Exception as e:
+                    logger.warning(f"   Error processing position {pos.get('ticket', 'unknown')}: {e}")
+                    continue
             
-            # Recalculate breakeven
-            if batch.total_volume > 0:
-                batch.breakeven_price = batch.total_invested / batch.total_volume
+            # Recalculate breakeven safely
+            try:
+                if batch.total_volume > 0:
+                    batch.breakeven_price = batch.total_invested / batch.total_volume
+                else:
+                    batch.breakeven_price = saved_batch.get('breakeven_price', 0)
+            except Exception as e:
+                logger.warning(f"   Error calculating breakeven: {e}")
+                batch.breakeven_price = 0
             
             # Update TP for all trades to ensure consistency
-            current_tp = batch.calculate_adaptive_batch_tp()
-            if current_tp:
-                batch.update_all_tps_with_retry(current_tp)
+            try:
+                current_tp = batch.calculate_adaptive_batch_tp()
+                if current_tp and batch.trades:
+                    batch.update_all_tps_with_retry(current_tp)
+            except Exception as e:
+                logger.warning(f"   Error updating batch TP: {e}")
             
-            logger.info(f"   Reconstructed: {batch.current_layer} layers, breakeven: {batch.breakeven_price:.5f}")
-            
+            logger.info(f"   ✅ Reconstructed: {batch.current_layer} layers, breakeven: {batch.breakeven_price:.5f}")
             return batch
             
         except Exception as e:
-            logger.error(f"❌ Error reconstructing batch: {e}")
+            logger.error(f"   ❌ Critical error reconstructing batch: {e}")
             return None
+
     
     def check_missed_layers(self, batch, mt5_positions):
         """Check if we missed any martingale opportunities while offline"""
@@ -2344,23 +2518,34 @@ class BotPersistence:
         except Exception as e:
             logger.error(f"❌ Error checking missed layers: {e}")
     
+        # Also add this method to safely handle backup recovery:
     def try_backup_recovery(self, trade_manager):
-        """Try to recover from backup file"""
+        """Enhanced backup recovery with safety checks"""
         try:
             if os.path.exists(self.backup_file):
                 logger.info("🔄 Attempting backup recovery...")
+                
+                # Temporarily switch to backup file
                 original_file = self.data_file
                 self.data_file = self.backup_file
-                result = self.load_and_recover_state(trade_manager)
-                self.data_file = original_file
-                return result
+                
+                try:
+                    result = self.load_and_recover_state(trade_manager)
+                    logger.info("✅ Backup recovery completed")
+                    return result
+                except Exception as e:
+                    logger.error(f"❌ Backup recovery also failed: {e}")
+                    return True  # Start fresh
+                finally:
+                    # Restore original file path
+                    self.data_file = original_file
             else:
                 logger.warning("⚠️ No backup file available")
-                return True  # Continue with fresh start
+                return True  # Start fresh
                 
         except Exception as e:
-            logger.error(f"❌ Backup recovery failed: {e}")
-            return True  # Continue with fresh start
+            logger.error(f"❌ Critical error in backup recovery: {e}")
+            return True  # Start fresh rather than crash
         
         # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 8 =====
 # Part 8: Enhanced Trade Manager with Hedging Support (Part 1)
