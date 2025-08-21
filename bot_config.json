@@ -45,73 +45,110 @@
     "AUDNZD",
     "NZDCAD",
     "US500",
-    "BTCUSD"
+    "BTCUSD",
+    "USDJPY",
+    "EURJPY",
+    "GBPJPY",
+    "EURAUD",
+    "EURGBP",
+    "AUDCHF",
+    "UK100"
   ],
   "pair_risk_profiles": {
     "AUDCAD": {
       "risk": "Low",
       "min_lot": 0.01,
-      "max_lot": 0.3
+      "max_lot": 0.03
     },
     "AUDNZD": {
       "risk": "Medium",
       "min_lot": 0.01,
-      "max_lot": 0.5
+      "max_lot": 0.03
     },
     "AUDUSD": {
       "risk": "Medium",
       "min_lot": 0.01,
-      "max_lot": 1
+      "max_lot": 0.03
+    },
+    "AUDCHF": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+        "max_lot": 0.03
     },
     "BTCUSD": {
       "risk": "Medium",
       "min_lot": 0.01,
-      "max_lot": 0.05
+      "max_lot": 0.03
+    },
+    "EURGBP": {
+      "risk": "Low",
+      "min_lot": 0.01,
+      "max_lot": 0.03
+     },
+    "EURJPY": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 0.03
+    },
+    "EURAUD": {
+      "risk": "Medium",
+      "min_lot": 0.01,
+      "max_lot": 0.03
     },
     "EURUSD": {
       "risk": "Medium",
       "min_lot": 0.01,
-      "max_lot": 1
+      "max_lot": 0.03
     },
     "GBPCAD": {
       "risk": "Low",
       "min_lot": 0.01,
-      "max_lot": 0.3
+      "max_lot": 0.03
+    },
+    "GBPJPY": {
+      "risk": "High",
+      "min_lot": 0.01,
+      "max_lot": 0.03
     },
     "GBPUSD": {
       "risk": "Medium",
       "min_lot": 0.01,
-      "max_lot": 1
+      "max_lot": 0.03
     },
     "NZDCAD": {
       "risk": "Low",
       "min_lot": 0.01,
-      "max_lot": 0.3
+      "max_lot": 0.03
     },
+    "UK100": {
+      "risk": "High",
+      "min_lot": 0.01,
+      "max_lot": 0.03
+     },
     "US500": {
       "risk": "High",
       "min_lot": 0.01,
-      "max_lot": 0.1
+      "max_lot": 0.03
     },
     "USDCAD": {
       "risk": "Low",
       "min_lot": 0.01,
-      "max_lot": 0.5
+      "max_lot": 0.03
     },
     "USDCHF": {
       "risk": "Medium",
       "min_lot": 0.01,
-      "max_lot": 0.5
+      "max_lot": 0.03
     },
     "USDJPY": {
       "risk": "Low",
       "min_lot": 0.01,
-      "max_lot": 1
+      "max_lot": 0.03
     },
     "XAUUSD": {
       "risk": "High",
       "min_lot": 0.01,
-      "max_lot": 0.2
+      "max_lot": 0.03
     }
   },
   "pair_trading_schedule": {
@@ -174,54 +211,92 @@
   "symbol_specific_settings": {
     "base_tp_targets": {
       "AUDCAD": 15,
+      "AUDCHF": 12,
       "AUDNZD": 10,
       "AUDUSD": 12,
       "BTCUSD": 50,
       "ETHUSD": 40,
+      "EURGBP": 10,
+      "EURJPY": 18,
+      "EURAUD": 15,
       "EURUSD": 15,
       "GBPCAD": 18,
+      "GBPJPY": 25,
       "GBPUSD": 15,
       "NZDCAD": 12,
+      "UK100": 25,
       "US500": 20,
       "USDCAD": 12,
-      "USDJPY": 12,
+      "USDJPY": 15,
       "XAUUSD": 25,
       "XRPUSD": 30,
       "default": 15
     },
     "max_position_percentages": {
+      "AUDCHF": 0.04,
       "BTCUSD": 0.02,
       "ETHUSD": 0.02,
+      "EURGBP": 0.05,
+      "EURJPY": 0.04,
+      "EURAUD": 0.04,
+      "GBPJPY": 0.02,
+      "UK100": 0.01,
       "US500": 0.01,
       "USDCHF": 0.05,
+      "USDJPY": 0.06,
       "XAUUSD": 0.03,
       "default": 0.05
     },
     "risk_reduction_factors": {
       "AUDCAD": 0.7,
+      "AUDCHF": 0.6,
       "BTCUSD": 0.3,
       "ETHUSD": 0.3,
+      "EURGBP": 0.8,
+      "EURJPY": 0.6,
+      "EURAUD": 0.6,
       "EURCAD": 0.7,
       "GBPCAD": 0.6,
+      "GBPJPY": 0.4,
       "NAS100": 0.2,
       "NZDCAD": 0.7,
+      "UK100": 0.2,
       "US500": 0.2,
       "USDCAD": 0.8,
       "USDCHF": 0.6,
+      "USDJPY": 0.7,
       "XAUUSD": 0.4,
       "XRPUSD": 0.3
     },
     "spread_limits": {
       "AUDCAD": 10,
+      "AUDCHF": 12,
       "BTCUSD": 100,
       "ETHUSD": 50,
+      "EURGBP": 8,
+      "EURJPY": 10,
+      "EURAUD": 12,
       "GBPCAD": 12,
+      "GBPJPY": 15,
       "NZDCAD": 12,
+      "UK100": 60,
       "US500": 50,
       "USDCAD": 8,
       "USDCHF": 8,
+      "USDJPY": 8,
       "XAUUSD": 15,
       "default": 5
+    },
+    "recommended_lot_sizes": {
+      "comment": "Based on performance analysis - Tier 1 performers",
+      "XAUUSD_BUY": 0.03,
+      "XAUUSD_SELL": 0.02,
+      "US500_BUY": 0.02,
+      "US500_SELL": 0.02,
+      "EURUSD_SELL": 0.02,
+      "GBPUSD_SELL": 0.02,
+      "USDCHF_BUY": 0.02,
+      "new_pairs_testing": 0.01
     }
   },
   "logging_settings": {
