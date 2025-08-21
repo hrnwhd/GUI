@@ -13,10 +13,6 @@ import json
 import os
 import requests
 import threading
-import psutil
-import signal
-import sys
-import threading
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -1008,645 +1004,6 @@ class HybridWebhookManager:
             
         return False
     
-    
-# protection protest upgrade
-
-# ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 6.5 =====
-# Part 6.5: Bulletproof Protection System (NEW)
-
-# ===== ENHANCED PROTECTION SYSTEM - BULLETPROOF FIXES =====
-# Add these enhanced functions to your existing code
-
-
-logger = logging.getLogger(__name__)
-
-# ===== SINGLETON INSTANCE PROTECTION =====
-class SingletonMT5Instance:
-    """Ensure only one instance of the bot runs and connects to correct account"""
-    
-    def __init__(self, target_account):
-        self.target_account = target_account
-        self.lock_file = f"bm_robot_lock_{target_account}.pid"
-        self.instance_locked = False
-        
-    def acquire_lock(self):
-        """Acquire exclusive lock for this account"""
-        try:
-            # Check if lock file exists
-            if os.path.exists(self.lock_file):
-                with open(self.lock_file, 'r') as f:
-                    old_pid = int(f.read().strip())
-                
-                # Check if process is still running
-                if psutil.pid_exists(old_pid):
-                    try:
-                        proc = psutil.Process(old_pid)
-                        if proc.is_running():
-                            logger.error(f"🚨 CRITICAL: Another bot instance is already running for account {self.target_account}")
-                            logger.error(f"   PID: {old_pid}, Process: {proc.name()}")
-                            logger.error(f"   Please stop the other instance before starting this one")
-                            return False
-                    except psutil.NoSuchProcess:
-                        pass  # Process died, remove stale lock
-                
-                # Remove stale lock file
-                os.remove(self.lock_file)
-                logger.info(f"Removed stale lock file for account {self.target_account}")
-            
-            # Create new lock file
-            with open(self.lock_file, 'w') as f:
-                f.write(str(os.getpid()))
-            
-            self.instance_locked = True
-            logger.info(f"✅ Instance lock acquired for account {self.target_account}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"❌ Failed to acquire instance lock: {e}")
-            return False
-    
-    def release_lock(self):
-        """Release the instance lock"""
-        try:
-            if self.instance_locked and os.path.exists(self.lock_file):
-                os.remove(self.lock_file)
-                self.instance_locked = False
-                logger.info(f"🔓 Instance lock released for account {self.target_account}")
-        except Exception as e:
-            logger.error(f"Error releasing lock: {e}")
-    
-    def __enter__(self):
-        if not self.acquire_lock():
-            raise RuntimeError(f"Cannot acquire exclusive lock for account {self.target_account}")
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.release_lock()
-
-# ===== ENHANCED MT5 CONNECTION MANAGER =====
-class EnhancedMT5Manager:
-    """Bulletproof MT5 connection management with account validation"""
-    
-    def __init__(self, target_account):
-        self.target_account = target_account
-        self.connection_attempts = 0
-        self.max_connection_attempts = 5
-        self.last_successful_connection = None
-        self.connection_health_check_interval = 30  # seconds
-        
-    def ensure_correct_account_connection(self):
-        """Ensure we're connected to the correct account with multiple validation layers"""
-        try:
-            logger.info(f"🔍 ACCOUNT VALIDATION: Target account {self.target_account}")
-            
-            # Step 1: Check if MT5 is initialized
-            if not mt5.terminal_info():
-                logger.warning("MT5 not initialized, attempting initialization...")
-                if not self.initialize_mt5_safely():
-                    return False
-            
-            # Step 2: Validate account connection
-            account_info = mt5.account_info()
-            if account_info is None:
-                logger.error("❌ Cannot get account info - MT5 connection invalid")
-                return self.reconnect_to_correct_account()
-            
-            # Step 3: Critical account number validation
-            current_account = account_info.login
-            if current_account != self.target_account:
-                logger.error(f"🚨 CRITICAL ACCOUNT MISMATCH!")
-                logger.error(f"   Expected: {self.target_account}")
-                logger.error(f"   Connected: {current_account}")
-                logger.error(f"   🔄 Attempting to reconnect to correct account...")
-                return self.reconnect_to_correct_account()
-            
-            # Step 4: Additional validation checks
-            if account_info.trade_allowed == False:
-                logger.error(f"❌ Trading not allowed on account {current_account}")
-                return False
-            
-            if account_info.balance <= 0:
-                logger.warning(f"⚠️ Zero balance on account {current_account}")
-            
-            # Step 5: Connection health validation
-            positions = mt5.positions_get()
-            if positions is None:
-                logger.warning("⚠️ Cannot retrieve positions - connection may be unstable")
-                return self.test_connection_stability()
-            
-            logger.info(f"✅ ACCOUNT VALIDATION PASSED:")
-            logger.info(f"   Account: {current_account}")
-            logger.info(f"   Balance: ${account_info.balance:.2f}")
-            logger.info(f"   Server: {account_info.server}")
-            logger.info(f"   Trading: {'Enabled' if account_info.trade_allowed else 'Disabled'}")
-            
-            self.last_successful_connection = datetime.now()
-            self.connection_attempts = 0
-            return True
-            
-        except Exception as e:
-            logger.error(f"❌ Account validation failed: {e}")
-            return False
-    
-    def initialize_mt5_safely(self):
-        """Safely initialize MT5 with multiple attempts"""
-        try:
-            # First, ensure any existing connection is closed
-            try:
-                mt5.shutdown()
-                time.sleep(2)  # Wait for clean shutdown
-            except:
-                pass
-            
-            logger.info("🔄 Initializing MT5 connection...")
-            
-            for attempt in range(self.max_connection_attempts):
-                try:
-                    if mt5.initialize():
-                        logger.info(f"✅ MT5 initialized successfully on attempt {attempt + 1}")
-                        
-                        # Validate we got the right account immediately
-                        account_info = mt5.account_info()
-                        if account_info and account_info.login == self.target_account:
-                            logger.info(f"✅ Connected to correct account: {self.target_account}")
-                            return True
-                        elif account_info:
-                            logger.error(f"❌ Wrong account connected: {account_info.login} (expected: {self.target_account})")
-                            mt5.shutdown()
-                            time.sleep(3)
-                        else:
-                            logger.error(f"❌ No account info available")
-                            mt5.shutdown()
-                            time.sleep(2)
-                    else:
-                        logger.warning(f"MT5 initialization attempt {attempt + 1} failed")
-                        time.sleep(3)
-                        
-                except Exception as e:
-                    logger.error(f"MT5 initialization attempt {attempt + 1} error: {e}")
-                    time.sleep(3)
-            
-            logger.error(f"❌ Failed to initialize MT5 after {self.max_connection_attempts} attempts")
-            return False
-            
-        except Exception as e:
-            logger.error(f"❌ Critical error in MT5 initialization: {e}")
-            return False
-    
-    def reconnect_to_correct_account(self):
-        """Force reconnection to the correct account"""
-        try:
-            logger.info(f"🔄 FORCE RECONNECTING to account {self.target_account}")
-            
-            # Step 1: Clean shutdown
-            try:
-                mt5.shutdown()
-                logger.info("🔌 MT5 connection closed")
-            except:
-                pass
-            
-            # Step 2: Kill any conflicting MT5 processes (if needed)
-            self.cleanup_conflicting_mt5_processes()
-            
-            # Step 3: Wait for clean state
-            time.sleep(5)
-            
-            # Step 4: Reinitialize
-            return self.initialize_mt5_safely()
-            
-        except Exception as e:
-            logger.error(f"❌ Reconnection failed: {e}")
-            return False
-    
-    def cleanup_conflicting_mt5_processes(self):
-        """Clean up any conflicting MT5 processes"""
-        try:
-            logger.info("🧹 Checking for conflicting MT5 processes...")
-            
-            mt5_processes = []
-            for proc in psutil.process_iter(['pid', 'name']):
-                try:
-                    if 'terminal64' in proc.info['name'].lower() or 'metatrader' in proc.info['name'].lower():
-                        mt5_processes.append(proc)
-                except (psutil.NoSuchProcess, psutil.AccessDenied):
-                    continue
-            
-            if mt5_processes:
-                logger.warning(f"⚠️ Found {len(mt5_processes)} MT5 processes running")
-                for proc in mt5_processes:
-                    logger.info(f"   PID: {proc.pid}, Name: {proc.info['name']}")
-                
-                # Don't automatically kill - just warn user
-                logger.warning("⚠️ Multiple MT5 instances detected!")
-                logger.warning("   Please ensure only one MT5 terminal is running for account consistency")
-            else:
-                logger.info("✅ No conflicting MT5 processes found")
-                
-        except Exception as e:
-            logger.error(f"Error checking MT5 processes: {e}")
-    
-    def test_connection_stability(self):
-        """Test if the MT5 connection is stable"""
-        try:
-            logger.info("🔍 Testing connection stability...")
-            
-            # Test multiple operations
-            tests_passed = 0
-            total_tests = 4
-            
-            # Test 1: Account info
-            try:
-                account_info = mt5.account_info()
-                if account_info and account_info.login == self.target_account:
-                    tests_passed += 1
-                    logger.debug("✅ Account info test passed")
-                else:
-                    logger.warning("❌ Account info test failed")
-            except Exception as e:
-                logger.warning(f"❌ Account info test error: {e}")
-            
-            # Test 2: Symbol info
-            try:
-                symbol_info = mt5.symbol_info("EURUSD")
-                if symbol_info:
-                    tests_passed += 1
-                    logger.debug("✅ Symbol info test passed")
-                else:
-                    logger.warning("❌ Symbol info test failed")
-            except Exception as e:
-                logger.warning(f"❌ Symbol info test error: {e}")
-            
-            # Test 3: Positions
-            try:
-                positions = mt5.positions_get()
-                if positions is not None:  # Can be empty list
-                    tests_passed += 1
-                    logger.debug("✅ Positions test passed")
-                else:
-                    logger.warning("❌ Positions test failed")
-            except Exception as e:
-                logger.warning(f"❌ Positions test error: {e}")
-            
-            # Test 4: Historical data
-            try:
-                rates = mt5.copy_rates_from_pos("EURUSD", mt5.TIMEFRAME_M1, 0, 10)
-                if rates is not None and len(rates) > 0:
-                    tests_passed += 1
-                    logger.debug("✅ Historical data test passed")
-                else:
-                    logger.warning("❌ Historical data test failed")
-            except Exception as e:
-                logger.warning(f"❌ Historical data test error: {e}")
-            
-            success_rate = (tests_passed / total_tests) * 100
-            logger.info(f"🔍 Connection stability: {tests_passed}/{total_tests} tests passed ({success_rate:.0f}%)")
-            
-            return success_rate >= 75  # Require 75% success rate
-            
-        except Exception as e:
-            logger.error(f"❌ Connection stability test failed: {e}")
-            return False
-
-# ===== ENHANCED RECOVERY SYSTEM =====
-class EnhancedRecoverySystem:
-    """Enhanced recovery system with stricter validation"""
-    
-    def __init__(self, persistence, target_account):
-        self.persistence = persistence
-        self.target_account = target_account
-        
-    def validate_saved_state_integrity(self, saved_state):
-        """Validate saved state for consistency and corruption"""
-        try:
-            logger.info("🔍 VALIDATING SAVED STATE INTEGRITY...")
-            
-            # Check required fields
-            required_fields = ['timestamp', 'account_number', 'magic_number', 'batches']
-            for field in required_fields:
-                if field not in saved_state:
-                    logger.error(f"❌ Missing required field: {field}")
-                    return False
-            
-            # Validate account consistency
-            if saved_state['account_number'] != self.target_account:
-                logger.error(f"🚨 ACCOUNT MISMATCH IN SAVED STATE!")
-                logger.error(f"   Saved: {saved_state['account_number']}")
-                logger.error(f"   Current: {self.target_account}")
-                return False
-            
-            # Check timestamp validity
-            try:
-                saved_time = datetime.fromisoformat(saved_state['timestamp'])
-                time_diff = (datetime.now() - saved_time).total_seconds()
-                
-                # If saved state is older than 24 hours, warn but don't reject
-                if time_diff > 86400:  # 24 hours
-                    logger.warning(f"⚠️ Saved state is {time_diff/3600:.1f} hours old")
-                    logger.warning("   Recovery may be less reliable for very old states")
-                
-                logger.info(f"✅ Saved state timestamp valid: {saved_time}")
-                
-            except Exception as e:
-                logger.error(f"❌ Invalid timestamp in saved state: {e}")
-                return False
-            
-            # Validate batch data structure
-            if not isinstance(saved_state['batches'], dict):
-                logger.error(f"❌ Invalid batches data structure")
-                return False
-            
-            # Validate each batch
-            for batch_key, batch_data in saved_state['batches'].items():
-                if not self.validate_batch_data(batch_key, batch_data):
-                    logger.error(f"❌ Invalid batch data: {batch_key}")
-                    return False
-            
-            logger.info(f"✅ SAVED STATE VALIDATION PASSED")
-            logger.info(f"   Account: {saved_state['account_number']}")
-            logger.info(f"   Batches: {len(saved_state['batches'])}")
-            logger.info(f"   Total trades: {sum(len(b.get('trades', [])) for b in saved_state['batches'].values())}")
-            
-            return True
-            
-        except Exception as e:
-            logger.error(f"❌ Saved state validation failed: {e}")
-            return False
-    
-    def validate_batch_data(self, batch_key, batch_data):
-        """Validate individual batch data"""
-        try:
-            required_batch_fields = ['batch_id', 'symbol', 'direction', 'trades']
-            for field in required_batch_fields:
-                if field not in batch_data:
-                    logger.warning(f"Missing batch field {field} in {batch_key}")
-                    return False
-            
-            # Validate trades array
-            if not isinstance(batch_data['trades'], list):
-                logger.warning(f"Invalid trades data in {batch_key}")
-                return False
-            
-            # Validate each trade
-            for i, trade in enumerate(batch_data['trades']):
-                if not isinstance(trade, dict):
-                    logger.warning(f"Invalid trade data at index {i} in {batch_key}")
-                    return False
-                
-                required_trade_fields = ['order_id', 'volume', 'entry_price']
-                for field in required_trade_fields:
-                    if field not in trade:
-                        logger.warning(f"Missing trade field {field} in {batch_key} trade {i}")
-                        return False
-            
-            return True
-            
-        except Exception as e:
-            logger.warning(f"Batch validation error for {batch_key}: {e}")
-            return False
-    
-    def cross_validate_with_mt5(self, saved_state):
-        """Cross-validate saved state with current MT5 positions"""
-        try:
-            logger.info("🔍 CROSS-VALIDATING WITH MT5...")
-            
-            # Get current MT5 positions
-            positions = mt5.positions_get()
-            if positions is None:
-                logger.warning("⚠️ Cannot get MT5 positions for validation")
-                return True  # Allow recovery to proceed
-            
-            # Filter our positions
-            our_positions = [pos for pos in positions if pos.magic == MAGIC_NUMBER]
-            
-            # Count expected vs actual positions
-            expected_trades = sum(len(batch.get('trades', [])) for batch in saved_state['batches'].values())
-            actual_positions = len(our_positions)
-            
-            logger.info(f"📊 POSITION COMPARISON:")
-            logger.info(f"   Expected from saved state: {expected_trades}")
-            logger.info(f"   Actual MT5 positions: {actual_positions}")
-            
-            # If significant mismatch, warn but don't block
-            if abs(expected_trades - actual_positions) > expected_trades * 0.3:  # 30% tolerance
-                logger.warning(f"⚠️ SIGNIFICANT POSITION MISMATCH!")
-                logger.warning(f"   This could indicate:")
-                logger.warning(f"   - Some trades were closed while bot was offline")
-                logger.warning(f"   - Saved state is outdated")
-                logger.warning(f"   - Manual intervention occurred")
-                logger.warning(f"   Recovery will proceed with MT5 reality as source of truth")
-            else:
-                logger.info(f"✅ Position count validation passed")
-            
-            return True
-            
-        except Exception as e:
-            logger.error(f"❌ MT5 cross-validation failed: {e}")
-            return True  # Don't block recovery on validation errors
-
-# ===== ENHANCED ERROR HANDLING AND MONITORING =====
-class EnhancedErrorHandler:
-    """Enhanced error handling with crash prevention"""
-    
-    def __init__(self):
-        self.error_counts = {}
-        self.last_errors = {}
-        self.critical_errors = []
-        self.system_health_score = 100
-        
-    def handle_error(self, error_type, error_msg, exc_info=None):
-        """Handle and categorize errors"""
-        try:
-            timestamp = datetime.now()
-            
-            # Categorize error severity
-            severity = self.categorize_error_severity(error_type, error_msg)
-            
-            # Log with appropriate level
-            if severity == 'CRITICAL':
-                logger.critical(f"🚨 CRITICAL ERROR [{error_type}]: {error_msg}")
-                self.critical_errors.append({
-                    'timestamp': timestamp,
-                    'type': error_type,
-                    'message': error_msg
-                })
-            elif severity == 'ERROR':
-                logger.error(f"❌ ERROR [{error_type}]: {error_msg}")
-            elif severity == 'WARNING':
-                logger.warning(f"⚠️ WARNING [{error_type}]: {error_msg}")
-            else:
-                logger.info(f"ℹ️ INFO [{error_type}]: {error_msg}")
-            
-            # Track error frequency
-            if error_type not in self.error_counts:
-                self.error_counts[error_type] = 0
-            self.error_counts[error_type] += 1
-            self.last_errors[error_type] = timestamp
-            
-            # Update system health score
-            self.update_system_health_score(severity)
-            
-            # Log detailed traceback for critical errors
-            if severity == 'CRITICAL' and exc_info:
-                import traceback
-                logger.critical(f"📋 CRITICAL ERROR TRACEBACK:\n{traceback.format_exc()}")
-            
-            # Determine if recovery action is needed
-            return self.should_trigger_recovery(error_type, severity)
-            
-        except Exception as e:
-            logger.error(f"Error in error handler: {e}")
-            return False
-    
-    def categorize_error_severity(self, error_type, error_msg):
-        """Categorize error severity"""
-        critical_keywords = [
-            'account mismatch', 'wrong account', 'critical', 'fatal', 
-            'cannot connect', 'initialization failed', 'corrupted'
-        ]
-        
-        error_keywords = [
-            'connection failed', 'timeout', 'execution failed', 
-            'invalid', 'unauthorized', 'insufficient funds'
-        ]
-        
-        warning_keywords = [
-            'retry', 'temporary', 'slow', 'high spread', 'warning'
-        ]
-        
-        error_lower = error_msg.lower()
-        
-        if any(keyword in error_lower for keyword in critical_keywords):
-            return 'CRITICAL'
-        elif any(keyword in error_lower for keyword in error_keywords):
-            return 'ERROR'
-        elif any(keyword in error_lower for keyword in warning_keywords):
-            return 'WARNING'
-        else:
-            return 'INFO'
-    
-    def update_system_health_score(self, severity):
-        """Update system health score based on errors"""
-        if severity == 'CRITICAL':
-            self.system_health_score = max(0, self.system_health_score - 20)
-        elif severity == 'ERROR':
-            self.system_health_score = max(0, self.system_health_score - 5)
-        elif severity == 'WARNING':
-            self.system_health_score = max(0, self.system_health_score - 1)
-        
-        # Gradual health recovery over time
-        if self.system_health_score < 100:
-            self.system_health_score = min(100, self.system_health_score + 0.1)
-    
-    def should_trigger_recovery(self, error_type, severity):
-        """Determine if error should trigger recovery"""
-        if severity == 'CRITICAL':
-            return True
-        
-        # Check error frequency
-        if error_type in self.error_counts:
-            if self.error_counts[error_type] >= 5:  # 5 of same error type
-                logger.warning(f"⚠️ Frequent errors of type {error_type}: {self.error_counts[error_type]}")
-                return True
-        
-        # Check system health
-        if self.system_health_score < 50:
-            logger.warning(f"⚠️ Low system health score: {self.system_health_score}")
-            return True
-        
-        return False
-    
-    def get_health_report(self):
-        """Get system health report"""
-        return {
-            'health_score': self.system_health_score,
-            'total_errors': sum(self.error_counts.values()),
-            'critical_errors': len(self.critical_errors),
-            'error_types': list(self.error_counts.keys()),
-            'last_critical': self.critical_errors[-1] if self.critical_errors else None
-        }
-
-# ===== ENHANCED HEARTBEAT MONITORING =====
-class HeartbeatMonitor:
-    """Monitor system health with heartbeat"""
-    
-    def __init__(self, trade_manager, mt5_manager):
-        self.trade_manager = trade_manager
-        self.mt5_manager = mt5_manager
-        self.last_heartbeat = datetime.now()
-        self.heartbeat_interval = 60  # seconds
-        self.monitoring_active = False
-        self.monitor_thread = None
-        
-    def start_monitoring(self):
-        """Start heartbeat monitoring in background thread"""
-        if self.monitoring_active:
-            return
-        
-        self.monitoring_active = True
-        self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
-        self.monitor_thread.start()
-        logger.info("💓 Heartbeat monitoring started")
-    
-    def stop_monitoring(self):
-        """Stop heartbeat monitoring"""
-        self.monitoring_active = False
-        if self.monitor_thread:
-            self.monitor_thread.join(timeout=5)
-        logger.info("💔 Heartbeat monitoring stopped")
-    
-    def _monitor_loop(self):
-        """Main monitoring loop"""
-        while self.monitoring_active:
-            try:
-                # Perform health checks
-                self.perform_health_checks()
-                
-                # Update heartbeat
-                self.last_heartbeat = datetime.now()
-                
-                # Sleep until next check
-                time.sleep(self.heartbeat_interval)
-                
-            except Exception as e:
-                logger.error(f"❌ Heartbeat monitoring error: {e}")
-                time.sleep(self.heartbeat_interval)
-    
-    def perform_health_checks(self):
-        """Perform comprehensive health checks"""
-        try:
-            # Check 1: MT5 connection
-            if not self.mt5_manager.ensure_correct_account_connection():
-                logger.error("💔 Heartbeat: MT5 connection failed")
-                return False
-            
-            # Check 2: Account validation
-            account_info = mt5.account_info()
-            if not account_info or account_info.login != self.mt5_manager.target_account:
-                logger.error("💔 Heartbeat: Account validation failed")
-                return False
-            
-            # Check 3: Trading permissions
-            if not account_info.trade_allowed:
-                logger.warning("💔 Heartbeat: Trading not allowed")
-            
-            # Check 4: Emergency stop status
-            if hasattr(self.trade_manager, 'emergency_stop_active') and self.trade_manager.emergency_stop_active:
-                logger.warning("💔 Heartbeat: Emergency stop active")
-            
-            # Check 5: System resources
-            import psutil
-            memory_percent = psutil.virtual_memory().percent
-            if memory_percent > 90:
-                logger.warning(f"💔 Heartbeat: High memory usage: {memory_percent:.1f}%")
-            
-            logger.debug("💓 Heartbeat: All systems healthy")
-            return True
-            
-        except Exception as e:
-            logger.error(f"💔 Heartbeat check failed: {e}")
-            return False  
-    
-    
     # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 6 =====
 # Part 6: Enhanced Martingale Batch Class with Hedging Support
 
@@ -1914,42 +1271,7 @@ class BotPersistence:
     def __init__(self, data_file="BM_bot_state.json"):
         self.data_file = data_file
         self.backup_file = data_file + ".backup"
-    
-    def load_and_recover_state(self, trade_manager):
-        """Enhanced load state with bulletproof validation"""
-        try:
-            # Create recovery system with validation
-            recovery_system = EnhancedRecoverySystem(self, ACCOUNT_NUMBER)
-            
-            # Try to load saved state
-            saved_state = self.load_saved_state()
-            if not saved_state:
-                logger.info("🆕 No saved state found - starting fresh")
-                return True
-            
-            # Validate saved state integrity
-            if not recovery_system.validate_saved_state_integrity(saved_state):
-                logger.error("❌ Saved state validation failed - starting fresh")
-                return True
-            
-            # Cross-validate with MT5
-            if not recovery_system.cross_validate_with_mt5(saved_state):
-                logger.warning("⚠️ MT5 cross-validation issues detected")
-            
-            # Get current MT5 positions
-            mt5_positions = self.get_mt5_positions()
-            
-            # Perform intelligent recovery
-            recovered_batches = self.recover_batches(saved_state, mt5_positions, trade_manager)
-            
-            logger.info(f"🔄 Recovery complete: {len(recovered_batches)} batches restored")
-            return True
-            
-        except Exception as e:
-            logger.error(f"❌ Recovery failed: {e}")
-            return self.try_backup_recovery(trade_manager)
-    
-    
+        
     def save_bot_state(self, trade_manager):
         """Save complete bot state after every trade execution"""
         try:
@@ -2118,8 +1440,7 @@ class BotPersistence:
             # - Hedge: HEDGE_B01_BTCUSD_SH or HEDGE_B01_BTCUSD_BH
             # - Close Hedge: CLOSE_HEDGE_B01
             
-            # Add account validation
-            if not comment or not comment.startswith(('BM', 'HEDGE_', 'CLOSE_HEDGE_')):
+            if not comment:
                 return {'batch_id': None, 'direction': None, 'layer': None, 'is_hedge': False}
             
             # Check if it's a hedge position
@@ -2383,11 +1704,6 @@ class EnhancedTradeManager:
         # Initialize persistence system
         self.persistence = BotPersistence()
         
-        self.error_handler = EnhancedErrorHandler()
-        self.mt5_manager = None
-        self.heartbeat_monitor = None
-        self.last_health_check = datetime.now()
-        
         # ✅ RECOVERY ON STARTUP
         logger.info("🔄 Attempting to recover previous state...")
         recovery_success = self.persistence.load_and_recover_state(self)
@@ -2395,26 +1711,10 @@ class EnhancedTradeManager:
             logger.info("✅ State recovery completed successfully")
         else:
             logger.warning("⚠️ State recovery failed - starting fresh")
-            
-    def ensure_mt5_connection_health(self):
-        """Ensure MT5 connection is healthy and connected to correct account"""
-        try:
-            if not self.mt5_manager:
-                self.mt5_manager = EnhancedMT5Manager(ACCOUNT_NUMBER)
-            
-            return self.mt5_manager.ensure_correct_account_connection()
-        except Exception as e:
-            self.error_handler.handle_error('MT5_CONNECTION', f"Connection health check failed: {e}")
-            return False
     
     def can_trade(self, symbol):
-        """Enhanced can_trade with connection validation"""
+        """Check if we can trade this symbol"""
         try:
-            # Add connection health check
-            if not self.ensure_mt5_connection_health():
-                self.error_handler.handle_error('CONNECTION', 'MT5 connection health check failed')
-                return False
-        
             # Check emergency stop
             if self.emergency_stop_active:
                 return False
@@ -3206,570 +2506,302 @@ def execute_martingale_trade(opportunity, trade_manager):
     return execute_trade(martingale_signal, trade_manager)
 
 def execute_trade(signal, trade_manager):
-    """Execute trade order with enhanced handling - VERSION 3 LOGIC with Bulletproof Protection"""
+    """Execute trade order with enhanced handling - VERSION 3 LOGIC with Hedging Support"""
+    symbol = signal['symbol']
+    direction = signal['direction']
     
-    # ===== ENHANCED ERROR HANDLING AND VALIDATION =====
-    try:
-        # Step 1: Account validation before execution
-        if hasattr(trade_manager, 'mt5_manager') and trade_manager.mt5_manager:
-            if not trade_manager.mt5_manager.ensure_correct_account_connection():
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('ACCOUNT_VALIDATION', 'Account validation failed before trade execution')
-                logger.error("❌ Account validation failed before trade execution")
-                return False
-        
-        symbol = signal['symbol']
-        direction = signal['direction']
-        
-        # Log lot size configuration for this trade
-        if signal.get('is_initial', True):  # Only for initial trades
-            logger.info(f"\n💰 LOT SIZE INFO for {symbol}:")
-            logger.info(f"   Mode: {LOT_SIZE_MODE}")
-            if LOT_SIZE_MODE == "MANUAL":
-                logger.info(f"   Manual lot: {MANUAL_LOT_SIZE}")
-            else:
-                logger.info(f"   Dynamic risk-based calculation")
-        
-        # ===== SYMBOL VALIDATION WITH ERROR HANDLING =====
-        try:
-            if not mt5.symbol_select(symbol, True):
-                error_msg = f"Failed to select symbol {symbol}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('SYMBOL_SELECTION', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-        except Exception as e:
-            error_msg = f"Error selecting symbol {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('SYMBOL_SELECTION', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== SYMBOL INFO VALIDATION =====
-        try:
-            symbol_info = mt5.symbol_info(symbol)
-            if symbol_info is None:
-                error_msg = f"Failed to get symbol info for {symbol}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('SYMBOL_INFO', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-        except Exception as e:
-            error_msg = f"Error getting symbol info for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('SYMBOL_INFO', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== PRICE DATA VALIDATION =====
-        try:
-            tick = mt5.symbol_info_tick(symbol)
-            if tick is None:
-                error_msg = f"Failed to get tick data for {symbol}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('TICK_DATA', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-        except Exception as e:
-            error_msg = f"Error getting tick data for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('TICK_DATA', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== SPREAD VALIDATION =====
-        try:
-            spread = tick.ask - tick.bid
-            spread_pips = spread / get_pip_size(symbol)
-            max_spread = SPREAD_LIMITS.get(symbol, SPREAD_LIMITS['default'])
-            
-            if spread_pips > max_spread:
-                error_msg = f"Spread too high for {symbol}: {spread_pips:.1f} pips (max: {max_spread})"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('HIGH_SPREAD', error_msg)
-                logger.warning(f"⚠️ {error_msg}")
-                return False
-        except Exception as e:
-            error_msg = f"Error validating spread for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('SPREAD_VALIDATION', error_msg)
-            logger.warning(f"⚠️ {error_msg}")
-            # Don't return False for spread validation errors - continue with trade
-        
-        # ===== ORDER TYPE AND PRICE DETERMINATION =====
-        try:
-            if direction == 'long':
-                order_type = mt5.ORDER_TYPE_BUY
-                price = tick.ask
-            else:
-                order_type = mt5.ORDER_TYPE_SELL
-                price = tick.bid
-        except Exception as e:
-            error_msg = f"Error determining order type/price for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('ORDER_PREPARATION', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== ACCOUNT INFO VALIDATION =====
-        try:
-            account_info = mt5.account_info()
-            if account_info is None:
-                error_msg = "Failed to get account info for position sizing"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('ACCOUNT_INFO', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-            
-            # Additional account validation
-            if account_info.login != ACCOUNT_NUMBER:
-                error_msg = f"Account mismatch during trade execution: {account_info.login} != {ACCOUNT_NUMBER}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('ACCOUNT_MISMATCH', error_msg)
-                logger.error(f"🚨 {error_msg}")
-                return False
-                
-        except Exception as e:
-            error_msg = f"Error getting account info: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('ACCOUNT_INFO', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== RISK CALCULATION WITH ERROR HANDLING =====
-        try:
-            risk_profile = signal['risk_profile']
-            params = PARAM_SETS[risk_profile]
-            
-            # Risk reduction in drawdown
-            base_risk_pct = params['risk_per_trade_pct']
-            if trade_manager.initial_balance:
-                current_dd = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
-                if current_dd > 5:
-                    base_risk_pct *= 0.5
-                    logger.info(f"Reducing risk due to {current_dd:.1f}% drawdown")
-            
-            risk_amount = account_info.balance * (base_risk_pct / 100)
-            
-        except Exception as e:
-            error_msg = f"Error calculating risk for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('RISK_CALCULATION', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== POSITION SIZING WITH ERROR HANDLING =====
-        try:
-            # Check if this is initial trade or martingale layer
-            is_martingale = not signal.get('is_initial', True)
-            layer = signal.get('layer', 1)
-            
-            # Enhanced comment generation
-            if is_martingale:
-                batch_key = f"{symbol}_{direction}"
-                if batch_key in trade_manager.martingale_batches:
-                    batch = trade_manager.martingale_batches[batch_key]
-                    batch_id = batch.batch_id
-                    actual_layer = batch.current_layer + 1
-                else:
-                    batch_id = 99
-                    actual_layer = layer
-            else:
-                batch_id = trade_manager.next_batch_id
-                actual_layer = 1
-            
-            batch_prefix = f"BM{batch_id:02d}"
-            direction_code = "B" if direction == 'long' else "S"
-            layer_suffix = f"{direction_code}{actual_layer:02d}"
-            enhanced_comment = f"{batch_prefix}_{symbol}_{layer_suffix}"
-            
-            # Enhanced position size calculation using VERSION 3 logic
-            if is_martingale:
-                batch_key = f"{symbol}_{direction}"
-                if batch_key in trade_manager.martingale_batches:
-                    batch = trade_manager.martingale_batches[batch_key]
-                    base_volume = batch.trades[0]['volume'] if batch.trades else 0.01
-                    position_size = calculate_position_size(
-                        symbol, signal['sl_distance_pips'], risk_amount, 
-                        is_martingale=True, base_volume=base_volume, layer=layer
-                    )
-                else:
-                    position_size = calculate_position_size(symbol, signal['sl_distance_pips'], risk_amount)
-            else:
-                # Initial trade: Uses either MANUAL or DYNAMIC based on LOT_SIZE_MODE
-                position_size = calculate_position_size(symbol, signal['sl_distance_pips'], risk_amount)
-            
-            if position_size <= 0:
-                error_msg = f"Invalid position size calculated: {position_size}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('POSITION_SIZE', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-                
-        except Exception as e:
-            error_msg = f"Error calculating position size for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('POSITION_SIZE', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== ORDER REQUEST PREPARATION =====
-        try:
-            # No SL - Build from first approach
-            sl = None
-            tp = signal.get('tp')
-            
-            # Create order request
-            request = {
-                "action": mt5.TRADE_ACTION_DEAL,
-                "symbol": symbol,
-                "volume": float(position_size),
-                "type": order_type,
-                "price": float(price),
-                "tp": float(tp) if tp else None,
-                "deviation": 20,
-                "magic": MAGIC_NUMBER,
-                "comment": enhanced_comment,
-                "type_time": mt5.ORDER_TIME_GTC,
-                "type_filling": mt5.ORDER_FILLING_IOC,
-            }
-            
-            # Remove None values
-            request = {k: v for k, v in request.items() if v is not None}
-            
-            logger.info(f"Order request: {symbol} {direction} Layer {layer} - {position_size} lots")
-            tp_display = f"{tp:.5f}" if tp else "None"
-            logger.info(f"  Price: {price:.5f}, NO SL, TP: {tp_display}")
-            logger.info(f"  Spread: {spread_pips:.1f} pips, Comment: {enhanced_comment}")
-            
-        except Exception as e:
-            error_msg = f"Error preparing order request for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('ORDER_PREPARATION', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== ENHANCED ORDER EXECUTION WITH SYMBOL-SPECIFIC HANDLING =====
-        result = None
-        execution_attempts = 0
-        max_execution_attempts = 3
-        
-        try:
-            if symbol == 'US500':
-                # Special handling for US500
-                filling_methods = [mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_FOK, mt5.ORDER_FILLING_RETURN]
-                logger.info(f"US500 detected - trying {len(filling_methods)} filling methods")
-                
-                for i, filling_method in enumerate(filling_methods):
-                    try:
-                        request["type_filling"] = filling_method
-                        logger.info(f"US500 Attempt {i+1}: Using filling method {filling_method}")
-                        result = mt5.order_send(request)
-                        
-                        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-                            logger.info(f"✅ US500 trade executed with filling method {filling_method}")
-                            break
-                        else:
-                            logger.warning(f"US500 Attempt {i+1} failed: {result.retcode if result else 'None'}")
-                            time.sleep(0.2)
-                    except Exception as e:
-                        error_msg = f"US500 filling method {i+1} error: {e}"
-                        if hasattr(trade_manager, 'error_handler'):
-                            trade_manager.error_handler.handle_error('US500_EXECUTION', error_msg)
-                        logger.warning(f"US500 Attempt {i+1} error: {e}")
-                else:
-                    error_msg = "All US500 filling methods failed"
-                    if hasattr(trade_manager, 'error_handler'):
-                        trade_manager.error_handler.handle_error('US500_EXECUTION', error_msg)
-                    logger.error(f"❌ {error_msg}")
-                    return False
-            
-            elif symbol == 'USDCHF':
-                # Special handling for USDCHF
-                logger.info("USDCHF detected - using conservative execution")
-                
-                # Try with tighter deviation first
-                request["deviation"] = 10
-                
-                for attempt in range(max_execution_attempts):
-                    try:
-                        result = mt5.order_send(request)
-                        
-                        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-                            logger.info(f"✅ USDCHF trade executed on attempt {attempt+1}")
-                            break
-                        elif result and result.retcode == mt5.TRADE_RETCODE_INVALID_VOLUME:
-                            # Try with smaller volume
-                            new_volume = max(symbol_info.volume_min, position_size * 0.5)
-                            request["volume"] = float(new_volume)
-                            logger.info(f"USDCHF retry {attempt+1} with volume {new_volume}")
-                        else:
-                            logger.warning(f"USDCHF attempt {attempt+1} failed: {result.retcode if result else 'None'}")
-                            time.sleep(0.5)
-                    except Exception as e:
-                        error_msg = f"USDCHF attempt {attempt+1} error: {e}"
-                        if hasattr(trade_manager, 'error_handler'):
-                            trade_manager.error_handler.handle_error('USDCHF_EXECUTION', error_msg)
-                        logger.warning(f"USDCHF attempt {attempt+1} error: {e}")
-                        time.sleep(0.5)
-                else:
-                    error_msg = "USDCHF execution failed after all attempts"
-                    if hasattr(trade_manager, 'error_handler'):
-                        trade_manager.error_handler.handle_error('USDCHF_EXECUTION', error_msg)
-                    logger.error(f"❌ {error_msg}")
-                    return False
-            
-            else:
-                # Standard execution for other symbols
-                for attempt in range(max_execution_attempts):
-                    execution_attempts += 1
-                    try:
-                        result = mt5.order_send(request)
-                        
-                        if result is None:
-                            error_msg = f"Attempt {attempt+1}: Order send returned None"
-                            if hasattr(trade_manager, 'error_handler'):
-                                trade_manager.error_handler.handle_error('ORDER_SEND', error_msg)
-                            logger.error(f"❌ {error_msg}")
-                            continue
-                            
-                        if result.retcode == mt5.TRADE_RETCODE_DONE:
-                            logger.info(f"✅ Trade executed: {symbol} {direction} - {position_size} lots")
-                            break
-                            
-                        elif result.retcode == mt5.TRADE_RETCODE_INVALID_VOLUME:
-                            # Volume adjustment logic
-                            if attempt == 0:
-                                new_volume = symbol_info.volume_min if symbol_info else 0.01
-                            elif attempt == 1:
-                                new_volume = 0.1
-                            else:
-                                new_volume = 0.01
-                            
-                            request["volume"] = float(new_volume)
-                            logger.info(f"Volume retry {attempt+1}: {new_volume}")
-                            
-                        elif result.retcode == mt5.TRADE_RETCODE_INVALID_STOPS:
-                            logger.warning(f"Invalid stops, removing TP")
-                            request.pop("tp", None)
-                            
-                        elif result.retcode == mt5.TRADE_RETCODE_NO_MONEY:
-                            error_msg = "Insufficient funds"
-                            if hasattr(trade_manager, 'error_handler'):
-                                trade_manager.error_handler.handle_error('INSUFFICIENT_FUNDS', error_msg)
-                            logger.error(f"❌ {error_msg}")
-                            return False
-                            
-                        else:
-                            error_msg = f"Order failed with retcode: {result.retcode}"
-                            if hasattr(trade_manager, 'error_handler'):
-                                trade_manager.error_handler.handle_error('ORDER_EXECUTION', error_msg)
-                            logger.error(f"❌ {error_msg}")
-                            
-                        time.sleep(0.5)
-                        
-                    except Exception as e:
-                        error_msg = f"Order execution attempt {attempt+1} error: {e}"
-                        if hasattr(trade_manager, 'error_handler'):
-                            trade_manager.error_handler.handle_error('ORDER_EXECUTION', error_msg)
-                        logger.error(f"❌ {error_msg}")
-                        time.sleep(0.5)
-                else:
-                    error_msg = f"All execution attempts failed for {symbol} after {execution_attempts} attempts"
-                    if hasattr(trade_manager, 'error_handler'):
-                        trade_manager.error_handler.handle_error('ORDER_EXECUTION', error_msg)
-                    logger.error(f"❌ {error_msg}")
-                    return False
-                    
-        except Exception as e:
-            error_msg = f"Critical error during order execution for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('CRITICAL_EXECUTION', error_msg, exc_info=True)
-            logger.error(f"🚨 {error_msg}")
-            return False
-        
-        # ===== RESULT VALIDATION =====
-        try:
-            # Ensure result is valid before proceeding
-            if not result or result.retcode != mt5.TRADE_RETCODE_DONE:
-                error_msg = f"Trade execution failed for {symbol}: {result.retcode if result else 'No result'}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('EXECUTION_VALIDATION', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-            
-            # Validate result data
-            if not hasattr(result, 'order') or not hasattr(result, 'price') or not hasattr(result, 'volume'):
-                error_msg = f"Invalid result object for {symbol}: missing required fields"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('RESULT_VALIDATION', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-                
-        except Exception as e:
-            error_msg = f"Error validating execution result for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('RESULT_VALIDATION', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== TRADE INFO PREPARATION =====
-        try:
-            # Calculate SL distance
-            sl_distance_value = signal.get('sl_distance')
-            if sl_distance_value is None:
-                sl_distance_pips = signal.get('sl_distance_pips', 20)
-                sl_distance_value = sl_distance_pips * get_pip_size(symbol)
-            
-            trade_info = {
-                'symbol': symbol,
-                'direction': direction,
-                'entry_price': result.price,
-                'sl': None,
-                'tp': tp,
-                'volume': result.volume,
-                'order_id': result.order,
-                'sl_distance': sl_distance_value,
-                'layer': layer,
-                'is_martingale': is_martingale,
-                'enhanced_comment': enhanced_comment,
-                'sl_distance_pips': signal.get('sl_distance_pips', 20),
-                'tp_distance_pips': signal.get('tp_distance_pips', 0),
-                'risk_profile': signal.get('risk_profile', 'High'),
-                'adx_value': signal.get('adx_value', 0),
-                'rsi': signal.get('rsi', 0),
-                'timeframes_aligned': signal.get('timeframes_aligned', 1),
-                'execution_attempts': execution_attempts
-            }
-            
-        except Exception as e:
-            error_msg = f"Error preparing trade info for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('TRADE_INFO', error_msg)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== ADD TRADE TO MANAGER =====
-        try:
-            success = trade_manager.add_trade(trade_info)
-            if not success:
-                error_msg = f"Failed to add trade to manager for {symbol}"
-                if hasattr(trade_manager, 'error_handler'):
-                    trade_manager.error_handler.handle_error('TRADE_MANAGER', error_msg)
-                logger.error(f"❌ {error_msg}")
-                return False
-                
-        except Exception as e:
-            error_msg = f"Error adding trade to manager for {symbol}: {e}"
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('TRADE_MANAGER', error_msg, exc_info=True)
-            logger.error(f"❌ {error_msg}")
-            return False
-        
-        # ===== EXECUTION SUMMARY =====
-        try:
-            logger.info(f"📊 EXECUTION SUMMARY:")
-            logger.info(f"   Symbol: {symbol}, Direction: {direction}")
-            logger.info(f"   Volume: {result.volume} (Mode: {LOT_SIZE_MODE})")
-            logger.info(f"   Price: {result.price:.5f}")
-            logger.info(f"   Order ID: {result.order}")
-            logger.info(f"   Account: {account_info.login}")
-            logger.info(f"   Execution Attempts: {execution_attempts}")
-            
-            # Log success to error handler for statistics
-            if hasattr(trade_manager, 'error_handler'):
-                trade_manager.error_handler.handle_error('TRADE_SUCCESS', f"Trade executed successfully: {symbol} {direction}")
-                
-        except Exception as e:
-            logger.warning(f"Error logging execution summary: {e}")
-        
-        return True
-        
-    except KeyboardInterrupt:
-        logger.info("🛑 Trade execution interrupted by user")
-        raise
-        
-    except Exception as e:
-        # Final catch-all error handling
-        error_msg = f"Critical error in execute_trade for {signal.get('symbol', 'Unknown')}: {e}"
-        if hasattr(trade_manager, 'error_handler'):
-            trade_manager.error_handler.handle_error('CRITICAL_TRADE_ERROR', error_msg, exc_info=True)
-        
-        logger.error(f"🚨 {error_msg}")
-        
-        # Log detailed traceback for debugging
-        import traceback
-        logger.error(f"📋 DETAILED TRACEBACK:\n{traceback.format_exc()}")
-        
+    # Log lot size configuration for this trade
+    if signal.get('is_initial', True):  # Only for initial trades
+        logger.info(f"\n💰 LOT SIZE INFO for {symbol}:")
+        logger.info(f"   Mode: {LOT_SIZE_MODE}")
+        if LOT_SIZE_MODE == "MANUAL":
+            logger.info(f"   Manual lot: {MANUAL_LOT_SIZE}")
+        else:
+            logger.info(f"   Dynamic risk-based calculation")
+    
+    # Validate symbol
+    if not mt5.symbol_select(symbol, True):
+        logger.error(f"Failed to select symbol {symbol}")
         return False
+    
+    # Get symbol info for validation
+    symbol_info = mt5.symbol_info(symbol)
+    if symbol_info is None:
+        logger.error(f"Failed to get symbol info for {symbol}")
+        return False
+    
+    # Get current prices
+    tick = mt5.symbol_info_tick(symbol)
+    if tick is None:
+        logger.error(f"Failed to get tick data for {symbol}")
+        return False
+    
+    # Enhanced spread checking with symbol-specific limits from config
+    spread = tick.ask - tick.bid
+    spread_pips = spread / get_pip_size(symbol)
+    
+    max_spread = SPREAD_LIMITS.get(symbol, SPREAD_LIMITS['default'])
+    
+    if spread_pips > max_spread:
+        logger.warning(f"Spread too high for {symbol}: {spread_pips:.1f} pips (max: {max_spread})")
+        return False
+    
+    # Determine order type and price
+    if direction == 'long':
+        order_type = mt5.ORDER_TYPE_BUY
+        price = tick.ask
+    else:
+        order_type = mt5.ORDER_TYPE_SELL
+        price = tick.bid
+    
+    # Enhanced position size calculation
+    account_info = mt5.account_info()
+    if account_info is None:
+        return False
+    
+    risk_profile = signal['risk_profile']
+    params = PARAM_SETS[risk_profile]
+    
+    # Risk reduction in drawdown
+    base_risk_pct = params['risk_per_trade_pct']
+    if trade_manager.initial_balance:
+        current_dd = ((trade_manager.initial_balance - account_info.equity) / trade_manager.initial_balance) * 100
+        if current_dd > 5:
+            base_risk_pct *= 0.5
+            logger.info(f"Reducing risk due to {current_dd:.1f}% drawdown")
+    
+    risk_amount = account_info.balance * (base_risk_pct / 100)
+    
+    # Check if this is initial trade or martingale layer
+    is_martingale = not signal.get('is_initial', True)
+    layer = signal.get('layer', 1)
+    
+    # Enhanced comment generation
+    if is_martingale:
+        batch_key = f"{symbol}_{direction}"
+        if batch_key in trade_manager.martingale_batches:
+            batch = trade_manager.martingale_batches[batch_key]
+            batch_id = batch.batch_id
+            actual_layer = batch.current_layer + 1
+        else:
+            batch_id = 99
+            actual_layer = layer
+    else:
+        batch_id = trade_manager.next_batch_id
+        actual_layer = 1
+    
+    batch_prefix = f"BM{batch_id:02d}"
+    direction_code = "B" if direction == 'long' else "S"
+    layer_suffix = f"{direction_code}{actual_layer:02d}"
+    enhanced_comment = f"{batch_prefix}_{symbol}_{layer_suffix}"
+    
+    # Enhanced position size calculation using VERSION 3 logic
+    if is_martingale:
+        batch_key = f"{symbol}_{direction}"
+        if batch_key in trade_manager.martingale_batches:
+            batch = trade_manager.martingale_batches[batch_key]
+            base_volume = batch.trades[0]['volume'] if batch.trades else 0.01
+            position_size = calculate_position_size(
+                symbol, signal['sl_distance_pips'], risk_amount, 
+                is_martingale=True, base_volume=base_volume, layer=layer
+            )
+        else:
+            position_size = calculate_position_size(symbol, signal['sl_distance_pips'], risk_amount)
+    else:
+        # Initial trade: Uses either MANUAL or DYNAMIC based on LOT_SIZE_MODE
+        position_size = calculate_position_size(symbol, signal['sl_distance_pips'], risk_amount)
+    
+    if position_size <= 0:
+        logger.error(f"Invalid position size: {position_size}")
+        return False
+    
+    # No SL - Build from first approach
+    sl = None
+    tp = signal.get('tp')
+    
+    # Create order request
+    request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "symbol": symbol,
+        "volume": float(position_size),
+        "type": order_type,
+        "price": float(price),
+        "tp": float(tp) if tp else None,
+        "deviation": 20,
+        "magic": MAGIC_NUMBER,
+        "comment": enhanced_comment,
+        "type_time": mt5.ORDER_TIME_GTC,
+        "type_filling": mt5.ORDER_FILLING_IOC,
+    }
+    
+    # Remove None values
+    request = {k: v for k, v in request.items() if v is not None}
+    
+    logger.info(f"Order request: {symbol} {direction} Layer {layer} - {position_size} lots")
+    tp_display = f"{tp:.5f}" if tp else "None"
+    logger.info(f"  Price: {price:.5f}, NO SL, TP: {tp_display}")
+    logger.info(f"  Spread: {spread_pips:.1f} pips, Comment: {enhanced_comment}")
+    
+    # Enhanced order execution with symbol-specific handling
+    result = None
+    
+    if symbol == 'US500':
+        # Special handling for US500
+        filling_methods = [mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_FOK, mt5.ORDER_FILLING_RETURN]
+        logger.info(f"US500 detected - trying {len(filling_methods)} filling methods")
+        
+        for i, filling_method in enumerate(filling_methods):
+            request["type_filling"] = filling_method
+            result = mt5.order_send(request)
+            
+            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                logger.info(f"✅ US500 trade executed with method {filling_method}")
+                break
+            else:
+                logger.warning(f"US500 attempt {i+1} failed: {result.retcode if result else 'None'}")
+                time.sleep(0.2)
+        else:
+            logger.error("All US500 filling methods failed")
+            return False
+    
+    elif symbol == 'USDCHF':
+        # Special handling for USDCHF
+        logger.info("USDCHF detected - using conservative execution")
+        
+        # Try with tighter deviation first
+        request["deviation"] = 10
+        
+        for attempt in range(3):
+            result = mt5.order_send(request)
+            
+            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                logger.info(f"✅ USDCHF trade executed on attempt {attempt+1}")
+                break
+            elif result and result.retcode == mt5.TRADE_RETCODE_INVALID_VOLUME:
+                # Try with smaller volume
+                new_volume = max(symbol_info.volume_min, position_size * 0.5)
+                request["volume"] = float(new_volume)
+                logger.info(f"USDCHF retry {attempt+1} with volume {new_volume}")
+            else:
+                logger.warning(f"USDCHF attempt {attempt+1} failed: {result.retcode if result else 'None'}")
+                time.sleep(0.5)
+        else:
+            logger.error("USDCHF execution failed after all attempts")
+            return False
+    
+    else:
+        # Standard execution for other symbols
+        for attempt in range(3):
+            result = mt5.order_send(request)
+            
+            if result is None:
+                logger.error(f"Attempt {attempt+1}: Order send returned None")
+                continue
+                
+            if result.retcode == mt5.TRADE_RETCODE_DONE:
+                logger.info(f"✅ Trade executed: {symbol} {direction} - {position_size} lots")
+                break
+                
+            elif result.retcode == mt5.TRADE_RETCODE_INVALID_VOLUME:
+                # Volume adjustment logic
+                if attempt == 0:
+                    new_volume = symbol_info.volume_min if symbol_info else 0.01
+                elif attempt == 1:
+                    new_volume = 0.1
+                else:
+                    new_volume = 0.01
+                
+                request["volume"] = float(new_volume)
+                logger.info(f"Volume retry {attempt+1}: {new_volume}")
+                
+            elif result.retcode == mt5.TRADE_RETCODE_INVALID_STOPS:
+                logger.warning(f"Invalid stops, removing TP")
+                request.pop("tp", None)
+                
+            elif result.retcode == mt5.TRADE_RETCODE_NO_MONEY:
+                logger.error("Insufficient funds")
+                return False
+                
+            else:
+                logger.error(f"Order failed: {result.retcode}")
+                
+            time.sleep(0.5)
+        else:
+            logger.error(f"All execution attempts failed for {symbol}")
+            return False
+    
+    # Ensure result is valid before proceeding
+    if not result or result.retcode != mt5.TRADE_RETCODE_DONE:
+        logger.error(f"Trade execution failed for {symbol}")
+        return False
+    
+    # Add trade to manager
+    sl_distance_value = signal.get('sl_distance')
+    if sl_distance_value is None:
+        sl_distance_pips = signal.get('sl_distance_pips', 20)
+        sl_distance_value = sl_distance_pips * get_pip_size(symbol)
+    
+    trade_info = {
+        'symbol': symbol,
+        'direction': direction,
+        'entry_price': result.price,
+        'sl': None,
+        'tp': tp,
+        'volume': result.volume,
+        'order_id': result.order,
+        'sl_distance': sl_distance_value,
+        'layer': layer,
+        'is_martingale': is_martingale
+    }
+    
+    trade_manager.add_trade(trade_info)
+    
+    # Log execution summary
+    logger.info(f"📊 EXECUTION SUMMARY:")
+    logger.info(f"   Symbol: {symbol}, Direction: {direction}")
+    logger.info(f"   Volume: {result.volume} (Mode: {LOT_SIZE_MODE})")
+    logger.info(f"   Price: {result.price:.5f}")
+    logger.info(f"   Order ID: {result.order}")
+    
+    return True
 
 # ===== BM TRADING ROBOT WITH HEDGING SYSTEM - SECTION 11 =====
 # Part 11: Main Robot Function and Configuration Helpers
+
 def run_simplified_robot():
-    """Enhanced robot with bulletproof protection"""
+    """Run the simplified trading robot with enhanced error handling and hedging support"""
+    logger.info("="*60)
+    logger.info("BM TRADING ROBOT STARTED - VERSION 3 WITH HEDGING SYSTEM")
+    logger.info("="*60)
+    logger.info(f"Primary Timeframe: {CONFIG['timeframe_settings']['global_timeframe']}")
+    logger.info(f"Pairs: {len(PAIRS)}")
+    logger.info(f"Martingale: {MARTINGALE_ENABLED}")
+    logger.info(f"Lot Size Mode: {LOT_SIZE_MODE}")
+    logger.info(f"Hedging: {HEDGING_ENABLED}")
     
-    # Initialize protection systems
-    singleton_instance = None
-    mt5_manager = None
-    error_handler = EnhancedErrorHandler()
-    heartbeat_monitor = None
+    # Log configuration status
+    logger.info(f"Configuration loaded from: bot_config.json")
+    logger.info("="*60)
+    
+    # Initialize MT5
+    if not mt5.initialize():
+        logger.error("MT5 initialization failed")
+        return
+    
+    # Validate connection
+    account_info = mt5.account_info()
+    if account_info is None:
+        logger.error("Failed to get account info")
+        mt5.shutdown()
+        return
+    
+    logger.info(f"Connected to account: {account_info.login}")
+    logger.info(f"Balance: ${account_info.balance:.2f}")
+    
+    # Initialize trade manager - ENHANCED VERSION WITH RECOVERY AND HEDGING
+    trade_manager = EnhancedTradeManager()
     
     try:
-        logger.info("="*70)
-        logger.info("🚀 BM TRADING ROBOT - BULLETPROOF VERSION")
-        logger.info("="*70)
-        logger.info(f"🎯 Target Account: {ACCOUNT_NUMBER}")
-        logger.info(f"🔧 Timeframe: {CONFIG['timeframe_settings']['global_timeframe']}")
-        logger.info(f"📊 Pairs: {len(PAIRS)}")
-        logger.info(f"🔄 Martingale: {MARTINGALE_ENABLED}")
-        logger.info(f"💰 Lot Size: {LOT_SIZE_MODE}")
-        logger.info(f"🛡️ Hedging: {HEDGING_ENABLED}")
-        logger.info("="*70)
-        
-        # STEP 1: Singleton protection
-        logger.info("🔒 STEP 1: Acquiring singleton instance lock...")
-        singleton_instance = SingletonMT5Instance(ACCOUNT_NUMBER)
-        
-        if not singleton_instance.acquire_lock():
-            logger.error("🚨 CRITICAL: Another instance already running!")
-            logger.error("   Stop the other instance first")
-            return
-        
-        logger.info("✅ Singleton lock acquired")
-        
-        # STEP 2: Enhanced MT5 connection
-        logger.info("🔌 STEP 2: Establishing MT5 connection...")
-        mt5_manager = EnhancedMT5Manager(ACCOUNT_NUMBER)
-        
-        if not mt5_manager.ensure_correct_account_connection():
-            logger.error("🚨 CRITICAL: Cannot establish correct MT5 connection!")
-            return
-        
-        logger.info("✅ MT5 connection validated")
-        
-        # STEP 3: Initialize trade manager
-        logger.info("🤖 STEP 3: Initializing trade manager...")
-        trade_manager = EnhancedTradeManager()
-        trade_manager.mt5_manager = mt5_manager
-        trade_manager.error_handler = error_handler
-        
-        # STEP 4: Enhanced recovery
-        logger.info("🔄 STEP 4: Enhanced state recovery...")
-        recovery_success = trade_manager.persistence.load_and_recover_state(trade_manager)
-        if recovery_success:
-            logger.info("✅ State recovery completed")
-        else:
-            logger.warning("⚠️ Recovery failed - starting fresh")
-        
-        # STEP 5: Start heartbeat monitoring
-        logger.info("💓 STEP 5: Starting health monitoring...")
-        heartbeat_monitor = HeartbeatMonitor(trade_manager, mt5_manager)
-        heartbeat_monitor.start_monitoring()
-        
-        logger.info("🚀 ALL SYSTEMS READY - Starting trading loop...")
-        logger.info("="*70)
-        
-        # MAIN TRADING LOOP with enhanced error handling
         cycle_count = 0
         consecutive_errors = 0
         
@@ -3785,34 +2817,31 @@ def run_simplified_robot():
                 # Reset error counter on successful cycle start
                 consecutive_errors = 0
                 
-                # Enhanced connection validation every cycle
-                if not mt5_manager.ensure_correct_account_connection():
-                    error_handler.handle_error('CONNECTION', 'MT5 connection validation failed in main loop')
-                    consecutive_errors += 1
-                    if consecutive_errors >= 3:
-                        logger.error("🚨 Too many connection failures - attempting recovery...")
-                        if not mt5_manager.reconnect_to_correct_account():
-                            logger.critical("🚨 CRITICAL: Cannot recover MT5 connection - stopping")
+                # Check MT5 connection
+                if not mt5.terminal_info():
+                    logger.warning("MT5 disconnected, attempting reconnect...")
+                    if not mt5.initialize():
+                        logger.error("Reconnection failed")
+                        consecutive_errors += 1
+                        if consecutive_errors >= 5:
+                            logger.critical("Too many consecutive connection errors - stopping")
                             break
-                    time.sleep(30)
-                    continue
-                
-                # YOUR EXISTING TRADING LOGIC GOES HERE
-                # (Keep all your existing signal generation, execution, etc.)
+                        time.sleep(30)
+                        continue
                 
                 # Send periodic webhook updates
                 try:
                     trade_manager.send_periodic_webhook_updates()
                 except Exception as e:
-                    error_handler.handle_error('WEBHOOK', f"Webhook update failed: {e}")
+                    logger.error(f"Error in periodic webhook updates: {e}")
                 
                 # Check for config reload
                 try:
                     trade_manager.check_and_reload_config()
                 except Exception as e:
-                    error_handler.handle_error('CONFIG', f"Config reload failed: {e}")
+                    logger.error(f"Error checking config reload: {e}")
                 
-                # Get current prices with error handling
+                # Get current prices for all pairs
                 current_prices = {}
                 for symbol in PAIRS:
                     try:
@@ -3820,83 +2849,106 @@ def run_simplified_robot():
                         if tick is None:
                             logger.warning(f"Failed to get tick data for {symbol}")
                             continue
-                        current_prices[symbol] = {'bid': tick.bid, 'ask': tick.ask}
+                        current_prices[symbol] = {
+                            'bid': tick.bid,
+                            'ask': tick.ask
+                        }
                     except Exception as e:
-                        error_handler.handle_error('PRICE_DATA', f"Error getting price for {symbol}: {e}")
+                        logger.warning(f"Error getting price for {symbol}: {e}")
                         continue
                 
                 if not current_prices:
-                    logger.warning("No price data available - skipping cycle")
+                    logger.warning("No price data available. Skipping this cycle...")
                     time.sleep(30)
                     continue
                 
-                # Generate and execute signals with error handling
+                # Generate signals with multi-timeframe confirmation
                 try:
                     signals = generate_enhanced_signals(PAIRS, trade_manager)
                     logger.info(f"Generated {len(signals)} enhanced signals")
-                    
-                    for signal in signals:
-                        try:
-                            if not trade_manager.can_trade(signal['symbol']):
-                                continue
-                            
-                            logger.info(f"\n🎯 Enhanced Signal: {signal['symbol']} {signal['direction'].upper()}")
-                            logger.info(f"   Entry: {signal['entry_price']:.5f}")
-                            logger.info(f"   SL Distance: {signal['sl_distance_pips']:.1f} pips")
-                            logger.info(f"   ADX: {signal['adx_value']:.1f}, RSI: {signal['rsi']:.1f}")
-                            
-                            if execute_trade(signal, trade_manager):
-                                logger.info("✅ Enhanced trade executed successfully")
-                                trade_manager.webhook_manager.send_signal_generated(signal)
-                            else:
-                                logger.error("❌ Trade execution failed")
-                                
-                        except Exception as e:
-                            error_handler.handle_error('SIGNAL_EXECUTION', f"Error executing signal for {signal.get('symbol', 'Unknown')}: {e}")
-                            continue
-                            
                 except Exception as e:
-                    error_handler.handle_error('SIGNAL_GENERATION', f"Error generating signals: {e}")
+                    logger.error(f"Error generating signals: {e}")
+                    signals = []
                 
-                # Martingale opportunities with error handling
+                # Execute signals
+                for signal in signals:
+                    try:
+                        if not trade_manager.can_trade(signal['symbol']):
+                            continue
+                        
+                        logger.info(f"\n🎯 Enhanced Signal: {signal['symbol']} {signal['direction'].upper()}")
+                        logger.info(f"   Entry: {signal['entry_price']:.5f}")
+                        logger.info(f"   SL Distance: {signal['sl_distance_pips']:.1f} pips (for martingale)")
+                        logger.info(f"   Initial TP: {signal['tp']:.5f} ({signal['tp_distance_pips']:.1f} pips)")
+                        logger.info(f"   ADX: {signal['adx_value']:.1f}, RSI: {signal['rsi']:.1f}")
+                        logger.info(f"   Timeframes Aligned: {signal['timeframes_aligned']}")
+                        logger.info(f"   🚫 NO SL - Build-from-first approach")
+                        
+                        if execute_trade(signal, trade_manager):
+                            logger.info("✅ Enhanced trade executed successfully")
+                            try:
+                                trade_manager.webhook_manager.send_signal_generated(signal)
+                            except Exception as e:
+                                logger.error(f"Signal webhook error: {e}")
+                        else:
+                            logger.error("❌ Trade execution failed")
+                            
+                    except Exception as e:
+                        logger.error(f"Error executing signal for {signal.get('symbol', 'Unknown')}: {e}")
+                        continue
+                
+                # Check for martingale opportunities with enhanced detection
                 if MARTINGALE_ENABLED and not trade_manager.emergency_stop_active:
                     try:
                         martingale_opportunities = trade_manager.check_martingale_opportunities_enhanced(current_prices)
                         
                         for opportunity in martingale_opportunities:
                             try:
-                                logger.info(f"\n🔄 Martingale: {opportunity['symbol']} Layer {opportunity['layer']}")
+                                logger.info(f"\n🔄 Martingale Opportunity: {opportunity['symbol']} {opportunity['direction'].upper()}")
+                                logger.info(f"   Layer: {opportunity['layer']}")
+                                logger.info(f"   Trigger: {opportunity['trigger_price']:.5f}")
+                                logger.info(f"   Current: {opportunity['entry_price']:.5f}")
+                                logger.info(f"   Distance: {opportunity['distance_pips']:.1f} pips")
                                 
                                 if execute_martingale_trade(opportunity, trade_manager):
-                                    logger.info("✅ Martingale executed successfully")
+                                    logger.info("✅ Martingale layer executed successfully")
                                     
-                                    # Update batch TP
+                                    # Update batch TP after adding layer with adaptive system
                                     batch = opportunity['batch']
-                                    new_tp = batch.calculate_adaptive_batch_tp()
-                                    if new_tp:
-                                        batch.update_all_tps_with_retry(new_tp)
+                                    try:
+                                        new_tp = batch.calculate_adaptive_batch_tp()
+                                        if new_tp:
+                                            logger.info(f"🔄 Updating batch TP to {new_tp:.5f}")
+                                            batch.update_all_tps_with_retry(new_tp)
+                                    except Exception as e:
+                                        logger.error(f"Error updating batch TP after martingale: {e}")
                                 else:
                                     logger.error("❌ Martingale execution failed")
                                     
                             except Exception as e:
-                                error_handler.handle_error('MARTINGALE', f"Error executing martingale: {e}")
+                                logger.error(f"Error executing martingale for {opportunity.get('symbol', 'Unknown')}: {e}")
                                 continue
                                 
                     except Exception as e:
-                        error_handler.handle_error('MARTINGALE_CHECK', f"Error checking martingale: {e}")
+                        logger.error(f"Error checking martingale opportunities: {e}")
                 
-                # Sync and monitor with error handling
+                # Sync with MT5 positions every cycle
                 try:
                     trade_manager.sync_with_mt5_positions()
+                except Exception as e:
+                    logger.error(f"Error syncing with MT5: {e}")
+                
+                # Monitor batch exits with hedging support
+                try:
                     trade_manager.monitor_batch_exits(current_prices)
                 except Exception as e:
-                    error_handler.handle_error('SYNC_MONITOR', f"Error in sync/monitor: {e}")
+                    logger.error(f"Error monitoring batch exits: {e}")
                 
-                # Enhanced account status
+                # Show enhanced account status with batch and hedge information
                 try:
                     account_info = mt5.account_info()
                     if account_info:
-                        logger.info(f"\n📊 Account Status:")
+                        logger.info(f"\n📊 Enhanced Account Status:")
                         logger.info(f"   Balance: ${account_info.balance:.2f}")
                         logger.info(f"   Equity: ${account_info.equity:.2f}")
                         logger.info(f"   Margin: ${account_info.margin:.2f}")
@@ -3908,7 +2960,7 @@ def run_simplified_robot():
                             pnl_pct = (pnl / trade_manager.initial_balance) * 100
                             logger.info(f"   P&L: ${pnl:.2f} ({pnl_pct:.2f}%)")
                         
-                        # Show batch status
+                        # Enhanced batch status with hedging info
                         active_batches = len([b for b in trade_manager.martingale_batches.values() if b.trades])
                         if active_batches > 0:
                             logger.info(f"\n🔄 Martingale Batches: {active_batches} active")
@@ -3917,25 +2969,31 @@ def run_simplified_robot():
                                     logger.info(f"   {batch_key}: Layer {batch.current_layer}/{MAX_MARTINGALE_LAYERS}")
                                     logger.info(f"     Volume: {batch.total_volume:.2f}, Breakeven: {batch.breakeven_price:.5f}")
                                     
+                                    # Show hedge status
                                     if hasattr(batch, 'active_hedge') and batch.active_hedge:
                                         hedge_info = batch.active_hedge
-                                        logger.info(f"     🛡️ Hedge: {hedge_info['direction']} {hedge_info['volume']:.3f} lots")
+                                        logger.info(f"     🛡️ Active Hedge: {hedge_info['direction']} {hedge_info['volume']:.3f} lots")
+                                        logger.info(f"       Entry: {hedge_info['entry_price']:.5f}, Confidence: ADX={hedge_info['confidence']['adx']:.1f}")
+                                    elif HEDGING_ENABLED and batch.current_layer >= HEDGE_START_LAYER:
+                                        logger.info(f"     🛡️ Hedge eligible at Layer {HEDGE_START_LAYER}+")
                                     
-                                    next_trigger = batch.get_next_trigger_price()
-                                    logger.info(f"     Next trigger: {next_trigger:.5f}")
-                                    
-                                    if batch.trades and batch.trades[0].get('tp'):
-                                        logger.info(f"     Current TP: {batch.trades[0]['tp']:.5f}")
-                        
-                        # System health report
-                        health_report = error_handler.get_health_report()
-                        if health_report['health_score'] < 90:
-                            logger.warning(f"⚠️ System Health: {health_report['health_score']}%")
+                                    try:
+                                        next_trigger = batch.get_next_trigger_price()
+                                        logger.info(f"     Next trigger: {next_trigger:.5f}")
+                                        
+                                        # Show current TP
+                                        if batch.trades and batch.trades[0].get('tp'):
+                                            current_tp = batch.trades[0]['tp']
+                                            logger.info(f"     Current TP: {current_tp:.5f}")
+                                    except Exception as e:
+                                        logger.error(f"Error getting batch info for {batch_key}: {e}")
+                        else:
+                            logger.info(f"\n🎯 No active martingale batches - ready for new signals")
                             
                 except Exception as e:
-                    error_handler.handle_error('STATUS_DISPLAY', f"Error displaying status: {e}")
+                    logger.error(f"Error displaying account status: {e}")
                 
-                # Sleep until next cycle with error handling
+                # Sleep until next M5 candle
                 try:
                     now = datetime.now()
                     next_candle = now + timedelta(minutes=5 - (now.minute % 5))
@@ -3946,74 +3004,127 @@ def run_simplified_robot():
                     time.sleep(max(1, sleep_time))
                     
                 except Exception as e:
-                    error_handler.handle_error('SLEEP', f"Error in sleep calculation: {e}")
-                    time.sleep(60)
+                    logger.error(f"Error in sleep calculation: {e}")
+                    time.sleep(60)  # Default 1 minute sleep
                     
             except KeyboardInterrupt:
                 logger.info("\n🛑 Robot stopped by user")
-                break
+                raise  # Re-raise to exit main loop
                 
             except Exception as e:
                 consecutive_errors += 1
-                error_triggered_recovery = error_handler.handle_error('MAIN_LOOP', f"Error in main cycle: {e}", exc_info=True)
-                
+                logger.error(f"\n❌ Error in main cycle #{cycle_count}: {e}")
                 logger.error(f"Consecutive errors: {consecutive_errors}")
                 
-                # Emergency state save
+                # Emergency state save on error
                 try:
                     trade_manager.persistence.save_bot_state(trade_manager)
                     logger.info("💾 Emergency state saved")
                 except Exception as save_error:
                     logger.error(f"Failed to save emergency state: {save_error}")
                 
-                # Check if recovery is needed
-                if error_triggered_recovery or consecutive_errors >= 5:
-                    logger.warning("🔄 Attempting system recovery...")
-                    try:
-                        if mt5_manager.reconnect_to_correct_account():
-                            logger.info("✅ Recovery successful")
-                            consecutive_errors = 0
-                        else:
-                            logger.error("❌ Recovery failed")
-                    except Exception as recovery_error:
-                        logger.error(f"Recovery error: {recovery_error}")
-                
+                # If too many consecutive errors, stop the robot
                 if consecutive_errors >= 10:
-                    logger.critical(f"🚨 Too many consecutive errors - stopping")
+                    logger.critical(f"🚨 Too many consecutive errors ({consecutive_errors}) - stopping robot")
                     break
                 
-                # Progressive backoff
-                error_sleep = min(consecutive_errors * 30, 300)
+                # Import traceback for detailed error info
+                import traceback
+                logger.error(f"Detailed error info:\n{traceback.format_exc()}")
+                
+                # Wait before retrying
+                error_sleep = min(consecutive_errors * 30, 300)  # Max 5 minutes
                 logger.info(f"⏰ Waiting {error_sleep}s before retry...")
                 time.sleep(error_sleep)
                 
     except KeyboardInterrupt:
         logger.info("\n🛑 Robot stopped by user")
     except Exception as e:
-        logger.error(f"\n❌ Fatal error: {e}")
+        logger.error(f"\n❌ Fatal error in main robot: {e}")
         import traceback
         traceback.print_exc()
     finally:
-        # Enhanced cleanup
+        # Final cleanup and state save
         try:
-            logger.info("🔄 Performing enhanced cleanup...")
-            
-            # Stop monitoring
-            if heartbeat_monitor:
-                heartbeat_monitor.stop_monitoring()
-            
-            # Save final state
-            if 'trade_manager' in locals():
-                trade_manager.persistence.save_bot_state(trade_manager)
-                logger.info("💾 Final state saved")
-            
-            # Release singleton lock
-            if singleton_instance:
-                singleton_instance.release_lock()
-            
-            # Close MT5
-            mt5.shutdown()
-            logger.info("✅ Enhanced cleanup completed")
-            
+            logger.info("🔄 Performing final cleanup...")
+            trade_manager.persistence.save_bot_state(trade_manager)
+            logger.info("💾 Final state saved successfully")
         except Exception as e:
-            logger.error(f"Error during cleanup: {e}")
+            logger.error(f"Error during final cleanup: {e}")
+        
+        try:
+            mt5.shutdown()
+            logger.info("MT5 connection closed")
+        except Exception as e:
+            logger.error(f"Error closing MT5: {e}")
+
+# ===== CONFIGURATION HELPER FUNCTIONS =====
+def log_lot_size_configuration():
+    """Log current lot size configuration"""
+    logger.info("="*50)
+    logger.info("LOT SIZE CONFIGURATION")
+    logger.info("="*50)
+    logger.info(f"Mode: {LOT_SIZE_MODE}")
+    
+    if LOT_SIZE_MODE == "MANUAL":
+        logger.info(f"Manual lot size: {MANUAL_LOT_SIZE}")
+        logger.info("Note: Manual size applies to INITIAL trades only")
+        logger.info("      Martingale layers still use dynamic sizing")
+    else:
+        logger.info("Using dynamic risk-based lot sizing")
+    
+    logger.info("\nSymbol-specific configurations:")
+    for symbol, config in ENHANCED_PAIR_RISK_PROFILES.items():
+        logger.info(f"  {symbol}: Risk={config['risk']}, Range={config['min_lot']}-{config['max_lot']}")
+    
+    logger.info("="*50)
+
+def validate_configuration():
+    """Validate configuration on startup"""
+    logger.info("="*50)
+    logger.info("CONFIGURATION VALIDATION")
+    logger.info("="*50)
+    
+    # Check all pairs have risk profiles
+    for symbol in PAIRS:
+        if symbol not in ENHANCED_PAIR_RISK_PROFILES:
+            logger.warning(f"❌ {symbol}: Missing from risk profiles")
+        else:
+            profile = ENHANCED_PAIR_RISK_PROFILES[symbol]
+            logger.info(f"✅ {symbol}: {profile['risk']} risk, lots {profile['min_lot']}-{profile['max_lot']}")
+    
+    # Check spread limits
+    missing_spreads = []
+    for symbol in PAIRS:
+        if symbol not in SPREAD_LIMITS and symbol != 'default':
+            missing_spreads.append(symbol)
+    
+    if missing_spreads:
+        logger.warning(f"⚠️ Symbols using default spread limit: {missing_spreads}")
+    
+    # Check risk reduction factors
+    missing_risk_factors = []
+    for symbol in PAIRS:
+        if symbol not in RISK_REDUCTION_FACTORS:
+            missing_risk_factors.append(symbol)
+    
+    if missing_risk_factors:
+        logger.info(f"ℹ️ Symbols using default risk factor (1.0): {missing_risk_factors}")
+    
+    logger.info(f"\nLot Size Mode: {LOT_SIZE_MODE}")
+    if LOT_SIZE_MODE == "MANUAL":
+        logger.info(f"Manual Lot Size: {MANUAL_LOT_SIZE}")
+    
+    logger.info("="*50)
+
+# ===== STARTUP VALIDATION =====
+if __name__ == "__main__":
+    # Validate configuration on startup
+    validate_configuration()
+    log_lot_size_configuration()
+    
+    # Validate hedging configuration
+    validate_hedging_configuration()
+    
+    # Run the robot with hedging support
+    run_simplified_robot()
